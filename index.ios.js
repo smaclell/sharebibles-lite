@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import MapView from 'react-native-maps';
 import {
   AppRegistry,
   StyleSheet,
@@ -23,9 +24,14 @@ export default class sharebibles extends Component {
           To get started, edit index.ios.js
         </Text>
         <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Press Cmd+ctrl+z to reload
         </Text>
+        <MapView style={styles.map} initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }} />
       </View>
     );
   }
@@ -37,6 +43,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  map: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#777777',
+    width: 320,
   },
   welcome: {
     fontSize: 20,

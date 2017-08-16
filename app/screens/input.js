@@ -18,6 +18,7 @@ export default class Input extends React.Component {
           <View style={stylesLogin.inner_Container}>
             <Text style={{ fontSize: 20, margin: 5 }}>
               Sorry this feature isn&#39;t available yet.
+              start a Conversation
             </Text>
           </View>
         </View>

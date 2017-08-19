@@ -9,6 +9,7 @@ import Home from './screens/home';
 import Input from './screens/input';
 import MapView from './screens/map-view';
 import Settings from './screens/settings';
+import SignUp from './screens/sign-up';
 
 const App = StackNavigator({
   Authentication: { screen: Authentication },
@@ -17,6 +18,7 @@ const App = StackNavigator({
   Settings: { screen: Settings },
   MapView: { screen: MapView },
   Conversations: { screen: Conversations },
+  SignUp : {screen: SignUp}
 });
 
 AppRegistry.registerComponent('sharebibles', () => App);

@@ -1,14 +1,17 @@
 import {
-  Button,
   Image,
   KeyboardAvoidingView,
   Text,
   TextInput,
+  Button,
   View,
+  TouchableOpacity,
 } from 'react-native';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import stylesLogin from '../styles/main';
+import color from '../constants/colors';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
@@ -23,31 +26,33 @@ export default class SignInUp extends React.Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
-        <View style={stylesLogin.container}>
-          <View style={stylesLogin.inner_Container}>
-            <Image source={require('../assets/logo/logo.png')} style={stylesLogin.logoImage} />
-            <Text style={{ fontSize: 20, margin: 5 }}> Login to Share Bibles </Text>
-            <Text style={{ fontSize: 13, margin: 5, fontWeight: 'bold', marginBottom: 10 }}> Forgot your password?
-              <Text style={{ textDecorationLine: 'underline', color: '#5C9492' }}> Click Here </Text>
-            </Text>
-            <TextInput
-              style={stylesLogin.userPass_TextBox}
-              placeholder=" Username"
-            />
-            <TextInput
-              style={stylesLogin.userPass_TextBox}
-              placeholder=" Password"
-              secureTextEntry
-            />
-            <Button
-              onPress={() => navigate('Home')}
-              style={stylesLogin.button}
-              title="Login"
-            />
-          </View>
+      <View style={stylesLogin.container}>
+        <View style={stylesLogin.inner_container}>
+          
+          <Text style={{color: color.mintCream, fontSize: 40, fontWeight: 'normal', margin: 15}}> Share Bibles </Text>
+          <Image source={require('../../app/assets/logo/logo.png')} style={stylesLogin.logo_container}/>          
+          <Text style={{color: color.mintCream, fontSize: 18, fontWeight: 'normal', marginBottom: 15}}> Login to Share Bibles </Text>
+          <Text style={{color: color.mintCream, fontSize: 14, fontWeight: 'normal', marginBottom: 8}}> Don't have an account? </Text>
+
+          <TouchableOpacity onPress={()=>navigate('SignUp')}> 
+            <Text style={{color: color.flame, fontSize: 14, fontWeight: 'normal', marginBottom: 20, textDecorationLine: 'underline'}}> 
+              Create One </Text>
+           </TouchableOpacity>
+
+          <TextInput style={stylesLogin.textinput_container}
+            placeholder = 'Username'/>
+
+          <TextInput style={stylesLogin.textinput_container}
+            placeholder = 'Password'
+            secureTextEntry />
+
+          <TouchableOpacity style={stylesLogin.login_button} onPress={()=>navigate('Home')}>
+            <Text style={{color: 'black', fontSize: 15, fontWeight: 'bold'}}> Log In </Text>
+           </TouchableOpacity>
+           
+
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

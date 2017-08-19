@@ -14,9 +14,15 @@ Add your API key to your manifest file (android\app\src\main\AndroidManifest.xml
       android:value="Your Google maps API Key Here"/>
 </application>
 
-3. Once that is working on your machine, download this folder and run:
+
+3. Make a new copy of .env.example, in the root folder (where it is currently in), and call it .env instead. So, by the end, you should
+   have the orignal file .env.example and another file called .env
+
+4. Once that is working on your machine, download this folder and run:
 
     yarn install
     react-native run-android
+
+
 
 Let me know if this doesn't work for you (IanEdington@gmail.com).

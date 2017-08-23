@@ -1,12 +1,14 @@
 import {
-  Button,
-  KeyboardAvoidingView,
+  TouchableOpacity,
   Text,
   View,
+  Image
 } from 'react-native';
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import stylesLogin from '../styles/main';
+import style from '../styles/home';
+import color from '../constants/colors';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
@@ -21,38 +23,33 @@ export default class SignInUp extends React.Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
-        <View style={stylesLogin.container}>
-          <View style={stylesLogin.inner_Container}>
-            <Text style={{ fontSize: 20, margin: 5, marginBottom: 40 }}>
+        <View style={style.container}>
+          <View style={style.inner_Container}>
+            
+            <Text style={{color: color.mintCream, fontSize: 35, margin: 5, marginBottom: 25, textAlign: 'center' }}>
               Welcome to Share Bibles
             </Text>
-            <Button
-              onPress={() => navigate('Input')}
-              style={stylesLogin.button}
-              title="Input"
-            />
-            <Text />
-            <Button
-              onPress={() => navigate('Settings')}
-              style={{ width: 50, height: 50, backgroundColor: 'powderblue' }}
-              title="Settings"
-            />
-            <Text />
-            <Button
-              onPress={() => navigate('MapView')}
-              style={stylesLogin.button}
-              title="MapView"
-            />
-            <Text />
-            <Button
-              onPress={() => navigate('Conversations')}
-              style={stylesLogin.button}
-              title="Conversations"
-            />
+
+            <Image style={style.logo_container} source={require('../assets/logo/logo.png')}/>
+
+            <TouchableOpacity onPress = {()=>navigate('Input')} style={style.button_container}>
+              <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Input </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress = {()=>navigate('MapView')} style={style.button_container}>
+              <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Map View </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress = {()=>navigate('Conversations')} style={style.button_container}>
+              <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Conversations </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress = {()=>navigate('Settings')} style={style.button_container}>
+              <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Settings </Text>
+            </TouchableOpacity>
+
           </View>
         </View>
-      </KeyboardAvoidingView>
     );
   }
 }

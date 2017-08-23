@@ -44,7 +44,8 @@ export default class sharebiblesCreateAccount extends Component {
               placeholder = 'Name'/>
 
             <TextInput style={styles.textinput_container}
-              placeholder = 'E-mail'/>
+              placeholder = 'E-mail'
+              keyboardType = 'email-address'/>
 
             <TextInput style={styles.textinput_container}
               placeholder = 'Password'

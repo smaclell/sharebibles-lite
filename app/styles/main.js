@@ -36,7 +36,7 @@ container: {
     textAlign: 'center',
     color: 'black',
     backgroundColor: color.paleAqua,
-    marginBottom: 20,
+    marginBottom: 22,
     fontSize: 16,
   },
 

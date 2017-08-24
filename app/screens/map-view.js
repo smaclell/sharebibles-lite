@@ -1,27 +1,23 @@
 import {
-  KeyboardAvoidingView,
   Text,
   View,
 } from 'react-native';
-import React from 'react';
-import stylesLogin from '../styles/main';
 
-export default class MapView extends React.Component {
+import React from 'react';
+import styles from '../styles/map-screen';
+import MapView from 'react-native-maps';
+
+export default class MapsView extends React.Component {
+  
   static navigationOptions = {
     title: 'Map',
   };
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
-        <View style={stylesLogin.container}>
-          <View style={stylesLogin.inner_Container}>
-            <Text style={{ fontSize: 20, margin: 5 }}>
-              Sorry this feature isn&#39;t available yet.
-            </Text>
-          </View>
-        </View>
-      </KeyboardAvoidingView>
+      <MapView
+        style={{height: 200, margin: 40}}
+      />
     );
   }
 }

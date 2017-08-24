@@ -7,7 +7,7 @@ import Authentication from './screens/authentication';
 import Conversations from './screens/conversations';
 import Home from './screens/home';
 import Input from './screens/input';
-import MapView from './screens/map-view';
+import MapsView from './screens/map-view';
 import Settings from './screens/settings';
 import SignUp from './screens/sign-up';
 
@@ -16,7 +16,7 @@ const App = StackNavigator({
   Home: { screen: Home },
   Input: { screen: Input },
   Settings: { screen: Settings },
-  MapView: { screen: MapView },
+  MapsView: { screen: MapsView },
   Conversations: { screen: Conversations },
   SignUp : {screen: SignUp}
 });

@@ -36,7 +36,7 @@ export default class SignInUp extends React.Component {
               <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Input </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress = {()=>navigate('MapView')} style={style.button_container}>
+            <TouchableOpacity onPress = {()=>navigate('MapsView')} style={style.button_container}>
               <Text style={{color: 'black', fontSize: 16, fontWeight: 'bold'}}> Map View </Text>
             </TouchableOpacity>
 

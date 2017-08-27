@@ -5,7 +5,7 @@ import {
 import color from '../constants/colors';
 
 export default StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -19,13 +19,13 @@ export default StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     backgroundColor: color.maastBlue,
-    padding: 20
+    padding: 20,
   },
 
   logo_container: {
     height: 135,
     width: 135,
-    marginBottom: 25
+    marginBottom: 25,
   },
 
   textinput_container: {
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     marginBottom: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.keppel
+    backgroundColor: color.keppel,
   },
 
   button_container: {
@@ -57,6 +57,6 @@ export default StyleSheet.create({
     marginBottom: 25,
     backgroundColor: color.flame,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

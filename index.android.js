@@ -1,1 +1,1 @@
-import App from './app/App';
+import './app/App';

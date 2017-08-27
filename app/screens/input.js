@@ -9,7 +9,7 @@ import stylesLogin from '../styles/main';
 export default class Input extends React.Component {
   static navigationOptions = {
     title: 'Start Conversation',
-  };
+  }
 
   render() {
     return (

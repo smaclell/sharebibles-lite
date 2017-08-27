@@ -18,7 +18,7 @@ const App = StackNavigator({
   Settings: { screen: Settings },
   MapsView: { screen: MapsView },
   Conversations: { screen: Conversations },
-  SignUp : {screen: SignUp}
+  SignUp: { screen: SignUp },
 });
 
 AppRegistry.registerComponent('sharebibles', () => App);

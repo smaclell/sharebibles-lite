@@ -5,14 +5,14 @@ import {
 import color from '../constants/colors';
 
 export default StyleSheet.create({
-container: {
+  container: {
     flex: 1,
     padding: 30,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.middleBlue,
   },
-  
+
   inner_container: {
     height: 580,
     width: 340,
@@ -47,5 +47,5 @@ container: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.crayolaGreen,
-  }
+  },
 });

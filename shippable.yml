@@ -1,9 +1,8 @@
+language: node_js
+
+node_js:
+  - 7.4.0
+
 build:
   ci:
-    - npm install -g yarn
-    - yarn install
-    - mkdir -p shippable/testresults
-    - mkdir -p shippable/codecoverage
-    - yarn test
     - yarn lint
-    - npm test

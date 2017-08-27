@@ -1,5 +1,9 @@
 # Get started
 
+
+[![Run Status](https://api.shippable.com/projects/59a3023bcf8c1407003521c5/badge?branch=master)](https://app.shippable.com/github/IanEdington/sharebibles)
+[![Coverage Badge](https://api.shippable.com/projects/59a3023bcf8c1407003521c5/coverageBadge?branch=master)](https://app.shippable.com/github/IanEdington/sharebibles)
+
 1. In order to run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
 2. Specify your Google Maps API Key:

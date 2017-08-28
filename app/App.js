@@ -22,3 +22,4 @@ const App = StackNavigator({
 });
 
 AppRegistry.registerComponent('sharebibles', () => App);
+export default App;

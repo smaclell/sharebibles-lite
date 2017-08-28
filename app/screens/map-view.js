@@ -10,7 +10,7 @@ export default class MapsView extends React.Component {
   render() {
     return (
       <MapView
-        style={{width: 100, height: 200, margin: 40 }}
+        style={{ height: 200, margin: 40 }}
       />
     );
   }

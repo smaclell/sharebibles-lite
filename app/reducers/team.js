@@ -1,4 +1,4 @@
-const team = (state = [], action) => {
+const team = (state = {}, action) => {
   switch (action.type) {
     default:
       return state;

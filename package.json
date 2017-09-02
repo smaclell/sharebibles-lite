@@ -1,34 +1,37 @@
 {
-	"name": "sharebibles",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"lint": "eslint .",
-		"lint:fix": "eslint --fix .",
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"prop-types": "^15.5.10",
-		"react": "16.0.0-alpha.12",
-		"react-native": "0.47.1",
-		"react-native-config": "^0.6.0",
-		"react-native-maps": "*",
-		"react-navigation": "^1.0.0-beta.11"
-	},
-	"devDependencies": {
-		"babel-eslint": "^7.2.3",
-		"babel-jest": "20.0.3",
-		"babel-preset-react-native": "2.1.0",
-		"eslint": "^4.4.1",
-		"eslint-config-airbnb": "^15.1.0",
-		"eslint-plugin-import": "^2.7.0",
-		"eslint-plugin-jsx-a11y": "^5.1.1",
-		"eslint-plugin-react": "^7.1.0",
-		"jest": "20.0.4",
-		"react-test-renderer": "16.0.0-alpha.12"
-	},
-	"jest": {
+  "name": "sharebibles",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.47.1",
+    "react-native-config": "^0.6.0",
+    "react-native-maps": "*",
+    "react-navigation": "^1.0.0-beta.11",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "2.1.0",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "jest": "20.0.4",
+    "react-test-renderer": "16.0.0-alpha.12",
+    "redux-devtools": "^3.4.0"
+  },
+  "jest": {
     "preset": "react-native",
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -37,5 +40,5 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|react-navigation)/"
     ]
-	}
+  }
 }

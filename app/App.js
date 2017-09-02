@@ -1,25 +1,20 @@
-import {
-  AppRegistry,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import Authentication from './screens/authentication';
-import Conversations from './screens/conversations';
-import Home from './screens/home';
-import Input from './screens/input';
-import MapsView from './screens/map-view';
-import Settings from './screens/settings';
-import SignUp from './screens/sign-up';
+import Navigation from './nav';
+import reducer from './reducers';
+import initialState from './reducers/initial-state';
 
-const App = StackNavigator({
-  Authentication: { screen: Authentication },
-  Home: { screen: Home },
-  Input: { screen: Input },
-  Settings: { screen: Settings },
-  MapsView: { screen: MapsView },
-  Conversations: { screen: Conversations },
-  SignUp: { screen: SignUp },
-});
+const store = createStore(reducer, initialState);
+
+const App = () => (
+  <Provider store={store}>
+    <Navigation />
+  </Provider>
+);
 
 AppRegistry.registerComponent('sharebibles', () => App);
+
 export default App;

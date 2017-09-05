@@ -18,10 +18,18 @@ export default class SignInUp extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    signIn: PropTypes.func.isRequired,
   }
 
   render() {
     const { navigate } = this.props.navigation;
+
+    const signIn = () => {
+      const destination = 'Home';
+      return Promise.resolve()
+        .then(() => this.props.signIn())
+        .then(() => navigate(destination));
+    };
 
     return (
       <View style={stylesLogin.container}>
@@ -48,7 +56,7 @@ export default class SignInUp extends React.Component {
             secureTextEntry
           />
 
-          <TouchableOpacity style={stylesLogin.login_button} onPress={() => navigate('Home')}>
+          <TouchableOpacity style={stylesLogin.login_button} onPress={signIn}>
             <Text style={{ color: 'black', fontSize: 15, fontWeight: 'bold' }}> Log In </Text>
           </TouchableOpacity>
 

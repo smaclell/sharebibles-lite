@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 
-import Authentication from '../screens/authentication';
+import Authentication from '../containers/Authentication';
 import Conversations from '../screens/conversations';
 import Home from '../screens/home';
 import Input from '../screens/input';

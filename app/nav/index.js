@@ -8,6 +8,7 @@ import Input from '../screens/input';
 import MapsView from '../screens/map-view';
 import Settings from '../screens/settings';
 import SignUp from '../screens/sign-up';
+import FollowUp from '../screens/follow-up';
 import Dev from '../screens/dev';
 
 const screens = {
@@ -18,6 +19,7 @@ const screens = {
   MapsView: { screen: MapsView },
   Conversations: { screen: Conversations },
   SignUp: { screen: SignUp },
+  FollowUp: { screen: FollowUp },
 };
 
 if (__DEV__) {

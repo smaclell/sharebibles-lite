@@ -6,23 +6,24 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: color.middleBlue,
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
   },
 
   inner_container: {
     flex: 1,
     backgroundColor: color.mintCream,
-    padding: 20,
+    padding: 15,
+    paddingBottom: 20,
     borderRadius: 15,
   },
 
   item: {
     height: 100,
-    width: 320,
+    width: 330,
     padding: 10,
     backgroundColor: color.paleAqua,
-    borderRadius: 20,
-    marginBottom: 20,
+    borderRadius: 10,
+    marginBottom: 15,
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -40,6 +41,4 @@ export default StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'green',
   },
-
-
 });

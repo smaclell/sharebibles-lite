@@ -6,11 +6,9 @@ import thunk from 'redux-thunk';
 
 import Navigation from './nav';
 import reducer from './reducers';
-import initialState from './reducers/initial-state';
 
 const store = createStore(
   reducer,
-  initialState,
   applyMiddleware(thunk),
 );
 

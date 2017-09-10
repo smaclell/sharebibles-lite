@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
 
+import distributions from './distributions';
+import teams from './teams';
 import user from './user';
-import team from './team';
-import households from './households';
+import users from './users';
+import visits from './visits';
 
 const reducer = combineReducers({
+  distributions,
+  teams,
   user,
-  team,
-  households,
+  users,
+  visits,
 });
 
 export default reducer;

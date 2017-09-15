@@ -1,4 +1,6 @@
 /* eslint no-plusplus: 0 */
+import moment from 'moment';
+
 let lastUserId = 1;
 const teamId = 7;
 
@@ -63,13 +65,18 @@ let lastDistributionId = 1000;
 export function createFakeDistribution(options) {
   return {
     id: lastDistributionId++,
+    name: 'Anything',
     imageUrl: 'https://google.com/favicon.ico',
-    created: new Date(),
+    created: moment.utc().valueOf(),
     latitude: 50, // TODO: Generate these in a small city area
     longitude: 50,
-    bibles: 1,
+    address: null,
+    bibles: 1, // Switch to resources instead
+    // tags|status:
+    // Considering a tag/status object/array to represent the many checkboxes
+    // Initially it would be populated/managed by a number of hardcoded values
     ...options,
-    uploaded: false, //
+    uploaded: false, // Support delayed upload with no wifi
   };
 }
 
@@ -78,7 +85,7 @@ export function createFakeVisit(distributionId, creator, options) {
   return {
     id: lastVisitId++,
     distributionId,
-    created: new Date(),
+    created: moment.utc().valueOf(),
     createdBy: creator.id,
     tags: [], // Actions performed, too technical?
     notes: '',

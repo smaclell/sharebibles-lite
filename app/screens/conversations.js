@@ -1,51 +1,40 @@
 import {
   Text,
   FlatList,
-  Image,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styles from '../styles/conversations';
+import Conversation from '../components/Conversation';
 
-export default class Conversations extends React.Component {
+class Conversations extends React.Component {
   static navigationOptions = {
     title: 'Conversations',
+  }
+
+  static propTypes = {
+    distributions: PropTypes.array.isRequired,
   }
 
   render() {
     return (
       <View style={styles.container}>
-
-        <Text style={{ fontSize: 35, marginBottom: 20 }}> Your Conversations </Text>
-
+        <Text style={{ fontSize: 35, marginBottom: 20 }}>Your Conversations</Text>
         <FlatList
           style={styles.inner_container}
-          data={[
-            { key: 'Distribution 1' },
-            { key: 'Distribution 2' },
-            { key: 'Distribution 3' },
-            { key: 'Distribution 4' },
-            { key: 'Distribution 5' },
-            { key: 'Distribution 6' },
-            { key: 'Distribution 7' },
-          ]}
-
-          renderItem={({ item }) =>
-            (<TouchableOpacity>
-              <View style={styles.item}>
-                <Image source={require('../../app/assets/logo/logo.png')} style={styles.item_image} />
-                <View style={{ marginRight: 35 }}>
-                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}> {item.key} </Text>
-                  <Text> Date of distribution </Text>
-                  <Text style={{ fontSize: 16 }}> Status </Text>
-                </View>
-                <View style={styles.circle} />
-              </View>
-            </TouchableOpacity>)}
+          data={this.props.distributions}
+          renderItem={({ item }) => <Conversation {...item} />}
+          keyExtractor={item => `conversation-${item.id}`}
         />
-
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  distributions: Object.keys(state.distributions).map(k => state.distributions[k]),
+});
+
+export default connect(mapStateToProps)(Conversations);

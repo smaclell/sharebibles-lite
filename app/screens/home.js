@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import {
   TouchableOpacity,
   Text,
@@ -47,6 +48,12 @@ export default class SignInUp extends React.Component {
           <TouchableOpacity onPress={() => navigate('Settings')} style={style.button_container}>
             <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Settings </Text>
           </TouchableOpacity>
+
+          {__DEV__ &&
+            <TouchableOpacity onPress={() => navigate('Test')} style={style.button_container}>
+              <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Development </Text>
+            </TouchableOpacity>
+          }
 
         </View>
       </View>

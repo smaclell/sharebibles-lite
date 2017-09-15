@@ -1,4 +1,4 @@
-import * as actions from '../actions/signUp';
+import * as actions from '../actions/user';
 
 export default function reducer(state = null, action) {
   switch (action.type) {

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import stylesLogin from '../styles/main';
 import * as actions from '../actions/distributions';
+import User from '../components/User';
 
 class Dev extends React.Component {
   static navigationOptions = {
@@ -17,6 +18,7 @@ class Dev extends React.Component {
 
   static propTypes = {
     createDistribution: PropTypes.func.isRequired,
+    user: PropTypes.object,
   }
 
   render() {
@@ -32,6 +34,9 @@ class Dev extends React.Component {
             <Text style={{ fontSize: 20, margin: 5 }}>
               This is a test screen. Have fun!
             </Text>
+
+            {this.props.user && <User {...this.props.user} />}
+
             <Button
               onPress={clickCreate}
               title="Create Test Distribution"
@@ -45,10 +50,14 @@ class Dev extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user ? state.users[state.user] : null,
+});
+
 const mapDispatchToProps = dispatch => ({
   createDistribution(args) {
     return dispatch(actions.createDistribution(args));
   },
 });
 
-export default connect(null, mapDispatchToProps)(Dev);
+export default connect(mapStateToProps, mapDispatchToProps)(Dev);

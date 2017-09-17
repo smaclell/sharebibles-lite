@@ -1,3 +1,4 @@
+// TODO: Merge with colours and simplify (i.e. blue with different gradients).
 export default {
   flame: '#E4572E',
   mintCream: '#F4FAFA',

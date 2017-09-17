@@ -45,7 +45,6 @@ const User = ({ name, imageUrl }) => (
       <Image style={image} source={{ uri: imageUrl }} />
     </View>
     <Text style={text}>{name}</Text>
-    <Text style={text}>{imageUrl}</Text>
   </View>
 );
 

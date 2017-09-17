@@ -21,6 +21,10 @@ class Dev extends React.Component {
     user: PropTypes.object,
   }
 
+  static defaultProps = {
+    user: null,
+  }
+
   render() {
     const clickCreate = () => this.props.createDistribution({
       name: 'Test',

@@ -8,42 +8,42 @@ const rob = {
   id: lastUserId++,
   teamId,
   name: 'Rob Wiebe',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/b23ec8577b034bb29c6c761bce752a0d.png?s=100&d=mm',
 };
 
 const sean = {
   id: lastUserId++,
   teamId,
   name: 'Sean Braacx',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/e06ba756dfcd57c07fa8e0aa3b352906.png?s=200&d=mm',
 };
 
 const ian = {
   id: lastUserId++,
   teamId,
   name: 'Ian Edington',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/7785a42d3b969050cd59679cbd610888.png?s=100&d=mm',
 };
 
 const zhuoJue = {
   id: lastUserId++,
   teamId,
   name: 'ZhuoJue Lee',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/c40b2007221c189f4afce2caf78997e2.png?s=100&d=mm',
 };
 
 const zafar = {
   id: lastUserId++,
   teamId,
   name: 'Zafar Siddiqi',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/d86825a375fe5703a43b3094bfa759bf.png?s=100&d=mm',
 };
 
 const scott = {
   id: lastUserId++,
   teamId,
   name: 'Scott MacLellan',
-  imageUrl: 'https://google.com/favicon.ico',
+  imageUrl: 'https://gravatar.com/avatar/36cb916d45e5b4ab10273ca266217ed7.png?s=100&d=mm',
 };
 
 export const user = rob;

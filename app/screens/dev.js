@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import stylesLogin from '../styles/main';
 import * as actions from '../actions/distributions';
+import GetLocation from '../components/GetLocation';
 
 class Dev extends React.Component {
   static navigationOptions = {
@@ -19,11 +20,20 @@ class Dev extends React.Component {
     createDistribution: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: 'unknown',
+    };
+  }
+
   render() {
     const clickCreate = () => this.props.createDistribution({
       name: 'Test',
       notes: 'we love testing',
     });
+
+    const updateLocation = location => this.setState(p => ({ ...p, location }));
 
     return (
       <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
@@ -38,6 +48,8 @@ class Dev extends React.Component {
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
+            <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
+            <GetLocation onLocationChanged={updateLocation} />
           </View>
         </View>
       </KeyboardAvoidingView>

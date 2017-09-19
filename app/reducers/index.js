@@ -9,6 +9,7 @@ import visits from './visits';
 
 const reducer = combineReducers({
   distributions,
+  resources,
   teams,
   user,
   users,

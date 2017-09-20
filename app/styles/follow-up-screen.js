@@ -12,7 +12,7 @@ export default StyleSheet.create({
     padding: 20,
   },
 
-  section1: {
+  users: {
     height: 80,
     width: 360,
     backgroundColor: color.mintCream,

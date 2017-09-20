@@ -15,7 +15,7 @@ export default class followUp extends React.Component {
       return (
         <View style={styles.container}>
 
-          <View style={styles.section1}>
+          <View style={styles.users}>
             <View style={{ height: 100, width: 15, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center', marginRight: 15 }}>
               <Text style={{ color: 'white' }}> 1 </Text>
             </View>

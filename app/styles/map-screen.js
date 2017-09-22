@@ -11,4 +11,17 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  callout_container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: color.mintCream,
+  },
+
+  callout_image: {
+    height: 100,
+    width: 150,
+    margin: 10,
+  },
 });

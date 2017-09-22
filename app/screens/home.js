@@ -1,6 +1,5 @@
 /* globals __DEV__ */
 import {
-  TouchableOpacity,
   Text,
   View,
   Image,

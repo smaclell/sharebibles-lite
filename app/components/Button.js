@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
-import colour from '../styles/colours';
+import color from '../constants/colors';
 import fonts from '../styles/fonts';
 
 const container = {
@@ -13,12 +13,13 @@ const container = {
   borderRadius: 20,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: colour.flame,
-  marginBottom: 23,
+  backgroundColor: color.flame,
+  margin: 10,
+  padding: 10,
 };
 
 const text = {
-  color: colour.text,
+  color: color.text,
   fontSize: fonts.normal,
   fontWeight: 'bold',
 };

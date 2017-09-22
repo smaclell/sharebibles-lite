@@ -8,6 +8,7 @@ import {
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import Button from '../components/Button';
 import style from '../styles/home';
 import color from '../constants/colors';
 
@@ -33,27 +34,15 @@ export default class SignInUp extends React.Component {
 
           <Image style={style.logo_container} source={require('../assets/logo/logo.png')} />
 
-          <TouchableOpacity onPress={() => navigate('Input')} style={style.button_container}>
-            <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Input </Text>
-          </TouchableOpacity>
+          <Button onClick={() => navigate('Input')}>Input</Button>
 
-          <TouchableOpacity onPress={() => navigate('MapsView')} style={style.button_container}>
-            <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Map View </Text>
-          </TouchableOpacity>
+          <Button onClick={() => navigate('Conversations')}>Conversations</Button>
 
-          <TouchableOpacity onPress={() => navigate('Conversations')} style={style.button_container}>
-            <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Conversations </Text>
-          </TouchableOpacity>
+          { __DEV__ && <Button onClick={() => navigate('MapsView')}>Map</Button> }
 
-          <TouchableOpacity onPress={() => navigate('Settings')} style={style.button_container}>
-            <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Settings </Text>
-          </TouchableOpacity>
+          { __DEV__ && <Button onClick={() => navigate('Settings')}>Settings</Button> }
 
-          {__DEV__ &&
-            <TouchableOpacity onPress={() => navigate('Dev')} style={style.button_container}>
-              <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Development </Text>
-            </TouchableOpacity>
-          }
+          {__DEV__ && <Button onClick={() => navigate('Dev')}>Development</Button> }
 
         </View>
       </View>

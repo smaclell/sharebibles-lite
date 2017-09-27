@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   Switch,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -24,7 +25,7 @@ class Input extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.add_members_section_container}>
           <User {...this.props.user} />
         </View>
@@ -74,12 +75,19 @@ class Input extends React.Component {
               <Text style={{ fontSize: 18 }}> - 1 + </Text>
             </View>
           </View>
+        </View>
 
-
+        <View style={styles.actions_container}>
+          <TouchableOpacity style={styles.button_container}>
+            <Text> ADD </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button_container}>
+            <Text> CANCEL </Text>
+          </TouchableOpacity>
         </View>
 
 
-      </View>
+      </ScrollView>
     );
   }
 }

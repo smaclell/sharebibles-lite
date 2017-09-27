@@ -3,7 +3,6 @@ import color from '../constants/colors';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: color.middleBlue,
     padding: 10,
     justifyContent: 'center',
@@ -11,34 +10,34 @@ export default StyleSheet.create({
   },
 
   add_members_section_container: {
-    flex: 1,
+    height: 130,
     width: 360,
-    padding: 10,
+    padding: 5,
     backgroundColor: color.mintCream,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
 
   add_location_section_container: {
     flex: 1,
     width: 360,
-    padding: 10,
     flexDirection: 'row',
     backgroundColor: color.mintCream,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
 
   results_container: {
-    height: 250,
+    height: 230,
     width: 360,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.mintCream,
+    marginBottom: 15,
   },
 
   distribution_status_container: {
@@ -46,7 +45,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: color.mintCream,
     marginBottom: 5,
-    paddingTop: 10,
+    paddingTop: 5,
   },
 
   status_container: {
@@ -62,7 +61,7 @@ export default StyleSheet.create({
   },
 
   info_container: {
-    height: 130,
+    height: 110,
     width: 300,
     padding: 10,
     justifyContent: 'center',
@@ -70,7 +69,7 @@ export default StyleSheet.create({
   },
 
   inner_info_container: {
-    height: 130,
+    height: 70,
     width: 280,
     justifyContent: 'center',
   },
@@ -84,10 +83,29 @@ export default StyleSheet.create({
   },
 
   switch_container: {
-    height: 130,
+    height: 70,
     width: 80,
     padding: 10,
     justifyContent: 'center',
+  },
+
+  actions_container: {
+    height: 50,
+    width: 360,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    flexDirection: 'row',
+  },
+
+  button_container: {
+    height: 30,
+    width: 160,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: color.flame,
+    margin: 5,
   },
 
 });

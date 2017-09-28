@@ -21,16 +21,6 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
 
-  button_container: {
-    height: 40,
-    width: 250,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: color.flame,
-    marginBottom: 23,
-  },
-
   logo_container: {
     height: 140,
     width: 140,

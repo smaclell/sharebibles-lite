@@ -1,42 +1,48 @@
 import { StyleSheet } from 'react-native';
 
 import color from '../constants/colors';
+import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
-
   container: {
-    flex: 1,
+    alignItems: 'stretch',
     backgroundColor: color.middleBlue,
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    padding: 10,
   },
 
-  users: {
-    height: 80,
-    width: 360,
-    backgroundColor: color.mintCream,
-    flexDirection: 'row',
+  container_heading: {
     alignItems: 'center',
+    backgroundColor: 'black',
+    height: '100%',
+    justifyContent: 'center',
+    marginRight: 15,
+    width: 15,
+  },
+
+  container_heading_text: {
+    color: colours.white,
+  },
+
+  users_container: {
+    alignItems: 'center',
+    backgroundColor: color.mintCream,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     margin: 10,
     paddingRight: 10,
   },
 
-  member_image: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    margin: 15,
-    borderColor: 'black',
-    borderWidth: 2,
-  },
-
-  section2: {
-    height: 240,
-    width: 360,
-    backgroundColor: color.mintCream,
-    flexDirection: 'row',
+  tags_container: {
     alignItems: 'center',
+    backgroundColor: color.mintCream,
+    flex: 1,
+    flexDirection: 'row',
+    flexGrow: 2,
     margin: 10,
   },
 
@@ -44,40 +50,29 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
 
-  section3: {
-    height: 130,
-    width: 360,
+  notes_container: {
+    alignItems: 'flex-start',
     backgroundColor: color.mintCream,
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     margin: 10,
   },
 
   note_input: {
-    height: 110,
-    width: 320,
+    alignSelf: 'stretch',
+    flex: 1,
+    fontSize: fonts.normal,
     margin: 10,
     padding: 10,
-    fontSize: 18,
   },
 
-  options_container: {
-    height: 50,
-    width: 360,
-    padding: 5,
+  actions_container: {
     backgroundColor: 'black',
+    flex: 1,
     flexDirection: 'row',
+    height: 50,
     margin: 10,
-  },
-
-  button_container: {
-    height: 30,
-    width: 165,
     padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: color.flame,
-    margin: 5,
   },
-
 });

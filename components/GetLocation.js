@@ -7,16 +7,9 @@ import {
 } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-// TODO: Import from other PR
-const colours = {
-  black: 'black',
-  text: 'black',
-};
-
-const fonts = {
-  large: 20,
-};
+import { FontAwesome } from '@expo/vector-icons';
+import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 const container = {
   alignItems: 'center',
@@ -42,6 +35,8 @@ const text = {
   margin: 5,
   textAlign: 'center',
 };
+
+const iconSize = 48;
 
 // Using entirely local state/methods to simplify the reducer
 class GetLocation extends Component {
@@ -69,18 +64,22 @@ class GetLocation extends Component {
 
   getIcon() {
     if (this.state.loading) {
-      return '...';
+      return <FontAwesome name="refresh" size={iconSize} color={colours.text} />;
+    }
+
+    if (this.state.error) {
+      return <FontAwesome name="warning" size={iconSize} color={'yellow'} />;
     }
 
     if (!this.state.location) {
-      return '?';
+      return <FontAwesome name="map-o" size={iconSize} color={colours.text} />;
     }
 
     if (this.state.accuracy) {
-      return '~';
+      return <FontAwesome name="crosshairs" size={iconSize} color={'green'} />;
     }
 
-    return 'X';
+    return <FontAwesome name="circle-o" size={iconSize} color={'green'} />;
   }
 
   handleStateUpdate() {

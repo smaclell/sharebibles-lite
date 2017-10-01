@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@expo/vector-icons@^5.0.0":
+"@expo/vector-icons@^5.0.0", "@expo/vector-icons@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-5.2.0.tgz#877f75c00bf21313cdb231c92cbcfd40e46ee2a1"
   dependencies:

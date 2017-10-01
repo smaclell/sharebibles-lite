@@ -1,63 +1,52 @@
 import { StyleSheet } from 'react-native';
 import color from '../constants/colors';
 
+const containerMargin = 10;
+
 export default StyleSheet.create({
   container: {
     backgroundColor: color.middleBlue,
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
   },
 
   add_members_section_container: {
-    height: 130,
-    width: 360,
-    padding: 5,
+    flex: 1,
     backgroundColor: color.mintCream,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: containerMargin,
   },
 
   add_location_section_container: {
     flex: 1,
-    width: 360,
     flexDirection: 'row',
     backgroundColor: color.mintCream,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: containerMargin,
   },
 
   results_container: {
-    height: 230,
-    width: 360,
+    flex: 1,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.mintCream,
-    marginBottom: 15,
+    marginBottom: containerMargin,
   },
 
   distribution_status_container: {
-    flex: 1,
+    alignItems: 'flex-start',
+    backgroundColor: color.mintCream,
+    flex: 0,
     flexDirection: 'row',
-    backgroundColor: color.mintCream,
-    marginBottom: 5,
-    paddingTop: 5,
-  },
-
-  status_container: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    borderColor: 'black',
-    borderWidth: 2,
-    backgroundColor: color.mintCream,
-    margin: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    margin: 5,
   },
 
   info_container: {
@@ -90,22 +79,11 @@ export default StyleSheet.create({
   },
 
   actions_container: {
-    height: 50,
-    width: 360,
+    flex: 1,
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
     flexDirection: 'row',
   },
-
-  button_container: {
-    height: 30,
-    width: 160,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: color.flame,
-    margin: 5,
-  },
-
 });

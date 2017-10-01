@@ -8,8 +8,8 @@ import color from '../constants/colors';
 import fonts from '../styles/fonts';
 
 const container = {
+  flex: 1,
   height: 40,
-  width: 250,
   borderRadius: 20,
   justifyContent: 'center',
   alignItems: 'center',

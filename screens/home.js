@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from '../components/Button';
 import style from '../styles/home';
-import color from '../constants/colors';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
@@ -27,11 +26,13 @@ export default class SignInUp extends React.Component {
       <View style={style.container}>
         <View style={style.inner_Container}>
 
-          <Text style={{ color: color.mintCream, fontSize: 35, margin: 5, marginBottom: 25, textAlign: 'center' }}>
+          <Text style={style.welcome}>
               Welcome to Share Bibles
           </Text>
 
-          <Image style={style.logo_container} source={require('../assets/logo/logo.png')} />
+          <View style={style.logo_container}>
+            <Image style={style.logo} source={require('../assets/logo/logo.png')} />
+          </View>
 
           <Button onClick={() => navigate('Input')}>Input</Button>
 

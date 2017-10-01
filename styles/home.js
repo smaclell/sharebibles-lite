@@ -12,18 +12,30 @@ export default StyleSheet.create({
   },
 
   inner_Container: {
-    height: 570,
-    width: 350,
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: color.maastBlue,
     padding: 20,
     borderRadius: 20,
   },
 
   logo_container: {
+    marginBottom: 25,
+    alignItems: 'center',
+  },
+
+  logo: {
     height: 140,
     width: 140,
+  },
+
+  welcome: {
+    color: color.mintCream,
+    fontSize: 35,
+    margin: 5,
     marginBottom: 25,
+    textAlign: 'center',
   },
 });

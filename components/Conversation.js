@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import styles from '../styles/conversations';
 
-const Conversation = ({ name, created, uploaded }) => (
-  <TouchableOpacity>
+const Conversation = ({ name, created, uploaded, navigate }) => (
+  <TouchableOpacity onPressOut={() => navigate()}>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ marginRight: 35 }}>
@@ -24,8 +24,9 @@ const Conversation = ({ name, created, uploaded }) => (
 );
 
 Conversation.propTypes = {
-  name: PropTypes.string.isRequired,
   created: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  navigate: PropTypes.func.isRequired,
   uploaded: PropTypes.bool.isRequired,
 };
 

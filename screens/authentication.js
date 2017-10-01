@@ -14,6 +14,7 @@ import color from '../constants/colors';
 export default class SignInUp extends React.Component {
   static navigationOptions = {
     title: 'Sign In or Up',
+    header: null,
   }
 
   static propTypes = {

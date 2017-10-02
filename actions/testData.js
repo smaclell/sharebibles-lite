@@ -65,13 +65,13 @@ let lastDistributionId = 1000;
 export function createFakeDistribution(options) {
   return {
     id: lastDistributionId++,
-    name: 'Anything',
+    name: 'Anything', // Remove the name
     imageUrl: 'https://google.com/favicon.ico',
     created: moment.utc().valueOf(),
     latitude: 50, // TODO: Generate these in a small city area
     longitude: 50,
     address: null,
-    bibles: 1, // Switch to resources instead
+    resources: {}, // { given: number, needed: number }
     // tags|status:
     // Considering a tag/status object/array to represent the many checkboxes
     // Initially it would be populated/managed by a number of hardcoded values

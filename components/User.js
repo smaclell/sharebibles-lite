@@ -18,23 +18,23 @@ const container = {
 const imageContainer = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 100,
+  borderRadius: 80,
   borderStyle: 'solid',
   borderWidth: 2,
   flex: 0,
-  height: 100,
+  height: 80,
   justifyContent: 'center',
-  width: 100,
+  width: 80,
 };
 
 const image = {
-  height: 100,
-  width: 100,
+  height: 80,
+  width: 80,
 };
 
 const text = {
   color: colours.text,
-  fontSize: fonts.large,
+  fontSize: fonts.normal,
   margin: 5,
   textAlign: 'center',
 };

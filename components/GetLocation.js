@@ -21,25 +21,25 @@ const fonts = {
 const container = {
   alignItems: 'center',
   flexDirection: 'column',
-  margin: 15,
+  margin: 10,
 };
 
 const circle = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 100,
+  borderRadius: 80,
   borderStyle: 'solid',
   borderWidth: 2,
   flex: 0,
-  height: 100,
+  height: 80,
   justifyContent: 'center',
-  width: 100,
+  width: 80,
 };
 
 const text = {
   color: colours.text,
-  fontSize: fonts.large,
-  margin: 5,
+  fontSize: fonts.normal,
+  padding: 5,
   textAlign: 'center',
 };
 
@@ -130,7 +130,7 @@ class GetLocation extends Component {
     return (
       <TouchableOpacity onPressOut={() => this.updateLocation(true)}>
         <View style={container}>
-          <ActivityIndicator size="large" animating={this.state.loading} />
+          <ActivityIndicator size="small" animating={this.state.loading} />
           <View style={[circle, { display: this.state.loading ? 'none' : 'flex' }]}>
             <Text>{icon}</Text>
           </View>

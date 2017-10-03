@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@expo/vector-icons": "^5.2.0",
     "expo": "^21.0.0",
     "moment": "^2.18.1",
     "prop-types": "^15.6.0",

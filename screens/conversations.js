@@ -16,16 +16,19 @@ class Conversations extends React.Component {
 
   static propTypes = {
     distributions: PropTypes.array.isRequired,
+    navigation: PropTypes.object.isRequired,
   }
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 35, marginBottom: 20 }}>Your Conversations</Text>
         <FlatList
           style={styles.inner_container}
           data={this.props.distributions}
-          renderItem={({ item }) => <Conversation {...item} />}
+          renderItem={({ item }) => <Conversation {...item} navigate={() => navigate('FollowUp', { conversationId: item.id })} />}
           keyExtractor={item => `conversation-${item.id}`}
         />
       </View>

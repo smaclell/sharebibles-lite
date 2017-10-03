@@ -24,6 +24,7 @@ const imageContainer = {
   flex: 0,
   height: 80,
   justifyContent: 'center',
+  overflow: 'hidden',
   width: 80,
 };
 

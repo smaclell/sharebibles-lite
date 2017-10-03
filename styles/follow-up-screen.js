@@ -4,6 +4,8 @@ import color from '../constants/colors';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
+const containerMargin = 5;
+
 export default StyleSheet.create({
   container: {
     alignItems: 'stretch',
@@ -19,7 +21,7 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     height: '100%',
     justifyContent: 'center',
-    marginRight: 15,
+    marginRight: 5,
     width: 15,
   },
 
@@ -33,7 +35,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: 10,
+    margin: containerMargin,
     paddingRight: 10,
   },
 
@@ -43,7 +45,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexGrow: 2,
-    margin: 10,
+    margin: containerMargin,
   },
 
   switch_style: {
@@ -56,7 +58,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: 10,
+    margin: containerMargin,
   },
 
   note_input: {
@@ -69,10 +71,9 @@ export default StyleSheet.create({
 
   actions_container: {
     backgroundColor: 'black',
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
-    height: 50,
-    margin: 10,
+    margin: containerMargin,
     padding: 5,
   },
 });

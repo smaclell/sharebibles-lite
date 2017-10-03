@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import color from '../constants/colors';
 
-const containerMargin = 10;
+const containerMargin = 5;
 
 export default StyleSheet.create({
   container: {
@@ -79,7 +79,7 @@ export default StyleSheet.create({
   },
 
   actions_container: {
-    flex: 1,
+    flex: 0,
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',

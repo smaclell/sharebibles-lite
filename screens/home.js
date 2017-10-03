@@ -13,6 +13,7 @@ import style from '../styles/home';
 export default class SignInUp extends React.Component {
   static navigationOptions = {
     title: 'Home',
+    header: null,
   }
 
   static propTypes = {

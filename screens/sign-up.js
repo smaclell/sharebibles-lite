@@ -15,6 +15,7 @@ import color from '../constants/colors';
 export default class sharebiblesCreateAccount extends Component {
  static navigationOptions = {
    title: 'Sign In or Up',
+   header: null,
  }
 
  static propTypes = {

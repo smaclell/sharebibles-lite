@@ -1,39 +1,58 @@
 import React from 'react';
-import { View,
-  TouchableOpacity,
+import {
+  View,
   Text,
   Switch,
-  TextInput } from 'react-native';
+  TextInput,
+} from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as visitActions from '../actions/visits';
+import User from '../components/User';
+import Button from '../components/Button';
 import styles from '../styles/follow-up-screen';
 
-
-export default class followUp extends React.Component {
+class FollowUp extends React.Component {
     static navigationOptions = {
       title: 'Follow Up',
     }
+
+    static propTypes = {
+      createVisit: PropTypes.func.isRequired,
+      navigation: PropTypes.object.isRequired,
+      user: PropTypes.object.isRequired,
+    }
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        notes: null,
+      };
+    }
+
+    update() {
+      const { params: { converationId } } = this.props.navigation.state;
+      // TODO: Tags
+      this.props.createVisit({ distributionId: converationId, notes: this.state.notes });
+      this.props.navigation.goBack();
+    }
+
     render() {
       return (
         <View style={styles.container}>
 
-          <View style={styles.users}>
-            <View style={{ height: 100, width: 15, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center', marginRight: 15 }}>
-              <Text style={{ color: 'white' }}> 1 </Text>
+          <View style={styles.users_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 1 </Text>
             </View>
 
-            <View style={styles.member_image}>
-              <Text> 1 </Text>
-            </View>
-
-            <View style={styles.member_image}>
-              <Text> 2 </Text>
-            </View>
+            <User {...this.props.user} />
           </View>
 
-
-          <View style={styles.section2}>
-
-            <View style={{ height: 250, width: 15, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ color: 'white' }}> 2 </Text>
+          <View style={styles.tags_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 2 </Text>
             </View>
 
             <View style={{ margin: 20, marginRight: 30 }}>
@@ -55,28 +74,35 @@ export default class followUp extends React.Component {
           </View>
 
 
-          <View style={styles.section3}>
-            <View style={{ height: 150, width: 15, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ color: 'white' }}> 3 </Text>
+          <View style={styles.notes_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 3 </Text>
             </View>
             <TextInput
               style={styles.note_input}
               placeholder="Add notes..."
+              returnKeyType="next"
               multiline
+              onChangeText={notes => this.setState(p => ({ ...p, notes }))}
             />
           </View>
 
-
-          <View style={styles.options_container}>
-            <TouchableOpacity style={styles.button_container}>
-              <Text style={{ color: 'white', fontSize: 16 }}> UPDATE </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button_container}>
-              <Text style={{ color: 'white', fontSize: 16 }}> CANCEL </Text>
-            </TouchableOpacity>
+          <View style={styles.actions_container}>
+            <Button onClick={() => this.update()}>UPDATE</Button>
+            <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
           </View>
 
         </View>
       );
     }
 }
+
+const mapStateToProps = state => ({
+  user: state.users[state.user],
+});
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(visitActions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FollowUp);

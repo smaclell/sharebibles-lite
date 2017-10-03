@@ -6,8 +6,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
+import * as distributionActions from '../actions/distributions';
 import User from '../components/User';
 import Button from '../components/Button';
 import Location from '../components/GetLocation';
@@ -26,6 +28,8 @@ class Input extends React.Component {
     super(props);
     this.state = {
       status: 'unknown',
+      longitude: null,
+      latitude: null,
     };
   }
 
@@ -34,8 +38,31 @@ class Input extends React.Component {
   /* CAMERA ON THE LEFT */
   /* # of Bibles Button Section NOT COMPLETED */
 
+  add() {
+    const { status, longitude, latitude } = this.state;
+    this.props.createDistribution({
+      status,
+      name: 'TBD',
+      longitude,
+      latitude,
+      notes: 'none',
+      resources: {
+        [this.props.resources[0].id]: {
+          given: 1,
+          needed: 0,
+        },
+      },
+    });
+    this.props.navigation.goBack();
+  }
+
   updateStatus(value) {
     this.setState(p => ({ ...p, status: value }));
+  }
+
+  updateLocation(location) {
+    const { longitude = null, latitude = null } = location || {};
+    this.setState(p => ({ ...p, longitude, latitude }));
   }
 
   render() {
@@ -48,7 +75,7 @@ class Input extends React.Component {
         <View style={styles.add_location_section_container}>
           <Location />
           <Text> Or </Text>
-          <Location />
+          <Location onLocationChanged={location => this.updateLocation(location)} />
         </View>
 
         <View style={styles.results_container}>
@@ -89,7 +116,7 @@ class Input extends React.Component {
         </View>
 
         <View style={styles.actions_container}>
-          <Button onClick={() => this.props.createDistribution()}>ADD</Button>
+          <Button onClick={() => this.add()}>ADD</Button>
           <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
         </View>
 
@@ -112,8 +139,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch,
-  createDistribution() {}
+  ...bindActionCreators(distributionActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);

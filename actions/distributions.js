@@ -4,7 +4,7 @@ import { createVisit } from './visits';
 export const CREATED_DISTRIBUTION = 'CREATED_DISTRIBUTION';
 
 export function createDistribution(options) {
-  const { imageUrl, name, latitude, longitude, address, bibles } = options;
+  const { imageUrl, name, latitude, longitude, address, resources } = options;
   const { notes } = options;
 
   return (dispatch) => {
@@ -15,7 +15,7 @@ export function createDistribution(options) {
       latitude,
       longitude,
       address,
-      bibles,
+      resources,
     });
 
     dispatch({

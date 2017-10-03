@@ -5,7 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.middleBlue,
-    alignItems: 'center',
+    alignContent: 'stretch',
+    flexDirection: 'column',
     padding: 10,
   },
 
@@ -18,21 +19,22 @@ export default StyleSheet.create({
   },
 
   item: {
+    flex: 1,
     height: 100,
-    width: 330,
-    padding: 10,
+    padding: 5,
     backgroundColor: color.paleAqua,
     borderRadius: 10,
     marginBottom: 15,
     alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 
   item_image: {
     height: 75,
     width: 75,
-    marginLeft: 10,
-    marginRight: 20,
+    margin: 10,
   },
 
   circle: {

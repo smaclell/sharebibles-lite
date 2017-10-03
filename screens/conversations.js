@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from '../styles/conversations';
+import fonts from '../styles/fonts';
 import Conversation from '../components/Conversation';
 
 class Conversations extends React.Component {
@@ -24,7 +25,7 @@ class Conversations extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 35, marginBottom: 20 }}>Your Conversations</Text>
+        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>Your Conversations</Text>
         <FlatList
           style={styles.inner_container}
           data={this.props.distributions}

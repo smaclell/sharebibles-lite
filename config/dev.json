@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "sharebibles",
+    "name": "sharebibles-dev",
     "description": "An empty new project",
-    "slug": "sharebibles",
-    "privacy": "public",
+    "slug": "sharebibles-dev",
+    "privacy": "unlisted",
     "sdkVersion": "21.0.0",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/app-icon.png",

@@ -8,7 +8,7 @@ const initial = {
     id: 1,
     summary: 'Complete English Bible',
     language: 'en-us', // Language as a language code
-    format: 'print', // ['print', 'audio', 'app', 'sd-card', 'video']
+    format: 'book', // ['book', 'documents', 'document', 'audio', 'app', 'sd-card', 'video']
     translation: 'ESV',
   },
 };

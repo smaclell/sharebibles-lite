@@ -8,7 +8,14 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "prestart": "cp ./config/dev.json ./app.json",
+    "start": "react-native-scripts start",
+    "preandroid": "cp ./config/dev.json ./app.json",
+    "android": "react-native-scripts android",
+    "preios": "cp ./config/dev.json ./app.json",
+    "ios": "react-native-scripts ios",
+    "publish": "chmod +x ./deploy.sh && ./deploy.sh publish $ENVIRONMENT",
+    "build": "chmod +x ./deploy.sh && ./deploy.sh build $ENVIRONMENT",
     "test": "jest"
   },
   "dependencies": {
@@ -32,7 +39,9 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "exp": "^44.0.0",
     "jest": "20.0.4",
+    "react-native-scripts": "^1.5.0",
     "react-test-renderer": "16.0.0-alpha.12",
     "redux-devtools": "^3.4.0"
   },

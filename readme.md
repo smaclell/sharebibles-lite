@@ -5,9 +5,9 @@
 
 1. In order to run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
-2. Run `npm install -g exp` to install the expo commandline tool
+2. Run `yarn global add exp` to install the expo commandline tool
 
-3. Run `exp start .`
+3. Run `yarn start` or `yarn run android` or `yarn run ios`
 
 4. Using the expo app on your phone see the awesomeness you have created!
 

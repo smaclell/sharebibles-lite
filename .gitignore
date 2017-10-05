@@ -2,6 +2,7 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 
+app.json
 .env
 .vscode
 jsconfig.json

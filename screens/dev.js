@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import stylesLogin from '../styles/main';
 import * as actions from '../actions/distributions';
 import GetLocation from '../components/GetLocation';
+import ResourceCounter from '../components/ResourceCounter';
 import User from '../components/User';
 
 class Dev extends React.Component {
@@ -30,6 +31,7 @@ class Dev extends React.Component {
     super(props);
     this.state = {
       location: 'unknown',
+      count: 0,
     };
   }
 
@@ -40,6 +42,7 @@ class Dev extends React.Component {
     });
 
     const updateLocation = location => this.setState(p => ({ ...p, location }));
+    const updateCount = ({ count }) => this.setState(p => ({ ...p, count }));
 
     return (
       <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
@@ -57,6 +60,10 @@ class Dev extends React.Component {
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
+
+            <Text>Count: {this.state.count}</Text>
+            <ResourceCounter onCountChanged={updateCount} {...this.props} />
+
             <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
             <GetLocation onLocationChanged={updateLocation} />
           </View>
@@ -66,9 +73,14 @@ class Dev extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user ? state.users[state.user] : null,
-});
+const mapStateToProps = (state) => {
+  const resourceId = Object.keys(state.resources)[0];
+  const resource = state.resources[resourceId];
+  return {
+    resource,
+    user: state.user ? state.users[state.user] : null,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   createDistribution(args) {

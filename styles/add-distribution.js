@@ -32,50 +32,46 @@ export default StyleSheet.create({
 
   results_container: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.mintCream,
     marginBottom: containerMargin,
   },
 
-  distribution_status_container: {
+  status_container: {
     alignItems: 'flex-start',
     backgroundColor: color.mintCream,
     flex: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    margin: 5,
+    margin: 0,
   },
 
   info_container: {
-    height: 110,
-    width: 300,
-    padding: 10,
+    flex: 1,
+    alignItems: 'stretch',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
 
-  inner_info_container: {
-    height: 70,
-    width: 280,
-    justifyContent: 'center',
-  },
-
-  options_container: {
-    height: 30,
-    width: 360,
+  switch_container: {
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 2,
     margin: 2,
   },
 
-  switch_container: {
-    height: 70,
-    width: 80,
-    padding: 10,
-    justifyContent: 'center',
+  resource_container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    padding: 2,
+    margin: 2,
   },
 
   actions_container: {

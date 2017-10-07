@@ -16,13 +16,13 @@ function all(state = {}, action) {
 }
 
 // TODO: should this whole thing just be a selector?
-function byDistribution(state = {}, action) {
+function byLocation(state = {}, action) {
   switch (action.type) {
-    case actions.CREATED_DISTRIBUTION:
+    case actions.CREATE_VISIT:
       return {
         ...state,
-        [action.visit.distributionId]: [ // TODO: Should these be sorted? Or is that in a selector
-          ...state[action.visit.distributionId],
+        [action.visit.locationId]: [ // TODO: Should these be sorted? Or is that in a selector
+          ...(state[action.visit.locationId] || []),
           action.visit.id,
         ],
       };
@@ -31,4 +31,4 @@ function byDistribution(state = {}, action) {
   }
 }
 
-export default combineReducers({ all, byDistribution });
+export default combineReducers({ all, byLocation });

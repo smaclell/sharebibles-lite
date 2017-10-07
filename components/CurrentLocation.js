@@ -39,7 +39,7 @@ const text = {
 const iconSize = 48;
 
 // Using entirely local state/methods to simplify the reducer
-class GetLocation extends Component {
+class CurrentLocation extends Component {
   static propTypes = {
     onLocationChanged: PropTypes.func,
   }
@@ -56,10 +56,6 @@ class GetLocation extends Component {
       loading: false,
       location: null,
     };
-  }
-
-  getLocation() {
-    return this.state.location;
   }
 
   getIcon() {
@@ -86,7 +82,7 @@ class GetLocation extends Component {
     this.props.onLocationChanged(this.state.location);
   }
 
-  updateLocation(accuracy) {
+  updateCurrentLocation(accuracy) {
     if (this.state.loading) {
       return;
     }
@@ -117,7 +113,7 @@ class GetLocation extends Component {
           }),
           this.handleStateUpdate,
         );
-        this.updateLocation(false);
+        this.updateCurrentLocation(false);
       },
       { enableHighAccuracy: accuracy, timeout: 30 * 1000, maximumAge: 10 * 1000 },
     );
@@ -127,7 +123,7 @@ class GetLocation extends Component {
     const icon = this.getIcon();
 
     return (
-      <TouchableOpacity onPressOut={() => this.updateLocation(true)}>
+      <TouchableOpacity onPressOut={() => this.updateCurrentLocation(true)}>
         <View style={container}>
           <ActivityIndicator size="small" animating={this.state.loading} />
           <View style={[circle, { display: this.state.loading ? 'none' : 'flex' }]}>
@@ -140,4 +136,4 @@ class GetLocation extends Component {
   }
 }
 
-export default GetLocation;
+export default CurrentLocation;

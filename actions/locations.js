@@ -23,7 +23,7 @@ export function createLocation(options) {
       location,
     });
 
-    dispatch(createVisit({ locationId: location.id, notes }));
+    dispatch(createVisit({ locationKey: location.key, notes }));
 
     return Promise.resolve();
   };

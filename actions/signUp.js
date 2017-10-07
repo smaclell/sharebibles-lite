@@ -7,7 +7,7 @@ export function signIn() {
     const user = testUser;
     return Promise.resolve()
       .then(() => dispatch(usersActions.receiveUser(user)))
-      .then(() => dispatch(usersActions.fetchUser(user.id)))
+      .then(() => dispatch(usersActions.fetchUser(user.key)))
       .then(() => dispatch(userActions.setUser(user)));
   };
 }

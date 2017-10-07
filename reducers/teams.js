@@ -5,9 +5,9 @@ export default function reducer(state = {}, action) {
     case actions.RECEIVED_TEAM:
       return {
         ...state,
-        [action.team.id]: {
+        [action.team.key]: {
           ...action.team,
-          user: action.team.users.map(u => u.id),
+          user: action.team.users.map(u => u.key),
         },
       };
     default:

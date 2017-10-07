@@ -6,7 +6,7 @@ export default function reducer(state = {}, action) {
     case actions.RECEIVED_USER:
       return {
         ...state,
-        [action.user.id]: {
+        [action.user.key]: {
           ...action.user,
         },
       };
@@ -14,7 +14,7 @@ export default function reducer(state = {}, action) {
     case teamActions.RECEIVED_TEAM:
       const added = action.team.users.reduce(
         (all, user) => { // eslint-disable-next-line no-param-reassign
-          all[user.id] = {
+          all[user.key] = {
             ...user,
           };
           return all;

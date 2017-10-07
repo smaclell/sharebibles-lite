@@ -29,8 +29,8 @@ class Locations extends React.Component {
         <FlatList
           style={styles.inner_container}
           data={this.props.locations}
-          renderItem={({ item }) => <Location {...item} navigate={() => navigate('Visit', { locationId: item.id })} />}
-          keyExtractor={item => `location-${item.id}`}
+          renderItem={({ item }) => <Location {...item} navigate={() => navigate('Visit', { locationKey: item.key })} />}
+          keyExtractor={item => `location-${item.key}`}
         />
       </View>
     );

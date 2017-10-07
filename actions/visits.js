@@ -2,14 +2,14 @@ import { createFakeVisit } from './testData';
 
 export const CREATE_VISIT = 'CREATE_VISIT';
 
-export function createVisit({ locationId, notes }) {
+export function createVisit({ locationKey, notes }) {
   return (dispatch, getState) => {
     // TODO FIREBASE
 
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
-    const visit = createFakeVisit(locationId, creator, { notes });
+    const visit = createFakeVisit(locationKey, creator, { notes });
 
     dispatch({
       type: CREATE_VISIT,

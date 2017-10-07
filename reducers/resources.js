@@ -5,7 +5,7 @@
 
 const initial = {
   1: {
-    id: 1,
+    key: '1',
     summary: 'Complete English Bible',
     language: 'en-us', // Language as a language code
     format: 'book', // ['book', 'documents', 'document', 'audio', 'app', 'sd-card', 'video']

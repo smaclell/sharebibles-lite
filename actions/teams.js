@@ -10,11 +10,11 @@ export function receiveTeam(team) {
   };
 }
 
-export function fetchTeam(teamId) {
+export function fetchTeam(teamKey) {
   return (dispatch) => {
     // TODO FIREBASE
 
-    if (teamId === testTeam.id) {
+    if (teamKey === testTeam.key) {
       return Promise.resolve()
         .then(() => dispatch(receiveTeam(testTeam)));
     }

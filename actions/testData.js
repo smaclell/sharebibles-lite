@@ -1,47 +1,47 @@
 /* eslint no-plusplus: 0 */
 import moment from 'moment';
 
-let lastUserId = 1;
-const teamId = 7;
+let lastUserKey = 1;
+const teamKey = 7;
 
 const rob = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'Rob Wiebe',
   imageUrl: 'https://gravatar.com/avatar/b23ec8577b034bb29c6c761bce752a0d.png?s=100&d=mm',
 };
 
 const sean = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'Sean Braacx',
   imageUrl: 'https://gravatar.com/avatar/e06ba756dfcd57c07fa8e0aa3b352906.png?s=200&d=mm',
 };
 
 const ian = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'Ian Edington',
   imageUrl: 'https://gravatar.com/avatar/7785a42d3b969050cd59679cbd610888.png?s=100&d=mm',
 };
 
 const zhuoJue = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'ZhuoJue Lee',
   imageUrl: 'https://gravatar.com/avatar/c40b2007221c189f4afce2caf78997e2.png?s=100&d=mm',
 };
 
 const zafar = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'Zafar Siddiqi',
   imageUrl: 'https://gravatar.com/avatar/d86825a375fe5703a43b3094bfa759bf.png?s=100&d=mm',
 };
 
 const scott = {
-  id: lastUserId++,
-  teamId,
+  key: (lastUserKey++).key,
+  teamKey,
   name: 'Scott MacLellan',
   imageUrl: 'https://gravatar.com/avatar/36cb916d45e5b4ab10273ca266217ed7.png?s=100&d=mm',
 };
@@ -49,7 +49,7 @@ const scott = {
 export const user = rob;
 
 export const team = {
-  id: teamId,
+  key: teamKey,
   name: 'awesome',
   users: [
     rob,
@@ -61,10 +61,10 @@ export const team = {
   ],
 };
 
-let lastLocationId = 1000;
+let lastLocationKey = 1000;
 export function createFakeLocation(options) {
   return {
-    id: lastLocationId++,
+    key: (lastLocationKey++).toString(),
     name: 'Anything', // Remove the name
     imageUrl: 'https://google.com/favicon.ico',
     created: moment.utc().valueOf(),
@@ -80,16 +80,19 @@ export function createFakeLocation(options) {
   };
 }
 
-let lastVisitId = 10000;
-export function createFakeVisit(locationId, creator, options) {
+let lastVisitKey = 10000;
+export function createFakeVisit(locationKey, creator, options) {
   return {
-    id: lastVisitId++,
-    locationId,
+    key: (lastVisitKey++).toString(),
+    locationKey,
     created: moment.utc().valueOf(),
-    createdBy: creator.id,
+    createdBy: creator.key,
+    visitors: {
+      [creator.key]: true,
+    },
     tags: [], // Actions performed, too technical?
     notes: '',
-    teamId: creator.teamId,
+    teamKey: creator.teamKey,
     ...options,
     uploaded: false, // TODO: Handle uploading them.
   };

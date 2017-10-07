@@ -11,15 +11,15 @@ export function receiveUser(user) {
   };
 }
 
-export function fetchUser(userId) {
+export function fetchUser(userKey) {
   return (dispatch) => {
     // TODO FIREBASE
-    if (testUser.id !== userId) {
+    if (testUser.key !== userKey) {
       return Promise.resolve();
     }
 
     dispatch(receiveUser(testUser));
 
-    return dispatch(fetchTeam(testUser.teamId));
+    return dispatch(fetchTeam(testUser.teamKey));
   };
 }

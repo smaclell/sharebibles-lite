@@ -32,9 +32,9 @@ class Visit extends React.Component {
     }
 
     update() {
-      const { params: { locationId } } = this.props.navigation.state;
+      const { params: { locationKey } } = this.props.navigation.state;
       // TODO: Tags
-      this.props.createVisit({ locationId, notes: this.state.notes });
+      this.props.createVisit({ locationKey, notes: this.state.notes });
       this.props.navigation.goBack();
     }
 

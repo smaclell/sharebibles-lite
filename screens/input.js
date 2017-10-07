@@ -51,12 +51,7 @@ class Input extends React.Component {
       longitude,
       latitude,
       notes: 'none',
-      resources: {
-        [this.props.resources[0].id]: {
-          given: 1,
-          needed: 0,
-        },
-      },
+      resources: this.state.resources,
     });
     this.props.navigation.goBack();
   }
@@ -64,7 +59,7 @@ class Input extends React.Component {
   showResource(resource) {
     return (
       <ResourceCounter
-        key={resource.id}
+        key={resource.key}
         resource={resource}
         onCountChanged={this.updateCount}
       />
@@ -75,7 +70,10 @@ class Input extends React.Component {
     this.setState(p => ({
       ...p,
       resources: {
-        [resource.id]: count,
+        [resource.key]: {
+          ...p.resources[resource.key],
+          given: count,
+        },
       },
     }));
   }

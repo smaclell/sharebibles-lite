@@ -61,10 +61,10 @@ export const team = {
   ],
 };
 
-let lastDistributionId = 1000;
-export function createFakeDistribution(options) {
+let lastLocationId = 1000;
+export function createFakeLocation(options) {
   return {
-    id: lastDistributionId++,
+    id: lastLocationId++,
     name: 'Anything', // Remove the name
     imageUrl: 'https://google.com/favicon.ico',
     created: moment.utc().valueOf(),
@@ -81,10 +81,10 @@ export function createFakeDistribution(options) {
 }
 
 let lastVisitId = 10000;
-export function createFakeVisit(distributionId, creator, options) {
+export function createFakeVisit(locationId, creator, options) {
   return {
     id: lastVisitId++,
-    distributionId,
+    locationId,
     created: moment.utc().valueOf(),
     createdBy: creator.id,
     tags: [], // Actions performed, too technical?

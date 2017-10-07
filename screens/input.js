@@ -9,18 +9,19 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
-import * as distributionActions from '../actions/distributions';
+import * as locationActions from '../actions/locations';
 import User from '../components/User';
 import Button from '../components/Button';
-import Location from '../components/GetLocation';
+import CurrentLocation from '../components/CurrentLocation';
+import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
-import styles from '../styles/add-distribution';
+import styles from '../styles/input';
 
 const statusIconsSize = 32;
 
 class Input extends React.Component {
   static navigationOptions = {
-    title: 'Start Conversation',
+    title: 'First Visit',
     header: null,
   }
 
@@ -30,17 +31,21 @@ class Input extends React.Component {
       status: 'unknown',
       longitude: null,
       latitude: null,
+      resources: {},
     };
+
+    this.showResource = this.showResource.bind(this);
+    this.updateCount = this.updateCount.bind(this);
+    this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
   }
 
   /* NOTES: */
   /* SHOULD BE FLAT LIST */
   /* CAMERA ON THE LEFT */
-  /* # of Bibles Button Section NOT COMPLETED */
 
   add() {
     const { status, longitude, latitude } = this.state;
-    this.props.createDistribution({
+    this.props.createLocation({
       status,
       name: 'TBD',
       longitude,
@@ -56,13 +61,32 @@ class Input extends React.Component {
     this.props.navigation.goBack();
   }
 
-  updateStatus(value) {
-    this.setState(p => ({ ...p, status: value }));
+  showResource(resource) {
+    return (
+      <ResourceCounter
+        key={resource.id}
+        resource={resource}
+        onCountChanged={this.updateCount}
+      />
+    );
   }
 
-  updateLocation(location) {
+  updateCount({ count, resource }) {
+    this.setState(p => ({
+      ...p,
+      resources: {
+        [resource.id]: count,
+      },
+    }));
+  }
+
+  updateCurrentLocation(location) {
     const { longitude = null, latitude = null } = location || {};
     this.setState(p => ({ ...p, longitude, latitude }));
+  }
+
+  updateStatus(value) {
+    this.setState(p => ({ ...p, status: value }));
   }
 
   render() {
@@ -73,14 +97,14 @@ class Input extends React.Component {
         </View>
 
         <View style={styles.add_location_section_container}>
-          <Location />
+          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
           <Text> Or </Text>
-          <Location onLocationChanged={location => this.updateLocation(location)} />
+          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
         </View>
 
         <View style={styles.results_container}>
 
-          <View style={styles.distribution_status_container}>
+          <View style={styles.status_container}>
             <Status label="Accepted" onPressed={() => this.updateStatus('accepted')} selected={this.state.status === 'accepted'}>
               <FontAwesome name="check" size={statusIconsSize} color={'white'} />
             </Status>
@@ -96,22 +120,17 @@ class Input extends React.Component {
           </View>
 
           <View style={styles.info_container}>
-            <View style={styles.inner_info_container}>
-              <View style={styles.options_container}>
-                <Text style={{ fontSize: 18, margin: 2 }}> Is Christian? </Text>
-              </View>
-              <View style={styles.options_container}>
-                <Text style={{ fontSize: 18, margin: 2 }}> Cannot Read? </Text>
-              </View>
-              <View style={styles.options_container}>
-                <Text style={{ fontSize: 18, margin: 2 }}> # of Bibles </Text>
-              </View>
+            <View style={styles.switch_container}>
+              <Text style={{ fontSize: 18 }}> Is Christian? </Text>
+              <Switch style={{ margin: 5 }} />
             </View>
             <View style={styles.switch_container}>
+              <Text style={{ fontSize: 18 }}> Cannot Read? </Text>
               <Switch style={{ margin: 5 }} />
-              <Switch style={{ margin: 5 }} />
-              <Text style={{ fontSize: 18 }}> - 1 + </Text>
             </View>
+          </View>
+          <View style={styles.resources_container}>
+            {this.props.resources.map(this.showResource) }
           </View>
         </View>
 
@@ -127,7 +146,7 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
-  createDistribution: PropTypes.func.isRequired,
+  createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
@@ -139,7 +158,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(distributionActions, dispatch),
+  ...bindActionCreators(locationActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);

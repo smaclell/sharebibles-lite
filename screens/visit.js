@@ -11,9 +11,9 @@ import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
 import User from '../components/User';
 import Button from '../components/Button';
-import styles from '../styles/follow-up-screen';
+import styles from '../styles/visit';
 
-class FollowUp extends React.Component {
+class Visit extends React.Component {
     static navigationOptions = {
       title: 'Follow Up',
     }
@@ -32,9 +32,9 @@ class FollowUp extends React.Component {
     }
 
     update() {
-      const { params: { converationId } } = this.props.navigation.state;
+      const { params: { locationId } } = this.props.navigation.state;
       // TODO: Tags
-      this.props.createVisit({ distributionId: converationId, notes: this.state.notes });
+      this.props.createVisit({ locationId, notes: this.state.notes });
       this.props.navigation.goBack();
     }
 
@@ -105,4 +105,4 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(visitActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FollowUp);
+export default connect(mapStateToProps, mapDispatchToProps)(Visit);

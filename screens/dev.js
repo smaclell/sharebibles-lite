@@ -8,8 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import stylesLogin from '../styles/main';
-import * as actions from '../actions/distributions';
-import GetLocation from '../components/GetLocation';
+import * as actions from '../actions/locations';
+import CurrentLocation from '../components/CurrentLocation';
+import ResourceCounter from '../components/ResourceCounter';
 import User from '../components/User';
 import Switch from '../components/Switch';
 
@@ -19,7 +20,7 @@ class Dev extends React.Component {
   }
 
   static propTypes = {
-    createDistribution: PropTypes.func.isRequired,
+    createLocation: PropTypes.func.isRequired,
     user: PropTypes.object,
   }
 
@@ -31,17 +32,22 @@ class Dev extends React.Component {
     super(props);
     this.state = {
       location: 'unknown',
+<<<<<<< HEAD
       toggled: true,
+=======
+      count: 0,
+>>>>>>> master
     };
   }
 
   render() {
-    const clickCreate = () => this.props.createDistribution({
+    const clickCreate = () => this.props.createLocation({
       name: 'Test',
       notes: 'we love testing',
     });
 
-    const updateLocation = location => this.setState(p => ({ ...p, location }));
+    const updateCurrentLocation = location => this.setState(p => ({ ...p, location }));
+    const updateCount = ({ count }) => this.setState(p => ({ ...p, count }));
 
     return (
       <KeyboardAvoidingView behavior="padding" style={stylesLogin.container}>
@@ -55,12 +61,16 @@ class Dev extends React.Component {
 
             <Button
               onPress={clickCreate}
-              title="Create Test Distribution"
+              title="Create Test Location"
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
+
+            <Text>Count: {this.state.count}</Text>
+            <ResourceCounter onCountChanged={updateCount} {...this.props} />
+
             <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
-            <GetLocation onLocationChanged={updateLocation} />
+            <CurrentLocation onLocationChanged={updateCurrentLocation} />
 
             <Switch
               onChange={value => this.setState(p => ({ ...p, toggled: value }))}
@@ -68,7 +78,6 @@ class Dev extends React.Component {
             >
             text
             </Switch>
-
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -76,13 +85,18 @@ class Dev extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user ? state.users[state.user] : null,
-});
+const mapStateToProps = (state) => {
+  const resourceId = Object.keys(state.resources)[0];
+  const resource = state.resources[resourceId];
+  return {
+    resource,
+    user: state.user ? state.users[state.user] : null,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
-  createDistribution(args) {
-    return dispatch(actions.createDistribution(args));
+  createLocation(args) {
+    return dispatch(actions.createLocation(args));
   },
 });
 

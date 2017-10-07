@@ -1,15 +1,15 @@
-import { createFakeDistribution } from './testData';
+import { createFakeLocation } from './testData';
 import { createVisit } from './visits';
 
-export const CREATED_DISTRIBUTION = 'CREATED_DISTRIBUTION';
+export const CREATED_LOCATION = 'CREATED_LOCATION';
 
-export function createDistribution(options) {
+export function createLocation(options) {
   const { imageUrl, name, latitude, longitude, address, resources } = options;
   const { notes } = options;
 
   return (dispatch) => {
     // TODO: Firebase
-    const distribution = createFakeDistribution({
+    const location = createFakeLocation({
       imageUrl,
       name,
       latitude,
@@ -19,11 +19,11 @@ export function createDistribution(options) {
     });
 
     dispatch({
-      type: CREATED_DISTRIBUTION,
-      distribution,
+      type: CREATED_LOCATION,
+      location,
     });
 
-    dispatch(createVisit({ distributionId: distribution.id, notes }));
+    dispatch(createVisit({ locationId: location.id, notes }));
 
     return Promise.resolve();
   };

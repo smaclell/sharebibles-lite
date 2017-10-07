@@ -44,19 +44,14 @@ class Input extends React.Component {
   /* CAMERA ON THE LEFT */
 
   add() {
-    const { status, longitude, latitude } = this.state;
+    const { status, longitude, latitude, resources } = this.state;
     this.props.createLocation({
       status,
       name: 'TBD',
       longitude,
       latitude,
       notes: 'none',
-      resources: {
-        [this.props.resources[0].id]: {
-          given: 1,
-          needed: 0,
-        },
-      },
+      resources,
     });
     this.props.navigation.goBack();
   }

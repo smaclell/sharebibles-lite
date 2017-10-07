@@ -12,6 +12,7 @@ import * as actions from '../actions/locations';
 import CurrentLocation from '../components/CurrentLocation';
 import ResourceCounter from '../components/ResourceCounter';
 import User from '../components/User';
+import Switch from '../components/Switch';
 
 class Dev extends React.Component {
   static navigationOptions = {
@@ -31,6 +32,7 @@ class Dev extends React.Component {
     super(props);
     this.state = {
       location: 'unknown',
+      toggled: true,
       count: 0,
     };
   }
@@ -66,6 +68,13 @@ class Dev extends React.Component {
 
             <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
             <CurrentLocation onLocationChanged={updateCurrentLocation} />
+
+            <Switch
+              onChange={value => this.setState(p => ({ ...p, toggled: value }))}
+              value={this.state.toggled}
+            >
+            text
+            </Switch>
           </View>
         </View>
       </KeyboardAvoidingView>

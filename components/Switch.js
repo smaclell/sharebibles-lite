@@ -10,7 +10,7 @@ import fonts from '../styles/fonts';
 const TextSwitch = ({ children, onChange, value }) => (
 
   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-    <Text style={{ font: fonts.normal, margin: 2 }}>{children}</Text>
+    <Text style={{ fontSize: fonts.large, margin: 2 }}>{children}</Text>
     <Switch
       onValueChange={onChange}
       value={value}

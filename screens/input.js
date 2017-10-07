@@ -140,11 +140,11 @@ class Input extends React.Component {
   }
 }
 
-Input.propTypes = {
+Input.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

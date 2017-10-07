@@ -11,6 +11,7 @@ import stylesLogin from '../styles/main';
 import * as actions from '../actions/distributions';
 import GetLocation from '../components/GetLocation';
 import User from '../components/User';
+import Switch from '../components/Switch';
 
 class Dev extends React.Component {
   static navigationOptions = {
@@ -30,6 +31,7 @@ class Dev extends React.Component {
     super(props);
     this.state = {
       location: 'unknown',
+      toggled: true,
     };
   }
 
@@ -59,6 +61,14 @@ class Dev extends React.Component {
             />
             <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
             <GetLocation onLocationChanged={updateLocation} />
+
+            <Switch
+              onChange={value => this.setState(p => ({ ...p, toggled: value }))}
+              value={this.state.toggled}
+            >
+            text
+            </Switch>
+
           </View>
         </View>
       </KeyboardAvoidingView>

@@ -5,11 +5,12 @@ import {
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
+import fonts from '../styles/fonts';
 
 const TextSwitch = ({ children, onChange, value }) => (
 
   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-    <Text style={{ fontSize: 18, margin: 2 }}>{children}</Text>
+    <Text style={{ font: fonts.normal, margin: 2 }}>{children}</Text>
     <Switch
       onValueChange={onChange}
       value={value}

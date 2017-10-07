@@ -32,11 +32,8 @@ class Dev extends React.Component {
     super(props);
     this.state = {
       location: 'unknown',
-<<<<<<< HEAD
       toggled: true,
-=======
       count: 0,
->>>>>>> master
     };
   }
 

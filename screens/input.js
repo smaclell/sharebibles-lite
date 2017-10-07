@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Switch,
   ScrollView,
 } from 'react-native';
 import React from 'react';
@@ -15,6 +14,7 @@ import Button from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
 import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
+import Switch from '../components/Switch';
 import styles from '../styles/input';
 
 const statusIconsSize = 32;
@@ -32,9 +32,11 @@ class Input extends React.Component {
       longitude: null,
       latitude: null,
       resources: {},
+      tags: {},
     };
 
     this.showResource = this.showResource.bind(this);
+    this.showTag = this.showTag.bind(this);
     this.updateCount = this.updateCount.bind(this);
     this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
   }
@@ -44,7 +46,14 @@ class Input extends React.Component {
   /* CAMERA ON THE LEFT */
 
   add() {
-    const { status, longitude, latitude, resources } = this.state;
+    const {
+      status,
+      longitude,
+      latitude,
+      resources,
+      tags,
+    } = this.state;
+
     this.props.createLocation({
       status,
       name: 'TBD',
@@ -52,6 +61,7 @@ class Input extends React.Component {
       latitude,
       notes: 'none',
       resources,
+      tags,
     });
     this.props.navigation.goBack();
   }
@@ -63,6 +73,18 @@ class Input extends React.Component {
         resource={resource}
         onCountChanged={this.updateCount}
       />
+    );
+  }
+
+  showTag(tag) {
+    return (
+      <Switch
+        key={tag.key}
+        onChange={enabled => this.updateTag(tag.key, enabled)}
+        value={!!this.state.tags[tag.key]}
+      >
+        {tag.label}
+      </Switch>
     );
   }
 
@@ -82,6 +104,16 @@ class Input extends React.Component {
 
   updateStatus(value) {
     this.setState(p => ({ ...p, status: value }));
+  }
+
+  updateTag(tagKey, enabled) {
+    this.setState(p => ({
+      ...p,
+      tags: {
+        ...p.tags,
+        [tagKey]: enabled,
+      },
+    }));
   }
 
   render() {
@@ -115,14 +147,7 @@ class Input extends React.Component {
           </View>
 
           <View style={styles.info_container}>
-            <View style={styles.switch_container}>
-              <Text style={{ fontSize: 18 }}> Is Christian? </Text>
-              <Switch style={{ margin: 5 }} />
-            </View>
-            <View style={styles.switch_container}>
-              <Text style={{ fontSize: 18 }}> Cannot Read? </Text>
-              <Switch style={{ margin: 5 }} />
-            </View>
+            {this.props.tags.map(this.showTag) }
           </View>
           <View style={styles.resources_container}>
             {this.props.resources.map(this.showResource) }
@@ -144,12 +169,14 @@ Input.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
+  tags: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
+  tags: state.tags.location,
 });
 
 const mapDispatchToProps = dispatch => ({

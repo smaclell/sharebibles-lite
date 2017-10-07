@@ -1,12 +1,12 @@
-import * as actions from '../actions/distributions';
+import * as actions from '../actions/locations';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
-    case actions.CREATED_DISTRIBUTION:
+    case actions.CREATED_LOCATION:
       return {
         ...state,
-        [action.distribution.id]: {
-          ...action.distribution,
+        [action.location.id]: {
+          ...action.location,
         },
       };
     default:

@@ -23,7 +23,7 @@ export default class MapsView extends React.Component {
 
     return (<View>
       <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
-      <Text onPress={() => navigate('followUp')}>You need to implement this!</Text>
+      <Text onPress={() => navigate('Visit')}>You need to implement this!</Text>
     </View>
     );
     /*
@@ -43,16 +43,16 @@ export default class MapsView extends React.Component {
           pinColor="red"
         >
 
-          <MapView.Callout onPress={() => navigate('followUp')}>
+          <MapView.Callout onPress={() => navigate('Visit')}>
             <View style={styles.callout_container}>
               <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
               <View style={{ marginBottom: 5 }}>
                 <Text style={{ fontSize: 16 }}> Name </Text>
-                <Text style={{ fontSize: 16 }}> Date of Distribution </Text>
+                <Text style={{ fontSize: 16 }}> Date of First Visit </Text>
                 <Text style={{ fontSize: 16 }}> No. of Visits </Text>
               </View>
               <Text style={{ fontSize: 12, color: 'red', fontWeight: 'bold' }}>
-                Tap to Follow Up
+                Tap to Visit
               </Text>
             </View>
           </MapView.Callout>

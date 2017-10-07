@@ -1,10 +1,10 @@
-// A hardcoded list of interactions for each converation and visit
+// A hardcoded list of interactions for each location and visit
 const tags = {
   interested: { label: 'Interested' },
   rejected: { label: 'Rejected', exclusive: true },
   notHome: { label: 'Not Home', exclusive: true },
-  cannotRead: { label: 'Can Not Read', conversationOnly: true },
-  christian: { label: 'Is Christian', conversationOnly: true },
+  cannotRead: { label: 'Can Not Read', locationOnly: true },
+  christian: { label: 'Is Christian', locationOnly: true },
   prayer: { label: 'Received Prayer' },
   readBible: { label: 'Read the Bible' },
   understoodGospel: { label: 'Understood the Gospel' },
@@ -13,7 +13,7 @@ const tags = {
   needsFollowUp: { label: 'Needs Follow Up' },
 };
 
-function reducer(state = tags, action) { // eslint-disable-line no-unused-vars
+function reducer(state = tags) {
   return state;
 }
 

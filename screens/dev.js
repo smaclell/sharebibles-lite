@@ -8,8 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import stylesLogin from '../styles/main';
-import * as actions from '../actions/distributions';
-import GetLocation from '../components/GetLocation';
+import * as actions from '../actions/locations';
+import CurrentLocation from '../components/CurrentLocation';
 import ResourceCounter from '../components/ResourceCounter';
 import User from '../components/User';
 
@@ -19,7 +19,7 @@ class Dev extends React.Component {
   }
 
   static propTypes = {
-    createDistribution: PropTypes.func.isRequired,
+    createLocation: PropTypes.func.isRequired,
     user: PropTypes.object,
   }
 
@@ -36,12 +36,12 @@ class Dev extends React.Component {
   }
 
   render() {
-    const clickCreate = () => this.props.createDistribution({
+    const clickCreate = () => this.props.createLocation({
       name: 'Test',
       notes: 'we love testing',
     });
 
-    const updateLocation = location => this.setState(p => ({ ...p, location }));
+    const updateCurrentLocation = location => this.setState(p => ({ ...p, location }));
     const updateCount = ({ count }) => this.setState(p => ({ ...p, count }));
 
     return (
@@ -56,7 +56,7 @@ class Dev extends React.Component {
 
             <Button
               onPress={clickCreate}
-              title="Create Test Distribution"
+              title="Create Test Location"
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
@@ -65,7 +65,7 @@ class Dev extends React.Component {
             <ResourceCounter onCountChanged={updateCount} {...this.props} />
 
             <Text>Location: {JSON.stringify(this.state.location || 'unknown')}</Text>
-            <GetLocation onLocationChanged={updateLocation} />
+            <CurrentLocation onLocationChanged={updateCurrentLocation} />
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -83,8 +83,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createDistribution(args) {
-    return dispatch(actions.createDistribution(args));
+  createLocation(args) {
+    return dispatch(actions.createLocation(args));
   },
 });
 

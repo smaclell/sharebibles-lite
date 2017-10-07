@@ -1,30 +1,28 @@
-/* globals __DEV__ */
 import { StackNavigator } from 'react-navigation';
 
+// Sorted Alphabetically
 import Authentication from '../containers/Authentication';
-import Conversations from '../screens/conversations';
+import Dev from '../screens/dev';
 import Home from '../screens/home';
 import Input from '../screens/input';
+import Locations from '../screens/locations';
 import MapsView from '../screens/map-view';
 import Settings from '../screens/settings';
 import SignUp from '../screens/sign-up';
-import FollowUp from '../screens/follow-up';
-import Dev from '../screens/dev';
+import Visit from '../screens/visit';
 
+// Sorted Alphabetically
 const screens = {
   Authentication: { screen: Authentication },
+  Dev: { screen: Dev },
   Home: { screen: Home },
   Input: { screen: Input },
-  Settings: { screen: Settings },
+  Locations: { screen: Locations },
   MapsView: { screen: MapsView },
-  Conversations: { screen: Conversations },
+  Settings: { screen: Settings },
   SignUp: { screen: SignUp },
-  FollowUp: { screen: FollowUp },
+  Visit: { screen: Visit },
 };
-
-if (__DEV__) {
-  screens.Dev = { screen: Dev };
-}
 
 const Nav = StackNavigator(screens);
 

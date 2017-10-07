@@ -9,19 +9,19 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
-import * as distributionActions from '../actions/distributions';
+import * as locationActions from '../actions/locations';
 import User from '../components/User';
 import Button from '../components/Button';
-import Location from '../components/GetLocation';
+import CurrentLocation from '../components/CurrentLocation';
 import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
-import styles from '../styles/add-distribution';
+import styles from '../styles/input';
 
 const statusIconsSize = 32;
 
 class Input extends React.Component {
   static navigationOptions = {
-    title: 'Start Conversation',
+    title: 'First Visit',
     header: null,
   }
 
@@ -36,6 +36,7 @@ class Input extends React.Component {
 
     this.showResource = this.showResource.bind(this);
     this.updateCount = this.updateCount.bind(this);
+    this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
   }
 
   /* NOTES: */
@@ -44,7 +45,7 @@ class Input extends React.Component {
 
   add() {
     const { status, longitude, latitude } = this.state;
-    this.props.createDistribution({
+    this.props.createLocation({
       status,
       name: 'TBD',
       longitude,
@@ -79,7 +80,7 @@ class Input extends React.Component {
     }));
   }
 
-  updateLocation(location) {
+  updateCurrentLocation(location) {
     const { longitude = null, latitude = null } = location || {};
     this.setState(p => ({ ...p, longitude, latitude }));
   }
@@ -96,9 +97,9 @@ class Input extends React.Component {
         </View>
 
         <View style={styles.add_location_section_container}>
-          <Location />
+          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
           <Text> Or </Text>
-          <Location onLocationChanged={location => this.updateLocation(location)} />
+          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
         </View>
 
         <View style={styles.results_container}>
@@ -145,7 +146,7 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
-  createDistribution: PropTypes.func.isRequired,
+  createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
@@ -157,7 +158,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(distributionActions, dispatch),
+  ...bindActionCreators(locationActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);

@@ -6,17 +6,17 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styles from '../styles/conversations';
+import styles from '../styles/locations';
 import fonts from '../styles/fonts';
-import Conversation from '../components/Conversation';
+import Location from '../components/Location';
 
-class Conversations extends React.Component {
+class Locations extends React.Component {
   static navigationOptions = {
     title: 'Conversations',
   }
 
   static propTypes = {
-    distributions: PropTypes.array.isRequired,
+    locations: PropTypes.array.isRequired,
     navigation: PropTypes.object.isRequired,
   }
 
@@ -28,9 +28,9 @@ class Conversations extends React.Component {
         <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>Your Conversations</Text>
         <FlatList
           style={styles.inner_container}
-          data={this.props.distributions}
-          renderItem={({ item }) => <Conversation {...item} navigate={() => navigate('FollowUp', { conversationId: item.id })} />}
-          keyExtractor={item => `conversation-${item.id}`}
+          data={this.props.locations}
+          renderItem={({ item }) => <Location {...item} navigate={() => navigate('Visit', { locationId: item.id })} />}
+          keyExtractor={item => `location-${item.id}`}
         />
       </View>
     );
@@ -38,7 +38,7 @@ class Conversations extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  distributions: Object.keys(state.distributions).map(k => state.distributions[k]),
+  locations: Object.keys(state.locations).map(k => state.locations[k]),
 });
 
-export default connect(mapStateToProps)(Conversations);
+export default connect(mapStateToProps)(Locations);

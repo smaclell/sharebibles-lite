@@ -1,12 +1,10 @@
 import { connect } from 'react-redux';
-import * as actions from '../actions/signUp';
+import * as actions from '../actions/authentication';
 import Authentication from '../screens/authentication';
 
 function mapDispatchToProps(dispatch) {
   return {
-    signIn: () => {
-      dispatch(actions.signIn());
-    },
+    signIn: () => dispatch(actions.signIn()),
   };
 }
 

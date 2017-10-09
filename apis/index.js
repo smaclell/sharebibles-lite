@@ -1,10 +1,13 @@
 /* globals __DEV__ */
 import moment from 'moment';
 import * as fake from './fake';
-// import * as firebase from './firebase';
+import * as firebase from './firebase';
 
-const apis = __DEV__ ? fake : null;
-apis.initialize();
+const apis = __DEV__ ? fake : firebase;
+
+export function initalize() {
+  return apis.initialize();
+}
 
 export function signIn() {
   return apis.signIn();
@@ -56,7 +59,7 @@ export function createVisit(locationKey, creator, options) {
     ...options,
   };
 
-  const { created, saved } = apis.createLocation(create);
+  const { created, saved } = apis.createVisit(create);
 
   return Promise.resolve({
     created,

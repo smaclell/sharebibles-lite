@@ -10,7 +10,7 @@ import moment from 'moment';
 import styles from '../styles/locations';
 import fonts from '../styles/fonts';
 
-const Location = ({ name, created, navigate }) => (
+const Location = ({ name, created, navigate, uploaded }) => (
   <TouchableOpacity onPressOut={() => navigate()}>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
@@ -28,6 +28,11 @@ Location.propTypes = {
   created: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   navigate: PropTypes.func.isRequired,
+  uploaded: PropTypes.bool,
+};
+
+Location.defaultProps = {
+  uploaded: true,
 };
 
 export default Location;

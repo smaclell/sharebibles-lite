@@ -57,6 +57,8 @@ export function createVisit(create) {
     ...create,
   };
 
+  // TODO: use the server timestamp created: firebase.database.ServerValue.TIMESTAMP,
+
   const saved = pushed.set(created);
 
   const link = firebase.database().ref(`visitByLocation/${create.locationKey}/visits`).update({

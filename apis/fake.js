@@ -50,12 +50,12 @@ export const team = {
   key: fakeTeamKey,
   name: 'awesome',
   users: [
-    rob,
-    sean,
-    ian,
-    zhuoJue,
-    zafar,
-    scott,
+    rob.key,
+    sean.key,
+    ian.key,
+    zhuoJue.key,
+    zafar.key,
+    scott.key,
   ],
 };
 

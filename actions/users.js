@@ -11,7 +11,7 @@ export function receiveUser(user) {
   };
 }
 
-export function fetchUser(userKey) {
+export function fetchUser(userKey, deep = true) {
   return (dispatch) => { // eslint-disable-line arrow-body-style
     return apis.fetchUser(userKey)
       .then((user) => {
@@ -21,7 +21,15 @@ export function fetchUser(userKey) {
 
         dispatch(receiveUser(user));
 
-        return dispatch(fetchTeam(user.teamKey));
+        if (!deep) {
+          return Promise.resolve();
+        }
+
+        return Promise.resolve()
+          .then(() => dispatch(fetchTeam(user.teamKey)))
+          .then(({ users = [] }) => Promise.all(
+            users.map(u => fetchUser(u, false)),
+          ));
       });
   };
 }

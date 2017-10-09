@@ -47,7 +47,9 @@ class Input extends React.Component {
     const { status, longitude, latitude } = this.state;
     this.props.createLocation({
       status,
+      imageUrl: null,
       name: 'TBD',
+      address: null,
       longitude,
       latitude,
       notes: 'none',

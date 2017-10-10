@@ -48,12 +48,15 @@ export default class SignInUp extends React.Component {
 
           <TextInput
             style={stylesLogin.textinput_container}
-            placeholder="Username"
+            placeholderTextColor="black"
+            placeholder="you@email.com"
+            keyboardType="email-address"
           />
 
           <TextInput
             style={stylesLogin.textinput_container}
             placeholder="Password"
+            placeholderTextColor="black"
             secureTextEntry
           />
 

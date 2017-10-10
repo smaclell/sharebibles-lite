@@ -1,28 +1,37 @@
-/* globals __DEV__ */
 import moment from 'moment';
-import * as fake from './fake';
-import * as firebase from './firebase';
+import Expo from 'expo';
+import * as firebase from 'firebase';
 
-const apis = __DEV__ ? fake : firebase;
+export function initialize() {
+  if (firebase.initialized) {
+    return;
+  }
 
-export function initalize() {
-  return apis.initialize();
+  firebase.initialized = true;
+  firebase.initializeApp(Expo.Constants.manifest.extra);
 }
 
 export function signIn() {
-  return apis.signIn();
+  initialize();
+  return firebase.database().ref('users/scott').once('value').then(v => v.val());
 }
 
 export function fetchTeam(teamKey) {
-  return apis.fetchTeam(teamKey);
+  initialize();
+  return firebase.database().ref(`teams/${teamKey}`).once('value').then(v => v.val());
 }
 
 export function fetchUser(userKey) {
-  return apis.fetchUser(userKey);
+  initialize();
+  return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
 export function createLocation(options) {
-  const create = {
+  initialize();
+
+  const pushed = firebase.database().ref('locations').push();
+  const created = {
+    key: pushed.key,
     name: 'Anything', // TODO: Remove the name
     imageUrl: 'https://google.com/favicon.ico',
     created: moment.utc().valueOf(),
@@ -37,7 +46,7 @@ export function createLocation(options) {
     ...options,
   };
 
-  const { created, saved } = apis.createLocation(create);
+  const saved = pushed.set(created);
 
   return Promise.resolve({
     created,
@@ -46,7 +55,10 @@ export function createLocation(options) {
 }
 
 export function createVisit(locationKey, creator, options) {
-  const create = {
+  initialize();
+  const pushed = firebase.database().ref('visits').push();
+  const created = {
+    key: pushed.key,
     locationKey,
     created: moment.utc().valueOf(),
     createdBy: creator.key,
@@ -59,10 +71,16 @@ export function createVisit(locationKey, creator, options) {
     ...options,
   };
 
-  const { created, saved } = apis.createVisit(create);
+  // TODO: use the server timestamp created: firebase.database.ServerValue.TIMESTAMP,
+
+  const saved = pushed.set(created);
+
+  const link = firebase.database().ref(`visitByLocation/${created.locationKey}/visits`).update({
+    [pushed.key]: true,
+  });
 
   return Promise.resolve({
     created,
-    saved,
+    saved: Promise.all([saved, link]),
   });
 }

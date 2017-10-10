@@ -2,11 +2,11 @@ import * as apis from '../apis';
 import * as userActions from './user';
 import * as usersActions from './users';
 
-export function signIn() {
+export function signIn(email, password) {
   return (dispatch) => {
     let user;
     return Promise.resolve()
-      .then(() => apis.signIn())
+      .then(() => apis.signIn(email, password))
       .then((found) => {
         user = found;
       })

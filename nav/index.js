@@ -13,17 +13,21 @@ import Visit from '../screens/visit';
 
 // Sorted Alphabetically
 const screens = {
-  Authentication: { screen: Authentication },
   Dev: { screen: Dev },
   Home: { screen: Home },
   Input: { screen: Input },
   Locations: { screen: Locations },
   MapsView: { screen: MapsView },
   Settings: { screen: Settings },
+  SignIn: { screen: Authentication },
   SignUp: { screen: SignUp },
   Visit: { screen: Visit },
 };
 
-const Nav = StackNavigator(screens);
+const options = {
+  initialRouteName: 'SignIn',
+};
+
+const Nav = StackNavigator(screens, options);
 
 export default Nav;

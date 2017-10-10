@@ -4,7 +4,7 @@ import Authentication from '../screens/authentication';
 
 function mapDispatchToProps(dispatch) {
   return {
-    signIn: () => dispatch(actions.signIn()),
+    signIn: (email, password) => dispatch(actions.signIn(email, password)),
   };
 }
 

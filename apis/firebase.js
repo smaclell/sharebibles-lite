@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import Expo from 'expo';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -6,16 +7,7 @@ export function initialize() {
   }
 
   firebase.initialized = true;
-  const firebaseConfig = {
-    apiKey: 'AIzaSyC8AO42wX7wmzhZ4jY4rAnAOPbDPIBb5xg',
-    authDomain: 'sharebible-scott.firebaseapp.com',
-    databaseURL: 'https://sharebible-scott.firebaseio.com',
-    projectId: 'sharebible-scott',
-    storageBucket: 'sharebible-scott.appspot.com',
-    messagingSenderId: '717650859495',
-  };
-
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(Expo.Constants.manifest.extra);
 }
 
 export function signIn() {

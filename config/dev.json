@@ -15,8 +15,20 @@
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
     },
+    "android": {
+    },
     "ios": {
       "supportsTablet": true
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyC8AO42wX7wmzhZ4jY4rAnAOPbDPIBb5xg",
+        "authDomain": "sharebible-scott.firebaseapp.com",
+        "databaseURL": "https://sharebible-scott.firebaseio.com",
+        "projectId": "sharebible-scott",
+        "storageBucket": "sharebible-scott.appspot.com",
+        "messagingSenderId": "717650859495"
+      }
     }
   }
 }

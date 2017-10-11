@@ -8,7 +8,7 @@ export function initialize() {
   }
 
   firebase.initialized = true;
-  firebase.initializeApp(Expo.Constants.manifest.extra);
+  firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 }
 
 export function signIn() {

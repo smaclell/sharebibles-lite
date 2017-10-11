@@ -44,7 +44,7 @@ class Input extends React.Component {
   /* CAMERA ON THE LEFT */
 
   add() {
-    const { status, longitude, latitude } = this.state;
+    const { status, longitude, latitude, resources } = this.state;
     this.props.createLocation({
       status,
       imageUrl: null,
@@ -53,7 +53,7 @@ class Input extends React.Component {
       longitude,
       latitude,
       notes: 'none',
-      resources: this.state.resources,
+      resources,
     });
     this.props.navigation.goBack();
   }
@@ -145,11 +145,11 @@ class Input extends React.Component {
   }
 }
 
-Input.propTypes = {
+Input.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -83,8 +83,8 @@ class Dev extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const resourceId = Object.keys(state.resources)[0];
-  const resource = state.resources[resourceId];
+  const resourceKey = Object.keys(state.resources)[0];
+  const resource = state.resources[resourceKey];
   return {
     resource,
     user: state.user ? state.users[state.user] : null,

@@ -5,7 +5,7 @@ export default function reducer(state = {}, action) {
     case actions.CREATED_LOCATION:
       return {
         ...state,
-        [action.location.id]: {
+        [action.location.key]: {
           ...action.location,
         },
       };

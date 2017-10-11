@@ -6,7 +6,7 @@ function all(state = {}, action) {
     case actions.CREATE_VISIT:
       return {
         ...state,
-        [action.visit.id]: {
+        [action.visit.key]: {
           ...action.visit,
         },
       };
@@ -21,9 +21,9 @@ function byLocation(state = {}, action) {
     case actions.CREATE_VISIT:
       return {
         ...state,
-        [action.visit.locationId]: [ // TODO: Should these be sorted? Or is that in a selector
-          ...(state[action.visit.locationId] || []),
-          action.visit.id,
+        [action.visit.locationKey]: [ // TODO: Should these be sorted? Or is that in a selector
+          ...(state[action.visit.locationKey] || []),
+          action.visit.key,
         ],
       };
     default:

@@ -1,4 +1,4 @@
-import { user as testUser } from './testData';
+import * as apis from '../apis';
 import { fetchTeam } from './teams';
 
 export const FETCH_USER = 'FETCH_USER';
@@ -11,15 +11,25 @@ export function receiveUser(user) {
   };
 }
 
-export function fetchUser(userId) {
-  return (dispatch) => {
-    // TODO FIREBASE
-    if (testUser.id !== userId) {
-      return Promise.resolve();
-    }
+export function fetchUser(userKey, deep = true) {
+  return (dispatch) => { // eslint-disable-line arrow-body-style
+    return apis.fetchUser(userKey)
+      .then((user) => {
+        if (!user) {
+          return null;
+        }
 
-    dispatch(receiveUser(testUser));
+        dispatch(receiveUser(user));
 
-    return dispatch(fetchTeam(testUser.teamId));
+        if (!deep) {
+          return Promise.resolve();
+        }
+
+        return Promise.resolve()
+          .then(() => dispatch(fetchTeam(user.teamKey)))
+          .then(({ users = [] }) => Promise.all(
+            users.map(u => fetchUser(u, false)),
+          ));
+      });
   };
 }

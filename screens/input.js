@@ -47,7 +47,9 @@ class Input extends React.Component {
     const { status, longitude, latitude, resources } = this.state;
     this.props.createLocation({
       status,
+      imageUrl: null,
       name: 'TBD',
+      address: null,
       longitude,
       latitude,
       notes: 'none',
@@ -59,7 +61,7 @@ class Input extends React.Component {
   showResource(resource) {
     return (
       <ResourceCounter
-        key={resource.id}
+        key={resource.key}
         resource={resource}
         onCountChanged={this.updateCount}
       />
@@ -70,7 +72,10 @@ class Input extends React.Component {
     this.setState(p => ({
       ...p,
       resources: {
-        [resource.id]: count,
+        [resource.key]: {
+          ...p.resources[resource.key],
+          given: count,
+        },
       },
     }));
   }

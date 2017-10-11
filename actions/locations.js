@@ -1,4 +1,4 @@
-import { createFakeLocation } from './testData';
+import * as apis from '../apis';
 import { createVisit } from './visits';
 
 export const CREATED_LOCATION = 'CREATED_LOCATION';
@@ -8,23 +8,24 @@ export function createLocation(options) {
   const { notes } = options;
 
   return (dispatch) => {
-    // TODO: Firebase
-    const location = createFakeLocation({
+    const locationData = {
       imageUrl,
       name,
       latitude,
       longitude,
       address,
       resources,
-    });
+    };
 
-    dispatch({
-      type: CREATED_LOCATION,
-      location,
-    });
+    return Promise.resolve()
+      .then(() => apis.createLocation(locationData))
+      .then(({ created: location }) => {
+        dispatch({
+          type: CREATED_LOCATION,
+          location,
+        });
 
-    dispatch(createVisit({ locationId: location.id, notes }));
-
-    return Promise.resolve();
+        return dispatch(createVisit({ locationKey: location.key, notes }));
+      });
   };
 }

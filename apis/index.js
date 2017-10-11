@@ -11,9 +11,11 @@ export function initialize() {
   firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 }
 
-export function signIn() {
+export function signIn(email, password) {
   initialize();
-  return firebase.database().ref('users/scott').once('value').then(v => v.val());
+
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(({ uid }) => firebase.database().ref(`users/${uid}`).once('value').then(v => v.val()));
 }
 
 export function fetchTeam(teamKey) {

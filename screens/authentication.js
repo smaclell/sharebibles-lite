@@ -22,14 +22,25 @@ export default class SignInUp extends React.Component {
     signIn: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: null,
+      password: null,
+    };
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
     const signIn = () => {
       const destination = 'Home';
       return Promise.resolve()
-        .then(() => this.props.signIn())
-        .then(() => navigate(destination));
+        .then(() => this.props.signIn(this.state.email, this.state.password))
+        .then(() => navigate(destination))
+        .catch((e) => {
+          console.log('sign in failed', e); // eslint-disable-line no-console
+        });
     };
 
     return (
@@ -48,13 +59,20 @@ export default class SignInUp extends React.Component {
 
           <TextInput
             style={stylesLogin.textinput_container}
-            placeholder="Username"
+            placeholderTextColor="black"
+            placeholder="you@email.com"
+            keyboardType="email-address"
+            onChangeText={(email) => { this.setState({ email }); }}
+            value={this.state.email}
           />
 
           <TextInput
             style={stylesLogin.textinput_container}
             placeholder="Password"
+            placeholderTextColor="black"
             secureTextEntry
+            onChangeText={(password) => { this.setState({ password }); }}
+            value={this.state.password}
           />
 
           <TouchableOpacity style={stylesLogin.login_button} onPress={signIn}>

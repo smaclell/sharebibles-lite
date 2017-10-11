@@ -7,7 +7,11 @@ export function createLocation(options) {
   const { imageUrl, name, latitude, longitude, address, resources } = options;
   const { notes } = options;
 
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    // TODO: selector
+    const state = getState();
+    const creator = state.users[state.user];
+
     const locationData = {
       imageUrl,
       name,
@@ -18,7 +22,7 @@ export function createLocation(options) {
     };
 
     return Promise.resolve()
-      .then(() => apis.createLocation(locationData))
+      .then(() => apis.createLocation(creator, locationData))
       .then(({ created: location }) => {
         dispatch({
           type: CREATED_LOCATION,

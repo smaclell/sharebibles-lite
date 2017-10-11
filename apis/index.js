@@ -28,7 +28,7 @@ export function fetchUser(userKey) {
   return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
-export function createLocation(options) {
+export function createLocation(creator, options) {
   initialize();
 
   const pushed = firebase.database().ref('locations').push();
@@ -42,6 +42,8 @@ export function createLocation(options) {
     address: null,
     status: null,
     resources: {}, // { given: number, needed: number }
+    createdBy: creator.key,
+    teamKey: creator.teamKey,
     // tags|status:
     // Considering a tag/status object/array to represent the many checkboxes
     // Initially it would be populated/managed by a number of hardcoded values

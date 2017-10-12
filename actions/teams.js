@@ -11,7 +11,13 @@ export function receiveTeam(team) {
 }
 
 export function fetchTeam(teamKey) {
-  return dispatch =>
-    apis.fetchTeam(teamKey)
-      .then(team => dispatch(receiveTeam(team)));
+  return (dispatch) => {
+    let team;
+    return apis.fetchTeam(teamKey)
+      .then((found) => {
+        team = found;
+      })
+      .then(() => dispatch(receiveTeam(team)))
+      .then(() => team);
+  };
 }

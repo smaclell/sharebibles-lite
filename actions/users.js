@@ -27,8 +27,8 @@ export function fetchUser(userKey, deep = true) {
 
         return Promise.resolve()
           .then(() => dispatch(fetchTeam(user.teamKey)))
-          .then(({ users = [] }) => Promise.all(
-            users.map(u => fetchUser(u, false)),
+          .then(({ users = {} }) => Promise.all(
+            Object.keys(users).map(u => fetchUser(u, false)),
           ));
       });
   };

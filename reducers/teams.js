@@ -7,7 +7,6 @@ export default function reducer(state = {}, action) {
         ...state,
         [action.team.key]: {
           ...action.team,
-          user: action.team.users.map(u => u.key),
         },
       };
     default:

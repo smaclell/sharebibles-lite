@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import {
   Alert,
   Image,
@@ -39,7 +40,11 @@ export default class SignInUp extends React.Component {
       return Promise.resolve()
         .then(() => this.props.signIn(this.state.email, this.state.password))
         .then(() => navigate(destination))
-        .catch(() => {
+        .catch((e) => {
+          if (__DEV__) {
+            console.error(e); // eslint-disable-line no-console
+          }
+
           Alert.alert(
             'Could not sign in',
             'Please check your email and password',

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Text,
   TextInput,
@@ -38,8 +39,13 @@ export default class SignInUp extends React.Component {
       return Promise.resolve()
         .then(() => this.props.signIn(this.state.email, this.state.password))
         .then(() => navigate(destination))
-        .catch((e) => {
-          console.log('sign in failed', e); // eslint-disable-line no-console
+        .catch(() => {
+          Alert.alert(
+            'Could not sign in',
+            'Please check your email and password',
+            [{ text: 'OK', onPress() {} }],
+            { cancelable: false },
+          );
         });
     };
 

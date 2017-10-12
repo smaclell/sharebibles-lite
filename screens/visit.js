@@ -2,15 +2,15 @@ import React from 'react';
 import {
   View,
   Text,
-  Switch,
   TextInput,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
-import User from '../components/User';
 import Button from '../components/Button';
+import Switch from '../components/Switch';
+import User from '../components/User';
 import styles from '../styles/visit';
 
 class Visit extends React.Component {
@@ -18,9 +18,10 @@ class Visit extends React.Component {
       title: 'Follow Up',
     }
 
-    static propTypes = {
+    static propTypes = { // Sorted Alphabetically
       createVisit: PropTypes.func.isRequired,
       navigation: PropTypes.object.isRequired,
+      tags: PropTypes.array.isRequired,
       user: PropTypes.object.isRequired,
     }
 
@@ -28,14 +29,40 @@ class Visit extends React.Component {
       super(props);
       this.state = {
         notes: null,
+        tags: {},
       };
+
+      this.showTag = this.showTag.bind(this);
+    }
+
+    showTag(tag) {
+      return (
+        <Switch
+          key={tag.key}
+          onChange={enabled => this.updateTag(tag.key, enabled)}
+          value={!!this.state.tags[tag.key]}
+        >
+          {tag.label}
+        </Switch>
+      );
     }
 
     update() {
       const { params: { locationKey } } = this.props.navigation.state;
-      // TODO: Tags
-      this.props.createVisit({ locationKey, notes: this.state.notes });
+      const { notes, tags } = this.state;
+
+      this.props.createVisit({ locationKey, notes, tags });
       this.props.navigation.goBack();
+    }
+
+    updateTag(tagKey, enabled) {
+      this.setState(p => ({
+        ...p,
+        tags: {
+          ...p.tags,
+          [tagKey]: enabled,
+        },
+      }));
     }
 
     render() {
@@ -55,24 +82,10 @@ class Visit extends React.Component {
               <Text style={styles.container_heading_text}> 2 </Text>
             </View>
 
-            <View style={{ margin: 20, marginRight: 30 }}>
-              <Text style={{ fontSize: 14, fontStyle: 'italic', margin: 10 }}>Someone at this home... </Text>
-              <Text style={{ fontSize: 16, margin: 5, fontWeight: 'bold' }}> Received Prayer </Text>
-              <Text style={{ fontSize: 16, margin: 5, fontWeight: 'bold' }}> Read the Bible </Text>
-              <Text style={{ fontSize: 16, margin: 5, fontWeight: 'bold' }}> Understood the Gospel </Text>
-              <Text style={{ fontSize: 16, margin: 5, fontWeight: 'bold' }}> Joined Descipleship Group </Text>
-              <Text style={{ fontSize: 16, margin: 5, fontWeight: 'bold' }}> Received Baptism </Text>
-            </View>
-
-            <View style={{ height: 110 }}>
-              <Switch style={styles.switch_style} />
-              <Switch style={styles.switch_style} />
-              <Switch style={styles.switch_style} />
-              <Switch style={styles.switch_style} />
-              <Switch style={styles.switch_style} />
+            <View style={{ flex: 1, margin: 5 }}>
+              { this.props.tags.map(this.showTag) }
             </View>
           </View>
-
 
           <View style={styles.notes_container}>
             <View style={styles.container_heading}>
@@ -99,6 +112,7 @@ class Visit extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.users[state.user],
+  tags: state.tags.visit,
 });
 
 const mapDispatchToProps = dispatch => ({

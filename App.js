@@ -11,6 +11,12 @@ const store = createStore(
   applyMiddleware(thunk),
 );
 
+// https://github.com/firebase/firebase-js-sdk/issues/97
+// eslint-disable-next-line no-console
+console.ignoredYellowBox = console.ignoredYellowBox || [];
+// eslint-disable-next-line no-console
+console.ignoredYellowBox = console.ignoredYellowBox.concat('Setting a timer for a long period');
+
 const App = () => (
   <Provider store={store}>
     <Navigation />

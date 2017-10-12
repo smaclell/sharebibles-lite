@@ -29,7 +29,7 @@ export function createLocation(options) {
           location,
         });
 
-        return dispatch(createVisit({ locationKey: location.key, notes }));
+        return dispatch(createVisit({ locationKey: location.key, notes, tags: { initial: true } }));
       });
   };
 }

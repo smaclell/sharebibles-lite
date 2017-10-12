@@ -15,7 +15,7 @@ const tags = {
     { key: 'understoodGospel', label: 'Understood the Gospel' },
     { key: 'joinedDiscipleshipGroup', label: 'Joined Discipleship Group' },
     { key: 'receivedBaptism', label: 'Received Baptism' },
-    { key: 'needsFollowUp', label: 'Needs Follow Up' },
+    // { key: 'needsFollowUp', label: 'Needs Follow Up' },
   ],
 };
 

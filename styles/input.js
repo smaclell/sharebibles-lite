@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import color from '../constants/colors';
 
-const containerMargin = 5;
+const containerMargin = 10;
 
 export default StyleSheet.create({
   container: {

@@ -5,10 +5,12 @@
 
 1. In order to run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
-2. Run `yarn global add exp` to install the expo commandline tool
+2. Ensure you have `yarn` installed, i.e. `brew install yarn`
 
-3. Run `yarn start` or `yarn run android` or `yarn run ios`
+3. Run `yarn global add exp` to install the expo commandline tool
 
-4. Using the expo app on your phone see the awesomeness you have created!
+4. Run `yarn start` or `yarn run android` or `yarn run ios`
+
+5. Using the expo app on your phone see the awesomeness you have created!
 
 Create a card on the trello board if this does not work for you.

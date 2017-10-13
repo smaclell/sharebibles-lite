@@ -34,7 +34,8 @@ export function fetchVisits({ userKey, last }) {
     .ref(`visitsByUser/${userKey}`)
     .limitToLast(last)
     .once('value')
-    .then(visits => Object.values(visits.val()));
+    .then(visits => Object.values(visits.val() || {}))
+    .catch(() => []);
 }
 
 export function startVisitListener(userKey, onReceived) {

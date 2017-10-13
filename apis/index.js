@@ -69,6 +69,7 @@ export function createVisit(locationKey, creator, options) {
     visitors: {
       [creator.key]: true,
     },
+    status: null,
     tags: {},
     notes: '',
     teamKey: creator.teamKey,

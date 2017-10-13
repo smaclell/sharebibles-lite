@@ -20,11 +20,12 @@ class MapsView extends React.Component {
     return (
       <MapView
         style={{ flex: 1 }}
+        mapType="hybrid"
         initialRegion={{
           latitude: first.latitude,
           longitude: first.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.000922,
+          longitudeDelta: 0.000421,
         }}
       >
         {this.props.locations.map(location => (

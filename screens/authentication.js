@@ -2,10 +2,11 @@
 import {
   Alert,
   Image,
+  KeyboardAvoidingView,
   Text,
   TextInput,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -56,7 +57,7 @@ export default class SignInUp extends React.Component {
 
     return (
       <View style={stylesLogin.container}>
-        <View style={stylesLogin.inner_container}>
+        <KeyboardAvoidingView behavior="padding" style={stylesLogin.inner_container}>
 
           <Text style={{ color: color.mintCream, fontSize: 40, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
           <Image source={require('../assets/logo/logo.png')} style={stylesLogin.logo_container} />
@@ -89,9 +90,7 @@ export default class SignInUp extends React.Component {
           <TouchableOpacity style={stylesLogin.login_button} onPress={signIn}>
             <Text style={{ color: 'black', fontSize: 15, fontWeight: 'bold' }}> Log In </Text>
           </TouchableOpacity>
-
-
-        </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }

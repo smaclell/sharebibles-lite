@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  View,
+  KeyboardAvoidingView,
   Text,
   TextInput,
+  View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -67,7 +68,7 @@ class Visit extends React.Component {
 
     render() {
       return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
 
           <View style={styles.users_container}>
             <View style={styles.container_heading}>
@@ -105,7 +106,7 @@ class Visit extends React.Component {
             <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
           </View>
 
-        </View>
+        </KeyboardAvoidingView>
       );
     }
 }

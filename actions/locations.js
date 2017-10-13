@@ -4,7 +4,7 @@ import { createVisit } from './visits';
 export const CREATED_LOCATION = 'CREATED_LOCATION';
 
 export function createLocation(options) {
-  const { imageUrl, name, latitude, longitude, address, resources } = options;
+  const { imageUrl, name, latitude, longitude, address, resources, tags, status } = options;
   const { notes } = options;
 
   return (dispatch, getState) => {
@@ -19,6 +19,7 @@ export function createLocation(options) {
       longitude,
       address,
       resources,
+      tags,
     };
 
     return Promise.resolve()
@@ -29,7 +30,7 @@ export function createLocation(options) {
           location,
         });
 
-        return dispatch(createVisit({ locationKey: location.key, notes, tags: { initial: true } }));
+        return dispatch(createVisit({ locationKey: location.key, notes, status, tags: { ...tags, initial: true } }));
       });
   };
 }

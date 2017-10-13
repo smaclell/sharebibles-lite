@@ -28,6 +28,22 @@ export function fetchUser(userKey) {
   return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
+export function fetchVisits({ userKey, last }) {
+  initialize();
+  return firebase.database()
+    .ref(`visitsByUser/${userKey}`)
+    .limitToLast(last)
+    .once('value')
+    .then(visits => Object.values(visits.val() || {}))
+    .catch(() => []);
+}
+
+export function startVisitListener(userKey, onReceived) {
+  initialize();
+  firebase.database().ref(`visitsByUser/${userKey}`)
+    .on('child_added', data => onReceived(data.val()));
+}
+
 export function createLocation(creator, options) {
   initialize();
 
@@ -69,6 +85,7 @@ export function createVisit(locationKey, creator, options) {
     visitors: {
       [creator.key]: true,
     },
+    status: null,
     tags: {},
     notes: '',
     teamKey: creator.teamKey,
@@ -79,12 +96,18 @@ export function createVisit(locationKey, creator, options) {
 
   const saved = pushed.set(created);
 
-  const link = firebase.database().ref(`visitByLocation/${created.locationKey}/visits`).update({
+  const byLocation = firebase.database().ref(`visitsByLocation/${created.locationKey}/visits`).update({
     [pushed.key]: true,
   });
 
+  const byUser = Object.keys(created.visitors)
+    .map(userKey => `visitsByLocation/${userKey}/${pushed.key}`)
+    .map(path => firebase.database().ref(path).set(created));
+
   return Promise.resolve({
     created,
-    saved: Promise.all([saved, link]),
+    saved: Promise.all([saved, byLocation, ...byUser]),
   });
 }
+
+

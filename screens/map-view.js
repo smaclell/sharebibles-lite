@@ -21,6 +21,7 @@ class MapsView extends React.Component {
       <MapView
         style={{ flex: 1 }}
         mapType="hybrid"
+        showsUserLocation
         initialRegion={{
           latitude: first.latitude,
           longitude: first.longitude,

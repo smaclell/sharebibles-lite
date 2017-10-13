@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { RECEIVE_VISIT } from '../actions/visits';
+import uniq from 'lodash/uniq';
 
 function all(state = {}, action) {
   switch (action.type) {
@@ -38,6 +39,10 @@ function byUser(state = {}, action) {
       Object.keys(action.visit.visitors).forEach((userKey) => {
         const previous = state[userKey] || [];
         users[userKey] = [...previous, action.visit.key];
+      });
+
+      Object.keys(users).forEach((userKey) => {
+        users[userKey] = uniq(users[userKey]);
       });
 
       return {

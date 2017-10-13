@@ -18,14 +18,14 @@ const container = {
 const circle = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 40,
+  borderRadius: 30,
   borderStyle: 'solid',
   borderWidth: 2,
   display: 'flex',
   flex: 0,
-  height: 80,
+  height: 60,
   justifyContent: 'center',
-  width: 80,
+  width: 60,
 };
 
 const selected = {

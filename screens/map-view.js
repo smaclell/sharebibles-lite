@@ -50,7 +50,7 @@ class MapsView extends React.Component {
 const mapStateToProps = state => ({
   locations: Object.keys(state.locations)
     .map(x => state.locations[x])
-    .map(x => ({ ...x, visits: (state.visits.byLocation[x] || []).length })),
+    .map(x => ({ ...x, visits: (state.visits.byLocation[x.key] || []).length })),
 });
 
 export default connect(mapStateToProps)(MapsView);

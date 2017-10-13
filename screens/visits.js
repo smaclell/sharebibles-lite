@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
   visits: (state.visits.byUser[state.user] || [])
     .map(k => state.visits.all[k])
     .map(v => visitMapper(state.tags.visit, v))
-    .sort((v1, v2) => v1.created - v2.created),
+    .sort((v1, v2) => v2.created - v1.created),
 });
 
 export default connect(mapStateToProps)(Visits);

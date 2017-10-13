@@ -1,5 +1,6 @@
 // TODO: Merge with colours and simplify (i.e. blue with different gradients).
 export default {
+  orange: '#F75C03',
   flame: '#E4572E',
   mintCream: '#F4FAFA',
   middleBlue: '#72C8D8',

@@ -10,10 +10,10 @@ import fonts from '../styles/fonts';
 const container = {
   flex: 1,
   height: 40,
-  borderRadius: 20,
+  borderRadius: 0,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: color.flame,
+  backgroundColor: color.orange,
   margin: 10,
   padding: 10,
 };

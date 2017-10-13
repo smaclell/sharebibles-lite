@@ -1,8 +1,8 @@
-import * as actions from '../actions/locations';
+import { RECIEVE_LOCATION } from '../actions/locations';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
-    case actions.CREATED_LOCATION:
+    case RECIEVE_LOCATION:
       return {
         ...state,
         [action.location.key]: {

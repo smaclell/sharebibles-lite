@@ -1,17 +1,13 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  Text,
-} from 'react-native';
 import PropTypes from 'prop-types';
-// import styles from '../styles/map-screen';
-// import MapView from 'react-native-maps';
-import styles from '../styles/map-screen';
+import { connect } from 'react-redux';
+import { MapView } from 'expo';
+import PinCallout from '../components/PinCallout';
 
-export default class MapsView extends React.Component {
+class MapsView extends React.Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
+    locations: PropTypes.array.isRequired,
   }
 
   static navigationOptions = {
@@ -20,45 +16,39 @@ export default class MapsView extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-
-    return (<View>
-      <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
-      <Text onPress={() => navigate('Visit')}>You need to implement this!</Text>
-    </View>
-    );
-    /*
+    const first = this.props.locations.slice(-1)[0] || { latitude: 37.78825, longitude: -122.4324 };
+    return (
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: first.latitude,
+          longitude: first.longitude,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421 }}
+          longitudeDelta: 0.0421,
+        }}
       >
-
-        <MapView.Marker
-          coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324 }}
-          pinColor="red"
-        >
-
-          <MapView.Callout onPress={() => navigate('Visit')}>
-            <View style={styles.callout_container}>
-              <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
-              <View style={{ marginBottom: 5 }}>
-                <Text style={{ fontSize: 16 }}> Name </Text>
-                <Text style={{ fontSize: 16 }}> Date of First Visit </Text>
-                <Text style={{ fontSize: 16 }}> No. of Visits </Text>
-              </View>
-              <Text style={{ fontSize: 12, color: 'red', fontWeight: 'bold' }}>
-                Tap to Visit
-              </Text>
-            </View>
-          </MapView.Callout>
-        </MapView.Marker>
+        {this.props.locations.map(location => (
+          <MapView.Marker
+            key={location.key}
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude }}
+            pinColor="red"
+          >
+            <MapView.Callout onPress={() => navigate('Visit', { locationKey: location.key })}>
+              <PinCallout {...location} />
+            </MapView.Callout>
+          </MapView.Marker>
+        ))}
       </MapView>
     );
-    */
   }
 }
+
+const mapStateToProps = state => ({
+  locations: Object.keys(state.locations)
+    .map(x => state.locations[x])
+    .map(x => ({ ...x, visits: (state.visits.byLocation[x] || []).length })),
+});
+
+export default connect(mapStateToProps)(MapsView);

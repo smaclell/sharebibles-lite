@@ -1,6 +1,7 @@
 import * as apis from '../apis';
 import * as userActions from './user';
 import * as usersActions from './users';
+import * as visitActions from './visits';
 
 export function signIn(email, password) {
   return (dispatch) => {
@@ -12,7 +13,9 @@ export function signIn(email, password) {
       })
       .then(() => dispatch(usersActions.receiveUser(user)))
       .then(() => dispatch(usersActions.fetchUser(user.key)))
-      .then(() => dispatch(userActions.setUser(user)));
+      .then(() => dispatch(userActions.setUser(user)))
+      .then(() => dispatch(visitActions.fetchLastVisits()))
+      .then(() => dispatch(visitActions.startListener()));
   };
 }
 

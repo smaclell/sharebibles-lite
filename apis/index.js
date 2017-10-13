@@ -28,6 +28,21 @@ export function fetchUser(userKey) {
   return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
+export function fetchVisits({ userKey, last }) {
+  initialize();
+  return firebase.database()
+    .ref(`visitsByUser/${userKey}`)
+    .limitToLast(last)
+    .once('value')
+    .then(visits => Object.values(visits.val()));
+}
+
+export function startVisitListener(userKey, onReceived) {
+  initialize();
+  firebase.database().ref(`visitsByUser/${userKey}`)
+    .on('child_added', data => onReceived(data.val()));
+}
+
 export function createLocation(creator, options) {
   initialize();
 

@@ -80,12 +80,18 @@ export function createVisit(locationKey, creator, options) {
 
   const saved = pushed.set(created);
 
-  const link = firebase.database().ref(`visitByLocation/${created.locationKey}/visits`).update({
+  const byLocation = firebase.database().ref(`visitsByLocation/${created.locationKey}/visits`).update({
     [pushed.key]: true,
   });
 
+  const byUser = Object.keys(created.visitors)
+    .map(userKey => `visitsByLocation/${userKey}/${pushed.key}`)
+    .map(path => firebase.database().ref(path).set(created));
+
   return Promise.resolve({
     created,
-    saved: Promise.all([saved, link]),
+    saved: Promise.all([saved, byLocation, ...byUser]),
   });
 }
+
+

@@ -27,7 +27,7 @@ class Visits extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>Your Conversations</Text>
-        <Text style={{ fontSize: fonts.large, marginBottom: 20 }}>{this.props.teamName}</Text>
+        <Text style={{ fontSize: fonts.large, marginBottom: 10 }}>{this.props.teamName}</Text>
         <FlatList
           style={styles.inner_container}
           data={this.props.visits}
@@ -40,10 +40,11 @@ class Visits extends React.Component {
 }
 
 const visitMapper = (tags, v) => {
-  const visitTags = tags.filter(t => v.tags[t.key]).map(t => t.summary);
+  const visitTags = v.tags || {};
+  const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.summary);
   return {
     ...v,
-    tag: visitTags.length > 0 ? visitTags[visitTags.length - 1] : null,
+    tag: filteredTags.length > 0 ? filteredTags[filteredTags.length - 1] : null,
   };
 };
 

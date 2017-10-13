@@ -10,11 +10,11 @@ const tags = {
     { key: 'christian', label: 'Is Christian?' },
   ],
   visit: [
-    { key: 'prayer', label: 'Received Prayer', summary: 'Prayed' },
-    { key: 'readBible', label: 'Read the Bible', summary: 'Read Bible' },
-    { key: 'understoodGospel', label: 'Understood the Gospel', summary: 'Understanding' },
-    { key: 'joinedDiscipleshipGroup', label: 'Joined Discipleship Group', summary: 'Joined a Group' },
-    { key: 'receivedBaptism', label: 'Received Baptism', summary: 'Baptized' },
+    { key: 'prayer', label: 'Received Prayer' },
+    { key: 'readBible', label: 'Read the Bible' },
+    { key: 'understoodGospel', label: 'Understood the Gospel' },
+    { key: 'joinedDiscipleshipGroup', label: 'Joined Discipleship Group' },
+    { key: 'receivedBaptism', label: 'Received Baptism' },
     // { key: 'needsFollowUp', label: 'Needs Follow Up' },
   ],
 };

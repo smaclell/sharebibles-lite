@@ -41,7 +41,7 @@ class Visits extends React.Component {
 
 const visitMapper = (tags, v) => {
   const visitTags = v.tags || {};
-  const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.summary);
+  const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.label);
   return {
     ...v,
     tag: filteredTags.length > 0 ? filteredTags[filteredTags.length - 1] : null,

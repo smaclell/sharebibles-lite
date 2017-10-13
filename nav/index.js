@@ -10,6 +10,7 @@ import MapsView from '../screens/map-view';
 import Settings from '../screens/settings';
 import SignUp from '../screens/sign-up';
 import Visit from '../screens/visit';
+import Visits from '../screens/visits';
 
 // Sorted Alphabetically
 const screens = {
@@ -22,6 +23,7 @@ const screens = {
   SignIn: { screen: Authentication },
   SignUp: { screen: SignUp },
   Visit: { screen: Visit },
+  Visits: { screen: Visits },
 };
 
 const options = {

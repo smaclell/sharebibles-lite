@@ -31,4 +31,22 @@ function byLocation(state = {}, action) {
   }
 }
 
-export default combineReducers({ all, byLocation });
+function byUser(state = {}, action) {
+  switch (action.type) {
+    case actions.CREATE_VISIT:
+      const users = {};
+      Object.keys(action.visit.vistors).forEach((userKey) => {
+        const previous = state[userKey] || [];
+        users[userKey] = [...previous, action.visit.key];
+      });
+
+      return {
+        ...state,
+        ...users,
+      };
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ all, byLocation, byUser });

@@ -46,6 +46,14 @@ export function fetchVisits({ userKey, last }) {
     .catch(() => []);
 }
 
+export function fetchLocation(locationKey) {
+  initialize();
+  return firebase.database()
+    .ref(`locations/${locationKey}`)
+    .once('value')
+    .then(location => location.val());
+}
+
 export function startVisitListener(userKey, onReceived) {
   initialize();
   firebase.database().ref(`visitsByUser/${userKey}`)

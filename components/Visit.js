@@ -7,11 +7,13 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/visits';
 import fonts from '../styles/fonts';
+import uploadStyles from '../styles/upload';
 
-const Visit = ({ created, status, tag, navigate, uploaded }) => (
-  <TouchableOpacity onPressOut={() => navigate()}>
+const Visit = ({ created, status, tag, navigate, upload }) => (
+  <TouchableOpacity onLongPress={() => navigate()}>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 100, marginRight: 35 }}>
@@ -19,7 +21,7 @@ const Visit = ({ created, status, tag, navigate, uploaded }) => (
         <Text>Last visited {moment.utc(created).clone().local().fromNow()}</Text>
         <Text style={{ fontSize: fonts.normal }}>{ status || tag }</Text>
       </View>
-      <View style={[styles.circle, uploaded ? styles.uploaded : styles.pending]} />
+      <View style={[styles.circle, uploadStyles[upload]]} />
     </View>
   </TouchableOpacity>
 );
@@ -29,11 +31,10 @@ Visit.propTypes = {
   navigate: PropTypes.func.isRequired,
   status: PropTypes.string,
   tag: PropTypes.string,
-  uploaded: PropTypes.bool,
+  upload: PropTypes.oneOf(Object.keys(UploadStatus)).isRequired,
 };
 
 Visit.defaultProps = {
-  uploaded: true,
   status: null,
   tag: null,
 };

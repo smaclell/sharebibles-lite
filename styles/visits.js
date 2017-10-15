@@ -41,13 +41,6 @@ export default StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 10,
-  },
-
-  uploaded: {
-    backgroundColor: 'green',
-  },
-
-  pending: {
-    backgroundColor: 'grey',
+    margin: 10,
   },
 });

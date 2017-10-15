@@ -1,4 +1,5 @@
 import * as apis from '../apis';
+import { failed, pending, uploaded } from './uploads';
 
 export const RECEIVE_VISIT = 'RECEIVE_VISIT';
 export function receiveVisit(visit) {
@@ -9,7 +10,7 @@ export function fetchLastVisits(onReceived) {
   return (dispatch, getState) => {
     const { user: userKey } = getState();
 
-    return apis.fetchVisits({ userKey, last: 10 })
+    return apis.fetchVisits({ userKey, last: 25 })
       .then(visits => visits.forEach(onReceived));
   };
 }
@@ -28,6 +29,13 @@ export function createVisit({ locationKey, notes, status = null, tags = {} }) {
     const creator = state.users[state.user];
 
     return apis.createVisit(locationKey, creator, { notes, status, tags })
-      .then(({ created: visit }) => dispatch(receiveVisit(visit)));
+      .then(({ created: visit, saved }) => {
+        dispatch(pending(visit.key));
+        saved
+          .then(() => dispatch(uploaded(visit.key)))
+          .catch(() => dispatch(failed(visit.key)));
+
+        dispatch(receiveVisit(visit));
+      });
   };
 }

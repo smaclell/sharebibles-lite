@@ -1,5 +1,6 @@
 import * as apis from '../apis';
 import { createVisit } from './visits';
+import { failed, pending, uploaded } from './uploads';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
@@ -43,8 +44,13 @@ export function createLocation(options) {
 
     return Promise.resolve()
       .then(() => apis.createLocation(creator, locationData))
-      .then(({ created: location }) => {
+      .then(({ created: location, saved }) => {
         dispatch(receiveLocation(location));
+
+        dispatch(pending(location.key));
+        saved
+          .then(() => dispatch(uploaded(location.key)))
+          .catch(() => dispatch(failed(location.key)));
 
         return dispatch(createVisit({ locationKey: location.key, notes, status, tags: { ...tags, initial: true } }));
       });

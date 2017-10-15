@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Expo from 'expo';
 import * as firebase from 'firebase';
+import GeoFire from 'geofire';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -9,6 +10,13 @@ export function initialize() {
 
   firebase.initialized = true;
   firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
+}
+
+function getGeoFire() {
+  initialize();
+
+  const ref = firebase.database().ref('geofire');
+  return new GeoFire(ref);
 }
 
 export function signIn(email, password) {
@@ -75,15 +83,18 @@ export function createLocation(creator, options) {
   };
 
   const saved = pushed.set(created);
+  const geo = getGeoFire().set(`locations--${pushed.key}`, [created.latitude, created.longitude]);
 
   return Promise.resolve({
     created,
-    saved,
+    saved: Promise.all([saved, geo]),
   });
 }
 
-export function createVisit(locationKey, creator, options) {
+export function createVisit(location, creator, options) {
   initialize();
+
+  const locationKey = location.key;
   const pushed = firebase.database().ref('visits').push();
   const created = {
     key: pushed.key,
@@ -103,6 +114,7 @@ export function createVisit(locationKey, creator, options) {
   // TODO: use the server timestamp created: firebase.database.ServerValue.TIMESTAMP,
 
   const saved = pushed.set(created);
+  const geo = getGeoFire().set(`visits--${pushed.key}`, [location.latitude, location.longitude]);
 
   const byLocation = firebase.database().ref(`visitsByLocation/${created.locationKey}/visits`).update({
     [pushed.key]: true,
@@ -114,7 +126,7 @@ export function createVisit(locationKey, creator, options) {
 
   return Promise.resolve({
     created,
-    saved: Promise.all([saved, byLocation, ...byUser]),
+    saved: Promise.all([saved, geo, byLocation, ...byUser]),
   });
 }
 

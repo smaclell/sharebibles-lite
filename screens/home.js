@@ -39,7 +39,7 @@ export default class SignInUp extends React.Component {
 
           <Button onClick={() => navigate('Visits')}>Conversations</Button>
 
-          { __DEV__ && <Button onClick={() => navigate('MapsView')}>Map</Button> }
+          <Button onClick={() => navigate('MapsView')}>Map</Button>
 
           { __DEV__ && <Button onClick={() => navigate('Settings')}>Settings</Button> }
 

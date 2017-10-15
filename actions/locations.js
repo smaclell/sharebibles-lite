@@ -30,7 +30,7 @@ export function createLocation(options) {
           location,
         });
 
-        return dispatch(createVisit({ locationKey: location.key, notes, status, tags: { ...tags, initial: true } }));
+        return dispatch(createVisit({ location, notes, status, tags: { ...tags, initial: true } }));
       });
   };
 }

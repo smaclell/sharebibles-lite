@@ -23,13 +23,13 @@ export function startListener() {
   };
 }
 
-export function createVisit({ locationKey, notes, status = null, tags = {} }) {
+export function createVisit({ location, notes, status = null, tags = {} }) {
   return (dispatch, getState) => {
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
 
-    return apis.createVisit(locationKey, creator, { notes, status, tags })
+    return apis.createVisit(location, creator, { notes, status, tags })
       .then(({ created: visit }) => dispatch(receiveVisit(visit)));
   };
 }

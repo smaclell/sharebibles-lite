@@ -91,10 +91,9 @@ export function createLocation(creator, options) {
   });
 }
 
-export function createVisit(location, creator, options) {
+export function createVisit(locationKey, creator, options) {
   initialize();
 
-  const locationKey = location.key;
   const pushed = firebase.database().ref('visits').push();
   const created = {
     key: pushed.key,
@@ -114,7 +113,6 @@ export function createVisit(location, creator, options) {
   // TODO: use the server timestamp created: firebase.database.ServerValue.TIMESTAMP,
 
   const saved = pushed.set(created);
-  const geo = getGeoFire().set(`visits--${pushed.key}`, [location.latitude, location.longitude]);
 
   const byLocation = firebase.database().ref(`visitsByLocation/${created.locationKey}/visits`).update({
     [pushed.key]: true,
@@ -126,7 +124,7 @@ export function createVisit(location, creator, options) {
 
   return Promise.resolve({
     created,
-    saved: Promise.all([saved, geo, byLocation, ...byUser]),
+    saved: Promise.all([saved, byLocation, ...byUser]),
   });
 }
 

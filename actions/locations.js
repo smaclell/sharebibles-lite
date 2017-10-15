@@ -17,7 +17,9 @@ export function fetchLocation(locationKey) {
 
     return apis.fetchLocation(locationKey)
       .then((location) => {
-        dispatch(receiveLocation(location));
+        if (location) {
+          dispatch(receiveLocation(location));
+        }
         return Promise.resolve(location);
       });
   };
@@ -52,7 +54,7 @@ export function createLocation(options) {
           .then(() => dispatch(uploaded(location.key)))
           .catch(() => dispatch(failed(location.key)));
 
-        return dispatch(createVisit({ location, notes, status, tags: { ...tags, initial: true } }));
+        return dispatch(createVisit({ locationKey: location.key, notes, status, tags: { ...tags, initial: true } }));
       });
   };
 }

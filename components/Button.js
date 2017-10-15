@@ -15,13 +15,13 @@ const container = {
   alignItems: 'center',
   backgroundColor: color.orange,
   margin: 10,
-  padding: 10,
+  padding: 10
 };
 
 const text = {
   color: color.text,
   fontSize: fonts.normal,
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 };
 
 const Button = ({ children, onClick }) => (

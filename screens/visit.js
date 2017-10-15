@@ -83,7 +83,7 @@ class Visit extends React.Component {
               <Text style={styles.container_heading_text}> 2 </Text>
             </View>
 
-            <View style={{ flex: 1, margin: 5 }}>
+            <View style={{ flex: 1, margin: 10 }}>
               { this.props.tags.map(this.showTag) }
             </View>
           </View>

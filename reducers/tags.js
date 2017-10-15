@@ -6,7 +6,7 @@ const tags = {
     notHome: { label: 'Not Home', exclusive: true },
   },
   location: [
-    { key: 'cannotRead', label: 'Can Not Read' },
+    { key: 'cannotRead', label: "Can't Read" },
     { key: 'christian', label: 'Is Christian?' },
   ],
   visit: [

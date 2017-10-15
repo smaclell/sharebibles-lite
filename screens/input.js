@@ -17,7 +17,7 @@ import Status from '../components/Status';
 import Switch from '../components/Switch';
 import styles from '../styles/input';
 
-const statusIconsSize = 32;
+const statusIconsSize = 28;
 
 class Input extends React.Component {
   static navigationOptions = {

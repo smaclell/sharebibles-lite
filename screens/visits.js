@@ -6,6 +6,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/locations';
 import fonts from '../styles/fonts';
 import Visit from '../components/Visit';
@@ -39,11 +40,27 @@ class Visits extends React.Component {
   }
 }
 
-const visitMapper = (tags, v) => {
+const uploadMapper = (uploads, v) => {
+  const location = uploads[v.locationKey];
+  const visit = uploads[v.key];
+
+  if (location === UploadStatus.failed || visit === UploadStatus.failed) {
+    return UploadStatus.failed;
+  }
+
+  if (location === UploadStatus.pending || visit === UploadStatus.pending) {
+    return UploadStatus.pending;
+  }
+
+  return UploadStatus.uploaded;
+};
+
+const visitMapper = (uploads, tags, v) => {
   const visitTags = v.tags || {};
   const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.label);
   return {
     ...v,
+    upload: uploadMapper(uploads, v),
     tag: filteredTags.length > 0 ? filteredTags[filteredTags.length - 1] : null,
   };
 };
@@ -52,7 +69,7 @@ const mapStateToProps = state => ({
   teamName: state.teams[state.users[state.user].teamKey].name,
   visits: (state.visits.byUser[state.user] || [])
     .map(k => state.visits.all[k])
-    .map(v => visitMapper(state.tags.visit, v))
+    .map(v => visitMapper(state.uploads, state.tags.visit, v))
     .sort((v1, v2) => v2.created - v1.created),
 });
 

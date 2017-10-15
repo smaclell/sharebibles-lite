@@ -3,14 +3,16 @@ import {
 } from 'react-native';
 
 import color from '../constants/colors';
+import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: color.black,
+    alignItems: 'stretch',
+    flexDirection: 'column',
+    backgroundColor: color.teal,
   },
 
   white_box: {
@@ -21,22 +23,25 @@ export default StyleSheet.create({
   },
 
   inner_container: {
-    height: 580,
-    width: 340,
     borderRadius: 20,
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: color.teal,
   },
 
   logo_container: {
-    height: 80,
-    width: 80,
     marginBottom: 20,
   },
 
+  logo: {
+    height: 80,
+    width: 80,
+  },
+
   textinput_container: {
+    width: '100%',
     height: 40,
     width: 250,
     borderRadius: 0,
@@ -52,11 +57,17 @@ export default StyleSheet.create({
   },
 
   login_button: {
-    height: 40,
+    height: 60,
     width: 250,
-    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.orange
+  },
+
+  sign_up_container: {
+    width: '100%',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

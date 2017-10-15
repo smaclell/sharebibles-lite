@@ -22,6 +22,7 @@ class Visit extends React.Component {
     static propTypes = { // Sorted Alphabetically
       createVisit: PropTypes.func.isRequired,
       navigation: PropTypes.object.isRequired,
+      location: PropTypes.object.isRequired,
       tags: PropTypes.array.isRequired,
       user: PropTypes.object.isRequired,
     }
@@ -49,10 +50,9 @@ class Visit extends React.Component {
     }
 
     update() {
-      const { params: { locationKey } } = this.props.navigation.state;
       const { notes, tags } = this.state;
 
-      this.props.createVisit({ locationKey, notes, tags });
+      this.props.createVisit({ location: this.props.location, notes, tags });
       this.props.navigation.goBack();
     }
 
@@ -111,9 +111,10 @@ class Visit extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-  user: state.users[state.user],
+const mapStateToProps = (state, ownProps) => ({
+  location: state.locations[ownProps.navigation.state.params.locationKey],
   tags: state.tags.visit,
+  user: state.users[state.user],
 });
 
 const mapDispatchToProps = dispatch => ({

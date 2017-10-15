@@ -16,9 +16,17 @@
       "assetExts": ["ttf", "mp4"]
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
+        }
+      }
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
+      }
     },
     "extra": {
       "firebase": {

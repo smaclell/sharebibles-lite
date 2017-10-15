@@ -38,6 +38,14 @@ export function fetchVisits({ userKey, last }) {
     .catch(() => []);
 }
 
+export function fetchLocation(locationKey) {
+  initialize();
+  return firebase.database()
+    .ref(`locations/${locationKey}`)
+    .once('value')
+    .then(location => location.val());
+}
+
 export function startVisitListener(userKey, onReceived) {
   initialize();
   firebase.database().ref(`visitsByUser/${userKey}`)
@@ -101,7 +109,7 @@ export function createVisit(locationKey, creator, options) {
   });
 
   const byUser = Object.keys(created.visitors)
-    .map(userKey => `visitsByLocation/${userKey}/${pushed.key}`)
+    .map(userKey => `visitsByUser/${userKey}/${pushed.key}`)
     .map(path => firebase.database().ref(path).set(created));
 
   return Promise.resolve({

@@ -3,49 +3,59 @@ import {
 } from 'react-native';
 
 import color from '../constants/colors';
+import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
+    flexDirection: 'column',
     backgroundColor: color.middleBlue,
   },
 
   inner_container: {
-    height: 580,
-    width: 340,
     borderRadius: 20,
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: color.maastBlue,
   },
 
   logo_container: {
-    height: 135,
+    marginBottom: 20,
+  },
+
+  logo: {
     width: 135,
+    height: 135,
     marginBottom: 20,
   },
 
   textinput_container: {
+    width: '100%',
     height: 40,
-    width: 250,
     borderRadius: 10,
     textAlign: 'center',
     color: 'black',
     backgroundColor: color.paleAqua,
-    marginBottom: 22,
-    fontSize: 16,
+    marginBottom: 20,
+    fontSize: fonts.large,
   },
 
   login_button: {
-    height: 40,
-    width: 250,
-    borderRadius: 20,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.crayolaGreen,
+  },
+
+  sign_up_container: {
+    width: '100%',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

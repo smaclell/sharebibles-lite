@@ -6,6 +6,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FontAwesome } from '@expo/vector-icons';
 import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/locations';
 import fonts from '../styles/fonts';
@@ -13,7 +14,11 @@ import Visit from '../components/Visit';
 
 class Visits extends React.Component {
   static navigationOptions = {
-    title: 'Your Conversations',
+    header: null,
+    tabBarLabel: 'Your Conversations',
+    tabBarIcon: ({ tintColor }) => (
+      <FontAwesome name="list" size={40} color={tintColor} />
+    ),
   }
 
   static propTypes = {

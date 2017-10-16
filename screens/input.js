@@ -16,13 +16,20 @@ import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
 import styles from '../styles/input';
+import colours from '../styles/colours';
 
 const statusIconsSize = 32;
 
 class Input extends React.Component {
   static navigationOptions = {
-    title: 'First Visit',
     header: null,
+    tabBarLabel: 'First Visit',
+    tabBarVisible: false,
+    tabBarIcon: () => (
+      <View style={{ padding: 20, backgroundColor: colours.primaryButton }}>
+        <FontAwesome name="plus" size={40} color={colours.white} />
+      </View>
+    ),
   }
 
   constructor(props) {

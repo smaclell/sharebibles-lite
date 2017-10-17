@@ -67,18 +67,18 @@ export default class SignInUp extends React.Component {
         */ }
         <KeyboardAvoidingView behavior="padding" style={styles.inner_container} keyboardVerticalOffset={60}>
 
-          <Text style={{ color: colours.text, fontSize: fonts.header, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
+          <Text style={styles.header}> Share Bibles </Text>
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
 
           <View style={styles.white_box}>
-            <Text style={{ color: colours.text, fontSize: fonts.large, fontWeight: 'normal', margin: 15 }}> Sign In </Text>
+            <Text style={styles.subtitle}> Sign In </Text>
 
             <TextInput
               style={styles.textinput_container}
               placeholderTextColor={colours.placeholder}
-              placeholder="you@email.com"
+              placeholder="your@email.com"
               autoCapitalize="none"
               keyboardType="email-address"
               autoCorrect={false}

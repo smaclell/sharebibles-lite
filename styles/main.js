@@ -6,17 +6,6 @@ import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
-  notice_container: {
-    height: 200,
-    width: 280,
-    padding: 25,
-    borderRadius: 0,
-    marginBottom: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colours.greys.lightest,
-  },
-
   container: {
     flex: 1,
     padding: 20,
@@ -24,6 +13,33 @@ export default StyleSheet.create({
     alignItems: 'stretch',
     flexDirection: 'column',
     backgroundColor: colours.teals.base,
+  },
+
+  header: {
+    color: colours.text,
+    fontSize: fonts.header,
+    fontStyle: 'normal',
+    marginBottom: 15,
+  },
+
+  subtitle: {
+    color: colours.text,
+    fontSize: fonts.large,
+    fontStyle: 'normal',
+    marginBottom: 20,
+  },
+
+  instructions: {
+    color: colours.text,
+    fontSize: fonts.normal,
+    margin: 10,
+    textAlign: 'center',
+  },
+
+  terms: {
+    color: colours.text,
+    fontSize: fonts.small,
+    textAlign: 'center',
   },
 
   white_box: {
@@ -35,7 +51,7 @@ export default StyleSheet.create({
 
   inner_container: {
     borderRadius: 0,
-    padding: 15,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
@@ -63,6 +79,16 @@ export default StyleSheet.create({
     paddingLeft: 6,
     borderColor: colours.greys.lighter,
     borderWidth: 1,
+  },
+
+  notice_container: {
+    width: 270,
+    padding: 5,
+    borderRadius: 0,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colours.greys.lightest,
   },
 
   login_button: {

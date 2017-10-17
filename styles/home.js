@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import color from '../constants/colors';
+import colours from '../styles/colours';
 
 export default StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: color.middleBlue,
+    backgroundColor: colours.teals.base,
   },
 
   inner_Container: {
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     padding: 20,
     borderRadius: 0,
   },
@@ -32,7 +32,7 @@ export default StyleSheet.create({
   },
 
   welcome: {
-    color: color.mintCream,
+    color: colours.teals.base,
     fontSize: 35,
     margin: 5,
     marginBottom: 25,

@@ -1,11 +1,27 @@
-export default {
-  white: 'white',
-  black: 'black',
-
-  text: 'black',
-  primaryButton: '#E4572E',
+const colours = {
+  white: '#FEFCFD',
+  black: '#030303',
 
   greys: {
-    lighter: '#B3B3B3',
+    lightest: '#F7F7F7',
+    lighter: '#CACACA',
+    base: '#8C8C8C',
+    darkest: '#1C1C1C',
+  },
+
+  teals: {
+    base: '#65B7C7',
+  },
+
+  oranges: {
+    base: '#F75C03',
   },
 };
+
+const semantic = {
+  text: colours.black,
+  placeholder: colours.greys.base,
+  primaryButton: colours.oranges.base,
+};
+
+export default { ...colours, ...semantic };

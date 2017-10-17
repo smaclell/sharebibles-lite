@@ -2,21 +2,32 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import color from '../constants/colors';
+import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
+  notice_container: {
+    height: 200,
+    width: 280,
+    padding: 25,
+    borderRadius: 10,
+    marginBottom: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colours.greys.lightest,
+  },
+
   container: {
     flex: 1,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: color.teal,
+    backgroundColor: colours.teals.base,
   },
 
   white_box: {
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -28,7 +39,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: color.teal,
+    backgroundColor: colours.teals.base,
   },
 
   logo_container: {
@@ -46,11 +57,11 @@ export default StyleSheet.create({
     borderRadius: 0,
     textAlign: 'left',
     color: 'black',
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     marginBottom: 22,
     fontSize: fonts.normal,
     paddingLeft: 6,
-    borderColor: color.lightGray,
+    borderColor: colours.greys.lighter,
     borderWidth: 1,
   },
 
@@ -62,7 +73,7 @@ export default StyleSheet.create({
   },
 
   sign_up_container: {
-    width: '100%',
+    width: 250,
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',

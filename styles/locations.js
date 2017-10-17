@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import color from '../constants/colors';
+import colours from '../styles/colours';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.middleBlue,
+    backgroundColor: colours.teals.base,
     alignContent: 'stretch',
     flexDirection: 'column',
     padding: 10,
@@ -12,7 +12,7 @@ export default StyleSheet.create({
 
   inner_container: {
     flex: 1,
-    backgroundColor: color.mintCream,
+    backgroundColor: colours.white,
     padding: 15,
     paddingBottom: 20,
     borderRadius: 15,
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     flex: 1,
     height: 100,
     padding: 5,
-    backgroundColor: color.paleAqua,
+    backgroundColor: colours.greys.lightest,
     borderRadius: 10,
     marginBottom: 15,
     alignItems: 'center',

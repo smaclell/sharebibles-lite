@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import color from '../constants/colors';
+import colours from '../styles/colours';
 
 const containerMargin = 10;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: color.middleBlue,
+    backgroundColor: colours.teals.base,
     padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -14,7 +14,7 @@ export default StyleSheet.create({
 
   add_members_section_container: {
     flex: 1,
-    backgroundColor: color.mintCream,
+    backgroundColor: colours.white,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -24,7 +24,7 @@ export default StyleSheet.create({
   add_location_section_container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: color.mintCream,
+    backgroundColor: colours.white,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: containerMargin,
@@ -35,13 +35,13 @@ export default StyleSheet.create({
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.mintCream,
+    backgroundColor: colours.white,
     marginBottom: containerMargin,
   },
 
   status_container: {
     alignItems: 'flex-start',
-    backgroundColor: color.mintCream,
+    backgroundColor: colours.white,
     flex: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -76,7 +76,7 @@ export default StyleSheet.create({
 
   actions_container: {
     flex: 0,
-    backgroundColor: 'black',
+    backgroundColor: colours.black,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,

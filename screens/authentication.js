@@ -13,8 +13,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from '../components/Button';
 import styles from '../styles/main';
+import colours from '../styles/colours';
 import fonts from '../styles/fonts';
-import color from '../constants/colors';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
@@ -67,16 +67,17 @@ export default class SignInUp extends React.Component {
         */ }
         <KeyboardAvoidingView behavior="padding" style={styles.inner_container} keyboardVerticalOffset={60}>
 
-          <Text style={{ color: color.black, fontSize: fonts.header, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
+          <Text style={{ color: colours.text, fontSize: fonts.header, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
 
           <View style={styles.white_box}>
+            <Text style={{ color: colours.text, fontSize: fonts.large, fontWeight: 'normal', margin: 15 }}> Sign In </Text>
 
             <TextInput
               style={styles.textinput_container}
-              placeholderTextColor={color.gray}
+              placeholderTextColor={colours.placeholder}
               placeholder="you@email.com"
               autoCapitalize="none"
               keyboardType="email-address"
@@ -88,7 +89,7 @@ export default class SignInUp extends React.Component {
             <TextInput
               style={styles.textinput_container}
               placeholder="Password"
-              placeholderTextColor={color.gray}
+              placeholderTextColor={colours.placeholder}
               secureTextEntry
               autoCapitalize="none"
               onChangeText={(password) => { this.setState({ password }); }}
@@ -101,9 +102,9 @@ export default class SignInUp extends React.Component {
 
             { __DEV__ &&
               <View style={styles.sign_up_container}>
-                <Text style={{ color: color.black, fontSize: fonts.small, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
+                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
                 <TouchableOpacity onPress={() => navigate('SignUp')}>
-                  <Text style={{ color: color.flame, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                  <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
                     Create One </Text>
                 </TouchableOpacity>
               </View>

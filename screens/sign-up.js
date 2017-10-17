@@ -4,90 +4,85 @@ import {
   ScrollView,
   Image,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
 import PropTypes from 'prop-types';
-import styles from '../styles/signup';
-import color from '../constants/colors';
+import Button from '../components/Button';
+import styles from '../styles/main';
+import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 export default class sharebiblesCreateAccount extends Component {
- static navigationOptions = {
-   title: 'Sign In or Up',
-   header: null,
- }
+  static navigationOptions = {
+    title: 'Sign In or Up',
+    header: null,
+  }
 
- static propTypes = {
-   navigation: PropTypes.object.isRequired,
- }
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+  }
 
- render() {
-   const { navigate } = this.props.navigation;
+  render() {
+    const { navigate } = this.props.navigation;
 
-   return (
-     <View style={styles.container}>
-       <ScrollView>
-         <View style={styles.inner_container}>
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.inner_container}>
 
-           <Text style={{ color: color.mintCream, fontSize: 50, fontStyle: 'normal', marginBottom: 15 }}> Share Bibles </Text>
+            <Text style={{ color: colours.text, fontSize: fonts.header, fontStyle: 'normal', marginBottom: 15 }}> Share Bibles </Text>
 
-           <Image source={require('../assets/logo/logo.png')} style={styles.logo_container} />
 
-           <Text style={{ color: color.mintCream, fontSize: 18, fontStyle: 'normal', marginBottom: 20 }}>
-              Create Your Account </Text>
+            <View style={styles.logo_container}>
+              <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+            </View>
 
-           <TextInput
-             style={styles.textinput_container}
-             placeholderTextColor="black"
-             autoCapitalize="words"
-             placeholder="Sam Smith"
-           />
+            <Text style={{ color: colours.text, fontSize: fonts.large, fontStyle: 'normal', marginBottom: 20 }}>
+              Create Your Account
+            </Text>
 
-           <TextInput
-             style={styles.textinput_container}
-             placeholderTextColor="black"
-             placeholder="you@email.com"
-             keyboardType="email-address"
-           />
+            <TextInput
+              style={styles.textinput_container}
+              placeholderTextColor={colours.placeholder}
+              autoCapitalize="words"
+              placeholder="Sam Smith"
+            />
 
-           <TextInput
-             style={styles.textinput_container}
-             placeholderTextColor="black"
-             placeholder="Password"
-             secureTextEntry
-           />
+            <TextInput
+              style={styles.textinput_container}
+              placeholderTextColor={colours.placeholder}
+              placeholder="you@email.com"
+              keyboardType="email-address"
+            />
 
-           <View style={styles.notice_container}>
-             <Text style={{ color: 'black', fontSize: 17, marginTop: 20, textAlign: 'center' }}>
+            <TextInput
+              style={styles.textinput_container}
+              placeholderTextColor={colours.placeholder}
+              placeholder="Password"
+              secureTextEntry
+            />
+
+            <View style={styles.notice_container}>
+              <Text style={{ color: colours.text, fontSize: fonts.normal, marginTop: 20, textAlign: 'center' }}>
                 You will need an access code from a Bible distribution group to continue.
-                To find a group near you, click
-             </Text>
+              </Text>
 
-             <TouchableOpacity>
-               <Text style={{ color: 'red', fontSize: 17, marginBottom: 20, textAlign: 'center' }}>
-                  here.
-               </Text>
-             </TouchableOpacity>
+              <TextInput
+                style={styles.textinput_container}
+                placeholder="Access Code"
+              />
+            </View>
 
+            <Button onClick={() => navigate('Home')}>Create Account</Button>
 
-             <TextInput
-               style={styles.textinput_container}
-               placeholder="Access Code"
-             />
-           </View>
-
-           <TouchableOpacity style={styles.button_container} onPress={() => navigate('Home')}>
-             <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold' }}> Create Account </Text>
-           </TouchableOpacity>
-
-           <Text style={{ color: color.mintCream, fontSize: 14, textAlign: 'center' }}>
+            <Text style={{ color: colours.teals.base, fontSize: fonts.small, textAlign: 'center' }}>
               By clicking &quot;Create Account&quot; you agree to the Terms and Conditions
-           </Text>
+            </Text>
 
-         </View>
-       </ScrollView>
-     </View>
-   );
- }
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
 }

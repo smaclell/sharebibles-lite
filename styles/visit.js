@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import color from '../constants/colors';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
@@ -9,7 +8,7 @@ const containerMargin = 5;
 export default StyleSheet.create({
   container: {
     alignItems: 'stretch',
-    backgroundColor: color.middleBlue,
+    backgroundColor: colours.teals.base,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -18,7 +17,7 @@ export default StyleSheet.create({
 
   container_heading: {
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: colours.black,
     height: '100%',
     justifyContent: 'center',
     marginRight: 5,
@@ -31,7 +30,7 @@ export default StyleSheet.create({
 
   users_container: {
     alignItems: 'center',
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -41,7 +40,7 @@ export default StyleSheet.create({
 
   tags_container: {
     alignItems: 'center',
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     flex: 1,
     flexDirection: 'row',
     flexGrow: 4,
@@ -54,7 +53,7 @@ export default StyleSheet.create({
 
   notes_container: {
     alignItems: 'flex-start',
-    backgroundColor: color.white,
+    backgroundColor: colours.white,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -70,7 +69,7 @@ export default StyleSheet.create({
   },
 
   actions_container: {
-    backgroundColor: 'black',
+    backgroundColor: colours.black,
     flex: 0,
     flexDirection: 'row',
     margin: containerMargin,

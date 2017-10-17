@@ -58,46 +58,61 @@ export default class SignInUp extends React.Component {
     };
 
     return (
+
       <View style={styles.container}>
-        <KeyboardAvoidingView behavior="padding" style={styles.inner_container}>
-          <Text style={{ color: color.mintCream, fontSize: fonts.header, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
+        {/*TODO: Need to figure out how to make the keyboard work better (not hide the text fields) */}
+        <KeyboardAvoidingView behavior="padding" style={styles.inner_container} keyboardVerticalOffset={60}>
+
+          <Text style={{ color: color.black, fontSize: fonts.header, fontWeight: 'normal', margin: 15 }}> Share Bibles </Text>
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
-          <Text style={{ color: color.mintCream, fontSize: fonts.large, fontWeight: 'normal', marginBottom: 15 }}> Login to Share Bibles </Text>
+          
+          <View style={styles.white_box}>
+            <Text style={{ color: color.black, fontSize: fonts.large, fontWeight: 'normal', marginBottom: 15 }}> Login to Share Bibles </Text>
+            <Text style={{ color: color.black, fontSize: 14, fontWeight: 'normal', marginBottom: 8 }}> Don&rsquo;t have an account? </Text>
 
-          <TextInput
-            style={styles.textinput_container}
-            placeholderTextColor="black"
-            placeholder="you@email.com"
-            keyboardType="email-address"
-            onChangeText={(email) => { this.setState({ email }); }}
-            value={this.state.email}
-          />
+            <TouchableOpacity onPress={() => navigate('SignUp')}>
+              <Text style={{ color: color.flame, fontSize: 14, fontWeight: 'normal', marginBottom: 20, textDecorationLine: 'underline' }}>
+                Create One </Text>
+            </TouchableOpacity>
 
-          <TextInput
-            style={styles.textinput_container}
-            placeholder="Password"
-            placeholderTextColor="black"
-            secureTextEntry
-            onChangeText={(password) => { this.setState({ password }); }}
-            value={this.state.password}
-          />
+            <TextInput
+              style={styles.textinput_container}
+              placeholderTextColor={color.gray}
+              placeholder="you@email.com"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoCorrect={false}
+              onChangeText={(email) => { this.setState({ email }); }}
+              value={this.state.email}
+            />
 
-          <View style={styles.login_button}>
-            <Button onClick={signIn}>Log In</Button>
-          </View>
-
-          { __DEV__ &&
-            <View style={styles.sign_up_container}>
-              <Text style={{ color: color.mintCream, fontSize: fonts.normal, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
-              <TouchableOpacity onPress={() => navigate('SignUp')}>
-                <Text style={{ color: color.flame, fontSize: fonts.normal, fontWeight: 'normal', textDecorationLine: 'underline' }}>
-                  Create One </Text>
-              </TouchableOpacity>
+            <TextInput
+              style={styles.textinput_container}
+              placeholder="Password"
+              placeholderTextColor={color.gray}
+              secureTextEntry
+              autoCapitalize="none"
+              onChangeText={(password) => { this.setState({ password }); }}
+              value={this.state.password}
+            />
+            
+            <View style={styles.login_button}>
+              <Button onClick={signIn}>LOG IN</Button>
             </View>
-          }
 
+            { __DEV__ &&
+              <View style={styles.sign_up_container}>
+                <Text style={{ color: color.black, fontSize: fonts.small, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
+                <TouchableOpacity onPress={() => navigate('SignUp')}>
+                  <Text style={{ color: color.flame, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                    Create One </Text>
+                </TouchableOpacity>
+              </View>
+            }
+
+          </View>
         </KeyboardAvoidingView>
       </View>
     );

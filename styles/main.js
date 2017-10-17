@@ -8,11 +8,18 @@ import fonts from '../styles/fonts';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: color.middleBlue,
+    backgroundColor: color.teal,
+  },
+
+  white_box: {
+    backgroundColor: color.white,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   inner_container: {
@@ -21,7 +28,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: color.maastBlue,
+    backgroundColor: color.teal,
   },
 
   logo_container: {
@@ -29,24 +36,29 @@ export default StyleSheet.create({
   },
 
   logo: {
-    width: 135,
-    height: 135,
-    marginBottom: 20,
+    height: 80,
+    width: 80,
   },
 
   textinput_container: {
     width: '100%',
     height: 40,
-    borderRadius: 10,
+    width: 250,
+    borderRadius: 0,
     textAlign: 'center',
     color: 'black',
-    backgroundColor: color.paleAqua,
-    marginBottom: 20,
-    fontSize: fonts.large,
+    backgroundColor: color.white,
+    marginBottom: 22,
+    fontSize: 16,
+    textAlign: 'left',
+    paddingLeft: 6,
+    borderColor: color.lightGray,
+    borderWidth: 1
   },
 
   login_button: {
     height: 60,
+    width: 250,
     justifyContent: 'center',
     alignItems: 'center',
   },

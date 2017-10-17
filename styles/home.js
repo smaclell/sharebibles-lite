@@ -16,9 +16,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: color.maastBlue,
+    backgroundColor: color.white,
     padding: 20,
-    borderRadius: 20,
+    borderRadius: 0,
   },
 
   logo_container: {

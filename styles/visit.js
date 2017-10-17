@@ -31,7 +31,7 @@ export default StyleSheet.create({
 
   users_container: {
     alignItems: 'center',
-    backgroundColor: color.mintCream,
+    backgroundColor: color.white,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -41,10 +41,10 @@ export default StyleSheet.create({
 
   tags_container: {
     alignItems: 'center',
-    backgroundColor: color.mintCream,
+    backgroundColor: color.white,
     flex: 1,
     flexDirection: 'row',
-    flexGrow: 2,
+    flexGrow: 4,
     margin: containerMargin,
   },
 
@@ -54,7 +54,7 @@ export default StyleSheet.create({
 
   notes_container: {
     alignItems: 'flex-start',
-    backgroundColor: color.mintCream,
+    backgroundColor: color.white,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',

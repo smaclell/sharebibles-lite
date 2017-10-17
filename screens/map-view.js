@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import PinCallout from '../components/PinCallout';
@@ -11,7 +12,11 @@ class MapsView extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Map',
+    header: null,
+    tabBarLabel: 'Map',
+    tabBarIcon: ({ tintColor }) => (
+      <FontAwesome name="map-marker" size={40} color={tintColor} />
+    ),
   }
 
   render() {

@@ -16,7 +16,8 @@ import styles from '../styles/visit';
 
 class Visit extends React.Component {
     static navigationOptions = {
-      title: 'Follow Up',
+      header: null,
+      tabBarVisible: false,
     }
 
     static propTypes = { // Sorted Alphabetically

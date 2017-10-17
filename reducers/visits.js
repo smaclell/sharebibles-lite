@@ -1,6 +1,6 @@
+import uniq from 'lodash/uniq';
 import { combineReducers } from 'redux';
 import { RECEIVE_VISIT } from '../actions/visits';
-import uniq from 'lodash/uniq';
 
 function all(state = {}, action) {
   switch (action.type) {

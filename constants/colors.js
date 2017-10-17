@@ -2,13 +2,13 @@
 export default {
   white: '#FEFCFD',
   veryLightGray: '#F7F7F7',
-  lightGray: '#CACACA',  
+  lightGray: '#CACACA',
   gray: '#8C8C8C',
   almostBlack: '#1C1C1C',
   black: '#030303',
   teal: '#65B7C7',
   orange: '#F75C03',
-  //BELOW CAN BE REMOVED
+
   flame: '#E4572E',
   mintCream: '#F4FAFA',
   middleBlue: '#65B7C7',

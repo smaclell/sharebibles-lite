@@ -54,7 +54,12 @@ export function createLocation(options) {
           .then(() => dispatch(uploaded(location.key)))
           .catch(() => dispatch(failed(location.key)));
 
-        return dispatch(createVisit({ locationKey: location.key, notes, status, tags: { ...tags, initial: true } }));
+        return dispatch(createVisit({
+          locationKey: location.key,
+          notes,
+          status,
+          tags: { ...tags, initial: true },
+        }));
       });
   };
 }

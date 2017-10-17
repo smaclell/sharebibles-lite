@@ -127,5 +127,3 @@ export function createVisit(locationKey, creator, options) {
     saved: Promise.all([saved, byLocation, ...byUser]),
   });
 }
-
-

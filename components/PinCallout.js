@@ -10,11 +10,13 @@ import moment from 'moment';
 import styles from '../styles/map-screen';
 import fonts from '../styles/fonts';
 
+const relativeTime = time => moment.utc(time).clone().local().fromNow();
+
 const Callout = ({ created, visits }) => (
   <View style={styles.callout_container}>
     <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
     <View style={{ marginBottom: 5 }}>
-      <Text style={{ fontSize: fonts.normal }}>Last visited {moment.utc(created).clone().local().fromNow()}</Text>
+      <Text style={{ fontSize: fonts.normal }}>Last visited {relativeTime(created)}</Text>
       <Text style={{ fontSize: fonts.normal }}> {visits} Visit(s) </Text>
     </View>
     <Text style={{ fontSize: fonts.small, color: 'red', fontWeight: 'bold' }}>

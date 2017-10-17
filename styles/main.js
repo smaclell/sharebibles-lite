@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor: color.white,
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   inner_container: {
@@ -41,19 +41,17 @@ export default StyleSheet.create({
   },
 
   textinput_container: {
-    width: '100%',
     height: 40,
     width: 250,
     borderRadius: 0,
-    textAlign: 'center',
+    textAlign: 'left',
     color: 'black',
     backgroundColor: color.white,
     marginBottom: 22,
-    fontSize: 16,
-    textAlign: 'left',
+    fontSize: fonts.normal,
     paddingLeft: 6,
     borderColor: color.lightGray,
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   login_button: {

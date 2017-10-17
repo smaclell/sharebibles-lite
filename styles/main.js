@@ -10,7 +10,7 @@ export default StyleSheet.create({
     height: 200,
     width: 280,
     padding: 25,
-    borderRadius: 10,
+    borderRadius: 0,
     marginBottom: 25,
     justifyContent: 'center',
     alignItems: 'center',
@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
 
   inner_container: {
-    borderRadius: 20,
+    borderRadius: 0,
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',

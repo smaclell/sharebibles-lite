@@ -15,7 +15,7 @@ export default StyleSheet.create({
     backgroundColor: colours.white,
     padding: 15,
     paddingBottom: 20,
-    borderRadius: 15,
+    borderRadius: 0,
   },
 
   item: {

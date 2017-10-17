@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import { UploadStatus } from '../actions/uploads';
-import styles from '../styles/locations';
+import styles from '../styles/visits';
 import fonts from '../styles/fonts';
 import Visit from '../components/Visit';
 

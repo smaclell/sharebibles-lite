@@ -16,7 +16,7 @@ const Visit = ({ created, status, tag, navigate, upload }) => (
   <TouchableOpacity onLongPress={() => navigate()}>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
-      <View style={{ flex: 1, minWidth: 100, marginRight: 35 }}>
+      <View style={{ flex: 1, minWidth: 140, marginRight: 10 }}>
         <Text style={{ fontSize: fonts.large, fontWeight: 'bold' }}>{ status ? 'First Visit' : 'Follow Up Visit' }</Text>
         <Text>Last visited {moment.utc(created).clone().local().fromNow()}</Text>
         <Text style={{ fontSize: fonts.normal }}>{ status || tag }</Text>

@@ -21,15 +21,15 @@ class MapsView extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const first = this.props.locations.slice(-1)[0] || { latitude: 37.78825, longitude: -122.4324 };
+    const { latitude = 37.78825, longitude = -122.4324 } = this.props.locations.slice(-1)[0] || {};
     return (
       <MapView
         style={{ flex: 1 }}
         mapType="hybrid"
         showsUserLocation
         initialRegion={{
-          latitude: first.latitude,
-          longitude: first.longitude,
+          latitude,
+          longitude,
           latitudeDelta: 0.000922,
           longitudeDelta: 0.000421,
         }}

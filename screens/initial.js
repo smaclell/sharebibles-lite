@@ -107,7 +107,7 @@ class Initial extends React.Component {
         selected={this.state.status === status.key}
       >
         <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
-      </Status>    
+      </Status>
     )
   }
 

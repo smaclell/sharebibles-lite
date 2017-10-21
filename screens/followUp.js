@@ -10,12 +10,16 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
 import Button from '../components/Button';
+import Status from '../components/Status';
 import Switch from '../components/Switch';
 import User from '../components/User';
 import styles from '../styles/followUp';
+
+const statusIconsSize = 28;
 
 class FollowUp extends React.Component {
   static navigationOptions = {
@@ -26,6 +30,7 @@ class FollowUp extends React.Component {
   static propTypes = { // Sorted Alphabetically
     createVisit: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,
+    statuses: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
   }
@@ -34,10 +39,25 @@ class FollowUp extends React.Component {
     super(props);
     this.state = {
       notes: null,
+      status: 'unknown',
       tags: {},
     };
 
     this.showTag = this.showTag.bind(this);
+    this.showStatus = this.showStatus.bind(this);
+  }
+
+  showStatus(status) {
+    return (
+      <Status
+        key={status.key}
+        label={status.label}
+        onPressed={() => this.updateStatus(status.key)}
+        selected={this.state.status === status.key}
+      >
+        <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
+      </Status>
+    )
   }
 
   showTag(tag) {
@@ -54,10 +74,14 @@ class FollowUp extends React.Component {
 
   update() {
     const { params: { locationKey } } = this.props.navigation.state;
-    const { notes, tags } = this.state;
+    const { notes, tags, status } = this.state;
 
-    this.props.createVisit({ locationKey, notes, tags });
+    this.props.createVisit({ locationKey, notes, tags, status });
     this.props.navigation.goBack();
+  }
+
+  updateStatus(value) {
+    this.setState(p => ({ ...p, status: value }));
   }
 
   updateTag(tagKey, enabled) {
@@ -83,9 +107,17 @@ class FollowUp extends React.Component {
               <User {...this.props.user} />
             </View>
 
-            <View style={styles.tags_container}>
+            <View style={styles.status_container}>
               <View style={styles.container_heading}>
                 <Text style={styles.container_heading_text}> 2 </Text>
+              </View>
+
+              {this.props.statuses.map(this.showStatus) }
+            </View>
+
+            <View style={styles.tags_container}>
+              <View style={styles.container_heading}>
+                <Text style={styles.container_heading_text}> 3 </Text>
               </View>
               <View style={{ flex: 1, margin: 10 }}>
                 { this.props.tags.map(this.showTag) }
@@ -94,7 +126,7 @@ class FollowUp extends React.Component {
 
             <View style={styles.notes_container}>
               <View style={styles.container_heading}>
-                <Text style={styles.container_heading_text}> 3 </Text>
+                <Text style={styles.container_heading_text}> 4 </Text>
               </View>
               <TextInput
                 style={styles.note_input}
@@ -117,6 +149,7 @@ class FollowUp extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  statuses: state.statuses,
   tags: state.tags.followUp,
   user: state.users[state.user],
 });

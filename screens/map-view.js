@@ -42,7 +42,7 @@ class MapsView extends React.Component {
               longitude: location.longitude }}
             pinColor="red"
           >
-            <MapView.Callout onPress={() => navigate('Visit', { locationKey: location.key })}>
+            <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
               <PinCallout {...location} />
             </MapView.Callout>
           </MapView.Marker>

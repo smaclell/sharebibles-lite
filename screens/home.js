@@ -35,7 +35,7 @@ export default class SignInUp extends React.Component {
             <Image style={style.logo} source={require('../assets/logo/logo.png')} />
           </View>
 
-          <Button onClick={() => navigate('Input')}>Input</Button>
+          <Button onClick={() => navigate('Initial')}>Initial</Button>
 
           <Button onClick={() => navigate('Visits')}>Conversations</Button>
 

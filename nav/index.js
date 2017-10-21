@@ -3,10 +3,10 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 // Sorted Alphabetically
 import Authentication from '../containers/Authentication';
 import Dev from '../screens/dev';
-import Input from '../screens/input';
+import Initial from '../screens/initial';
 import MapsView from '../screens/map-view';
 import SignUp from '../screens/sign-up';
-import Visit from '../screens/visit';
+import FollowUp from '../screens/followUp';
 import Visits from '../screens/visits';
 
 const login = new StackNavigator({
@@ -16,14 +16,14 @@ const login = new StackNavigator({
 
 const map = new StackNavigator({
   MapsView: { screen: MapsView },
-  Visit: { screen: Visit },
+  FollowUp: { screen: FollowUp },
 }, {
   headerMode: 'none',
 });
 
 const visits = new StackNavigator({
   Visits: { screen: Visits },
-  Visit: { screen: Visit },
+  FollowUp: { screen: FollowUp },
 }, {
   headerMode: 'none',
 });
@@ -31,14 +31,14 @@ const visits = new StackNavigator({
 const home = new TabNavigator({
   Dev: { screen: Dev },
   MapsView: { screen: map },
-  Input: { screen: Input },
+  Initial: { screen: Initial },
   Visits: { screen: visits },
 }, {
   lazy: true,
   animationEnabled: true,
   headerMode: 'none',
   tabBarPosition: 'bottom',
-  order: ['MapsView', 'Input', 'Visits'],
+  order: ['MapsView', 'Initial', 'Visits'],
   swipeEnabled: false,
   initialRouteName: 'MapsView',
   tabBarOptions: {

@@ -37,7 +37,7 @@ class Visits extends React.Component {
         <FlatList
           style={styles.inner_container}
           data={this.props.visits}
-          renderItem={({ item }) => <Visit {...item} navigate={() => navigate('Visit', { locationKey: item.key })} />}
+          renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
           keyExtractor={item => item.key}
         />
       </View>

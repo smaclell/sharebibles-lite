@@ -53,11 +53,10 @@ class MapsView extends React.Component {
 }
 
 const locationColor = (location, statuses) => {
-  if (location.status in statuses) {
-    return statuses[location.status].pinColor;
-  }
-  // Default to grey
-  return 'grey';
+  const status = statuses.find(s => (s.key === location.status));
+  if (status) { return status.pinColor; }
+
+  return 'wheat';
 };
 
 const mapStateToProps = state => ({

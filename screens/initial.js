@@ -43,6 +43,7 @@ class Initial extends React.Component {
     };
 
     this.showResource = this.showResource.bind(this);
+    this.showStatus = this.showStatus.bind(this);
     this.showTag = this.showTag.bind(this);
     this.updateCount = this.updateCount.bind(this);
     this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
@@ -97,6 +98,19 @@ class Initial extends React.Component {
     );
   }
 
+  showStatus(status) {
+    return (
+      <Status
+        key={status.key}
+        label={status.label}
+        onPressed={() => this.updateStatus(status.key)}
+        selected={this.state.status === status.key}
+      >
+        <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
+      </Status>    
+    )
+  }
+
   updateCount({ count, resource }) {
     this.setState(p => ({
       ...p,
@@ -144,18 +158,7 @@ class Initial extends React.Component {
         <View style={styles.results_container}>
 
           <View style={styles.status_container}>
-            <Status label="Accepted" onPressed={() => this.updateStatus('accepted')} selected={this.state.status === 'accepted'}>
-              <FontAwesome name="check" size={statusIconsSize} color={'white'} />
-            </Status>
-            <Status label="Delivered" onPressed={() => this.updateStatus('delivered')} selected={this.state.status === 'delivered'}>
-              <FontAwesome name="book" size={statusIconsSize} color={'white'} />
-            </Status>
-            <Status label="Not Home" onPressed={() => this.updateStatus('not-home')} selected={this.state.status === 'not-home'}>
-              <FontAwesome name="repeat" size={statusIconsSize} color={'white'} />
-            </Status>
-            <Status label="Rejected" onPressed={() => this.updateStatus('rejected')} selected={this.state.status === 'rejected'}>
-              <FontAwesome name="close" size={statusIconsSize} color={'white'} />
-            </Status>
+            {this.props.statuses.map(this.showStatus) }
           </View>
 
           <View style={styles.info_container}>
@@ -181,6 +184,7 @@ Initial.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
+  statuses: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
@@ -189,6 +193,7 @@ const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
   tags: state.tags.initial,
+  statuses: state.statuses,
 });
 
 const mapDispatchToProps = dispatch => ({

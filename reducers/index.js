@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // Sorted Alphabetically
 import locations from './locations';
 import resources from './resources';
+import statuses from './statuses';
 import tags from './tags';
 import teams from './teams';
 import uploads from './uploads';
@@ -14,6 +15,7 @@ import visits from './visits';
 const reducer = combineReducers({
   locations,
   resources,
+  statuses,
   tags,
   teams,
   uploads,

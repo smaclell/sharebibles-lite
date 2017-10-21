@@ -34,7 +34,10 @@ export function updateLocation(options) {
       .then(({ updated, saved }) => {
         dispatch(receiveLocation({ ...original, ...updated }));
 
-        saved.catch(() => dispatch(receiveLocation(original)));
+        saved.catch(() => {
+          dispatch(receiveLocation(original));
+          dispatch(fetchLocation(original.key));
+        });
       });
   };
 }

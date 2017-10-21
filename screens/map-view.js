@@ -40,7 +40,7 @@ class MapsView extends React.Component {
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude }}
-            pinColor="red"
+            pinColor={ location.pinColor }
           >
             <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
               <PinCallout {...location} />
@@ -52,10 +52,22 @@ class MapsView extends React.Component {
   }
 }
 
+const locationColor = (location, statuses) => {
+  if (location.status in statuses) {
+    return statuses[location.status].pinColor;
+  }
+  // Default to grey
+  return 'grey';
+};
+
 const mapStateToProps = state => ({
   locations: Object.keys(state.locations)
     .map(x => state.locations[x])
-    .map(x => ({ ...x, visits: (state.visits.byLocation[x.key] || []).length })),
+    .map(x => ({
+      ...x,
+      visits: (state.visits.byLocation[x.key] || []).length,
+      pinColor: locationColor(x, state.statuses),
+    })),
 });
 
 export default connect(mapStateToProps)(MapsView);

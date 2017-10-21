@@ -3,6 +3,9 @@ import {
   KeyboardAvoidingView,
   Text,
   TextInput,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
   View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
@@ -69,44 +72,45 @@ class FollowUp extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior="position">
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
 
-        <View style={styles.users_container}>
-          <View style={styles.container_heading}>
-            <Text style={styles.container_heading_text}> 1 </Text>
-          </View>
+            <View style={styles.users_container}>
+              <View style={styles.container_heading}>
+                <Text style={styles.container_heading_text}> 1 </Text>
+              </View>
+              <User {...this.props.user} />
+            </View>
 
-          <User {...this.props.user} />
-        </View>
+            <View style={styles.tags_container}>
+              <View style={styles.container_heading}>
+                <Text style={styles.container_heading_text}> 2 </Text>
+              </View>
+              <View style={{ flex: 1, margin: 10 }}>
+                { this.props.tags.map(this.showTag) }
+              </View>
+            </View>
 
-        <View style={styles.tags_container}>
-          <View style={styles.container_heading}>
-            <Text style={styles.container_heading_text}> 2 </Text>
-          </View>
+            <View style={styles.notes_container}>
+              <View style={styles.container_heading}>
+                <Text style={styles.container_heading_text}> 3 </Text>
+              </View>
+              <TextInput
+                style={styles.note_input}
+                placeholder="Add notes..."
+                multiline
+                numberOfLines={3}
+                onChangeText={notes => this.setState(p => ({ ...p, notes }))}
+              />
+            </View>
 
-          <View style={{ flex: 1, margin: 10 }}>
-            { this.props.tags.map(this.showTag) }
-          </View>
-        </View>
-
-        <View style={styles.notes_container}>
-          <View style={styles.container_heading}>
-            <Text style={styles.container_heading_text}> 3 </Text>
-          </View>
-          <TextInput
-            style={styles.note_input}
-            placeholder="Add notes..."
-            returnKeyType="next"
-            multiline
-            onChangeText={notes => this.setState(p => ({ ...p, notes }))}
-          />
-        </View>
-
-        <View style={styles.actions_container}>
-          <Button onClick={() => this.update()}>UPDATE</Button>
-          <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
-        </View>
-
+            <View style={styles.actions_container}>
+              <Button onClick={() => this.update()}>UPDATE</Button>
+              <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     );
   }

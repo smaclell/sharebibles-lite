@@ -41,6 +41,7 @@ export function createLocation(options) {
       longitude,
       address,
       resources,
+      status,
       tags,
     };
 

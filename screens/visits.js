@@ -37,7 +37,7 @@ class Visits extends React.Component {
         <FlatList
           style={styles.inner_container}
           data={this.props.visits}
-          renderItem={({ item }) => <Visit {...item} navigate={() => navigate('Visit', { locationKey: item.key })} />}
+          renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
           keyExtractor={item => item.key}
         />
       </View>
@@ -74,7 +74,7 @@ const mapStateToProps = state => ({
   teamName: state.teams[state.users[state.user].teamKey].name,
   visits: (state.visits.byUser[state.user] || [])
     .map(k => state.visits.all[k])
-    .map(v => visitMapper(state.uploads, state.tags.visit, v))
+    .map(v => visitMapper(state.uploads, state.tags.followUp, v))
     .sort((v1, v2) => v2.created - v1.created),
 });
 

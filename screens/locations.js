@@ -29,7 +29,7 @@ class Locations extends React.Component {
         <FlatList
           style={styles.inner_container}
           data={this.props.locations}
-          renderItem={({ item }) => <Location {...item} navigate={() => navigate('Visit', { locationKey: item.key })} />}
+          renderItem={({ item }) => <Location {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
           keyExtractor={item => `location-${item.key}`}
         />
       </View>

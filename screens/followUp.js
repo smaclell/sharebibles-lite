@@ -12,9 +12,9 @@ import * as visitActions from '../actions/visits';
 import Button from '../components/Button';
 import Switch from '../components/Switch';
 import User from '../components/User';
-import styles from '../styles/visit';
+import styles from '../styles/followUp';
 
-class Visit extends React.Component {
+class FollowUp extends React.Component {
     static navigationOptions = {
       header: null,
       tabBarVisible: false,
@@ -113,7 +113,7 @@ class Visit extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tags: state.tags.visit,
+  tags: state.tags.followUp,
   user: state.users[state.user],
 });
 
@@ -121,4 +121,4 @@ const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(visitActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Visit);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowUp);

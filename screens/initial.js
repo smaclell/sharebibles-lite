@@ -15,12 +15,12 @@ import CurrentLocation from '../components/CurrentLocation';
 import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
-import styles from '../styles/input';
+import styles from '../styles/initial';
 import colours from '../styles/colours';
 
 const statusIconsSize = 28;
 
-class Input extends React.Component {
+class Initial extends React.Component {
   static navigationOptions = {
     header: null,
     tabBarLabel: 'First Visit',
@@ -177,7 +177,7 @@ class Input extends React.Component {
   }
 }
 
-Input.propTypes = { // Sorted Alphabetically
+Initial.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
@@ -188,11 +188,11 @@ Input.propTypes = { // Sorted Alphabetically
 const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
-  tags: state.tags.location,
+  tags: state.tags.initial,
 });
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(locationActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+export default connect(mapStateToProps, mapDispatchToProps)(Initial);

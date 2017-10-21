@@ -158,7 +158,7 @@ class Initial extends React.Component {
         <View style={styles.results_container}>
 
           <View style={styles.status_container}>
-            {this.props.status.map(this.showStatus) }
+            {this.props.statuses.map(this.showStatus) }
           </View>
 
           <View style={styles.info_container}>
@@ -184,6 +184,7 @@ Initial.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
+  statuses: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
@@ -192,7 +193,7 @@ const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
   tags: state.tags.initial,
-  status: state.tags.status,
+  statuses: state.statuses,
 });
 
 const mapDispatchToProps = dispatch => ({

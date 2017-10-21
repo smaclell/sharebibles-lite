@@ -1,10 +1,5 @@
 // A hardcoded list of interactions for each location and visit
 const tags = {
-  statuses: {
-    interested: { label: 'Interested' },
-    rejected: { label: 'Rejected', exclusive: true },
-    notHome: { label: 'Not Home', exclusive: true },
-  },
   initial: [
     { key: 'cannotRead', label: "Can't Read" },
     { key: 'christian', label: 'Is Christian?' },

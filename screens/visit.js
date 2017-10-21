@@ -113,7 +113,7 @@ class Visit extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tags: state.tags.visit,
+  tags: state.tags.followUp,
   user: state.users[state.user],
 });
 

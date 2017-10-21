@@ -188,7 +188,7 @@ Input.propTypes = { // Sorted Alphabetically
 const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
-  tags: state.tags.location,
+  tags: state.tags.initial,
 });
 
 const mapDispatchToProps = dispatch => ({

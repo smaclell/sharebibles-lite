@@ -74,7 +74,7 @@ const mapStateToProps = state => ({
   teamName: state.teams[state.users[state.user].teamKey].name,
   visits: (state.visits.byUser[state.user] || [])
     .map(k => state.visits.all[k])
-    .map(v => visitMapper(state.uploads, state.tags.visit, v))
+    .map(v => visitMapper(state.uploads, state.tags.followUp, v))
     .sort((v1, v2) => v2.created - v1.created),
 });
 

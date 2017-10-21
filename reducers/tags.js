@@ -5,11 +5,11 @@ const tags = {
     rejected: { label: 'Rejected', exclusive: true },
     notHome: { label: 'Not Home', exclusive: true },
   },
-  location: [
+  initial: [
     { key: 'cannotRead', label: "Can't Read" },
     { key: 'christian', label: 'Is Christian?' },
   ],
-  visit: [
+  followUp: [
     { key: 'prayer', label: 'Received Prayer' },
     { key: 'readBible', label: 'Read the Bible' },
     { key: 'understoodGospel', label: 'Understood the Gospel' },

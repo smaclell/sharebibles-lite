@@ -67,7 +67,7 @@ export function updateLocation(options) {
   const updated = { name, imageUrl, latitude, longitude, address, status };
 
   const updateKeys = {};
-  Object.entries(updated, ([item, value]) => {
+  Object.entries(updated).forEach(([item, value]) => {
     // Don't update values if it wasn't provided:
     if (value === undefined) { return; }
     updateKeys[`${key}/${item}`] = value;

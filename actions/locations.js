@@ -32,7 +32,6 @@ export function updateLocation(options) {
 
     return apis.updateLocation({ ...original, ...options })
       .then(({ updated, saved }) => {
-        console.log("PIM");
         dispatch(receiveLocation({ ...original, ...updated }));
 
         saved.catch(() => dispatch(receiveLocation(original)));

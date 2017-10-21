@@ -23,7 +23,7 @@ export function startListener(onReceived) {
   };
 }
 
-export function createVisit({ locationKey, notes, status = null, tags = {} }) {
+export function createVisit({ locationKey, notes, status = 'unknown', tags = {} }) {
   return (dispatch, getState) => {
     // TODO: selector
     const state = getState();
@@ -37,7 +37,7 @@ export function createVisit({ locationKey, notes, status = null, tags = {} }) {
           .catch(() => dispatch(failed(visit.key)));
 
         dispatch(receiveVisit(visit));
-        if (!tags.initial && status) {
+        if (!tags.initial && status !== 'unknown') {
           return dispatch(updateLocation({ key: locationKey, status }));
         }
       });

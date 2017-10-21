@@ -63,8 +63,8 @@ export function startVisitListener(userKey, onReceived) {
 export function updateLocation(options) {
   initialize();
 
-  const { key, name, imageUrl, latitude, longitude, address, status } = options;
-  const updated = { name, imageUrl, latitude, longitude, address, status };
+  const { key, status } = options;
+  const updated = { status };
 
   const updateKeys = {};
   Object.entries(updated).forEach(([item, value]) => {

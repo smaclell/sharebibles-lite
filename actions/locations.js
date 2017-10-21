@@ -25,6 +25,21 @@ export function fetchLocation(locationKey) {
   };
 }
 
+export function updateLocation(options) {
+  return (dispatch, getState) => {
+    const { locations } = getState();
+    const original = { ...locations[options.key] };
+
+    return apis.updateLocation({ ...original, ...options })
+      .then(({ updated, saved }) => {
+        console.log("PIM");
+        dispatch(receiveLocation({ ...original, ...updated }));
+
+        saved.catch(() => dispatch(receiveLocation(original)));
+      });
+  };
+}
+
 export function createLocation(options) {
   const { imageUrl, name, latitude, longitude, address, resources, tags, status } = options;
   const { notes } = options;

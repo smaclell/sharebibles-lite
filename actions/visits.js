@@ -1,5 +1,6 @@
 import * as apis from '../apis';
 import { failed, pending, uploaded } from './uploads';
+import { updateLocation } from './locations';
 
 export const RECEIVE_VISIT = 'RECEIVE_VISIT';
 export function receiveVisit(visit) {
@@ -36,6 +37,9 @@ export function createVisit({ locationKey, notes, status = null, tags = {} }) {
           .catch(() => dispatch(failed(visit.key)));
 
         dispatch(receiveVisit(visit));
+        if (!tags.initial && status) {
+          return dispatch(updateLocation({ key: locationKey, status }));
+        }
       });
   };
 }

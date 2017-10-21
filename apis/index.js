@@ -60,6 +60,24 @@ export function startVisitListener(userKey, onReceived) {
     .on('child_added', data => onReceived(data.val()));
 }
 
+export function updateLocation(options) {
+  initialize();
+
+  const { key, name, imageUrl, latitude, longitude, address, status } = options;
+  const updated = { name, imageUrl, latitude, longitude, address, status };
+
+  const updateKeys = {};
+  Object.entries(updated, ([item, value]) => {
+    // Don't update values if it wasn't provided:
+    if (value === undefined) { return; }
+    updateKeys[`${key}/${item}`] = value;
+  });
+
+  const saved = firebase.database().ref('locations').update(updateKeys);
+
+  return Promise.resolve({ updated, saved });
+}
+
 export function createLocation(creator, options) {
   initialize();
 

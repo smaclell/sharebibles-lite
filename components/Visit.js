@@ -13,7 +13,7 @@ import fonts from '../styles/fonts';
 import uploadStyles from '../styles/upload';
 
 const Visit = ({ created, status, tag, navigate, upload }) => (
-  <TouchableOpacity onLongPress={() => navigate()}>
+  <TouchableOpacity onPress={() => navigate()}>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 140, marginRight: 10 }}>

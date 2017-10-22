@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
 import Button from '../components/Button';
@@ -18,8 +17,6 @@ import Status from '../components/Status';
 import Switch from '../components/Switch';
 import User from '../components/User';
 import styles from '../styles/followUp';
-
-const statusIconsSize = 28;
 
 class FollowUp extends React.Component {
   static navigationOptions = {
@@ -54,9 +51,8 @@ class FollowUp extends React.Component {
         label={status.label}
         onPressed={() => this.updateStatus(status.key)}
         selected={this.state.status === status.key}
-      >
-        <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
-      </Status>
+        icon={status.icon}
+      />
     )
   }
 

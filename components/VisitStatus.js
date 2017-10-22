@@ -12,10 +12,10 @@ const statusIconsSize = 10;
 
 const VisitStatus = ({ status }) => (
   <View style={{flexDirection: 'row'}}>
+    <Text style={{ fontSize: fonts.normal, marginRight: 5 }}>{status.label}</Text>
     <View style={styles.status_circle}>
       <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
     </View>
-    <Text style={{ fontSize: fonts.normal, marginLeft: 5 }}>{status.label}</Text>
   </View>
 );
 

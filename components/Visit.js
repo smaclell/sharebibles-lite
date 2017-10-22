@@ -19,11 +19,11 @@ const Visit = ({ created, status, initial, tag, navigate, upload }) => (
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 110, marginRight: 5 }}>
         <Text style={{ fontSize: fonts.large, fontWeight: 'bold' }}>{ initial ? 'First Visit' : 'Follow Up Visit' }</Text>
-        <Text>Visited {moment.utc(created).clone().local().fromNow()}</Text>
         {status ? 
           <VisitStatus status={status}/> : 
           <Text style={{ fontSize: fonts.normal }}>{tag }</Text>
         }
+        <Text style={{ fontSize: fonts.small }}>Visited {moment.utc(created).clone().local().fromNow()}</Text>
       </View>
       <View style={[styles.circle, uploadStyles[upload]]} />
     </View>

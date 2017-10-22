@@ -41,6 +41,15 @@ export default StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 10,
-    margin: 10,
   },
+
+  status_circle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    height: 20,
+    width: 20,
+    backgroundColor: colours.black,
+  },
+
 });

@@ -63,13 +63,13 @@ const uploadMapper = (uploads, v) => {
 const visitMapper = (uploads, tags, statuses, v) => {
   const visitTags = v.tags || {};
   const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.label);
-  const filteredStatus = statuses.find(s => (s.key === v.status)) || {};
+  const filteredStatus = statuses.find(s => (s.key === v.status)) || null
   return {
     ...v,
     upload: uploadMapper(uploads, v),
     initial: !!visitTags.initial,
     tag: filteredTags.pop(),
-    status: filteredStatus.label,
+    status: filteredStatus,
   };
 };
 

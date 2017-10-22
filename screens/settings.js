@@ -5,10 +5,11 @@ import {
 } from 'react-native';
 import React from 'react';
 import stylesLogin from '../styles/main';
+import I18n from '../assets/i18n/i18n';
 
 export default class Settings extends React.Component {
   static navigationOptions = {
-    title: 'Settings',
+    title: I18n.t('title_settings'),
   }
 
   render() {
@@ -17,7 +18,7 @@ export default class Settings extends React.Component {
         <View style={stylesLogin.container}>
           <View style={stylesLogin.inner_Container}>
             <Text style={{ fontSize: 20, margin: 5 }}>
-              Sorry this feature isn&#39;t available yet.
+              {I18n.t('settings_not_implemented')}
             </Text>
           </View>
         </View>

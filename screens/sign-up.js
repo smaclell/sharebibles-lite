@@ -11,10 +11,11 @@ import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import styles from '../styles/main';
 import colours from '../styles/colours';
+import I18n from '../assets/i18n/i18n';
 
 export default class sharebiblesCreateAccount extends Component {
   static navigationOptions = {
-    title: 'Sign In or Up',
+    title: I18n.t('title_sign_up'),
     header: null,
   }
 
@@ -30,7 +31,7 @@ export default class sharebiblesCreateAccount extends Component {
         <ScrollView>
           <View style={styles.inner_container}>
 
-            <Text style={styles.header}> Share Bibles </Text>
+            <Text style={styles.header}> {I18n.t('title_share_bibles')} </Text>
 
             <View style={styles.logo_container}>
               <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
@@ -38,47 +39,47 @@ export default class sharebiblesCreateAccount extends Component {
 
             <View style={styles.white_box}>
               <Text style={styles.subtitle}>
-                Create Your Account
+                {I18n.t('sign_up_create_your_account')}
               </Text>
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 autoCapitalize="words"
-                placeholder="Sam Smith"
+                placeholder={I18n.t('sign_up_example_name')}
               />
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder="your@email.com"
+                placeholder={I18n.t('sign_in_your_email')}
                 keyboardType="email-address"
               />
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder="Password"
+                placeholder={I18n.t('sign_in_your_password')}
                 secureTextEntry
               />
 
               <View style={styles.notice_container}>
                 <Text style={styles.instructions}>
-                You will need an access code for your team to continue.
+                {I18n.t('sign_up_instructions')}
                 </Text>
 
                 <TextInput
                   style={styles.textinput_container}
-                  placeholder="Access Code"
+                  placeholder={I18n.t('sign_up_your_access_code')}
                 />
               </View>
 
               <View style={styles.login_button}>
-                <Button onClick={() => navigate('Home')}>Create Account</Button>
+                <Button onClick={() => navigate('Home')}>{I18n.t('button_create_account')}</Button>
               </View>
 
               <Text style={styles.terms}>
-                By clicking &quot;Create Account&quot; you agree to the Terms and Conditions
+                {I18n.t('sign_up_conditions_agreement')}
               </Text>
 
             </View>

@@ -17,6 +17,8 @@ import Status from '../components/Status';
 import Switch from '../components/Switch';
 import User from '../components/User';
 import styles from '../styles/followUp';
+import I18n from '../assets/i18n/i18n';
+
 
 class FollowUp extends React.Component {
   static navigationOptions = {
@@ -48,7 +50,7 @@ class FollowUp extends React.Component {
     return (
       <Status
         key={status.key}
-        label={status.label}
+        label={I18n.t(status.key)}
         onPressed={() => this.updateStatus(status.key)}
         selected={this.state.status === status.key}
         icon={status.icon}
@@ -59,11 +61,11 @@ class FollowUp extends React.Component {
   showTag(tag) {
     return (
       <Switch
-        key={tag.key}
-        onChange={enabled => this.updateTag(tag.key, enabled)}
-        value={!!this.state.tags[tag.key]}
+        key={tag}
+        onChange={enabled => this.updateTag(tag, enabled)}
+        value={!!this.state.tags[tag]}
       >
-        {tag.label}
+        {I18n.t(tag)}
       </Switch>
     );
   }
@@ -126,7 +128,7 @@ class FollowUp extends React.Component {
               </View>
               <TextInput
                 style={styles.note_input}
-                placeholder="Add notes..."
+                placeholder={I18n.t('follow_up_add_notes')}
                 multiline
                 numberOfLines={3}
                 onChangeText={notes => this.setState(p => ({ ...p, notes }))}
@@ -134,8 +136,8 @@ class FollowUp extends React.Component {
             </View>
 
             <View style={styles.actions_container}>
-              <Button onClick={() => this.update()}>UPDATE</Button>
-              <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
+              <Button onClick={() => this.update()}>{I18n.t('button_update')}</Button>
+              <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button_cancel')}</Button>
             </View>
           </ScrollView>
         </TouchableWithoutFeedback>

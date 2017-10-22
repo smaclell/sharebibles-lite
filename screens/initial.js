@@ -18,11 +18,13 @@ import Status from '../components/Status';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
 import colours from '../styles/colours';
+import I18n from '../assets/i18n/i18n';
+
 
 class Initial extends React.Component {
   static navigationOptions = {
     header: null,
-    tabBarLabel: 'First Visit',
+    tabBarLabel: I18n.t('initial_first_visit'),
     tabBarVisible: false,
     tabBarIcon: () => (
       <View style={{ padding: 20, backgroundColor: colours.primaryButton }}>
@@ -82,7 +84,8 @@ class Initial extends React.Component {
     return (
       <ResourceCounter
         key={resource.key}
-        resource={resource}
+        format={resource.format}
+        summary={I18n.t(resource.key)}
         onCountChanged={this.updateCount}
       />
     );
@@ -91,11 +94,11 @@ class Initial extends React.Component {
   showTag(tag) {
     return (
       <Switch
-        key={tag.key}
-        onChange={enabled => this.updateTag(tag.key, enabled)}
-        value={!!this.state.tags[tag.key]}
+        key={tag}
+        onChange={enabled => this.updateTag(tag, enabled)}
+        value={!!this.state.tags[tag]}
       >
-        {tag.label}
+        {I18n.t(tag)}
       </Switch>
     );
   }
@@ -104,7 +107,7 @@ class Initial extends React.Component {
     return (
       <Status
         key={status.key}
-        label={status.label}
+        label={I18n.t(status.key)}
         onPressed={() => this.updateStatus(status.key)}
         selected={this.state.status === status.key}
         icon={status.icon}
@@ -156,7 +159,7 @@ class Initial extends React.Component {
 
         <View style={styles.add_location_section_container}>
           <Photo onPhotoChanged={this.updateImageUrl} />
-          <Text> Or </Text>
+          <Text> {I18n.t('initial_or')} </Text>
           <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
         </View>
 
@@ -175,8 +178,8 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.actions_container}>
-          <Button onClick={() => this.add()}>ADD</Button>
-          <Button onClick={() => this.props.navigation.goBack()}>CANCEL</Button>
+          <Button onClick={() => this.add()}>{I18n.t('button_add')}</Button>
+          <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button_cancel')}</Button>
         </View>
 
 

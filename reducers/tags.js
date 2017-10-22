@@ -1,15 +1,18 @@
+import I18n from '../assets/i18n/i18n';
+
+
 // A hardcoded list of interactions for each location and visit
 const tags = {
   initial: [
-    { key: 'cannotRead', label: "Can't Read" },
-    { key: 'christian', label: 'Is Christian?' },
+    'tag_initial_cannot_read',
+    'tag_initial_christian',
   ],
   followUp: [
-    { key: 'prayer', label: 'Received Prayer' },
-    { key: 'readBible', label: 'Read the Bible' },
-    { key: 'understoodGospel', label: 'Understood the Gospel' },
-    { key: 'joinedDiscipleshipGroup', label: 'Joined Discipleship Group' },
-    { key: 'receivedBaptism', label: 'Received Baptism' },
+    'tag_followup_prayer',
+    'tag_followup_read_bible',
+    'tag_followup_understood_gospel',
+    'tag_followup_joined_discipleship_group',
+    'tag_followup_received_baptism',
   ],
 };
 

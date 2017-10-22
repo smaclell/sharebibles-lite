@@ -9,10 +9,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from '../components/Button';
 import style from '../styles/home';
+import I18n from '../assets/i18n/i18n';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: I18n.t('title_home'),
     header: null,
   }
 
@@ -28,22 +29,22 @@ export default class SignInUp extends React.Component {
         <View style={style.inner_Container}>
 
           <Text style={style.welcome}>
-              Welcome to Share Bibles
+              {I18n.t('title_welcome')}
           </Text>
 
           <View style={style.logo_container}>
             <Image style={style.logo} source={require('../assets/logo/logo.png')} />
           </View>
 
-          <Button onClick={() => navigate('Initial')}>Initial</Button>
+          <Button onClick={() => navigate('Initial')}>{I18n.t('title_initial')}</Button>
 
-          <Button onClick={() => navigate('Visits')}>Conversations</Button>
+          <Button onClick={() => navigate('Visits')}>{I18n.t('title_conversations')}</Button>
 
-          <Button onClick={() => navigate('MapsView')}>Map</Button>
+          <Button onClick={() => navigate('MapsView')}>{I18n.t('title_map')}</Button>
 
-          { __DEV__ && <Button onClick={() => navigate('Settings')}>Settings</Button> }
+          { __DEV__ && <Button onClick={() => navigate('Settings')}>{I18n.t('title_settings')}</Button> }
 
-          {__DEV__ && <Button onClick={() => navigate('Dev')}>Development</Button> }
+          {__DEV__ && <Button onClick={() => navigate('Dev')}>{I18n.t('title_development')}</Button> }
 
         </View>
       </View>

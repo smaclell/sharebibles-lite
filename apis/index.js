@@ -2,6 +2,7 @@ import moment from 'moment';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
+import { ImageStore } from 'react-native';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -78,14 +79,35 @@ export function updateLocation(options) {
   return Promise.resolve({ updated, saved });
 }
 
-export function createLocation(creator, options) {
+export async function createLocation(creator, options) {
   initialize();
 
   const pushed = firebase.database().ref('locations').push();
+
+  // If we have an imageUrl, upload it to firebase storage:
+  let { imageUrl } = options;
+  // Hard code no-go for now until we figure out firebase + base64
+  if (false && imageUrl) {
+    const fileType = 'jpg';
+    const child = `locations/${pushed.key}.${fileType}`;
+    const metadata = {
+      contentType: `image/${fileType}`,
+    };
+    const body = await new Promise((resolve, reject) => {
+      ImageStore.getBase64ForTag(imageUrl, resolve, reject);
+    });
+
+    const image = await firebase.storage().ref().child(child).putString(body, 'base64');
+
+    imageUrl = image.snapshot.downloadUrl;
+
+  } else {
+    imageUrl = null;
+  }
+
   const created = {
     key: pushed.key,
     name: 'Anything', // TODO: Remove the name
-    imageUrl: 'https://google.com/favicon.ico',
     created: moment.utc().valueOf(),
     latitude: 50,
     longitude: 50,
@@ -98,15 +120,16 @@ export function createLocation(creator, options) {
     // Considering a tag/status object/array to represent the many checkboxes
     // Initially it would be populated/managed by a number of hardcoded values
     ...options,
+    imageUrl,
   };
 
   const saved = pushed.set(created);
   const geo = getGeoFire().set(`locations--${pushed.key}`, [created.latitude, created.longitude]);
 
-  return Promise.resolve({
+  return {
     created,
     saved: Promise.all([saved, geo]),
-  });
+  };
 }
 
 export function createVisit(locationKey, creator, options) {

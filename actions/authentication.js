@@ -30,6 +30,6 @@ export function signIn(email, password) {
 export function signUp(name, email, password, accessCode) {
   return dispatch =>
     Promise.resolve()
-      .then(() => apis.signUp(email, password, accessCode))
+      .then(() => apis.signUp(name, email, password, accessCode))
       .then(user => dispatch(onAuthenticated(user)));
 }

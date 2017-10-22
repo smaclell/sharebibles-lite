@@ -100,15 +100,13 @@ export default class SignInUp extends React.Component {
               <Button onClick={signIn}>LOG IN</Button>
             </View>
 
-            { __DEV__ &&
-              <View style={styles.sign_up_container}>
-                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
-                <TouchableOpacity onPress={() => navigate('SignUp')}>
-                  <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
-                    Create One </Text>
-                </TouchableOpacity>
-              </View>
-            }
+            <View style={styles.sign_up_container}>
+              <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> Don&rsquo;t have an account? </Text>
+              <TouchableOpacity onPress={() => navigate('SignUp')}>
+                <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                  Create One </Text>
+              </TouchableOpacity>
+            </View>
 
           </View>
         </KeyboardAvoidingView>

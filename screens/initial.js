@@ -12,6 +12,7 @@ import * as locationActions from '../actions/locations';
 import User from '../components/User';
 import Button from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
+import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
@@ -33,6 +34,7 @@ class Initial extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      imageUrl: null,
       status: 'unknown',
       longitude: null,
       latitude: null,
@@ -44,6 +46,7 @@ class Initial extends React.Component {
     this.showStatus = this.showStatus.bind(this);
     this.showTag = this.showTag.bind(this);
     this.updateCount = this.updateCount.bind(this);
+    this.updateImageUrl = this.updateImageUrl.bind(this);
     this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
   }
 
@@ -53,6 +56,7 @@ class Initial extends React.Component {
 
   add() {
     const {
+      imageUrl,
       status,
       longitude,
       latitude,
@@ -62,7 +66,7 @@ class Initial extends React.Component {
 
     this.props.createLocation({
       status,
-      imageUrl: null,
+      imageUrl,
       name: 'TBD',
       address: null,
       longitude,
@@ -120,6 +124,10 @@ class Initial extends React.Component {
     }));
   }
 
+  updateImageUrl(imageUrl) {
+    this.setState(p => ({ ...p, imageUrl }));
+  }
+
   updateCurrentLocation(location) {
     const { longitude = null, latitude = null } = location || {};
     this.setState(p => ({ ...p, longitude, latitude }));
@@ -147,7 +155,7 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.add_location_section_container}>
-          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
+          <Photo onPhotoChanged={this.updateImageUrl} />
           <Text> Or </Text>
           <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
         </View>

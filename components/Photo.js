@@ -74,8 +74,8 @@ class Photo extends Component {
           height,
         },
         displaySize: {
-          width: 160,
-          height: 160,
+          width: 960,
+          height: 960,
         },
         resizeMode: 'contain',
       };

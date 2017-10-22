@@ -1,7 +1,12 @@
+/* globals __DEV__ */
 import moment from 'moment';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
+import CryptoJS from 'crypto-js/core';
+import md5 from 'crypto-js/md5';
+import pbkdf2 from 'crypto-js/pbkdf2';
+import Base64 from 'crypto-js/enc-base64';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -24,6 +29,73 @@ export function signIn(email, password) {
 
   return firebase.auth().signInWithEmailAndPassword(email, password)
     .then(({ uid }) => firebase.database().ref(`users/${uid}`).once('value').then(v => v.val()));
+}
+
+function normalize(wordArray) {
+// From uuid-safe
+  const EQUAL_END_REGEXP = /=+$/;
+  const PLUS_GLOBAL_REGEXP = /\+/g;
+  const SLASH_GLOBAL_REGEXP = /\//g;
+
+  return wordArray
+    .toString(Base64)
+    .replace(EQUAL_END_REGEXP, '')
+    .replace(PLUS_GLOBAL_REGEXP, '-')
+    .replace(SLASH_GLOBAL_REGEXP, '_');
+}
+
+function hashAccessCode(raw) {
+  const salt = 'h-V-U5QmjC60KabrfTEzBykgzEXRaAm20KBzUNeySG5jIRVVKSp5RSBLKwP5eiRYPoq_exCMAKP2GAdLdNbR_A';
+  return normalize(pbkdf2(raw, salt, { keySize: 512 / 32, iterations: 1000 }));
+}
+
+export async function signUp(name, email, password, accessCode) {
+  initialize();
+
+  const hashCode = hashAccessCode(accessCode);
+
+  const { uid: userKey } = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+  await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);
+
+  const teamKey = await firebase.database().ref(`accessCodes/${hashCode}/teamKey`).once('value').then(v => v.val());
+  const hash = md5(email.trim()).toString(CryptoJS.lib.Hex);
+  const imageUrl = `https://gravatar.com/avatar/${hash}.png?s=100&d=mm`;
+
+  const user = {
+    key: userKey,
+    imageUrl,
+    name,
+    teamKey,
+    accessCode: hashCode,
+  };
+
+  await Promise.all([
+    firebase.database().ref(`teams/${teamKey}/users/${userKey}`).set(hashCode),
+    firebase.database().ref(`users/${userKey}`).set(user),
+  ]);
+
+  return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
+}
+
+export async function createAccessCode(forced) {
+  const { uid: userKey } = firebase.auth().currentUser;
+  const { teamKey } = (await firebase.database().ref(`users/${userKey}`).once('value')).val();
+
+  const raw = __DEV__ && forced ? forced : normalize(CryptoJS.lib.WordArray.random(192 / 8));
+
+  const hashed = hashAccessCode(raw);
+
+  await firebase.database().ref(`accessCodes/${hashed}`).set({
+    teamKey,
+    createdBy: userKey,
+    created: firebase.database.ServerValue.TIMESTAMP,
+  });
+
+  return {
+    raw,
+    hashed,
+  };
 }
 
 export function fetchTeam(teamKey) {

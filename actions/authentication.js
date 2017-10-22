@@ -4,19 +4,14 @@ import * as userActions from './user';
 import * as usersActions from './users';
 import * as visitActions from './visits';
 
-export function signIn(email, password) {
+function onAuthenticated(user) {
   return (dispatch) => {
     const onReceived = (visit) => {
       dispatch(visitActions.receiveVisit(visit));
       dispatch(locationActions.fetchLocation(visit.locationKey));
     };
 
-    let user;
     return Promise.resolve()
-      .then(() => apis.signIn(email, password))
-      .then((found) => {
-        user = found;
-      })
       .then(() => dispatch(usersActions.receiveUser(user)))
       .then(() => dispatch(usersActions.fetchUser(user.key)))
       .then(() => dispatch(userActions.setUser(user)))
@@ -25,6 +20,16 @@ export function signIn(email, password) {
   };
 }
 
-export function signUp() {
-  throw new Error('signUp is not implemented yet');
+export function signIn(email, password) {
+  return dispatch =>
+    Promise.resolve()
+      .then(() => apis.signIn(email, password))
+      .then(user => dispatch(onAuthenticated(user)));
+}
+
+export function signUp(name, email, password, accessCode) {
+  return dispatch =>
+    Promise.resolve()
+      .then(() => apis.signUp(email, password, accessCode))
+      .then(user => dispatch(onAuthenticated(user)));
 }

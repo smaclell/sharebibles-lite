@@ -4,9 +4,12 @@ import {
   View,
 } from 'react-native';
 import React, { Component } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
+
+const statusIconsSize = 28;
 
 const container = {
   flex: 1,
@@ -45,7 +48,6 @@ const text = {
 
 class Status extends Component {
   static propTypes = {
-    children: PropTypes.element.isRequired,
     label: PropTypes.string.isRequired,
     onPressed: PropTypes.func.isRequired,
     selected: PropTypes.bool,
@@ -59,7 +61,7 @@ class Status extends Component {
     return (
       <TouchableOpacity style={container} onPressOut={this.props.onPressed}>
         <View style={[circle, this.props.selected ? selected : normal]}>
-          {this.props.children}
+          <FontAwesome name={this.props.icon} size={statusIconsSize} color={'white'} />
         </View>
         <Text style={text}>{this.props.label}</Text>
       </TouchableOpacity>

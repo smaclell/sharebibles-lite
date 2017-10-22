@@ -25,6 +25,23 @@ export function fetchLocation(locationKey) {
   };
 }
 
+export function updateLocation(options) {
+  return (dispatch, getState) => {
+    const { locations } = getState();
+    const original = { ...locations[options.key] };
+
+    return apis.updateLocation({ ...original, ...options })
+      .then(({ updated, saved }) => {
+        dispatch(receiveLocation({ ...original, ...updated }));
+
+        saved.catch(() => {
+          dispatch(receiveLocation(original));
+          dispatch(fetchLocation(original.key));
+        });
+      });
+  };
+}
+
 export function createLocation(options) {
   const { imageUrl, name, latitude, longitude, address, resources, tags, status } = options;
   const { notes } = options;

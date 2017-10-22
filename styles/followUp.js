@@ -38,6 +38,17 @@ export default StyleSheet.create({
     paddingRight: 10,
   },
 
+  status_container: {
+    alignItems: 'center',
+    backgroundColor: colours.white,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    margin: containerMargin,
+    paddingRight: 10,
+  },
+
   tags_container: {
     alignItems: 'center',
     backgroundColor: colours.white,

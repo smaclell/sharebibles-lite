@@ -60,13 +60,16 @@ const uploadMapper = (uploads, v) => {
   return UploadStatus.uploaded;
 };
 
-const visitMapper = (uploads, tags, v) => {
+const visitMapper = (uploads, tags, statuses, v) => {
   const visitTags = v.tags || {};
   const filteredTags = tags.filter(t => visitTags[t.key]).map(t => t.label);
+  const filteredStatus = statuses.find(s => (s.key === v.status)) || {};
   return {
     ...v,
     upload: uploadMapper(uploads, v),
-    tag: filteredTags.length > 0 ? filteredTags[filteredTags.length - 1] : null,
+    initial: !!visitTags.initial,
+    tag: filteredTags.pop(),
+    status: filteredStatus.label,
   };
 };
 
@@ -74,7 +77,7 @@ const mapStateToProps = state => ({
   teamName: state.teams[state.users[state.user].teamKey].name,
   visits: (state.visits.byUser[state.user] || [])
     .map(k => state.visits.all[k])
-    .map(v => visitMapper(state.uploads, state.tags.followUp, v))
+    .map(v => visitMapper(state.uploads, state.tags.followUp, state.statuses, v))
     .sort((v1, v2) => v2.created - v1.created),
 });
 

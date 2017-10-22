@@ -18,8 +18,6 @@ import Switch from '../components/Switch';
 import styles from '../styles/initial';
 import colours from '../styles/colours';
 
-const statusIconsSize = 28;
-
 class Initial extends React.Component {
   static navigationOptions = {
     header: null,
@@ -105,9 +103,8 @@ class Initial extends React.Component {
         label={status.label}
         onPressed={() => this.updateStatus(status.key)}
         selected={this.state.status === status.key}
-      >
-        <FontAwesome name={status.icon} size={statusIconsSize} color={'white'} />
-      </Status>    
+        icon={status.icon}
+      />
     )
   }
 

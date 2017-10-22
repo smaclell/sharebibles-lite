@@ -16,6 +16,7 @@ import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
+import moment from 'moment';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
@@ -28,6 +29,7 @@ export default class SignInUp extends React.Component {
       I18n.initAsync()
     ]);
     console.info(I18n.locale);
+    moment.locale(I18n.locale)
     this.setState({appIsReady: true }); // when all above promises above are resolved
   }
 

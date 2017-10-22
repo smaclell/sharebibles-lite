@@ -1,3 +1,5 @@
+import es from 'moment/locale/es'
+
 export default {
   button_add: "Español",
   button_cancel: "Español",
@@ -7,11 +9,11 @@ export default {
   components_follow_up: "Español",
   components_get_location: "Español",
   components_get_photo: "Español",
-  components_last_visited: "Español",
+  components_last_visited: "Español {{visited_time}}",
   components_pending: "Español",
   components_tap_to_visit: "Español",
   components_uploaded: "Español",
-  components_visits: "Español",
+  components_visits: "{{num_visits}} Español",
   follow_up_add_notes: "Español",
   initial_first_visit: "Español",
   initial_or: "Español",

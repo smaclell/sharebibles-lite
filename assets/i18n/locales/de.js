@@ -1,3 +1,5 @@
+import de from 'moment/locale/de'
+
 export default {
   button_add: "Deutsch",
   button_cancel: "Deutsch",
@@ -7,11 +9,11 @@ export default {
   components_follow_up: "Deutsch",
   components_get_location: "Deutsch",
   components_get_photo: "Deutsch",
-  components_last_visited: "Deutsch",
+  components_last_visited: "Deutsch {{visited_time}}",
   components_pending: "Deutsch",
   components_tap_to_visit: "Deutsch",
   components_uploaded: "Deutsch",
-  components_visits: "Deutsch",
+  components_visits: "{{num_visits}} Deutsch",
   follow_up_add_notes: "Deutsch",
   initial_first_visit: "Deutsch",
   initial_or: "Deutsch",

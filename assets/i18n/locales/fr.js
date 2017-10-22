@@ -1,3 +1,5 @@
+import fr from 'moment/locale/fr'
+
 export default {
   button_add: "Français",
   button_cancel: "Français",
@@ -7,11 +9,11 @@ export default {
   components_follow_up: "Français",
   components_get_location: "Français",
   components_get_photo: "Français",
-  components_last_visited: "Français",
+  components_last_visited: "Français {{visited_time}}",
   components_pending: "Français",
   components_tap_to_visit: "Français",
   components_uploaded: "Français",
-  components_visits: "Français",
+  components_visits: "{{num_visits}} Français",
   follow_up_add_notes: "Français",
   initial_first_visit: "Français",
   initial_or: "Français",

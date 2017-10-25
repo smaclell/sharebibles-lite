@@ -85,7 +85,7 @@ class Initial extends React.Component {
       <ResourceCounter
         key={resource.key}
         format={resource.format}
-        summary={I18n.t(resource.key)}
+        summary={I18n.t(resource.summary)}
         onCountChanged={this.updateCount}
       />
     );

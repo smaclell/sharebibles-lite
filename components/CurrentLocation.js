@@ -131,7 +131,7 @@ class CurrentLocation extends Component {
           <View style={[circle, { display: this.state.loading ? 'none' : 'flex' }]}>
             <Text>{icon}</Text>
           </View>
-          <Text style={text}>{I18n.t('components_get_location')}</Text>
+          <Text style={text}>{I18n.t('components/get_location')}</Text>
         </View>
       </TouchableOpacity>
     );

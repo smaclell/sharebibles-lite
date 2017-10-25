@@ -15,7 +15,7 @@ import I18n from '../assets/i18n/i18n';
 
 export default class sharebiblesCreateAccount extends Component {
   static navigationOptions = {
-    title: I18n.t('title_sign_up'),
+    title: I18n.t('title/sign_up'),
     header: null,
   }
 
@@ -31,7 +31,7 @@ export default class sharebiblesCreateAccount extends Component {
         <ScrollView>
           <View style={styles.inner_container}>
 
-            <Text style={styles.header}> {I18n.t('title_share_bibles')} </Text>
+            <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
 
             <View style={styles.logo_container}>
               <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
@@ -39,47 +39,47 @@ export default class sharebiblesCreateAccount extends Component {
 
             <View style={styles.white_box}>
               <Text style={styles.subtitle}>
-                {I18n.t('sign_up_create_your_account')}
+                {I18n.t('sign_up/create_your_account')}
               </Text>
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 autoCapitalize="words"
-                placeholder={I18n.t('sign_up_example_name')}
+                placeholder={I18n.t('sign_up/example_name')}
               />
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder={I18n.t('sign_in_your_email')}
+                placeholder={I18n.t('sign_in/your_email')}
                 keyboardType="email-address"
               />
 
               <TextInput
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder={I18n.t('sign_in_your_password')}
+                placeholder={I18n.t('sign_in/your_password')}
                 secureTextEntry
               />
 
               <View style={styles.notice_container}>
                 <Text style={styles.instructions}>
-                {I18n.t('sign_up_instructions')}
+                {I18n.t('sign_up/instructions')}
                 </Text>
 
                 <TextInput
                   style={styles.textinput_container}
-                  placeholder={I18n.t('sign_up_your_access_code')}
+                  placeholder={I18n.t('sign_up/your_access_code')}
                 />
               </View>
 
               <View style={styles.login_button}>
-                <Button onClick={() => navigate('Home')}>{I18n.t('button_create_account')}</Button>
+                <Button onClick={() => navigate('Home')}>{I18n.t('button/create_account')}</Button>
               </View>
 
               <Text style={styles.terms}>
-                {I18n.t('sign_up_conditions_agreement')}
+                {I18n.t('sign_up/conditions_agreement')}
               </Text>
 
             </View>

@@ -14,7 +14,7 @@ class MapsView extends React.Component {
 
   static navigationOptions = {
     header: null,
-    tabBarLabel: I18n.t('title_map'),
+    tabBarLabel: I18n.t('title/map'),
     tabBarIcon: ({ tintColor }) => (
       <FontAwesome name="map-marker" size={40} color={tintColor} />
     ),

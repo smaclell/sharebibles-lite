@@ -126,7 +126,7 @@ class Photo extends Component {
             <Text>{icon}</Text>
           </View>
           <Image source={{ uri: this.state.uri }} style={[image, { display: this.state.uri ? 'flex' : 'none' }]} />
-          <Text style={text}>{I18n.t('components_get_photo')}</Text>
+          <Text style={text}>{I18n.t('components/get_photo')}</Text>
         </View>
       </TouchableOpacity>
     );

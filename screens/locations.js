@@ -14,7 +14,7 @@ import I18n from '../assets/i18n/i18n';
 
 class Locations extends React.Component {
   static navigationOptions = {
-    title: {I18n.t('title_conversations')},
+    title: {I18n.t('title/conversations')},
   }
 
   static propTypes = {
@@ -27,7 +27,7 @@ class Locations extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title_your_conversations')}</Text>
+        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
         <FlatList
           style={styles.inner_container}
           data={this.props.locations}

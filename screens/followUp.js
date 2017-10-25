@@ -128,7 +128,7 @@ class FollowUp extends React.Component {
               </View>
               <TextInput
                 style={styles.note_input}
-                placeholder={I18n.t('follow_up_add_notes')}
+                placeholder={I18n.t('follow_up/add_notes')}
                 multiline
                 numberOfLines={3}
                 onChangeText={notes => this.setState(p => ({ ...p, notes }))}
@@ -136,8 +136,8 @@ class FollowUp extends React.Component {
             </View>
 
             <View style={styles.actions_container}>
-              <Button onClick={() => this.update()}>{I18n.t('button_update')}</Button>
-              <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button_cancel')}</Button>
+              <Button onClick={() => this.update()}>{I18n.t('button/update')}</Button>
+              <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</Button>
             </View>
           </ScrollView>
         </TouchableWithoutFeedback>

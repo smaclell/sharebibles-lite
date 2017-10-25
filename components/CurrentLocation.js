@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
+import I18n from '../assets/i18n/i18n';
+
 
 const container = {
   alignItems: 'center',
@@ -129,7 +131,7 @@ class CurrentLocation extends Component {
           <View style={[circle, { display: this.state.loading ? 'none' : 'flex' }]}>
             <Text>{icon}</Text>
           </View>
-          <Text style={text}>Get Location</Text>
+          <Text style={text}>{I18n.t('components/get_location')}</Text>
         </View>
       </TouchableOpacity>
     );

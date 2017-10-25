@@ -11,11 +11,13 @@ import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/visits';
 import fonts from '../styles/fonts';
 import Visit from '../components/Visit';
+import I18n from '../assets/i18n/i18n';
+
 
 class Visits extends React.Component {
   static navigationOptions = {
     header: null,
-    tabBarLabel: 'Your Conversations',
+    tabBarLabel: I18n.t('title/your_conversations'),
     tabBarIcon: ({ tintColor }) => (
       <FontAwesome name="list" size={40} color={tintColor} />
     ),
@@ -32,7 +34,7 @@ class Visits extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>Your Conversations</Text>
+        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
         <Text style={{ fontSize: fonts.large, marginBottom: 10 }}>{this.props.teamName}</Text>
         <FlatList
           style={styles.inner_container}

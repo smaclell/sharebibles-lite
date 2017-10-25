@@ -44,10 +44,8 @@ const fixed = {
 // Using entirely local state/methods to simplify the reducer
 class ResourceCounter extends Component {
   static propTypes = {
-    resource: PropTypes.shape({
-      format: PropTypes.string.isRequired,
-      summary: PropTypes.string.isRequired,
-    }).isRequired,
+    format: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
     onCountChanged: PropTypes.func.isRequired,
   }
 
@@ -79,13 +77,12 @@ class ResourceCounter extends Component {
   }
 
   render() {
-    const { format, summary } = this.props.resource;
-    const iconName = formatIcons[format] || formatIcons.default;
+    const iconName = formatIcons[this.props.format] || formatIcons.default;
 
     return (
       <View style={container}>
         <FontAwesome name={iconName} size={fonts.large} color={colours.text} />
-        <Text style={text}>{summary}</Text>
+        <Text style={text}>{this.props.summary}</Text>
         <TouchableOpacity style={fixed} onPressOut={() => this.updateCount(-1)}>
           <FontAwesome name="minus" size={fonts.normal} color={colours.text} />
         </TouchableOpacity>

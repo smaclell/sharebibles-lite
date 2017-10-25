@@ -20,11 +20,11 @@ const Visit = ({ created, status, initial, tag, navigate, upload }) => (
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 110, marginRight: 5 }}>
         <Text style={{ fontSize: fonts.large, fontWeight: 'bold' }}>{ initial ? I18n.t('initial/first_visit') : I18n.t('components/follow_up') }</Text>
-        {status ? 
-          <VisitStatus status={status}/> : 
+        {status ?
+          <VisitStatus status={status} /> :
           <Text style={{ fontSize: fonts.normal }}>{tag }</Text>
         }
-        <Text style={{ fontSize: fonts.small }}>{I18n.t('components/last_visited', {visited_time: moment.utc(created).clone().local().fromNow()})}</Text>
+        <Text style={{ fontSize: fonts.small }}>{I18n.t('components/last_visited', { visited_time: moment.utc(created).clone().local().fromNow() })}</Text>
       </View>
       <View style={[styles.circle, uploadStyles[upload]]} />
     </View>
@@ -41,6 +41,7 @@ Visit.propTypes = {
 };
 
 Visit.defaultProps = {
+  initial: false,
   status: null,
   tag: null,
 };

@@ -29,7 +29,7 @@ export default class SignInUp extends React.Component {
         <View style={style.inner_Container}>
 
           <Text style={style.welcome}>
-              {I18n.t('title/welcome')}
+            {I18n.t('title/welcome')}
           </Text>
 
           <View style={style.logo_container}>

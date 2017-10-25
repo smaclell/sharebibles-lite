@@ -87,12 +87,14 @@ export async function createLocation(creator, options) {
   // If we have an imageUrl, upload it to firebase storage:
   let { imageUrl } = options;
   // Hard code no-go for now until we figure out firebase + base64
-  if (false && imageUrl) {
+  if (!pushed && imageUrl) {
     const fileType = 'jpg';
     const child = `locations/${pushed.key}.${fileType}`;
+    /*
     const metadata = {
       contentType: `image/${fileType}`,
     };
+    */
     const body = await new Promise((resolve, reject) => {
       ImageStore.getBase64ForTag(imageUrl, resolve, reject);
     });
@@ -100,7 +102,6 @@ export async function createLocation(creator, options) {
     const image = await firebase.storage().ref().child(child).putString(body, 'base64');
 
     imageUrl = image.snapshot.downloadUrl;
-
   } else {
     imageUrl = null;
   }

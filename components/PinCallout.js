@@ -18,8 +18,8 @@ const Callout = ({ created, visits }) => (
   <View style={styles.callout_container}>
     <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
     <View style={{ marginBottom: 5 }}>
-      <Text style={{ fontSize: fonts.normal }}>{I18n.t('components/last_visited', {visited_time: relativeTime(created)})}</Text>
-      <Text style={{ fontSize: fonts.normal }}> {I18n.t('components/visits', {num_visits: visits})} </Text>
+      <Text style={{ fontSize: fonts.normal }}>{I18n.t('components/last_visited', { visited_time: relativeTime(created) })}</Text>
+      <Text style={{ fontSize: fonts.normal }}> {I18n.t('components/visits', { num_visits: visits })} </Text>
     </View>
     <Text style={{ fontSize: fonts.small, color: 'red', fontWeight: 'bold' }}>
       {I18n.t('components/tap_to_visit')}

@@ -47,6 +47,27 @@ const image = {
 
 const iconSize = 48;
 
+function cropPhoto({ height, width, uri }) {
+  return new Promise((resolve, reject) => {
+    const cropData = {
+      offset: {
+        x: 0,
+        y: 0,
+      },
+      size: {
+        width,
+        height,
+      },
+      displaySize: {
+        width: 960,
+        height: 960,
+      },
+      resizeMode: 'contain',
+    };
+    ImageEditor.cropImage(uri, cropData, resolve, reject);
+  });
+}
+
 class Photo extends Component {
   static propTypes = {
     onPhotoChanged: PropTypes.func,
@@ -64,40 +85,20 @@ class Photo extends Component {
     };
   }
 
-  _cropPhoto({ height, width, uri }) {
-    return new Promise((resolve, reject) => {
-      const cropData = {
-        offset: {
-          x: 0,
-          y: 0,
-        },
-        size: {
-          width,
-          height,
-        },
-        displaySize: {
-          width: 960,
-          height: 960,
-        },
-        resizeMode: 'contain',
-      };
-      ImageEditor.cropImage(uri, cropData, resolve, reject);
-    });
-  }
-
   getPhoto() {
     this.setState(p => ({ ...p, loading: true }));
 
     ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
-    }).then(({ cancelled, uri, width, height  }) => {
+    }).then(({ cancelled, uri, width, height }) => {
       if (cancelled) {
         this.setState(p => ({ ...p, loading: false }));
-        return;
+        return null;
       }
-      return this._cropPhoto({ uri, width, height });
-    }).then(uri => {
+
+      return cropPhoto({ uri, width, height });
+    }).then((uri) => {
       this.setState(p => ({ ...p, uri }));
       this.props.onPhotoChanged(uri);
     });

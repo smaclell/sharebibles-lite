@@ -65,7 +65,7 @@ export default class sharebiblesCreateAccount extends Component {
 
               <View style={styles.notice_container}>
                 <Text style={styles.instructions}>
-                {I18n.t('sign_up/instructions')}
+                  {I18n.t('sign_up/instructions')}
                 </Text>
 
                 <TextInput

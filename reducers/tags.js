@@ -1,6 +1,3 @@
-import I18n from '../assets/i18n/i18n';
-
-
 // A hardcoded list of interactions for each location and visit
 const tags = {
   initial: [

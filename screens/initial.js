@@ -84,6 +84,7 @@ class Initial extends React.Component {
     return (
       <ResourceCounter
         key={resource.key}
+        resourceKey={resource.key}
         format={resource.format}
         summary={I18n.t(resource.summary)}
         onCountChanged={this.updateCount}
@@ -112,15 +113,15 @@ class Initial extends React.Component {
         selected={this.state.status === status.key}
         icon={status.icon}
       />
-    )
+    );
   }
 
-  updateCount({ count, resource }) {
+  updateCount({ count, resourceKey }) {
     this.setState(p => ({
       ...p,
       resources: {
-        [resource.key]: {
-          ...p.resources[resource.key],
+        [resourceKey]: {
+          ...p.resources[resourceKey],
           given: count,
         },
       },

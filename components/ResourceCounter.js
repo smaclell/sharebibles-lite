@@ -44,6 +44,7 @@ const fixed = {
 // Using entirely local state/methods to simplify the reducer
 class ResourceCounter extends Component {
   static propTypes = {
+    resourceKey: PropTypes.string.isRequired,
     format: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
     onCountChanged: PropTypes.func.isRequired,
@@ -62,7 +63,7 @@ class ResourceCounter extends Component {
   handleCountChanged() {
     this.props.onCountChanged({
       count: this.state.count,
-      resource: this.props.resource,
+      resourceKey: this.props.resourceKey,
     });
   }
 

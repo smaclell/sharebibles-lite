@@ -14,7 +14,7 @@ import I18n from '../assets/i18n/i18n';
 
 class Locations extends React.Component {
   static navigationOptions = {
-    title: {I18n.t('title/conversations')},
+    title: I18n.t('title/conversations'),
   }
 
   static propTypes = {

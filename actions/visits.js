@@ -30,7 +30,7 @@ export function createVisit({ locationKey, notes, status = 'unknown', tags = {} 
     const creator = state.users[state.user];
 
     return apis.createVisit(locationKey, creator, { notes, status, tags })
-      .then(({ created: visit, saved }) => {
+      .then(({ created: visit, saved }) => { // eslint-disable-line consistent-return
         dispatch(pending(visit.key));
         saved
           .then(() => dispatch(uploaded(visit.key)))

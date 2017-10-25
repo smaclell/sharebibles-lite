@@ -48,6 +48,7 @@ const text = {
 
 class Status extends Component {
   static propTypes = {
+    icon: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     onPressed: PropTypes.func.isRequired,
     selected: PropTypes.bool,

@@ -41,7 +41,7 @@ class MapsView extends React.Component {
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude }}
-            pinColor={ location.pinColor }
+            pinColor={location.pinColor}
           >
             <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
               <PinCallout {...location} />

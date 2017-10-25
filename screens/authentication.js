@@ -11,26 +11,17 @@ import {
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import moment from 'moment';
 import Button from '../components/Button';
 import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
-import moment from 'moment';
 
 export default class SignInUp extends React.Component {
   static navigationOptions = {
     title: I18n.t('title/sign_in'),
     header: null,
-  }
-
-  async componentWillMount() {
-    const dummy = await Promise.all([
-      I18n.initAsync()
-    ]);
-    console.info(I18n.locale);
-    moment.locale(I18n.locale)
-    this.setState({appIsReady: true }); // when all above promises above are resolved
   }
 
   static propTypes = {
@@ -43,8 +34,16 @@ export default class SignInUp extends React.Component {
     this.state = {
       email: null,
       password: null,
-      appIsReady: false
+      appIsReady: false,
     };
+  }
+
+  async componentWillMount() {
+    await Promise.all([
+      I18n.initAsync(),
+    ]);
+    moment.locale(I18n.locale);
+    this.setState({ appIsReady: true }); // when all above promises above are resolved
   }
 
   render() {
@@ -112,7 +111,7 @@ export default class SignInUp extends React.Component {
 
             <TextInput
               style={styles.textinput_container}
-              placeholder= {I18n.t('sign_in/your_password')}
+              placeholder={I18n.t('sign_in/your_password')}
               placeholderTextColor={colours.placeholder}
               secureTextEntry
               autoCapitalize="none"

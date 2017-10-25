@@ -55,7 +55,7 @@ class FollowUp extends React.Component {
         selected={this.state.status === status.key}
         icon={status.icon}
       />
-    )
+    );
   }
 
   showTag(tag) {

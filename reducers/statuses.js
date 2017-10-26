@@ -1,9 +1,9 @@
 // A hardcoded list of interactions for each location and visit
-const statuses =[
-  { key: 'accepted', label: 'Accepted', icon: 'check', colorPin: 'green' },
-  { key: 'delivered', label: 'Delivered', icon: 'book', colorPin: 'blue' },
-  { key: 'not-home', label: 'Not Home', icon: 'repeat', colorPin: 'linen' },
-  { key: 'rejected', label: 'Rejected', icon: 'close', colorPin: 'red' },
+const statuses = [
+  { key: 'status/accepted', icon: 'check', colorPin: 'green' },
+  { key: 'status/delivered', icon: 'book', colorPin: 'blue' },
+  { key: 'status/not_home', icon: 'repeat', colorPin: 'linen' },
+  { key: 'status/rejected', icon: 'close', colorPin: 'red' },
 ];
 
 function reducer(state = statuses) {

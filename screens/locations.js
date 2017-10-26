@@ -9,10 +9,12 @@ import { connect } from 'react-redux';
 import styles from '../styles/locations';
 import fonts from '../styles/fonts';
 import Location from '../components/Location';
+import I18n from '../assets/i18n/i18n';
+
 
 class Locations extends React.Component {
   static navigationOptions = {
-    title: 'Conversations',
+    title: I18n.t('title/conversations'),
   }
 
   static propTypes = {
@@ -25,7 +27,7 @@ class Locations extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>Your Conversations</Text>
+        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
         <FlatList
           style={styles.inner_container}
           data={this.props.locations}

@@ -1,15 +1,15 @@
 // A hardcoded list of interactions for each location and visit
 const tags = {
   initial: [
-    { key: 'cannotRead', label: "Can't Read" },
-    { key: 'christian', label: 'Is Christian?' },
+    'tag/initial/cannot_read',
+    'tag/initial/christian',
   ],
   followUp: [
-    { key: 'prayer', label: 'Received Prayer' },
-    { key: 'readBible', label: 'Read the Bible' },
-    { key: 'understoodGospel', label: 'Understood the Gospel' },
-    { key: 'joinedDiscipleshipGroup', label: 'Joined Discipleship Group' },
-    { key: 'receivedBaptism', label: 'Received Baptism' },
+    'tag/followup/prayer',
+    'tag/followup/read_bible',
+    'tag/followup/understood_gospel',
+    'tag/followup/joined_discipleship_group',
+    'tag/followup/received_baptism',
   ],
 };
 

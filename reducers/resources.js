@@ -2,11 +2,10 @@
 // Use to track the number of resources distributed and needed at a location
 
 // Based on https://trello.com/c/rIzf09DV
-
 const initial = {
-  1: {
-    key: '1',
-    summary: 'Complete English Bible',
+  english_bible_esv: {
+    key: 'english_bible_esv',
+    summary: 'resource/english_bible_esv',
     language: 'en-us', // Language as a language code
     format: 'book', // ['book', 'documents', 'document', 'audio', 'app', 'sd-card', 'video']
     translation: 'ESV',

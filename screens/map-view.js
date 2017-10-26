@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import PinCallout from '../components/PinCallout';
+import I18n from '../assets/i18n/i18n';
 
 class MapsView extends React.Component {
   static propTypes = {
@@ -13,7 +14,7 @@ class MapsView extends React.Component {
 
   static navigationOptions = {
     header: null,
-    tabBarLabel: 'Map',
+    tabBarLabel: I18n.t('title/map'),
     tabBarIcon: ({ tintColor }) => (
       <FontAwesome name="map-marker" size={40} color={tintColor} />
     ),
@@ -40,7 +41,7 @@ class MapsView extends React.Component {
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude }}
-            pinColor={ location.pinColor }
+            pinColor={location.pinColor}
           >
             <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
               <PinCallout {...location} />

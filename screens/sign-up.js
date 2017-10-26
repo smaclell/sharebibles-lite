@@ -16,10 +16,11 @@ import Button from '../components/Button';
 import * as authenticationActions from '../actions/authentication';
 import styles from '../styles/main';
 import colours from '../styles/colours';
+import I18n from '../assets/i18n/i18n';
 
 class SignUp extends Component {
   static navigationOptions = {
-    title: 'Sign Up',
+    title: I18n.t('title/sign_up'),
     header: null,
   }
 
@@ -65,7 +66,7 @@ class SignUp extends Component {
         <ScrollView>
           <View style={styles.inner_container}>
 
-            <Text style={styles.header}> Share Bibles </Text>
+            <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
 
             <View style={styles.logo_container}>
               <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
@@ -73,7 +74,7 @@ class SignUp extends Component {
 
             <View style={styles.white_box}>
               <Text style={styles.subtitle}>
-                Create Your Account
+                {I18n.t('sign_up/create_your_account')}
               </Text>
 
               <TextInput
@@ -81,14 +82,14 @@ class SignUp extends Component {
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 autoCapitalize="words"
-                placeholder="Sam Smith"
+                placeholder={I18n.t('sign_up/example_name')}
               />
 
               <TextInput
                 onChangeText={email => this.setState({ email })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder="your@email.com"
+                placeholder={I18n.t('sign_in/your_email')}
                 keyboardType="email-address"
               />
 
@@ -96,28 +97,28 @@ class SignUp extends Component {
                 onChangeText={password => this.setState({ password })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder="Password"
+                placeholder={I18n.t('sign_in/your_password')}
                 secureTextEntry
               />
 
               <View style={styles.notice_container}>
                 <Text style={styles.instructions}>
-                You will need an access code for your team to continue.
+                  {I18n.t('sign_up/instructions')}
                 </Text>
 
                 <TextInput
                   onChangeText={accessCode => this.setState({ accessCode })}
                   style={styles.textinput_container}
-                  placeholder="Access Code"
+                  placeholder={I18n.t('sign_up/your_access_code')}
                 />
               </View>
 
               <View style={styles.login_button}>
-                <Button onClick={this.createAccount}>Create Account</Button>
+                <Button onClick={this.createAccount}>{I18n.t('button/create_account')}</Button>
               </View>
 
               <Text style={styles.terms}>
-                By clicking &quot;Create Account&quot; you agree to the Terms and Conditions
+                {I18n.t('sign_up/conditions_agreement')}
               </Text>
 
             </View>

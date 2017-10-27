@@ -32,6 +32,7 @@ export function signIn(email, password) {
     .then(({ uid }) => firebase.database().ref(`users/${uid}`).once('value').then(v => v.val()));
 }
 
+// Standardizes the results from crypto into something safe to send
 function normalize(wordArray) {
 // From uuid-safe
   const EQUAL_END_REGEXP = /=+$/;
@@ -45,6 +46,9 @@ function normalize(wordArray) {
     .replace(SLASH_GLOBAL_REGEXP, '_');
 }
 
+// One way hashing for raw access codes
+// A single salt is used overall and does not need to be secured
+// It is to prevent using pre computed hashses to break our codes
 function hashAccessCode(raw) {
   const salt = 'h-V-U5QmjC60KabrfTEzBykgzEXRaAm20KBzUNeySG5jIRVVKSp5RSBLKwP5eiRYPoq_exCMAKP2GAdLdNbR_A';
   return normalize(pbkdf2(raw, salt, { keySize: 512 / 32, iterations: 1000 }));

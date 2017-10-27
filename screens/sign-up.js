@@ -35,6 +35,7 @@ class SignUp extends Component {
       name: '',
       email: '',
       password: '',
+      confirmPassword: '',
       accessCode: '',
     };
 
@@ -42,6 +43,15 @@ class SignUp extends Component {
   }
 
   createAccount() {
+    if (this.state.password !== this.state.confirmPassword) {
+      return Alert.alert(
+        I18n.t('sign_up/failed_confirmation_title'),
+        I18n.t('sign_up/failed_confirmation_message'),
+        [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+
     const { navigation: { navigate }, signUp } = this.props;
 
     return signUp(this.state.name, this.state.email, this.state.password, this.state.accessCode)
@@ -52,9 +62,9 @@ class SignUp extends Component {
         }
 
         Alert.alert(
-          'Could not sign up',
-          'Please check your email and password',
-          [{ text: 'OK', onPress() {} }],
+          I18n.t('sign_up/failed_sign_up_title'),
+          I18n.t('sign_up/failed_sign_up_message'),
+          [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
           { cancelable: false },
         );
       });
@@ -95,6 +105,14 @@ class SignUp extends Component {
 
               <TextInput
                 onChangeText={password => this.setState({ password })}
+                style={styles.textinput_container}
+                placeholderTextColor={colours.placeholder}
+                placeholder={I18n.t('sign_in/your_password')}
+                secureTextEntry
+              />
+
+              <TextInput
+                onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 placeholder={I18n.t('sign_in/your_password')}

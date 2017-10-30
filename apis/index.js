@@ -83,6 +83,9 @@ export async function signUp(name, email, password, accessCode) {
   return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
+// Currently not used. Will soon be used to send/share an access code
+// Access codes can only be used once and expire.
+// This is enforced by firebase
 export async function createAccessCode(forced) {
   const { uid: userKey } = firebase.auth().currentUser;
   const { teamKey } = (await firebase.database().ref(`users/${userKey}`).once('value')).val();

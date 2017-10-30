@@ -33,7 +33,6 @@ export default {
   'sign_up/failed_confirmation_message': 'Français',
   'sign_up/failed_sign_up_title': 'Français',
   'sign_up/failed_sign_up_message': 'Français',
-  'sign_up/failed_button': 'Français',
   'sign_up/instructions': 'Français',
   'sign_up/your_access_code': 'Français',
   'status/accepted': 'Français',

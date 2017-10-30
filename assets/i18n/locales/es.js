@@ -33,7 +33,6 @@ export default {
   'sign_up/failed_confirmation_message': 'Español',
   'sign_up/failed_sign_up_title': 'Español',
   'sign_up/failed_sign_up_message': 'Español',
-  'sign_up/failed_button': 'Español',
   'sign_up/instructions': 'Español',
   'sign_up/your_access_code': 'Español',
   'status/accepted': 'Español',

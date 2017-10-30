@@ -47,7 +47,7 @@ class SignUp extends Component {
       return Alert.alert(
         I18n.t('sign_up/failed_confirmation_title'),
         I18n.t('sign_up/failed_confirmation_message'),
-        [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
+        [{ text: I18n.t('button/ok'), onPress() {} }],
         { cancelable: false },
       );
     }

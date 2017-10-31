@@ -1,46 +1,32 @@
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 // Sorted Alphabetically
-import Authentication from '../containers/Authentication';
 import Dev from '../screens/dev';
-import Initial from '../screens/initial';
-import MapsView from '../screens/map-view';
-import SignUp from '../screens/sign-up';
 import FollowUp from '../screens/followUp';
+import Initial from '../screens/initial';
+import OverviewMap from '../screens/overviewMap';
+import SignIn from '../screens/signIn';
+import SignUp from '../screens/signUp';
 import Visits from '../screens/visits';
 
 const login = new StackNavigator({
-  SignIn: { screen: Authentication },
+  SignIn: { screen: SignIn },
   SignUp: { screen: SignUp },
-});
-
-const map = new StackNavigator({
-  MapsView: { screen: MapsView },
-  FollowUp: { screen: FollowUp },
-}, {
-  headerMode: 'none',
-});
-
-const visits = new StackNavigator({
-  Visits: { screen: Visits },
-  FollowUp: { screen: FollowUp },
-}, {
-  headerMode: 'none',
 });
 
 const home = new TabNavigator({
   Dev: { screen: Dev },
-  MapsView: { screen: map },
+  OverviewMap: { screen: OverviewMap },
   Initial: { screen: Initial },
-  Visits: { screen: visits },
+  Visits: { screen: Visits },
 }, {
   lazy: true,
   animationEnabled: true,
   headerMode: 'none',
   tabBarPosition: 'bottom',
-  order: ['MapsView', 'Initial', 'Visits'],
+  order: ['OverviewMap', 'Initial', 'Visits'],
   swipeEnabled: false,
-  initialRouteName: 'MapsView',
+  initialRouteName: 'OverviewMap',
   tabBarOptions: {
     showIcon: true,
     showLabel: false,
@@ -65,4 +51,5 @@ const home = new TabNavigator({
 export default new StackNavigator({
   Login: { screen: login },
   Home: { screen: home },
+  FollowUp: { screen: FollowUp },
 });

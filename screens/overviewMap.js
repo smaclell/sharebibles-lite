@@ -28,6 +28,11 @@ class OverviewMap extends React.Component {
         style={{ flex: 1 }}
         mapType="hybrid"
         showsUserLocation
+        showsMyLocationButton
+        showsTraffic={false}
+        showsIndoors={false}
+        showsBuildings={false}
+        provider="google"
         initialRegion={{
           latitude,
           longitude,

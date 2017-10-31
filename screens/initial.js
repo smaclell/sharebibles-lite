@@ -95,11 +95,11 @@ class Initial extends React.Component {
   showTag(tag) {
     return (
       <Switch
-        key={tag}
-        onChange={enabled => this.updateTag(tag, enabled)}
-        value={!!this.state.tags[tag]}
+        key={tag.key}
+        onChange={enabled => this.updateTag(tag.key, enabled)}
+        value={!!this.state.tags[tag.key]}
       >
-        {I18n.t(tag)}
+        {I18n.t(tag.label)}
       </Switch>
     );
   }
@@ -108,7 +108,7 @@ class Initial extends React.Component {
     return (
       <Status
         key={status.key}
-        label={I18n.t(status.key)}
+        label={I18n.t(status.label)}
         onPressed={() => this.updateStatus(status.key)}
         selected={this.state.status === status.key}
         icon={status.icon}

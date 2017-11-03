@@ -7,7 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import styles from '../styles/map-screen';
+import styles from '../styles/maps';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 

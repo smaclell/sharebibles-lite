@@ -9,16 +9,18 @@ import {
   View,
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
+import * as actions from '../actions/authentication';
 import Button from '../components/Button';
 import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
-export default class SignInUp extends React.Component {
+class SignIn extends React.Component {
   static navigationOptions = {
     title: I18n.t('title/sign_in'),
     header: null,
@@ -137,3 +139,9 @@ export default class SignInUp extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  signIn: (email, password) => dispatch(actions.signIn(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

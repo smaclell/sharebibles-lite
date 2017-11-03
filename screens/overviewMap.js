@@ -6,7 +6,7 @@ import { MapView } from 'expo';
 import PinCallout from '../components/PinCallout';
 import I18n from '../assets/i18n/i18n';
 
-class MapsView extends React.Component {
+class OverviewMap extends React.Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     locations: PropTypes.array.isRequired,
@@ -28,6 +28,11 @@ class MapsView extends React.Component {
         style={{ flex: 1 }}
         mapType="hybrid"
         showsUserLocation
+        showsMyLocationButton
+        showsTraffic={false}
+        showsIndoors={false}
+        showsBuildings={false}
+        provider="google"
         initialRegion={{
           latitude,
           longitude,
@@ -70,4 +75,4 @@ const mapStateToProps = state => ({
     })),
 });
 
-export default connect(mapStateToProps)(MapsView);
+export default connect(mapStateToProps)(OverviewMap);

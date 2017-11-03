@@ -22,7 +22,7 @@ const Visit = ({ created, status, initial, tag, navigate, upload }) => (
         <Text style={{ fontSize: fonts.large, fontWeight: 'bold' }}>{ initial ? I18n.t('initial/first_visit') : I18n.t('components/follow_up') }</Text>
         {status ?
           <VisitStatus status={status} /> :
-          <Text style={{ fontSize: fonts.normal }}>{tag }</Text>
+          <Text style={{ fontSize: fonts.normal }}>{tag}</Text>
         }
         <Text style={{ fontSize: fonts.small }}>{I18n.t('components/last_visited', { visited_time: moment.utc(created).clone().local().fromNow() })}</Text>
       </View>

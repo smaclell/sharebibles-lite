@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -36,6 +36,12 @@ const login = new StackNavigator({
 const iconSize = 30;
 const tabHeight = 50;
 
+const initialStyle = {
+  padding: 20,
+  paddingBottom: Platform.OS === 'ios' ? 35 : undefined,
+  backgroundColor: colours.primaryButton,
+};
+
 const home = new TabNavigator({
   Dev: {
     screen: Dev,
@@ -60,7 +66,7 @@ const home = new TabNavigator({
       tabBarLabel: I18n.t('initial/first_visit'),
       tabBarVisible: false,
       tabBarIcon: () => (
-        <View style={{ padding: 20, paddingBottom: 35, backgroundColor: colours.primaryButton }}>
+        <View style={initialStyle}>
           <FontAwesome name="plus" size={40} color={colours.white} />
         </View>
       ),

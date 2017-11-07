@@ -73,7 +73,7 @@ const Button = ({ children, disabled, onClick, type }) => (
 );
 
 Button.propTypes = {
-  type: PropTypes.oneOf('primary', 'secodary').isRequired,
+  type: PropTypes.oneOf('primary', 'secondary').isRequired,
   disabled: PropTypes.bool,
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
@@ -84,7 +84,7 @@ Button.defaultProps = {
 };
 
 const Primary = props => <Button type="primary" {...props} />;
-const Secondary = props => <Button type="primary" {...props} />;
+const Secondary = props => <Button type="secondary" {...props} />;
 
 export default Primary;
 export const PrimaryButton = Primary;

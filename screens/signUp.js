@@ -34,6 +34,7 @@ class SignUp extends Component {
       password: '',
       confirmPassword: '',
       accessCode: '',
+      loading: false,
     };
 
     this.createAccount = this.createAccount.bind(this);
@@ -135,7 +136,7 @@ class SignUp extends Component {
 
               <View style={styles.login_button}>
                 <Button disabled={this.state.loading} onClick={this.createAccount}>{
-                  this.state.loading ? I18n.t('button/create_account') : I18n.t('button/loading')
+                  this.state.loading ? I18n.t('button/loading') : I18n.t('button/create_account')
                 }</Button>
               </View>
 

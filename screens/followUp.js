@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
-import Button from '../components/Button';
+import { PrimaryButton, SecondaryButton } from '../components/Button';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
 import User from '../components/User';
@@ -136,8 +136,8 @@ class FollowUp extends React.Component {
             </View>
 
             <View style={styles.actions_container}>
-              <Button onClick={() => this.update()}>{I18n.t('button/update')}</Button>
-              <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</Button>
+              <PrimaryButton onClick={() => this.update()}>{I18n.t('button/update')}</PrimaryButton>
+              <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
             </View>
           </ScrollView>
         </TouchableWithoutFeedback>

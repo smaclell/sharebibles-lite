@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import * as locationActions from '../actions/locations';
 import User from '../components/User';
-import Button from '../components/Button';
+import { PrimaryButton, SecondaryButton } from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
 import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
@@ -179,8 +179,8 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.actions_container}>
-          <Button onClick={() => this.add()}>{I18n.t('button/add')}</Button>
-          <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</Button>
+          <PrimaryButton onClick={() => this.add()}>{I18n.t('button/add')}</PrimaryButton>
+          <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
 
 

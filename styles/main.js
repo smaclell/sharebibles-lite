@@ -98,6 +98,14 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  sign_in_container: {
+    width: 250,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   sign_up_container: {
     width: 250,
     padding: 10,

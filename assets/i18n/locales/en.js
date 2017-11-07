@@ -27,6 +27,8 @@ export default {
   'sign_up/conditions_agreement': 'By clicking "Create Account" you agree to the Terms and Conditions',
   'sign_up/create_your_account': 'Create Your Account',
   'sign_up/example_name': 'Sam Smith',
+  'sign_up/existing': 'Have an existing account?',
+  'sign_up/sign_in': 'Sign In',
   'sign_up/failed_confirmation_title': 'Passwords did not match',
   'sign_up/failed_confirmation_message': 'Your password and confirmation did not match, please try again',
   'sign_up/failed_sign_up_title': 'Could not sign up',

@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ import Button from '../components/Button';
 import * as authenticationActions from '../actions/authentication';
 import styles from '../styles/main';
 import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
 class SignUp extends Component {
@@ -66,6 +68,8 @@ class SignUp extends Component {
   }
 
   render() {
+    const { navigation: { navigate } } = this.props;
+
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -128,6 +132,14 @@ class SignUp extends Component {
 
               <View style={styles.login_button}>
                 <Button onClick={this.createAccount}>{I18n.t('button/create_account')}</Button>
+              </View>
+
+              <View style={styles.sign_in_container}>
+                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_up/existing')} </Text>
+                <TouchableOpacity onPress={() => navigate('SignIn')}>
+                  <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                    {I18n.t('sign_up/sign_in')} </Text>
+                </TouchableOpacity>
               </View>
 
               <Text style={styles.terms}>

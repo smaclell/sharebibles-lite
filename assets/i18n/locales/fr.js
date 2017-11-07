@@ -29,6 +29,8 @@ export default {
   'sign_up/conditions_agreement': 'Français',
   'sign_up/create_your_account': 'Français',
   'sign_up/example_name': 'Français',
+  'sign_up/existing': 'Français',
+  'sign_up/sign_in': 'Français',
   'sign_up/failed_confirmation_title': 'Français',
   'sign_up/failed_confirmation_message': 'Français',
   'sign_up/failed_sign_up_title': 'Français',

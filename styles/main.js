@@ -74,7 +74,7 @@ export default StyleSheet.create({
     textAlign: 'left',
     color: 'black',
     backgroundColor: colours.white,
-    marginBottom: 22,
+    marginBottom: 10,
     fontSize: fonts.normal,
     paddingLeft: 6,
     borderColor: colours.greys.lighter,

@@ -118,7 +118,7 @@ class SignUp extends Component {
                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
-                placeholder={I18n.t('sign_in/your_password')}
+                placeholder={I18n.t('sign_up/confirm_your_password')}
                 secureTextEntry
               />
 

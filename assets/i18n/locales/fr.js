@@ -28,6 +28,7 @@ export default {
   'sign_in/your_email': 'Français',
   'sign_in/your_password': 'Français',
   'sign_up/conditions_agreement': 'Français',
+  'sign_up/confirm_your_password': 'Français',
   'sign_up/create_your_account': 'Français',
   'sign_up/example_name': 'Français',
   'sign_up/existing': 'Français',

@@ -26,6 +26,7 @@ export default {
   'sign_in/your_email': 'your@email.com',
   'sign_in/your_password': 'Password',
   'sign_up/conditions_agreement': 'By clicking "Create Account" you agree to the Terms and Conditions',
+  'sign_up/confirm_your_password': 'Confirm Password',
   'sign_up/create_your_account': 'Create Your Account',
   'sign_up/example_name': 'Sam Smith',
   'sign_up/existing': 'Have an existing account?',

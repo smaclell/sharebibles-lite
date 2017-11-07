@@ -19,11 +19,6 @@ import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
 
 class SignUp extends Component {
-  static navigationOptions = {
-    title: I18n.t('title/sign_up'),
-    header: null,
-  }
-
   static propTypes = {
     signUp: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,

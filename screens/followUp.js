@@ -21,11 +21,6 @@ import I18n from '../assets/i18n/i18n';
 
 
 class FollowUp extends React.Component {
-  static navigationOptions = {
-    header: null,
-    tabBarVisible: false,
-  }
-
   static propTypes = { // Sorted Alphabetically
     createVisit: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired,

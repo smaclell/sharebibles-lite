@@ -21,11 +21,6 @@ import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
 class SignIn extends React.Component {
-  static navigationOptions = {
-    title: I18n.t('title/sign_in'),
-    header: null,
-  }
-
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     signIn: PropTypes.func.isRequired,

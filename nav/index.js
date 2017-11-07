@@ -17,15 +17,32 @@ import SignUp from '../screens/signUp';
 import Visits from '../screens/visits';
 
 const login = new StackNavigator({
-  SignIn: { screen: SignIn },
-  SignUp: { screen: SignUp },
+  SignIn: {
+    screen: SignIn,
+    navigationOptions: {
+      title: I18n.t('title/sign_in'),
+      header: null,
+    },
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      title: I18n.t('title/sign_up'),
+      header: null,
+    },
+  },
 });
 
 const iconSize = 30;
 const tabHeight = 50;
 
 const home = new TabNavigator({
-  Dev: { screen: Dev },
+  Dev: {
+    screen: Dev,
+    navigationOptions: {
+      title: 'Developer Testing Screen',
+    },
+  },
   OverviewMap: {
     screen: OverviewMap,
     navigationOptions: {
@@ -91,5 +108,11 @@ const home = new TabNavigator({
 export default new StackNavigator({
   Login: { screen: login },
   Home: { screen: home },
-  FollowUp: { screen: FollowUp },
+  FollowUp: {
+    screen: FollowUp,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false,
+    },
+  },
 });

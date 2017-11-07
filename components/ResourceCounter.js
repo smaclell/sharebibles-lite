@@ -22,7 +22,7 @@ const formatIcons = {
 const container = {
   alignItems: 'center',
   flexDirection: 'row',
-  margin: 10,
+  margin: 0,
 };
 
 const text = {

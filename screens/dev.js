@@ -15,10 +15,6 @@ import User from '../components/User';
 import Switch from '../components/Switch';
 
 class Dev extends React.Component {
-  static navigationOptions = {
-    title: 'Developer Testing Screen',
-  }
-
   static propTypes = {
     createLocation: PropTypes.func.isRequired,
     user: PropTypes.object,

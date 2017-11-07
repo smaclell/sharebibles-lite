@@ -21,11 +21,6 @@ import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
 class SignIn extends React.Component {
-  static navigationOptions = {
-    title: I18n.t('title/sign_in'),
-    header: null,
-  }
-
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     signIn: PropTypes.func.isRequired,
@@ -37,6 +32,7 @@ class SignIn extends React.Component {
       email: null,
       password: null,
       appIsReady: false,
+      loading: false,
     };
   }
 
@@ -53,6 +49,8 @@ class SignIn extends React.Component {
 
     const signIn = () => {
       const destination = 'Home';
+      this.setState({ loading: true });
+
       return Promise.resolve()
         .then(() => this.props.signIn(this.state.email, this.state.password))
         .then(() => navigate(destination))
@@ -67,7 +65,8 @@ class SignIn extends React.Component {
             [{ text: I18n.t('button/ok'), onPress() {} }],
             { cancelable: false },
           );
-        });
+        })
+        .then(() => this.setState({ loading: false }));
     };
 
     if (!this.state.appIsReady) {
@@ -122,7 +121,9 @@ class SignIn extends React.Component {
             />
 
             <View style={styles.login_button}>
-              <Button onClick={signIn}>{I18n.t('sign_in/log_in')}</Button>
+              <Button disabled={this.state.loading} onClick={signIn}>{
+                this.state.loading ? I18n.t('button/loading') : I18n.t('sign_in/sign_in')
+              }</Button>
             </View>
 
             <View style={styles.sign_up_container}>

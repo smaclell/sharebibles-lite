@@ -7,32 +7,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import * as locationActions from '../actions/locations';
 import User from '../components/User';
-import Button from '../components/Button';
+import { PrimaryButton, SecondaryButton } from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
 import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
-import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
 
 
 class Initial extends React.Component {
-  static navigationOptions = {
-    header: null,
-    tabBarLabel: I18n.t('initial/first_visit'),
-    tabBarVisible: false,
-    tabBarIcon: () => (
-      <View style={{ padding: 20, backgroundColor: colours.primaryButton }}>
-        <FontAwesome name="plus" size={40} color={colours.white} />
-      </View>
-    ),
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -165,7 +152,6 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.results_container}>
-
           <View style={styles.status_container}>
             {this.props.statuses.map(this.showStatus) }
           </View>
@@ -179,8 +165,8 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.actions_container}>
-          <Button onClick={() => this.add()}>{I18n.t('button/add')}</Button>
-          <Button onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</Button>
+          <PrimaryButton onClick={() => this.add()}>{I18n.t('button/add')}</PrimaryButton>
+          <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
 
 

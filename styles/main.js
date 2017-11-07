@@ -74,7 +74,7 @@ export default StyleSheet.create({
     textAlign: 'left',
     color: 'black',
     backgroundColor: colours.white,
-    marginBottom: 22,
+    marginBottom: 10,
     fontSize: fonts.normal,
     paddingLeft: 6,
     borderColor: colours.greys.lighter,
@@ -96,6 +96,14 @@ export default StyleSheet.create({
     width: 250,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  sign_in_container: {
+    width: 250,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   sign_up_container: {

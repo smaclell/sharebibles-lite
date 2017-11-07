@@ -18,19 +18,19 @@ const container = {
 const imageContainer = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 80,
+  borderRadius: 70,
   borderStyle: 'solid',
   borderWidth: 2,
   flex: 0,
-  height: 80,
+  height: 70,
   justifyContent: 'center',
   overflow: 'hidden',
-  width: 80,
+  width: 70,
 };
 
 const image = {
-  height: 80,
-  width: 80,
+  height: 70,
+  width: 70,
 };
 
 const text = {

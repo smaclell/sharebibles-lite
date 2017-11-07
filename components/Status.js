@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
-const statusIconsSize = 28;
+const statusIconsSize = 24;
 
 const container = {
   flex: 1,
@@ -21,14 +21,14 @@ const container = {
 const circle = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 30,
+  borderRadius: 50,
   borderStyle: 'solid',
   borderWidth: 2,
   display: 'flex',
   flex: 0,
-  height: 60,
+  height: 50,
   justifyContent: 'center',
-  width: 60,
+  width: 50,
 };
 
 const selected = {

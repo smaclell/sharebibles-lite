@@ -22,13 +22,13 @@ const container = {
 const circle = {
   alignItems: 'center',
   borderColor: colours.black,
-  borderRadius: 80,
+  borderRadius: 70,
   borderStyle: 'solid',
   borderWidth: 2,
   flex: 0,
-  height: 80,
+  height: 70,
   justifyContent: 'center',
-  width: 80,
+  width: 70,
 };
 
 const text = {
@@ -38,7 +38,7 @@ const text = {
   textAlign: 'center',
 };
 
-const iconSize = 48;
+const iconSize = 40;
 
 // Using entirely local state/methods to simplify the reducer
 class CurrentLocation extends Component {

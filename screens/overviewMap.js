@@ -12,14 +12,6 @@ class OverviewMap extends React.Component {
     locations: PropTypes.array.isRequired,
   }
 
-  static navigationOptions = {
-    header: null,
-    tabBarLabel: I18n.t('title/map'),
-    tabBarIcon: ({ tintColor }) => (
-      <FontAwesome name="map-marker" size={40} color={tintColor} />
-    ),
-  }
-
   render() {
     const { navigate } = this.props.navigation;
     const { latitude = 37.78825, longitude = -122.4324 } = this.props.locations.slice(-1)[0] || {};

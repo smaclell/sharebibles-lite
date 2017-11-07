@@ -17,22 +17,10 @@ import ResourceCounter from '../components/ResourceCounter';
 import Status from '../components/Status';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
-import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
 
 
 class Initial extends React.Component {
-  static navigationOptions = {
-    header: null,
-    tabBarLabel: I18n.t('initial/first_visit'),
-    tabBarVisible: false,
-    tabBarIcon: () => (
-      <View style={{ padding: 20, backgroundColor: colours.primaryButton }}>
-        <FontAwesome name="plus" size={40} color={colours.white} />
-      </View>
-    ),
-  }
-
   constructor(props) {
     super(props);
     this.state = {

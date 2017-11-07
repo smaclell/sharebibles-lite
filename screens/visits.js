@@ -6,7 +6,6 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/visits';
 import fonts from '../styles/fonts';
@@ -15,14 +14,6 @@ import I18n from '../assets/i18n/i18n';
 
 
 class Visits extends React.Component {
-  static navigationOptions = {
-    header: null,
-    tabBarLabel: I18n.t('title/your_conversations'),
-    tabBarIcon: ({ tintColor }) => (
-      <FontAwesome name="list" size={40} color={tintColor} />
-    ),
-  }
-
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     teamName: PropTypes.string.isRequired,

@@ -64,7 +64,10 @@ const styles = {
 const ignore = () => {};
 
 const Button = ({ children, disabled, onClick, type }) => (
-  <TouchableOpacity onPress={!disabled ? onClick : ignore} style={disabled ? styles[type].disabled : styles[type].container}>
+  <TouchableOpacity
+    onPress={!disabled ? onClick : ignore}
+    style={disabled ? styles[type].disabled : styles[type].container}
+  >
     <Text style={styles[type].text}>{children}</Text>
   </TouchableOpacity>
 );

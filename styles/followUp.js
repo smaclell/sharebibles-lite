@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
 
   status_container: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: colours.white,
     flex: 1,
     flexDirection: 'row',
@@ -56,10 +56,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexGrow: 4,
     margin: containerMargin,
-  },
-
-  switch_style: {
-    marginBottom: 5,
   },
 
   notes_container: {

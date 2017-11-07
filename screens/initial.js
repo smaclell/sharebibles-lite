@@ -152,7 +152,6 @@ class Initial extends React.Component {
         </View>
 
         <View style={styles.results_container}>
-
           <View style={styles.status_container}>
             {this.props.statuses.map(this.showStatus) }
           </View>

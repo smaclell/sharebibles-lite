@@ -45,24 +45,15 @@ export default StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     margin: 0,
   },
 
   info_container: {
     flex: 1,
-    alignItems: 'stretch',
+    alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-  },
-
-  switch_container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 2,
-    margin: 2,
   },
 
   resource_container: {
@@ -70,8 +61,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent: 'space-between',
-    padding: 2,
-    margin: 2,
   },
 
   actions_container: {

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   Alert,
   Image,
+  KeyboardAvoidingView,
   ScrollView,
   Text,
   TextInput,
@@ -75,8 +76,8 @@ class SignUp extends Component {
     const { navigation: { navigate } } = this.props;
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.inner_container}>
 
             <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
@@ -155,7 +156,7 @@ class SignUp extends Component {
             </View>
           </View>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

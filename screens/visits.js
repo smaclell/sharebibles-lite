@@ -13,30 +13,28 @@ import Visit from '../components/Visit';
 import I18n from '../assets/i18n/i18n';
 
 
-class Visits extends React.Component {
-  static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    teamName: PropTypes.string.isRequired,
-    visits: PropTypes.array.isRequired,
-  }
+const Visits = ({ navigation, teamName, visits }) => {
+  const { navigate } = navigation;
 
-  render() {
-    const { navigate } = this.props.navigation;
+  return (
+    <View style={styles.container}>
+      <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
+      <Text style={{ fontSize: fonts.large, marginBottom: 10 }}>{teamName}</Text>
+      <FlatList
+        style={styles.inner_container}
+        data={visits}
+        renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
+        keyExtractor={item => item.key}
+      />
+    </View>
+  );
+};
 
-    return (
-      <View style={styles.container}>
-        <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
-        <Text style={{ fontSize: fonts.large, marginBottom: 10 }}>{this.props.teamName}</Text>
-        <FlatList
-          style={styles.inner_container}
-          data={this.props.visits}
-          renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
-          keyExtractor={item => item.key}
-        />
-      </View>
-    );
-  }
-}
+Visits.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  teamName: PropTypes.string.isRequired,
+  visits: PropTypes.array.isRequired,
+};
 
 const uploadMapper = (uploads, v) => {
   const location = uploads[v.locationKey];

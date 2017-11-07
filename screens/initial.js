@@ -7,7 +7,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import * as locationActions from '../actions/locations';
 import User from '../components/User';
 import { PrimaryButton, SecondaryButton } from '../components/Button';

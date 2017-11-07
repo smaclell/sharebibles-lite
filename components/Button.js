@@ -25,6 +25,12 @@ const text = {
 
 const styles = {
   primary: StyleSheet.create({
+    disabled: {
+      ...container,
+      backgroundColor: colours.primaryButton,
+      opacity: 0.7,
+    },
+
     container: {
       ...container,
       backgroundColor: colours.primaryButton,
@@ -37,6 +43,12 @@ const styles = {
   }),
 
   secondary: StyleSheet.create({
+    disabled: {
+      ...container,
+      backgroundColor: colours.secondaryButton,
+      opacity: 0.7,
+    },
+
     container: {
       ...container,
       backgroundColor: colours.secondaryButton,
@@ -49,16 +61,23 @@ const styles = {
   }),
 };
 
-const Button = ({ children, onClick, type }) => (
-  <TouchableOpacity onPress={onClick} style={styles[type].container}>
+const ignore = () => {};
+
+const Button = ({ children, disabled, onClick, type }) => (
+  <TouchableOpacity onPress={!disabled ? onClick : ignore} style={disabled ? styles[type].disabled : styles[type].container}>
     <Text style={styles[type].text}>{children}</Text>
   </TouchableOpacity>
 );
 
 Button.propTypes = {
   type: PropTypes.oneOf('primary', 'secodary').isRequired,
+  disabled: PropTypes.bool,
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+};
+
+Button.defaultProps = {
+  disabled: false,
 };
 
 const Primary = props => <Button type="primary" {...props} />;

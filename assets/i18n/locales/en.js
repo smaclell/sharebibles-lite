@@ -2,6 +2,7 @@ export default {
   'button/add': 'ADD',
   'button/cancel': 'CANCEL',
   'button/create_account': 'Create Account',
+  'button/loading': 'LOADING',
   'button/ok': 'OK',
   'button/update': 'UPDATE',
   'components/follow_up': 'Follow Up Visit',

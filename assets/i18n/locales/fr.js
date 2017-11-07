@@ -4,6 +4,7 @@ export default {
   'button/add': 'Français',
   'button/cancel': 'Français',
   'button/create_account': 'Français',
+  'button/loading': 'Français',
   'button/ok': 'Français',
   'button/update': 'Français',
   'components/follow_up': 'Français',

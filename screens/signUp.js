@@ -51,6 +51,8 @@ class SignUp extends Component {
 
     const { navigation: { navigate }, signUp } = this.props;
 
+    this.setState({ loading: true });
+
     return signUp(this.state.name, this.state.email, this.state.password, this.state.accessCode)
       .then(() => navigate('Home'))
       .catch((e) => {
@@ -64,7 +66,8 @@ class SignUp extends Component {
           [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
           { cancelable: false },
         );
-      });
+      })
+      .then(() => this.setState({ loading: false }));
   }
 
   render() {
@@ -131,7 +134,9 @@ class SignUp extends Component {
               </View>
 
               <View style={styles.login_button}>
-                <Button onClick={this.createAccount}>{I18n.t('button/create_account')}</Button>
+                <Button disabled={this.state.loading} onClick={this.createAccount}>{
+                  this.state.loading ? I18n.t('button/create_account') : I18n.t('button/loading')
+                }</Button>
               </View>
 
               <View style={styles.sign_in_container}>

@@ -21,7 +21,7 @@ export default {
   'sign_in/check_email_password': 'Please check your email and password',
   'sign_in/create_one': 'Create One',
   'sign_in/failed_signin': 'Could not sign in',
-  'sign_in/log_in': 'LOG IN',
+  'sign_in/sign_in': 'SIGN IN',
   'sign_in/no_account': "Don't have an account?",
   'sign_in/your_email': 'your@email.com',
   'sign_in/your_password': 'Password',

@@ -23,7 +23,7 @@ export default {
   'sign_in/check_email_password': 'Français',
   'sign_in/create_one': 'Français',
   'sign_in/failed_signin': 'Français',
-  'sign_in/log_in': 'Français',
+  'sign_in/sign_in': 'Français',
   'sign_in/no_account': 'Français',
   'sign_in/your_email': 'Français',
   'sign_in/your_password': 'Français',

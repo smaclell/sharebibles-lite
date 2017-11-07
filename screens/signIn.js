@@ -122,7 +122,7 @@ class SignIn extends React.Component {
 
             <View style={styles.login_button}>
               <Button disabled={this.state.loading} onClick={signIn}>{
-                this.state.loading ? I18n.t('button/loading') : I18n.t('sign_in/log_in')
+                this.state.loading ? I18n.t('button/loading') : I18n.t('sign_in/sign_in')
               }</Button>
             </View>
 

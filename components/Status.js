@@ -41,7 +41,7 @@ const normal = {
 
 const text = {
   color: colours.text,
-  fontSize: fonts.small,
+  fontSize: fonts.small - 1,
   margin: 5,
   textAlign: 'center',
 };

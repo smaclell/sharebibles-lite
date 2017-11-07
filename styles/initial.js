@@ -79,7 +79,7 @@ export default StyleSheet.create({
     backgroundColor: colours.black,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 1,
     flexDirection: 'row',
   },
 });

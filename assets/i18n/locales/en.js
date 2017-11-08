@@ -1,3 +1,9 @@
+import 'moment/locale/en-au';
+import 'moment/locale/en-ca';
+import 'moment/locale/en-gb';
+import 'moment/locale/en-ie';
+import 'moment/locale/en-nz';
+
 export default {
   'button/add': 'ADD',
   'button/cancel': 'CANCEL',

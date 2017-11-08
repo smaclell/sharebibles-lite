@@ -40,7 +40,9 @@ class SignIn extends React.Component {
     await Promise.all([
       I18n.initAsync(),
     ]);
-    moment.locale(I18n.locale);
+
+    I18n.setDateLocale();
+
     this.setState({ appIsReady: true }); // when all above promises above are resolved
   }
 

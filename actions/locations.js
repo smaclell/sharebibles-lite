@@ -27,6 +27,11 @@ export function fetchLocation(locationKey) {
 
 export function updateLocation(options) {
   return (dispatch, getState) => {
+    // Fix This: https://trello.com/c/aXJgrXQO
+    if (getState) {
+      return Promise.resolve();
+    }
+
     const { locations } = getState();
     const original = { ...locations[options.key] };
 

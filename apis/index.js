@@ -18,10 +18,10 @@ export function initialize() {
   firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 }
 
-function getGeoFire() {
+function getGeoFire(path) {
   initialize();
 
-  const ref = firebase.database().ref('geofire');
+  const ref = firebase.database().ref(path);
   return new GeoFire(ref);
 }
 
@@ -204,11 +204,14 @@ export async function createLocation(creator, options) {
   };
 
   const saved = pushed.set(created);
-  const geo = getGeoFire().set(`locations--${pushed.key}`, [created.latitude, created.longitude]);
+  const geoKey = `locations--${pushed.key}`;
+  const geo = [created.latitude, created.longitude];
+  const geoUser = getGeoFire(`geofireUser/${creator.key}`).set(geoKey, geo);
+  const geoTeam = getGeoFire(`geofireTeam/${creator.teamKey}`).set(geoKey, geo);
 
   return {
     created,
-    saved: Promise.all([saved, geo]),
+    saved: Promise.all([saved, geoUser, geoTeam]),
   };
 }
 

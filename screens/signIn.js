@@ -12,7 +12,6 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React from 'react';
-import moment from 'moment';
 import * as actions from '../actions/authentication';
 import Button from '../components/Button';
 import styles from '../styles/main';

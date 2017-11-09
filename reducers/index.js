@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 // Sorted Alphabetically
+import connectivity from './connectivity';
 import locations from './locations';
 import resources from './resources';
 import statuses from './statuses';
@@ -13,6 +14,7 @@ import visits from './visits';
 
 // Sorted Alphabetically
 const reducer = combineReducers({
+  connected: connectivity,
   locations,
   resources,
   statuses,

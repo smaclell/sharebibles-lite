@@ -68,8 +68,9 @@ class SignUp extends Component {
           [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
           { cancelable: false },
         );
-      })
-      .then(() => this.setState({ loading: false }));
+
+        this.setState({ loading: false });
+      });
   }
 
   render() {

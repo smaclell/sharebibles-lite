@@ -67,8 +67,9 @@ class SignIn extends React.Component {
             [{ text: I18n.t('button/ok'), onPress() {} }],
             { cancelable: false },
           );
-        })
-        .then(() => this.setState({ loading: false }));
+
+          this.setState({ loading: false });
+        });
     };
 
     if (!this.state.appIsReady) {

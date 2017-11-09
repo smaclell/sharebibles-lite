@@ -149,9 +149,12 @@ class SignUp extends Component {
               </View>
 
               <View style={styles.login_button}>
-                <Button disabled={!this.props.connected || this.state.loading} onClick={this.createAccount}>{
-                  this.getButtonText()
-                }</Button>
+                <Button
+                  disabled={!this.props.connected || this.state.loading}
+                  onClick={this.createAccount}
+                >
+                  {this.getButtonText()}
+                </Button>
               </View>
 
               <View style={styles.sign_in_container}>

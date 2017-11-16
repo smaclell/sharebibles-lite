@@ -65,7 +65,7 @@ class SignUp extends Component {
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
           I18n.t('sign_up/failed_sign_up_message'),
-          [{ text: I18n.t('sign_up/failed_button'), onPress() {} }],
+          [{ text: I18n.t('button/ok'), onPress() {} }],
           { cancelable: false },
         );
 
@@ -98,30 +98,47 @@ class SignUp extends Component {
                 placeholderTextColor={colours.placeholder}
                 autoCapitalize="words"
                 placeholder={I18n.t('sign_up/example_name')}
+                returnKeyType="next"
+                onSubmitEditing={() => this.email.focus()}
               />
 
               <TextInput
+                ref={(t) => {
+                  this.email = t;
+                }}
                 onChangeText={email => this.setState({ email })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 placeholder={I18n.t('sign_in/your_email')}
                 keyboardType="email-address"
+                returnKeyType="next"
+                onSubmitEditing={() => this.password.focus()}
               />
 
               <TextInput
+                ref={(t) => {
+                  this.password = t;
+                }}
                 onChangeText={password => this.setState({ password })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 placeholder={I18n.t('sign_in/your_password')}
                 secureTextEntry
+                returnKeyType="next"
+                onSubmitEditing={() => this.confirmPassword.focus()}
               />
 
               <TextInput
+                ref={(t) => {
+                  this.confirmPassword = t;
+                }}
                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
                 placeholder={I18n.t('sign_up/confirm_your_password')}
                 secureTextEntry
+                returnKeyType="next"
+                onSubmitEditing={() => this.accessCode.focus()}
               />
 
               <View style={styles.notice_container}>
@@ -130,9 +147,14 @@ class SignUp extends Component {
                 </Text>
 
                 <TextInput
+                  ref={(t) => {
+                    this.accessCode = t;
+                  }}
                   onChangeText={accessCode => this.setState({ accessCode })}
                   style={styles.textinput_container}
                   placeholder={I18n.t('sign_up/your_access_code')}
+                  returnKeyType="done"
+                  onSubmitEditing={this.createAccount}
                 />
               </View>
 

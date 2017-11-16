@@ -55,6 +55,7 @@ export function createLocation(options) {
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
+    const team = state.teams[creator.teamKey];
 
     const locationData = {
       imageUrl,
@@ -68,7 +69,7 @@ export function createLocation(options) {
     };
 
     return Promise.resolve()
-      .then(() => apis.createLocation(creator, locationData))
+      .then(() => apis.createLocation(creator, team, locationData))
       .then(({ created: location, saved }) => {
         dispatch(receiveLocation(location));
 

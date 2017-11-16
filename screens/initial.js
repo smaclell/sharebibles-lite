@@ -140,37 +140,36 @@ class Initial extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.add_members_section_container}>
-          <User {...this.props.user} />
-        </View>
-
-        <View style={styles.add_location_section_container}>
-          <Photo onPhotoChanged={this.updateImageUrl} />
-          <Text> {I18n.t('initial/or')} </Text>
-          <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
-        </View>
-
-        <View style={styles.results_container}>
-          <View style={styles.status_container}>
-            {this.props.statuses.map(this.showStatus) }
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <View style={styles.add_members_section_container}>
+            <User {...this.props.user} />
           </View>
 
-          <View style={styles.info_container}>
-            {this.props.tags.map(this.showTag) }
+          <View style={styles.add_location_section_container}>
+            <Photo onPhotoChanged={this.updateImageUrl} />
+            <Text> {I18n.t('initial/or')} </Text>
+            <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
           </View>
-          <View style={styles.resources_container}>
-            {this.props.resources.map(this.showResource) }
-          </View>
-        </View>
 
+          <View style={styles.results_container}>
+            <View style={styles.status_container}>
+              {this.props.statuses.map(this.showStatus) }
+            </View>
+
+            <View style={styles.tag_container}>
+              {this.props.tags.map(this.showTag) }
+            </View>
+            <View style={styles.resources_container}>
+              {this.props.resources.map(this.showResource) }
+            </View>
+          </View>
+        </ScrollView>
         <View style={styles.actions_container}>
           <PrimaryButton onClick={() => this.add()}>{I18n.t('button/add')}</PrimaryButton>
           <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
-
-
-      </ScrollView>
+      </View>
     );
   }
 }

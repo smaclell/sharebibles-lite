@@ -7,9 +7,18 @@ export default StyleSheet.create({
   container: {
     backgroundColor: colours.teals.base,
     padding: 10,
+    paddingTop: 24,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
+    flex: 1,
+  },
+
+  scroll: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    flex: 0,
   },
 
   add_members_section_container: {
@@ -49,7 +58,7 @@ export default StyleSheet.create({
     margin: 0,
   },
 
-  info_container: {
+  tag_container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

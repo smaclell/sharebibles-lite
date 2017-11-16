@@ -11,8 +11,26 @@ export default StyleSheet.create({
     backgroundColor: colours.teals.base,
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 10,
+    paddingTop: 24,
+  },
+
+  scroll: {
+    flex: 0,
+    flexGrow: 1,
+  },
+
+  avoiding: {
+    flex: 1,
+    flexGrow: 1,
+    // paddingBottom: 20,
+    /*
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    */
   },
 
   container_heading: {

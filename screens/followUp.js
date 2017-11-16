@@ -4,8 +4,6 @@ import {
   Text,
   TextInput,
   ScrollView,
-  TouchableWithoutFeedback,
-  Keyboard,
   View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
@@ -89,10 +87,9 @@ class FollowUp extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="position">
-        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-
+      <View style={styles.container}>
+        <ScrollView style={styles.scroll} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+          <KeyboardAvoidingView style={styles.avoiding} behavior="position">
             <View style={styles.users_container}>
               <View style={styles.container_heading}>
                 <Text style={styles.container_heading_text}> 1 </Text>
@@ -129,14 +126,13 @@ class FollowUp extends React.Component {
                 onChangeText={notes => this.setState(p => ({ ...p, notes }))}
               />
             </View>
-
-            <View style={styles.actions_container}>
-              <PrimaryButton onClick={() => this.update()}>{I18n.t('button/update')}</PrimaryButton>
-              <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
-            </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        </ScrollView>
+        <View style={styles.actions_container}>
+          <PrimaryButton onClick={() => this.update()}>{I18n.t('button/update')}</PrimaryButton>
+          <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
+        </View>
+      </View>
     );
   }
 }

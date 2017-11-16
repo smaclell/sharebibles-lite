@@ -1,4 +1,5 @@
 import * as apis from '../apis';
+import * as positionActions from './position';
 import * as locationActions from './locations';
 import * as userActions from './user';
 import * as usersActions from './users';
@@ -12,6 +13,7 @@ function onAuthenticated(user) {
     };
 
     return Promise.resolve()
+      .then(() => dispatch(positionActions.initialize()))
       .then(() => dispatch(usersActions.receiveUser(user)))
       .then(() => dispatch(usersActions.fetchUser(user.key)))
       .then(() => dispatch(userActions.setUser(user)))

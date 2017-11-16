@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import PinCallout from '../components/PinCallout';
 
-const OverviewMap = ({ navigation, locations }) => {
+const OverviewMap = ({ navigation, position, locations }) => {
   const { navigate } = navigation;
-  const { latitude = 37.78825, longitude = -122.4324 } = locations.slice(-1)[0] || {};
+  const { latitude, longitude } = position;
   return (
     <MapView
       style={{ flex: 1 }}
@@ -42,8 +42,12 @@ const OverviewMap = ({ navigation, locations }) => {
 };
 
 OverviewMap.propTypes = {
-  navigation: PropTypes.object.isRequired,
   locations: PropTypes.array.isRequired,
+  navigation: PropTypes.object.isRequired,
+  position: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 const locationColor = (location, statuses) => {
@@ -54,6 +58,7 @@ const locationColor = (location, statuses) => {
 };
 
 const mapStateToProps = state => ({
+  position: state.position,
   locations: Object.keys(state.locations)
     .map(x => state.locations[x])
     .map(x => ({

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 // Sorted Alphabetically
 import locations from './locations';
+import position from './position';
 import resources from './resources';
 import statuses from './statuses';
 import tags from './tags';
@@ -14,6 +15,7 @@ import visits from './visits';
 // Sorted Alphabetically
 const reducer = combineReducers({
   locations,
+  position,
   resources,
   statuses,
   tags,

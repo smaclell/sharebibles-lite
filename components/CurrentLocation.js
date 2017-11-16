@@ -1,4 +1,3 @@
-/* globals navigator */
 import {
   ActivityIndicator,
   Text,
@@ -8,6 +7,7 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
+import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
@@ -84,40 +84,21 @@ class CurrentLocation extends Component {
     this.props.onLocationChanged(this.state.location);
   }
 
-  updateCurrentLocation(accuracy) {
+  updateCurrentLocation = async () => {
     if (this.state.loading) {
       return;
     }
 
     this.setState(p => ({ ...p, loading: true }));
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { coords: { latitude, longitude } } = position;
-        this.setState(
-          p => ({
-            ...p,
-            accuracy,
-            error: null,
-            loading: false,
-            location: { latitude, longitude },
-          }),
-          this.handleStateUpdate,
-        );
-      },
-      (error) => {
-        this.setState(
-          p => ({
-            ...p,
-            accuracy,
-            error: error.message,
-            loading: accuracy,
-            location: null,
-          }),
-          this.handleStateUpdate,
-        );
-        this.updateCurrentLocation(false);
-      },
-      { enableHighAccuracy: accuracy, timeout: 30 * 1000, maximumAge: 10 * 1000 },
+    const result = await getCurrentPosition();
+
+    this.setState(
+      p => ({
+        ...p,
+        ...result,
+        loading: false,
+      }),
+      this.handleStateUpdate,
     );
   }
 
@@ -125,7 +106,7 @@ class CurrentLocation extends Component {
     const icon = this.getIcon();
 
     return (
-      <TouchableOpacity onPressOut={() => this.updateCurrentLocation(true)}>
+      <TouchableOpacity onPressOut={this.updateCurrentLocation}>
         <View style={container}>
           <ActivityIndicator size="small" animating={this.state.loading} />
           <View style={[circle, { display: this.state.loading ? 'none' : 'flex' }]}>

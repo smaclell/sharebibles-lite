@@ -25,6 +25,6 @@ export async function getCurrentPosition(accuracy = true) {
       return result;
     }
 
-    return getCurrentLocation(false);
+    return getCurrentPosition(false);
   });
 }

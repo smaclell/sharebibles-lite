@@ -21,18 +21,6 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
 
-  avoiding: {
-    flex: 1,
-    flexGrow: 1,
-    // paddingBottom: 20,
-    /*
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    */
-  },
-
   container_heading: {
     alignItems: 'center',
     backgroundColor: colours.black,

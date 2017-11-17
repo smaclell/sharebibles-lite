@@ -6,10 +6,14 @@ import thunk from 'redux-thunk';
 import Navigation from './nav';
 import reducer from './reducers';
 
+import { setup } from './actions/connectivity';
+
 const store = createStore(
   reducer,
   applyMiddleware(thunk),
 );
+
+store.dispatch(setup());
 
 // https://github.com/firebase/firebase-js-sdk/issues/97
 // eslint-disable-next-line no-console

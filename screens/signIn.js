@@ -45,6 +45,18 @@ class SignIn extends React.Component {
     this.setState({ appIsReady: true }); // when all above promises above are resolved
   }
 
+  getButtonText() {
+    if (!this.props.connected) {
+      return I18n.t('button/offline');
+    }
+
+    if (this.state.loading) {
+      return I18n.t('button/loading');
+    }
+
+    return I18n.t('sign_in/sign_in');
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -82,6 +94,7 @@ class SignIn extends React.Component {
         </View>
       );
     }
+
 
     return (
 
@@ -123,9 +136,12 @@ class SignIn extends React.Component {
             />
 
             <View style={styles.login_button}>
-              <Button disabled={this.state.loading} onClick={signIn}>{
-                this.state.loading ? I18n.t('button/loading') : I18n.t('sign_in/sign_in')
-              }</Button>
+              <Button
+                disabled={!this.props.connected || this.state.loading}
+                onClick={signIn}
+              >
+                {this.getButtonText()}
+              </Button>
             </View>
 
             <View style={styles.sign_up_container}>
@@ -143,8 +159,16 @@ class SignIn extends React.Component {
   }
 }
 
+SignIn.propTypes = {
+  connected: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  connected: state.connected,
+});
+
 const mapDispatchToProps = dispatch => ({
   signIn: (email, password) => dispatch(actions.signIn(email, password)),
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

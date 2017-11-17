@@ -41,6 +41,18 @@ class SignUp extends Component {
     this.createAccount = this.createAccount.bind(this);
   }
 
+  getButtonText() {
+    if (!this.props.connected) {
+      return I18n.t('button/offline');
+    }
+
+    if (this.state.loading) {
+      return I18n.t('button/loading');
+    }
+
+    return I18n.t('button/create_account');
+  }
+
   createAccount() {
     if (this.state.password !== this.state.confirmPassword) {
       return Alert.alert(
@@ -137,9 +149,12 @@ class SignUp extends Component {
               </View>
 
               <View style={styles.login_button}>
-                <Button disabled={this.state.loading} onClick={this.createAccount}>{
-                  this.state.loading ? I18n.t('button/loading') : I18n.t('button/create_account')
-                }</Button>
+                <Button
+                  disabled={!this.props.connected || this.state.loading}
+                  onClick={this.createAccount}
+                >
+                  {this.getButtonText()}
+                </Button>
               </View>
 
               <View style={styles.sign_in_container}>
@@ -162,8 +177,16 @@ class SignUp extends Component {
   }
 }
 
+SignUp.propTypes = {
+  connected: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  connected: state.connected,
+});
+
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(authenticationActions, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

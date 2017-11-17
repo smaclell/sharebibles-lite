@@ -25,6 +25,17 @@ function getGeoFire(path) {
   return new GeoFire(ref);
 }
 
+function saveGeoData(created, locatinonKey, regionKey, creator) {
+  const geoKey = `locations--${locatinonKey}`;
+  const geo = [created.latitude, created.longitude];
+
+  const geoRegion = getGeoFire(`geofireRegion/${regionKey}`).set(geoKey, geo);
+  const geoUser = getGeoFire(`geofireUser/${creator.key}`).set(geoKey, geo);
+  const geoTeam = getGeoFire(`geofireTeam/${creator.teamKey}`).set(geoKey, geo);
+
+  return [geoRegion, geoUser, geoTeam];
+}
+
 export function signIn(email, password) {
   initialize();
 
@@ -158,7 +169,7 @@ export function updateLocation(options) {
   return Promise.resolve({ updated, saved });
 }
 
-export async function createLocation(creator, options) {
+export async function createLocation(creator, team, options) {
   initialize();
 
   const pushed = firebase.database().ref('locations').push();
@@ -187,7 +198,6 @@ export async function createLocation(creator, options) {
 
   const created = {
     key: pushed.key,
-    name: 'Anything', // TODO: Remove the name
     created: moment.utc().valueOf(),
     latitude: 50,
     longitude: 50,
@@ -196,22 +206,16 @@ export async function createLocation(creator, options) {
     resources: {}, // { given: number, needed: number }
     createdBy: creator.key,
     teamKey: creator.teamKey,
-    // tags|status:
-    // Considering a tag/status object/array to represent the many checkboxes
-    // Initially it would be populated/managed by a number of hardcoded values
     ...options,
     imageUrl,
   };
 
   const saved = pushed.set(created);
-  const geoKey = `locations--${pushed.key}`;
-  const geo = [created.latitude, created.longitude];
-  const geoUser = getGeoFire(`geofireUser/${creator.key}`).set(geoKey, geo);
-  const geoTeam = getGeoFire(`geofireTeam/${creator.teamKey}`).set(geoKey, geo);
+  const geoPromises = saveGeoData(created, pushed.key, team.regionKey, creator);
 
   return {
     created,
-    saved: Promise.all([saved, geoUser, geoTeam]),
+    saved: Promise.all([saved, ...geoPromises]),
   };
 }
 

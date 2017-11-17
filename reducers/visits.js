@@ -22,10 +22,10 @@ function byLocation(state = {}, action) {
     case RECEIVE_VISIT:
       return {
         ...state,
-        [action.visit.locationKey]: [ // TODO: Should these be sorted? Or is that in a selector
+        [action.visit.locationKey]: uniq([ // TODO: Should these be sorted? Or is that in a selector
           ...(state[action.visit.locationKey] || []),
           action.visit.key,
-        ],
+        ]),
       };
     default:
       return state;

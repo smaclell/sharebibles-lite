@@ -23,7 +23,7 @@ const Visits = ({ navigation, teamName, visits }) => {
       <FlatList
         style={styles.inner_container}
         data={visits}
-        renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.key })} />}
+        renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.locationKey })} />}
         keyExtractor={item => item.key}
       />
     </View>

@@ -1,4 +1,5 @@
 import * as apis from '../apis';
+import { updatePosition } from './position';
 import { createVisit } from './visits';
 import { failed, pending, uploaded } from './uploads';
 
@@ -67,6 +68,8 @@ export function createLocation(options) {
       status,
       tags,
     };
+
+    dispatch(updatePosition(latitude, longitude));
 
     return Promise.resolve()
       .then(() => apis.createLocation(creator, team, locationData))

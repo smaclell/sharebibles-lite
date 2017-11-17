@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // Sorted Alphabetically
 import connectivity from './connectivity';
 import locations from './locations';
+import position from './position';
 import resources from './resources';
 import statuses from './statuses';
 import tags from './tags';
@@ -16,6 +17,7 @@ import visits from './visits';
 const reducer = combineReducers({
   connected: connectivity,
   locations,
+  position,
   resources,
   statuses,
   tags,

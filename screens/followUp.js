@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-  KeyboardAvoidingView,
   Text,
   TextInput,
-  ScrollView,
   View,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -88,46 +87,48 @@ class FollowUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scroll} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-          <KeyboardAvoidingView style={styles.avoiding} behavior="position">
-            <View style={styles.users_container}>
-              <View style={styles.container_heading}>
-                <Text style={styles.container_heading_text}> 1 </Text>
-              </View>
-              <User {...this.props.user} />
+        <KeyboardAwareScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.users_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 1 </Text>
+            </View>
+            <User {...this.props.user} />
+          </View>
+
+          <View style={styles.status_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 2 </Text>
             </View>
 
-            <View style={styles.status_container}>
-              <View style={styles.container_heading}>
-                <Text style={styles.container_heading_text}> 2 </Text>
-              </View>
+            {this.props.statuses.map(this.showStatus) }
+          </View>
 
-              {this.props.statuses.map(this.showStatus) }
+          <View style={styles.tags_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 3 </Text>
             </View>
+            <View style={{ flex: 1, margin: 10 }}>
+              { this.props.tags.map(this.showTag) }
+            </View>
+          </View>
 
-            <View style={styles.tags_container}>
-              <View style={styles.container_heading}>
-                <Text style={styles.container_heading_text}> 3 </Text>
-              </View>
-              <View style={{ flex: 1, margin: 10 }}>
-                { this.props.tags.map(this.showTag) }
-              </View>
+          <View style={styles.notes_container}>
+            <View style={styles.container_heading}>
+              <Text style={styles.container_heading_text}> 4 </Text>
             </View>
-
-            <View style={styles.notes_container}>
-              <View style={styles.container_heading}>
-                <Text style={styles.container_heading_text}> 4 </Text>
-              </View>
-              <TextInput
-                style={styles.note_input}
-                placeholder={I18n.t('follow_up/add_notes')}
-                multiline
-                numberOfLines={3}
-                onChangeText={notes => this.setState(p => ({ ...p, notes }))}
-              />
-            </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+            <TextInput
+              style={styles.note_input}
+              placeholder={I18n.t('follow_up/add_notes')}
+              multiline
+              numberOfLines={3}
+              onChangeText={notes => this.setState(p => ({ ...p, notes }))}
+            />
+          </View>
+        </KeyboardAwareScrollView>
         <View style={styles.actions_container}>
           <PrimaryButton onClick={() => this.update()}>{I18n.t('button/update')}</PrimaryButton>
           <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>

@@ -6,6 +6,21 @@ import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
+  outer_container: {
+    flex: 1,
+    backgroundColor: colours.teals.base,
+  },
+
+  inner_container: {
+    flex: 1,
+    borderRadius: 0,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: colours.teals.base,
+  },
+
   container: {
     flex: 1,
     padding: 20,
@@ -47,15 +62,6 @@ export default StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  inner_container: {
-    borderRadius: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    backgroundColor: colours.teals.base,
   },
 
   logo_container: {

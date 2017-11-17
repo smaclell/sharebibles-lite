@@ -11,8 +11,14 @@ export default StyleSheet.create({
     backgroundColor: colours.teals.base,
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 10,
+    paddingTop: 24,
+  },
+
+  scroll: {
+    flex: 0,
+    flexGrow: 1,
   },
 
   container_heading: {

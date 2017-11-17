@@ -123,9 +123,14 @@ class SignIn extends React.Component {
               autoCorrect={false}
               onChangeText={(email) => { this.setState({ email }); }}
               value={this.state.email}
+              returnKeyType="next"
+              onSubmitEditing={() => this.password.focus()}
             />
 
             <TextInput
+              ref={(t) => {
+                this.password = t;
+              }}
               style={styles.textinput_container}
               placeholder={I18n.t('sign_in/your_password')}
               placeholderTextColor={colours.placeholder}
@@ -133,6 +138,8 @@ class SignIn extends React.Component {
               autoCapitalize="none"
               onChangeText={(password) => { this.setState({ password }); }}
               value={this.state.password}
+              returnKeyType="go"
+              onSubmitEditing={signIn}
             />
 
             <View style={styles.login_button}>

@@ -166,7 +166,6 @@ class SignUp extends Component {
                   style={styles.textinput_container}
                   placeholder={I18n.t('sign_up/your_access_code')}
                   returnKeyType="done"
-                  onSubmitEditing={this.createAccount}
                 />
               </View>
 

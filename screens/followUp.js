@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
-import Status from '../components/Status';
+import ChooseStatus from '../containers/ChooseStatus';
+import VisitStatus from '../components/VisitStatus';
 import Switch from '../components/Switch';
 import User from '../components/User';
 import styles from '../styles/followUp';
@@ -18,8 +19,13 @@ import I18n from '../assets/i18n/i18n';
 
 
 class FollowUp extends React.Component {
+  static defaultProps = { // Sorted Alphabetically
+    currentStatus: null,
+  }
+
   static propTypes = { // Sorted Alphabetically
     createVisit: PropTypes.func.isRequired,
+    currentStatus: PropTypes.object,
     navigation: PropTypes.object.isRequired,
     statuses: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
@@ -33,34 +39,17 @@ class FollowUp extends React.Component {
       status: 'unknown',
       tags: {},
     };
-
-    this.showTag = this.showTag.bind(this);
-    this.showStatus = this.showStatus.bind(this);
   }
 
-  showStatus(status) {
-    return (
-      <Status
-        key={status.key}
-        label={I18n.t(status.label)}
-        onPressed={() => this.updateStatus(status.key)}
-        selected={this.state.status === status.key}
-        icon={status.icon}
-      />
-    );
-  }
-
-  showTag(tag) {
-    return (
-      <Switch
-        key={tag.key}
-        onChange={enabled => this.updateTag(tag.key, enabled)}
-        value={!!this.state.tags[tag.key]}
-      >
-        {I18n.t(tag.label)}
-      </Switch>
-    );
-  }
+  showTag = tag => (
+    <Switch
+      key={tag.key}
+      onChange={enabled => this.updateTag(tag.key, enabled)}
+      value={!!this.state.tags[tag.key]}
+    >
+      {I18n.t(tag.label)}
+    </Switch>
+  );
 
   update() {
     const { params: { locationKey } } = this.props.navigation.state;
@@ -70,9 +59,7 @@ class FollowUp extends React.Component {
     this.props.navigation.goBack();
   }
 
-  updateStatus(value) {
-    this.setState(p => ({ ...p, status: value }));
-  }
+  updateStatus = status => this.setState({ status });
 
   updateTag(tagKey, enabled) {
     this.setState(p => ({
@@ -104,7 +91,13 @@ class FollowUp extends React.Component {
               <Text style={styles.container_heading_text}> 2 </Text>
             </View>
 
-            {this.props.statuses.map(this.showStatus) }
+            {
+              this.props.currentStatus && this.props.currentStatus.success ?
+                <View style={styles.accepted_container}>
+                  <VisitStatus status={this.props.currentStatus} />
+                </View> :
+                <ChooseStatus updateStatus={this.updateStatus} />
+            }
           </View>
 
           <View style={styles.tags_container}>
@@ -138,7 +131,22 @@ class FollowUp extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+function getLocationStatus({ locations, statuses }, { navigation: { state } }) {
+  if (!state && !state.params) {
+    return null;
+  }
+
+  const { params: { locationKey } } = state;
+  const location = locations[locationKey];
+  if (!location) {
+    return null;
+  }
+
+  return statuses.find(s => s.key === location.status);
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  currentStatus: getLocationStatus(state, ownProps),
   statuses: state.statuses,
   tags: state.tags.followUp,
   user: state.users[state.user],

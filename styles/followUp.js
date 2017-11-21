@@ -41,7 +41,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     margin: containerMargin,
-    paddingRight: 10,
   },
 
   status_container: {
@@ -52,6 +51,13 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     margin: containerMargin,
+  },
+
+  accepted_container: {
+    alignSelf: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
     paddingRight: 10,
   },
 

@@ -13,7 +13,7 @@ import { PrimaryButton, SecondaryButton } from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
 import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
-import Status from '../components/Status';
+import ChooseStatus from '../containers/ChooseStatus';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
 import I18n from '../assets/i18n/i18n';
@@ -32,7 +32,6 @@ class Initial extends React.Component {
     };
 
     this.showResource = this.showResource.bind(this);
-    this.showStatus = this.showStatus.bind(this);
     this.showTag = this.showTag.bind(this);
     this.updateCount = this.updateCount.bind(this);
     this.updateImageUrl = this.updateImageUrl.bind(this);
@@ -91,18 +90,6 @@ class Initial extends React.Component {
     );
   }
 
-  showStatus(status) {
-    return (
-      <Status
-        key={status.key}
-        label={I18n.t(status.label)}
-        onPressed={() => this.updateStatus(status.key)}
-        selected={this.state.status === status.key}
-        icon={status.icon}
-      />
-    );
-  }
-
   updateCount({ count, resourceKey }) {
     this.setState(p => ({
       ...p,
@@ -124,9 +111,7 @@ class Initial extends React.Component {
     this.setState(p => ({ ...p, longitude, latitude }));
   }
 
-  updateStatus(value) {
-    this.setState(p => ({ ...p, status: value }));
-  }
+  updateStatus = value => this.setState({ status: value });
 
   updateTag(tagKey, enabled) {
     this.setState(p => ({
@@ -153,9 +138,7 @@ class Initial extends React.Component {
           </View>
 
           <View style={styles.results_container}>
-            <View style={styles.status_container}>
-              {this.props.statuses.map(this.showStatus) }
-            </View>
+            <ChooseStatus updateStatus={this.updateStatus} />
 
             <View style={styles.tag_container}>
               {this.props.tags.map(this.showTag) }
@@ -178,7 +161,6 @@ Initial.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
-  statuses: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
@@ -187,7 +169,6 @@ const mapStateToProps = state => ({
   user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
   tags: state.tags.initial,
-  statuses: state.statuses,
 });
 
 const mapDispatchToProps = dispatch => ({

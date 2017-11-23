@@ -148,7 +148,7 @@ class Initial extends React.Component {
 
           <View style={styles.add_location_section_container}>
             <Photo onPhotoChanged={this.updateImageUrl} />
-            <Text> {I18n.t('initial/or')} </Text>
+            { !this.state.latitude && <Text> {I18n.t('initial/or')} </Text> }
             <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
           </View>
 

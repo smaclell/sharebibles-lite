@@ -10,25 +10,30 @@ class CurrentLocation extends Component {
     onLocationChanged: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: null,
+    };
+  }
+
   onLocationChanged = (location) => {
     this.props.onLocationChanged(location);
-    if (!this.location) {
-      this.location = location;
-    }
+    this.setState({ location });
   };
 
   render() {
     const onLocationChanged = this.onLocationChanged;
     const childProps = { onLocationChanged };
 
-    if (!this.location) {
+    if (!this.state.location) {
       return (
         <FindLocation {...childProps} />
       );
     }
 
     return (
-      <AdjustableMap {...this.location} {...childProps} />
+      <AdjustableMap {...this.state.location} {...childProps} />
     );
   }
 }

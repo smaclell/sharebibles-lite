@@ -17,8 +17,6 @@ class AdjustableMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: props.latitude,
-      longitude: props.longitude,
       latitudeDelta: 0.0000922,
       longitudeDelta: 0.0000421,
     };
@@ -38,6 +36,11 @@ class AdjustableMap extends Component {
       longitude: this.props.longitude,
     };
 
+    const region = {
+      ...location,
+      ...this.state,
+    };
+
     return (
       <View style={flex}>
         <MapView
@@ -49,7 +52,7 @@ class AdjustableMap extends Component {
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          region={this.state}
+          region={region}
           onRegionChange={this.onRegionChange}
         >
           <MapView.Marker coordinate={location} pinColor="green" />

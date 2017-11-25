@@ -1,139 +1,100 @@
+/* globals __DEV__ */
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { Platform, View } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { Text, TouchableOpacity } from 'react-native';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
 import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
 
+import Tabs from './tabs';
+
 // Sorted Alphabetically
 import Dev from '../screens/dev';
 import FollowUp from '../screens/followUp';
-import Initial from '../screens/initial';
-import OverviewMap from '../screens/overviewMap';
 import SignIn from '../screens/signIn';
 import SignUp from '../screens/signUp';
-import Visits from '../screens/visits';
 
 const login = new StackNavigator({
   SignIn: {
     screen: SignIn,
     navigationOptions: {
-      title: I18n.t('title/sign_in'),
       header: null,
+      title: I18n.t('title/sign_in'),
     },
   },
   SignUp: {
     screen: SignUp,
     navigationOptions: {
+      header: null,
       title: I18n.t('title/sign_up'),
-      header: null,
-    },
-  },
-});
-
-const iconSize = 30;
-const tabHeight = 50;
-
-const initialStyle = {
-  flex: 1,
-  height: 1.5 * tabHeight,
-  marginTop: -0.5 * tabHeight,
-  paddingTop: 20,
-  paddingLeft: 25,
-  paddingRight: 25,
-  paddingBottom: Platform.OS === 'ios' ? 35 : undefined,
-  backgroundColor: colours.primaryButton,
-};
-
-const home = new TabNavigator({
-  Dev: {
-    screen: Dev,
-    navigationOptions: {
-      title: 'Developer Testing Screen',
-    },
-  },
-  OverviewMap: {
-    screen: OverviewMap,
-    navigationOptions: {
-      header: null,
-      tabBarLabel: I18n.t('title/map'),
-      tabBarIcon: ({ tintColor }) => (
-        <FontAwesome name="map-marker" size={iconSize} color={tintColor} />
-      ),
-    },
-  },
-  Initial: {
-    screen: Initial,
-    navigationOptions: {
-      header: null,
-      tabBarLabel: I18n.t('initial/first_visit'),
-      tabBarVisible: false,
-      style: {
-        height: tabHeight,
-        backgroundColor: 'black',
-      },
-      tabStyle: {
-        height: 1.5 * tabHeight,
-        padding: 0,
-        backgroundColor: 'black',
-      },
-      tabBarIcon: () => (
-        <View style={initialStyle}>
-          <FontAwesome name="plus" size={40} color={colours.white} />
-        </View>
-      ),
-    },
-  },
-  Visits: {
-    screen: Visits,
-    navigationOptions: {
-      header: null,
-      tabBarLabel: I18n.t('title/your_conversations'),
-      tabBarIcon: ({ tintColor }) => (
-        <FontAwesome name="list" size={iconSize} color={tintColor} />
-      ),
     },
   },
 }, {
-  lazy: true,
-  animationEnabled: true,
   headerMode: 'none',
-  tabBarPosition: 'bottom',
-  order: ['OverviewMap', 'Initial', 'Visits'],
-  swipeEnabled: false,
-  initialRouteName: 'OverviewMap',
-  tabBarOptions: {
-    showIcon: true,
-    showLabel: false,
-    style: {
-      height: tabHeight,
-      backgroundColor: 'black',
+});
+
+const createGear = navigation => (
+  <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={() => navigation.navigate('DrawerOpen')}>
+    <FontAwesome size={24} name="gear" color={colours.text} />
+  </TouchableOpacity>
+);
+
+const drawerScreens = {
+  Tabs: {
+    screen: Tabs,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('title/share_bibles'),
+      gesturesEnabled: false,
+      headerLeft: createGear(navigation),
+    }),
+  },
+  FollowUp: {
+    screen: FollowUp,
+    navigationOptions: {
+      title: I18n.t('components/follow_up'),
+      tabBarVisible: false,
+      gesturesEnabled: false,
     },
-    iconStyle: {
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    tabStyle: {
-      height: tabHeight,
-      padding: 0,
-      backgroundColor: 'black',
-    },
+  },
+};
+
+if (__DEV__) {
+  drawerScreens.Dev = {
+    screen: Dev,
+    navigationOptions: ({ navigation }) => ({
+      headerLeft: <Text onPress={() => navigation.goBack()}>Menu</Text>,
+      title: 'Developer Testing Screen',
+      drawerLabel: 'Dev',
+    }),
+  };
+}
+
+const drawer = new DrawerNavigator(drawerScreens, {
+  headerMode: 'float',
+  drawerLockMode: 'locked-closed',
+  navigationOptions: () => ({
+    headerStyle: { backgroundColor: colours.white },
+    headerTintColor: colours.text,
+  }),
+});
+
+const drawerStack = new StackNavigator({
+  Drawer: { screen: drawer },
+}, {
+  headerMode: 'float',
+  navigationOptions: {
+    gesturesEnabled: false,
   },
 });
 
 export default new StackNavigator({
   Login: { screen: login },
-  Home: { screen: home },
-  FollowUp: {
-    screen: FollowUp,
-    navigationOptions: {
-      header: null,
-      tabBarVisible: false,
-      gesturesEnabled: false,
-    },
+  Home: { screen: drawerStack },
+}, {
+  headerMode: 'none',
+  navigationOptions: {
+    gesturesEnabled: false,
   },
 });

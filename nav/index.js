@@ -18,8 +18,8 @@ export default new StackNavigator({
   Home: { screen: Home },
 }, {
   headerMode: 'none',
+  transitionConfig: noTransitionConfig,
   navigationOptions: {
     gesturesEnabled: false,
-    transitionConfig: noTransitionConfig,
   },
 });

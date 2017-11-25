@@ -20,6 +20,7 @@ export default {
   'initial/first_visit': 'Français',
   'initial/or': 'Français',
   'resource/english_bible_esv': 'Français',
+  'settings/logout': 'Français',
   'settings/not_implemented': 'Français',
   'sign_in/check_email_password': 'Français',
   'sign_in/create_one': 'Français',

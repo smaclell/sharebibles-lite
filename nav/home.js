@@ -8,6 +8,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
 
+import Settings from '../containers/Settings';
+
 import Dev from '../screens/dev';
 import FollowUp from '../screens/followUp';
 import Tabs from './tabs';
@@ -42,6 +44,7 @@ if (__DEV__) {
 const drawer = new DrawerNavigator(drawerScreens, {
   headerMode: 'float',
   drawerLockMode: 'locked-closed',
+  contentComponent: Settings,
   navigationOptions: {
     headerStyle: { backgroundColor: colours.white },
     headerTintColor: colours.text,

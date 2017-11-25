@@ -17,6 +17,13 @@ import User from '../components/User';
 import styles from '../styles/followUp';
 import I18n from '../assets/i18n/i18n';
 
+function createInitialState() {
+  return {
+    notes: null,
+    status: 'unknown',
+    tags: {},
+  };
+}
 
 class FollowUp extends React.Component {
   static defaultProps = { // Sorted Alphabetically
@@ -34,11 +41,7 @@ class FollowUp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      notes: null,
-      status: 'unknown',
-      tags: {},
-    };
+    this.state = createInitialState();
   }
 
   showTag = tag => (
@@ -51,12 +54,17 @@ class FollowUp extends React.Component {
     </Switch>
   );
 
-  update() {
+  goBack = () => {
+    this.props.navigation.goBack();
+    this.setState(createInitialState());
+  }
+
+  update = () => {
     const { params: { locationKey } } = this.props.navigation.state;
     const { notes, tags, status } = this.state;
 
     this.props.createVisit({ locationKey, notes, tags, status });
-    this.props.navigation.goBack();
+    this.goBack();
   }
 
   updateStatus = status => this.setState({ status });
@@ -126,8 +134,8 @@ class FollowUp extends React.Component {
           </View>
         </KeyboardAwareScrollView>
         <View style={styles.actions_container}>
-          <PrimaryButton onClick={() => this.update()}>{I18n.t('button/update')}</PrimaryButton>
-          <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
+          <PrimaryButton onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>
+          <SecondaryButton onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
       </View>
     );

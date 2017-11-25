@@ -139,6 +139,8 @@ class Initial extends React.Component {
   }
 
   render() {
+    const { latitude, longitude } = this.state;
+
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
@@ -148,8 +150,12 @@ class Initial extends React.Component {
 
           <View style={styles.add_location_section_container}>
             <Photo onPhotoChanged={this.updateImageUrl} />
-            { !this.state.latitude && <Text> {I18n.t('initial/or')} </Text> }
-            <CurrentLocation onLocationChanged={this.updateCurrentLocation} />
+            { !latitude && <Text> {I18n.t('initial/or')} </Text> }
+            <CurrentLocation
+              latitude={latitude}
+              longitude={longitude}
+              onLocationChanged={this.updateCurrentLocation}
+            />
           </View>
 
           <View style={styles.results_container}>

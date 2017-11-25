@@ -63,6 +63,7 @@ class ChooseStatus extends Component {
       onPressed={() => this.updateStatus(status.key)}
       selected={this.state.status === status.key}
       icon={status.icon}
+      iconFamily={status.iconFamily}
     />
   );
 

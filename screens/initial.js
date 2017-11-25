@@ -18,18 +18,21 @@ import Switch from '../components/Switch';
 import styles from '../styles/initial';
 import I18n from '../assets/i18n/i18n';
 
+function createInitialState() {
+  return {
+    imageUrl: null,
+    status: 'unknown',
+    longitude: null,
+    latitude: null,
+    resources: {},
+    tags: {},
+  };
+}
 
 class Initial extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      imageUrl: null,
-      status: 'unknown',
-      longitude: null,
-      latitude: null,
-      resources: {},
-      tags: {},
-    };
+    this.state = createInitialState();
 
     this.showResource = this.showResource.bind(this);
     this.showStatus = this.showStatus.bind(this);
@@ -43,7 +46,7 @@ class Initial extends React.Component {
   /* SHOULD BE FLAT LIST */
   /* CAMERA ON THE LEFT */
 
-  add() {
+  add = () => {
     const {
       imageUrl,
       status,
@@ -64,8 +67,14 @@ class Initial extends React.Component {
       resources,
       tags,
     });
-    this.props.navigation.goBack();
+
+    this.goBack();
   }
+
+  goBack = () => {
+    this.props.navigation.goBack();
+    this.setState(createInitialState());
+  };
 
   showResource(resource) {
     return (
@@ -172,8 +181,8 @@ class Initial extends React.Component {
           </View>
         </ScrollView>
         <View style={styles.actions_container}>
-          <PrimaryButton onClick={() => this.add()}>{I18n.t('button/add')}</PrimaryButton>
-          <SecondaryButton onClick={() => this.props.navigation.goBack()}>{I18n.t('button/cancel')}</SecondaryButton>
+          <PrimaryButton onClick={this.add}>{I18n.t('button/add')}</PrimaryButton>
+          <SecondaryButton onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
       </View>
     );

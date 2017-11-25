@@ -24,6 +24,7 @@ export default {
   'initial/first_visit': 'First Visit',
   'initial/or': 'OR',
   'resource/english_bible_esv': 'Complete English Bible',
+  'settings/logout': 'logout',
   'settings/not_implemented': "Sorry this feature isn't available yet.",
   'sign_in/check_email_password': 'Please check your email and password',
   'sign_in/create_one': 'Create One',

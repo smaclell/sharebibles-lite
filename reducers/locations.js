@@ -1,4 +1,5 @@
 import { RECIEVE_LOCATION } from '../actions/locations';
+import { SIGN_OUT } from '../actions/authentication';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
@@ -9,6 +10,8 @@ export default function reducer(state = {}, action) {
           ...action.location,
         },
       };
+    case SIGN_OUT:
+      return {};
     default:
       return state;
   }

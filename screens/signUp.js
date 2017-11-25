@@ -89,7 +89,10 @@ class SignUp extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView style={styles.outer_container} showsVerticalScrollIndicator={false}>
+        <KeyboardAwareScrollView
+          style={styles.outer_container}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.inner_container}>
             <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
 

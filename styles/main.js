@@ -8,11 +8,12 @@ import fonts from '../styles/fonts';
 export default StyleSheet.create({
   outer_container: {
     flex: 1,
-    backgroundColor: colours.teals.base,
   },
 
   inner_container: {
     flex: 1,
+    flexShrink: 0,
+    flexGrow: 1,
     borderRadius: 0,
     padding: 20,
     justifyContent: 'center',
@@ -23,11 +24,11 @@ export default StyleSheet.create({
 
   container: {
     flex: 1,
-    padding: 20,
+    paddingTop: 20,
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: colours.teals.base,
+    backgroundColor: colours.white,
   },
 
   header: {

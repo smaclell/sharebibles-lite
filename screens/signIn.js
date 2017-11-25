@@ -104,8 +104,7 @@ class SignIn extends React.Component {
             Need to figure out how to make the keyboard work better
             (not hide the text fields)
         */ }
-        <KeyboardAvoidingView behavior="padding" style={styles.inner_container} keyboardVerticalOffset={60}>
-
+        <KeyboardAvoidingView behavior="padding" style={styles.inner_container}>
           <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />

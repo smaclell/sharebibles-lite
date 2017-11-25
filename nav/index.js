@@ -37,7 +37,12 @@ const iconSize = 30;
 const tabHeight = 50;
 
 const initialStyle = {
-  padding: 20,
+  flex: 1,
+  height: 1.5 * tabHeight,
+  marginTop: -0.5 * tabHeight,
+  paddingTop: 20,
+  paddingLeft: 25,
+  paddingRight: 25,
   paddingBottom: Platform.OS === 'ios' ? 35 : undefined,
   backgroundColor: colours.primaryButton,
 };
@@ -65,6 +70,15 @@ const home = new TabNavigator({
       header: null,
       tabBarLabel: I18n.t('initial/first_visit'),
       tabBarVisible: false,
+      style: {
+        height: tabHeight,
+        backgroundColor: 'black',
+      },
+      tabStyle: {
+        height: 1.5 * tabHeight,
+        padding: 0,
+        backgroundColor: 'black',
+      },
       tabBarIcon: () => (
         <View style={initialStyle}>
           <FontAwesome name="plus" size={40} color={colours.white} />
@@ -119,6 +133,7 @@ export default new StackNavigator({
     navigationOptions: {
       header: null,
       tabBarVisible: false,
+      gesturesEnabled: false,
     },
   },
 });

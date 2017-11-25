@@ -12,11 +12,11 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    padding: 10,
     paddingTop: 24,
   },
 
   scroll: {
+    padding: 10,
     flex: 0,
     flexGrow: 1,
   },
@@ -91,7 +91,6 @@ export default StyleSheet.create({
     backgroundColor: colours.black,
     flex: 0,
     flexDirection: 'row',
-    margin: containerMargin,
     padding: 5,
   },
 });

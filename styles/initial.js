@@ -6,7 +6,6 @@ const containerMargin = 10;
 export default StyleSheet.create({
   container: {
     backgroundColor: colours.teals.base,
-    padding: 10,
     paddingTop: 24,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -15,6 +14,7 @@ export default StyleSheet.create({
   },
 
   scroll: {
+    padding: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',

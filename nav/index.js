@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -28,24 +28,15 @@ const drawerScreens = {
       headerLeft: createGear(navigation),
     }),
   },
-  FollowUp: {
-    screen: FollowUp,
-    navigationOptions: {
-      title: I18n.t('components/follow_up'),
-      tabBarVisible: false,
-      gesturesEnabled: false,
-    },
-  },
 };
 
 if (__DEV__) {
   drawerScreens.Dev = {
     screen: Dev,
-    navigationOptions: ({ navigation }) => ({
-      headerLeft: <Text onPress={() => navigation.goBack()}>Menu</Text>,
+    navigationOptions: {
       title: 'Developer Testing Screen',
       drawerLabel: 'Dev',
-    }),
+    },
   };
 }
 
@@ -60,6 +51,14 @@ const drawer = new DrawerNavigator(drawerScreens, {
 
 const drawerStack = new StackNavigator({
   Drawer: { screen: drawer },
+  FollowUp: {
+    screen: FollowUp,
+    navigationOptions: {
+      title: I18n.t('components/follow_up'),
+      tabBarVisible: false,
+      gesturesEnabled: false,
+    },
+  },
 }, {
   headerMode: 'float',
   navigationOptions: {

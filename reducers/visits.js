@@ -1,6 +1,7 @@
 import uniq from 'lodash/uniq';
 import { combineReducers } from 'redux';
 import { RECEIVE_VISIT } from '../actions/visits';
+import { SIGN_OUT } from '../actions/authentication';
 
 function all(state = {}, action) {
   switch (action.type) {
@@ -11,6 +12,8 @@ function all(state = {}, action) {
           ...action.visit,
         },
       };
+    case SIGN_OUT:
+      return {};
     default:
       return state;
   }
@@ -27,6 +30,8 @@ function byLocation(state = {}, action) {
           action.visit.key,
         ]),
       };
+    case SIGN_OUT:
+      return {};
     default:
       return state;
   }
@@ -49,6 +54,8 @@ function byUser(state = {}, action) {
         ...state,
         ...users,
       };
+    case SIGN_OUT:
+      return {};
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 import * as actions from '../actions/users';
+import { SIGN_OUT } from '../actions/authentication';
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
@@ -9,7 +10,8 @@ export default function reducer(state = {}, action) {
           ...action.user,
         },
       };
-
+    case SIGN_OUT:
+      return {};
     default:
       return state;
   }

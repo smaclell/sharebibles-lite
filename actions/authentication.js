@@ -22,6 +22,14 @@ function onAuthenticated(user) {
   };
 }
 
+export const SIGN_OUT = 'SIGN_OUT';
+export function signOut() {
+  return dispatch =>
+    Promise.resolve()
+      .then(() => apis.signOut())
+      .then(() => dispatch({ type: 'SIGN_OUT' }));
+}
+
 export function signIn(email, password) {
   return dispatch =>
     Promise.resolve()

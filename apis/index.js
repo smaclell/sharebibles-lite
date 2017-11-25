@@ -36,6 +36,12 @@ function saveGeoData(created, locatinonKey, regionKey, creator) {
   return [geoRegion, geoUser, geoTeam];
 }
 
+export function signOut() {
+  initialize();
+
+  return firebase.auth().signOut();
+}
+
 export function signIn(email, password) {
   initialize();
 

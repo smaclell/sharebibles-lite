@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Animated, Easing, TouchableOpacity } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -43,14 +43,16 @@ if (__DEV__) {
 const drawer = new DrawerNavigator(drawerScreens, {
   headerMode: 'float',
   drawerLockMode: 'locked-closed',
-  navigationOptions: () => ({
+  navigationOptions: {
     headerStyle: { backgroundColor: colours.white },
     headerTintColor: colours.text,
-  }),
+  },
 });
 
 const drawerStack = new StackNavigator({
-  Drawer: { screen: drawer },
+  Drawer: {
+    screen: drawer,
+  },
   FollowUp: {
     screen: FollowUp,
     navigationOptions: {
@@ -66,6 +68,15 @@ const drawerStack = new StackNavigator({
   },
 });
 
+// https://github.com/react-community/react-navigation/issues/1254
+const noTransitionConfig = () => ({
+  transitionSpec: {
+    duration: 0,
+    timing: Animated.timing,
+    easing: Easing.step0,
+  },
+});
+
 export default new StackNavigator({
   Login: { screen: Login },
   Home: { screen: drawerStack },
@@ -73,5 +84,6 @@ export default new StackNavigator({
   headerMode: 'none',
   navigationOptions: {
     gesturesEnabled: false,
+    transitionConfig: noTransitionConfig,
   },
 });

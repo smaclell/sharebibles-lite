@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
-const containerMargin = 5;
+const containerMargin = 10;
 
 export default StyleSheet.create({
   container: {
@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
 
   scroll: {
-    padding: 10,
+    padding: 5,
     flex: 0,
     flexGrow: 1,
   },
@@ -40,7 +40,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: containerMargin,
+    marginBottom: containerMargin,
   },
 
   status_container: {
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    margin: containerMargin,
+    marginBottom: containerMargin,
   },
 
   accepted_container: {
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexGrow: 4,
-    margin: containerMargin,
+    marginBottom: containerMargin,
   },
 
   notes_container: {
@@ -76,7 +76,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    margin: containerMargin,
+    marginBottom: containerMargin,
   },
 
   note_input: {

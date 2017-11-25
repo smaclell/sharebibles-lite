@@ -117,7 +117,10 @@ class FollowUp extends React.Component {
               style={styles.note_input}
               placeholder={I18n.t('follow_up/add_notes')}
               multiline
-              numberOfLines={3}
+              numberOfLines={5}
+              maxLength={1000}
+              autoGrow
+              maxHeight={90}
               onChangeText={notes => this.setState(p => ({ ...p, notes }))}
             />
           </View>

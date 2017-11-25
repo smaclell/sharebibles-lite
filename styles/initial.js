@@ -48,16 +48,6 @@ export default StyleSheet.create({
     marginBottom: containerMargin,
   },
 
-  status_container: {
-    alignItems: 'flex-start',
-    backgroundColor: colours.white,
-    flex: 0,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    margin: 0,
-  },
-
   tag_container: {
     flex: 1,
     alignItems: 'center',

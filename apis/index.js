@@ -107,7 +107,7 @@ export async function createAccessCode(forced) {
   const { uid: userKey } = firebase.auth().currentUser;
   const { teamKey } = (await firebase.database().ref(`users/${userKey}`).once('value')).val();
 
-  const raw = __DEV__ && forced ? forced : normalize(CryptoJS.lib.WordArray.random(192 / 8));
+  const raw = __DEV__ && forced ? forced : normalize(CryptoJS.lib.WordArray.random(120 / 8));
 
   const hashed = hashAccessCode(raw);
 

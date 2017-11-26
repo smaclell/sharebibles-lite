@@ -29,7 +29,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  logout: () => dispatch(authenticationActions.signOut()).then(createLogout(ownProps)),
+  logout: () => Promise.resolve()
+    .then(createLogout(ownProps))
+    .then(() => dispatch(authenticationActions.signOut())),
   shareInvite: () =>
     dispatch(authenticationActions.shareInvite())
       .then(options => Share.share(options, dialogOptions)),

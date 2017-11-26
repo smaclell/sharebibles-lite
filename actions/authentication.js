@@ -43,3 +43,10 @@ export function signUp(name, email, password, accessCode) {
       .then(() => apis.signUp(name, email, password, accessCode))
       .then(user => dispatch(onAuthenticated(user)));
 }
+
+export function shareInvite() {
+  return () =>
+    Promise.resolve()
+      .then(() => apis.createAccessCode())
+      .then(({ raw }) => ({ title: 'Join my Share Bibles team', message: raw }));
+}

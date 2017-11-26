@@ -22,9 +22,14 @@ console.ignoredYellowBox = console.ignoredYellowBox || [];
 // eslint-disable-next-line no-console
 console.ignoredYellowBox = console.ignoredYellowBox.concat('Setting a timer for a long period');
 
+const paddingTop = Platform.select({
+  ios: 0,
+  android: StatusBar.currentHeight,
+});
+
 const App = () => (
   <Provider store={store}>
-    <View style={{ flex: 1, paddingTop: Platform.select({ ios: 0, android: StatusBar.currentHeight }) }}>
+    <View style={{ flex: 1, paddingTop }}>
       <Navigation />
     </View>
   </Provider>

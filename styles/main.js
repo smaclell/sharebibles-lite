@@ -1,5 +1,5 @@
 import {
-  StyleSheet,
+  Platform, StyleSheet,
 } from 'react-native';
 
 import colours from '../styles/colours';
@@ -24,7 +24,7 @@ export default StyleSheet.create({
 
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: Platform.select({ android: 0, ios: 20 }),
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',

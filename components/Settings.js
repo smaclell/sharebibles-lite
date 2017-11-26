@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   options_container: {
     flex: 1,
     padding: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
   version_container: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, team, user, version } = props;
+  const { logout, shareInvite, team, user, version } = props;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -64,6 +65,7 @@ const Settings = (props) => {
         <Text style={styles.teamName}>{team.name}</Text>
       </View>
       <View style={styles.options_container}>
+        { user && team && team.owers && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>
@@ -79,6 +81,7 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   logout: PropTypes.func.isRequired,
+  shareInvite: PropTypes.func.isRequired,
   team: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   version: PropTypes.string.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform, StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -21,9 +22,16 @@ console.ignoredYellowBox = console.ignoredYellowBox || [];
 // eslint-disable-next-line no-console
 console.ignoredYellowBox = console.ignoredYellowBox.concat('Setting a timer for a long period');
 
+const paddingTop = Platform.select({
+  ios: 0,
+  android: StatusBar.currentHeight,
+});
+
 const App = () => (
   <Provider store={store}>
-    <Navigation />
+    <View style={{ flex: 1, paddingTop }}>
+      <Navigation />
+    </View>
   </Provider>
 );
 

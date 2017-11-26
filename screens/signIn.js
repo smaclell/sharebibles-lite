@@ -120,6 +120,7 @@ class SignIn extends React.Component {
               autoCapitalize="none"
               keyboardType="email-address"
               autoCorrect={false}
+              autoFocus
               onChangeText={(email) => { this.setState({ email }); }}
               value={this.state.email}
               returnKeyType="next"

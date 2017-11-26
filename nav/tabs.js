@@ -15,16 +15,28 @@ import Visits from '../screens/visits';
 const iconSize = 30;
 const tabHeight = 50;
 
-const initialStyle = {
+const sharedInitialStyle = {
   flex: 1,
-  height: 1.5 * tabHeight,
-  marginTop: -0.5 * tabHeight,
-  paddingTop: 20,
+  backgroundColor: colours.primaryButton,
   paddingLeft: 25,
   paddingRight: 25,
-  paddingBottom: Platform.OS === 'ios' ? 35 : undefined,
-  backgroundColor: colours.primaryButton,
 };
+
+const initialStyle = Platform.select({
+  ios: {
+    ...sharedInitialStyle,
+    height: 1.5 * tabHeight,
+    marginTop: -0.5 * tabHeight,
+    paddingTop: 20,
+    paddingBottom: 35,
+  },
+  android: {
+    ...sharedInitialStyle,
+    height: tabHeight,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+});
 
 const navigator = new TabNavigator({
   OverviewMap: {
@@ -46,7 +58,7 @@ const navigator = new TabNavigator({
         backgroundColor: 'black',
       },
       tabStyle: {
-        height: 1.5 * tabHeight,
+        height: (Platform.OS === 'ios' ? 1.5 : 1) * tabHeight,
         padding: 0,
         backgroundColor: 'black',
       },

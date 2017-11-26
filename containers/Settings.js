@@ -23,7 +23,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  logout: () => dispatch(authenticationActions.signOut()).then(createLogout(ownProps)),
+  logout: () => Promise.resolve()
+    .then(createLogout(ownProps))
+    .then(() => dispatch(authenticationActions.signOut())),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -53,11 +53,13 @@ class ChooseUsers extends Component {
 
     this.state = {
       filter: '',
-      users: this.props.users,
-      visitors: this.props.visitors,
+      users: props.users,
+      visitors: props.visitors,
     };
 
-    this.togglers = {};
+    this.togglers = {
+      [props.user]: () => {},
+    };
   }
 
   getToggler = (user) => {
@@ -146,11 +148,13 @@ class ChooseUsers extends Component {
 ChooseUsers.propTypes = {
   goBack: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
+  user: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
   visitors: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
+  user: state.user,
   users: Object.values(state.users),
   visitors: state.visitors,
 });

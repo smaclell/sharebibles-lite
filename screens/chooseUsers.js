@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
   actions_container: {
@@ -88,7 +88,18 @@ class ChooseUsers extends Component {
     />
   )
 
-  showUsers = (users, selected) => (users.map(u => this.showUser(u, selected)))
+  comparison = (a, b) => {
+    if (a.name === b.name) {
+      return 0;
+    }
+
+    return a.name > b.name ? 1 : -1;
+  }
+
+  showUsers = (users, selected) => (
+    users.sort(this.comparison)
+      .map(u => this.showUser(u, selected))
+  )
 
   goBack = () => {
     this.props.goBack();

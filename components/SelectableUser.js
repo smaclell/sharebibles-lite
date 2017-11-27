@@ -8,8 +8,8 @@ import User from '../components/User';
 
 const styles = StyleSheet.create({
   user: {
-    minWidth: '45%',
-    margin: 5,
+    width: '50%',
+    padding: 5,
   },
   unselected: {
     opacity: 0.5,

@@ -11,6 +11,7 @@ import teams from './teams';
 import uploads from './uploads';
 import user from './user';
 import users from './users';
+import visitors from './visitors';
 import visits from './visits';
 
 // Sorted Alphabetically
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   uploads,
   user,
   users,
+  visitors,
   visits,
 });
 

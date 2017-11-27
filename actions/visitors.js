@@ -7,10 +7,10 @@ export function toggleVistor(userKey) {
   };
 }
 
-export const UPDATE_VISTORS = 'UPDATE_VISTORS';
+export const UPDATE_VISITORS = 'UPDATE_VISITORS';
 export function update(users) {
   return {
-    type: UPDATE_VISTORS,
+    type: UPDATE_VISITORS,
     users,
   };
 }

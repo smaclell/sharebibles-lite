@@ -14,6 +14,7 @@ export default {
   'components/last_visited': 'Français {{visited_time}}',
   'components/pending': 'Français',
   'components/tap_to_visit': 'Français',
+  'components/update_users': 'Français',
   'components/uploaded': 'Français',
   'components/visits': '{{num_visits}} Français',
   'follow_up/add_notes': 'Français',

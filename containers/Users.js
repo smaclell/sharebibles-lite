@@ -4,10 +4,15 @@ import * as visitorActions from '../actions/visitors';
 import Users from '../components/Users';
 import sorter from '../utils/userSorter';
 
-const mapStateToProps = state => ({
-  user: state.user,
-  visitors: state.visitors.map(v => state.users[v]).sort(sorter),
-});
+const mapStateToProps = (state) => {
+  const visitors = state.visitors.map(v => state.users[v]);
+  visitors.sort(sorter);
+
+  return {
+    user: state.user,
+    visitors,
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(visitorActions, dispatch);
 

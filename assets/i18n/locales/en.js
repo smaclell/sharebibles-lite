@@ -18,6 +18,7 @@ export default {
   'components/last_visited': 'Last visited {{visited_time}}',
   'components/pending': 'Pending',
   'components/tap_to_visit': 'Tap to Visit',
+  'components/update_users': 'Update Users',
   'components/uploaded': 'Uploaded',
   'components/visits': '{{num_visits}} Visit(s)',
   'follow_up/add_notes': 'Add notes...',

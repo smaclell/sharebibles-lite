@@ -22,13 +22,6 @@ const createGear = navigation => (
 );
 
 const drawerScreens = {
-  ChooseUsers: {
-    screen: ChooseUsers,
-    navigationOptions: {
-      title: I18n.t('title/choose_users'),
-      gesturesEnabled: false,
-    },
-  },
   Tabs: {
     screen: Tabs,
     navigationOptions: ({ navigation }) => ({
@@ -62,6 +55,13 @@ const drawer = new DrawerNavigator(drawerScreens, {
 const drawerStack = new StackNavigator({
   Drawer: {
     screen: drawer,
+  },
+  ChooseUsers: {
+    screen: ChooseUsers,
+    navigationOptions: {
+      title: I18n.t('title/choose_users'),
+      gesturesEnabled: false,
+    },
   },
   FollowUp: {
     screen: FollowUp,

@@ -19,6 +19,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  scroll: {
+    flex: 0,
+  },
+  inner: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  update: {
+    justifyContent: 'flex-end',
   },
 });
 
@@ -50,10 +66,14 @@ class Users extends PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView styles={styles.container} contentContainerStyle={styles.container}>
-          { this.props.vistors.map(this.showVistor) }
+        <ScrollView
+          styles={styles.scroll}
+          contentContainerStyle={styles.inner}
+          horizontal
+        >
+          <UpdateUsers show={this.props.showUpdateUsers} />
+          { this.props.visitors.map(this.showVistor) }
         </ScrollView>
-        <UpdateUsers show={this.props.showUpdateUsers} />
       </View>
     );
   }
@@ -63,7 +83,7 @@ Users.propTypes = {
   showUpdateUsers: PropTypes.func.isRequired,
   toggleVistor: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
-  vistors: PropTypes.array.isRequired,
+  visitors: PropTypes.array.isRequired,
 };
 
 export default Users;

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    margin: 15,
+    margin: 10,
   },
   imageContainer: {
     alignItems: 'center',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 const UpdateUsers = ({ show }) => (
   <TouchableOpacity style={styles.container} onPress={show}>
     <View style={styles.imageContainer}>
-      <FontAwesome name="people" size={70} color={colours.text} />
+      <FontAwesome name="group" size={50} color={colours.text} />
     </View>
     <Text style={styles.text}>{I18n.t('components/update_users')}</Text>
   </TouchableOpacity>

@@ -12,7 +12,7 @@ const container = {
   alignItems: 'center',
   flexDirection: 'column',
   justifyContent: 'flex-start',
-  margin: 15,
+  margin: 10,
 };
 
 const imageContainer = {

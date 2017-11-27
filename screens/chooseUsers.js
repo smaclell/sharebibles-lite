@@ -16,6 +16,8 @@ import partition from 'lodash/partition';
 import * as visitorActions from '../actions/visitors';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import SelectableUser from '../components/SelectableUser';
+import toggleArray from '../utils/toggleArray';
+import sorter from '../utils/userSorter';
 import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
 
@@ -67,17 +69,10 @@ class ChooseUsers extends Component {
     return this.togglers[user.key];
   }
 
-  // eslint-disable-next-line arrow-body-style
-  toggle = (key, array) => {
-    return array.includes(key) ?
-      array.filter(x => x !== key) :
-      array.concat(key);
-  }
-
   toggleUser = ({ key }) => {
     this.setState(p => ({
       ...p,
-      visitors: this.toggle(key, p.visitors),
+      visitors: toggleArray(key, p.visitors),
     }));
   }
 
@@ -90,16 +85,8 @@ class ChooseUsers extends Component {
     />
   )
 
-  comparison = (a, b) => {
-    if (a.name === b.name) {
-      return 0;
-    }
-
-    return a.name > b.name ? 1 : -1;
-  }
-
   showUsers = (users, selected) => (
-    users.sort(this.comparison)
+    users.sort(sorter)
       .map(u => this.showUser(u, selected))
   )
 

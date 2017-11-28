@@ -20,10 +20,12 @@ import toggleArray from '../utils/toggleArray';
 import sorter from '../utils/userSorter';
 import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'stretch',
   },
   search_container: {
     padding: 10,
@@ -32,7 +34,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   search: {
+    width: '100%',
     maxWidth: 250,
+    height: 40,
+    borderRadius: 0,
+    textAlign: 'left',
+    color: 'black',
+    backgroundColor: colours.white,
+    fontSize: fonts.normal,
+    borderColor: colours.greys.lighter,
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingLeft: 6,
   },
   users_container: {
     flex: 1,
@@ -115,7 +127,7 @@ class ChooseUsers extends Component {
         <View style={styles.search_container}>
           <TextInput
             style={styles.search}
-            placeholder={I18n.t('chooseUsers/search')}
+            placeholder={I18n.t('choose_users/search')}
             onChangeText={filter => this.setState({ filter: filter.trim().toUpperCase() })}
           />
         </View>

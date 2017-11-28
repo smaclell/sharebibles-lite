@@ -12,6 +12,7 @@ import Settings from '../containers/Settings';
 
 import Dev from '../screens/dev';
 import FollowUp from '../screens/followUp';
+import ChooseUsers from '../screens/chooseUsers';
 import Tabs from './tabs';
 
 const createGear = navigation => (
@@ -54,6 +55,13 @@ const drawer = new DrawerNavigator(drawerScreens, {
 const drawerStack = new StackNavigator({
   Drawer: {
     screen: drawer,
+  },
+  ChooseUsers: {
+    screen: ChooseUsers,
+    navigationOptions: {
+      title: I18n.t('title/choose_users'),
+      gesturesEnabled: false,
+    },
   },
   FollowUp: {
     screen: FollowUp,

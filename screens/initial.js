@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as locationActions from '../actions/locations';
-import User from '../components/User';
+import Users from '../containers/Users';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import CurrentLocation from '../components/CurrentLocation';
 import Photo from '../components/Photo';
@@ -139,7 +139,7 @@ class Initial extends React.Component {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           <View style={styles.add_members_section_container}>
-            <User {...this.props.user} />
+            <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
           </View>
 
           <View style={styles.add_location_section_container}>
@@ -177,11 +177,9 @@ Initial.propTypes = { // Sorted Alphabetically
   navigation: PropTypes.object.isRequired,
   resources: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  user: state.users[state.user],
   resources: Object.keys(state.resources).map(r => state.resources[r]),
   tags: state.tags.initial,
 });

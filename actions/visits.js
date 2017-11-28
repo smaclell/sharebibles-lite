@@ -28,8 +28,9 @@ export function createVisit({ locationKey, notes, status = 'unknown', tags = {} 
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
+    const visitors = state.visitors;
 
-    return apis.createVisit(locationKey, creator, { notes, status, tags })
+    return apis.createVisit(locationKey, creator, { notes, status, tags, visitors })
       .then(({ created: visit, saved }) => { // eslint-disable-line consistent-return
         dispatch(pending(visit.key));
         saved

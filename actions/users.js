@@ -27,9 +27,12 @@ export function fetchUser(userKey, deep = true) {
 
         return Promise.resolve()
           .then(() => dispatch(fetchTeam(user.teamKey)))
-          .then(({ users = {} }) => Promise.all(
-            Object.keys(users).map(u => fetchUser(u, false)),
-          ));
+          .then(({ users = {} }) => {
+            const userKeys = Object.keys(users);
+            return Promise.all(
+              userKeys.map(k => dispatch(fetchUser(k, false)).catch(() => {})),
+            );
+          });
       });
   };
 }

@@ -228,20 +228,24 @@ export async function createLocation(creator, team, options) {
 export function createVisit(locationKey, creator, options) {
   initialize();
 
+  const { visitors: vistorsList, ...extra } = options;
+  const visitors = vistorsList.reduce((p, v) => {
+    p[v] = v; // eslint-disable-line no-param-reassign
+    return p;
+  }, {});
+
   const pushed = firebase.database().ref('visits').push();
   const created = {
     key: pushed.key,
     locationKey,
     created: moment.utc().valueOf(),
     createdBy: creator.key,
-    visitors: {
-      [creator.key]: true,
-    },
+    visitors,
     status: null,
     tags: {},
     notes: '',
     teamKey: creator.teamKey,
-    ...options,
+    ...extra,
   };
 
   // TODO: use the server timestamp created: firebase.database.ServerValue.TIMESTAMP,

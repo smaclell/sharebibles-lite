@@ -99,6 +99,7 @@ export default StyleSheet.create({
   },
 
   login_button: {
+    flexDirection: 'row',
     height: 60,
     width: 250,
     justifyContent: 'center',

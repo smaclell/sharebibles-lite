@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import React, { Component } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   Text,
@@ -177,6 +178,7 @@ class SignUp extends Component {
                 >
                   {this.getButtonText()}
                 </Button>
+                {this.state.loading && <ActivityIndicator />}
               </View>
 
               <View style={styles.sign_in_container}>

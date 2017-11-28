@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -149,6 +150,7 @@ class SignIn extends React.Component {
               >
                 {this.getButtonText()}
               </Button>
+              {this.state.loading && <ActivityIndicator />}
             </View>
 
             <View style={styles.sign_up_container}>

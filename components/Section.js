@@ -19,10 +19,13 @@ const styles = StyleSheet.create({
   },
 
   container_heading: {
+    flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: colours.black,
     height: '100%',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingBottom: 20,
     marginRight: 5,
     width: 15,
   },
@@ -43,7 +46,10 @@ const Section = ({ children, order, style }) => (
 );
 
 Section.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
   order: PropTypes.number.isRequired,
   style: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
 };

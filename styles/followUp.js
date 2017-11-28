@@ -10,7 +10,6 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    paddingTop: 24,
   },
 
   scroll: {

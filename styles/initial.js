@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
 import colours from '../styles/colours';
 
-const containerMargin = 10;
-
 export default StyleSheet.create({
   container: {
     backgroundColor: colours.teals.base,
-    paddingTop: 24,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
@@ -23,29 +20,24 @@ export default StyleSheet.create({
 
   add_members_section_container: {
     flex: 1,
-    backgroundColor: colours.white,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: containerMargin,
   },
 
   add_location_section_container: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: colours.white,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: containerMargin,
   },
 
-  results_container: {
+  results_outer_container: {
+    flex: 1,
+  },
+
+  results_inner_container: {
     flex: 1,
     padding: 5,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colours.white,
-    marginBottom: containerMargin,
   },
 
   tag_container: {

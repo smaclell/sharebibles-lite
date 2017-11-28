@@ -14,6 +14,7 @@ import CurrentLocation from '../components/CurrentLocation';
 import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
 import ChooseStatus from '../containers/ChooseStatus';
+import Section from '../components/Section';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
 import I18n from '../assets/i18n/i18n';
@@ -33,16 +34,9 @@ class Initial extends React.Component {
   constructor(props) {
     super(props);
     this.state = createInitialState();
-
-    this.showResource = this.showResource.bind(this);
-    this.showTag = this.showTag.bind(this);
-    this.updateCount = this.updateCount.bind(this);
-    this.updateImageUrl = this.updateImageUrl.bind(this);
-    this.updateCurrentLocation = this.updateCurrentLocation.bind(this);
   }
 
   /* NOTES: */
-  /* SHOULD BE FLAT LIST */
   /* CAMERA ON THE LEFT */
 
   add = () => {
@@ -75,31 +69,27 @@ class Initial extends React.Component {
     this.setState(createInitialState());
   };
 
-  showResource(resource) {
-    return (
-      <ResourceCounter
-        key={resource.key}
-        resourceKey={resource.key}
-        format={resource.format}
-        summary={I18n.t(resource.summary)}
-        onCountChanged={this.updateCount}
-      />
-    );
-  }
+  showResource = resource => (
+    <ResourceCounter
+      key={resource.key}
+      resourceKey={resource.key}
+      format={resource.format}
+      summary={I18n.t(resource.summary)}
+      onCountChanged={this.updateCount}
+    />
+  );
 
-  showTag(tag) {
-    return (
-      <Switch
-        key={tag.key}
-        onChange={enabled => this.updateTag(tag.key, enabled)}
-        value={!!this.state.tags[tag.key]}
-      >
-        {I18n.t(tag.label)}
-      </Switch>
-    );
-  }
+  showTag = tag => (
+    <Switch
+      key={tag.key}
+      onChange={enabled => this.updateTag(tag.key, enabled)}
+      value={!!this.state.tags[tag.key]}
+    >
+      {I18n.t(tag.label)}
+    </Switch>
+  );
 
-  updateCount({ count, resourceKey }) {
+  updateCount = ({ count, resourceKey }) => {
     this.setState(p => ({
       ...p,
       resources: {
@@ -111,18 +101,16 @@ class Initial extends React.Component {
     }));
   }
 
-  updateImageUrl(imageUrl) {
-    this.setState(p => ({ ...p, imageUrl }));
-  }
+  updateImageUrl = imageUrl => this.setState(p => ({ ...p, imageUrl }));
 
-  updateCurrentLocation(location) {
+  updateCurrentLocation = (location) => {
     const { longitude = null, latitude = null } = location || {};
     this.setState(p => ({ ...p, longitude, latitude }));
   }
 
   updateStatus = value => this.setState({ status: value });
 
-  updateTag(tagKey, enabled) {
+  updateTag = (tagKey, enabled) => {
     this.setState(p => ({
       ...p,
       tags: {
@@ -138,11 +126,11 @@ class Initial extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
-          <View style={styles.add_members_section_container}>
+          <Section style={styles.add_members_section_container} order={1}>
             <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
-          </View>
+          </Section>
 
-          <View style={styles.add_location_section_container}>
+          <Section style={styles.add_location_section_container} order={2}>
             <Photo onPhotoChanged={this.updateImageUrl} />
             { !latitude && <Text> {I18n.t('initial/or')} </Text> }
             <CurrentLocation
@@ -150,18 +138,20 @@ class Initial extends React.Component {
               longitude={longitude}
               onLocationChanged={this.updateCurrentLocation}
             />
-          </View>
+          </Section>
 
-          <View style={styles.results_container}>
-            <ChooseStatus updateStatus={this.updateStatus} />
+          <Section style={styles.results_outer_container} order={3}>
+            <View style={styles.results_inner_container}>
+              <ChooseStatus updateStatus={this.updateStatus} />
 
-            <View style={styles.tag_container}>
-              {this.props.tags.map(this.showTag) }
+              <View style={styles.tag_container}>
+                {this.props.tags.map(this.showTag) }
+              </View>
+              <View style={styles.resources_container}>
+                {this.props.resources.map(this.showResource) }
+              </View>
             </View>
-            <View style={styles.resources_container}>
-              {this.props.resources.map(this.showResource) }
-            </View>
-          </View>
+          </Section>
         </ScrollView>
         <View style={styles.actions_container}>
           <PrimaryButton style={{ margin: 10 }} onClick={this.add}>{I18n.t('button/add')}</PrimaryButton>

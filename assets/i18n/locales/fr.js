@@ -18,6 +18,7 @@ export default {
   'components/update_users': 'Français',
   'components/uploaded': 'Français',
   'components/visits': '{{num_visits}} Français',
+  'conversations/no_visits': 'Français',
   'follow_up/add_notes': 'Français',
   'initial/first_visit': 'Français',
   'initial/or': 'Français',

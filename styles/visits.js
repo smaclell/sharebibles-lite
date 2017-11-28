@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   container: {
@@ -16,6 +17,23 @@ export default StyleSheet.create({
     padding: 15,
     paddingBottom: 20,
     borderRadius: 0,
+  },
+
+  header: {
+    fontSize: fonts.header,
+    color: colours.text,
+    marginBottom: 5,
+  },
+
+  teamName: {
+    fontSize: fonts.large,
+    color: colours.greys.base,
+    marginBottom: 20,
+  },
+
+  empty: {
+    fontSize: fonts.large,
+    color: colours.text,
   },
 
   item: {

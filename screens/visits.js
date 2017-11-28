@@ -8,19 +8,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { UploadStatus } from '../actions/uploads';
 import styles from '../styles/visits';
-import fonts from '../styles/fonts';
 import Visit from '../components/Visit';
 import I18n from '../assets/i18n/i18n';
-
 
 const Visits = ({ navigation, teamName, visits }) => {
   const { navigate } = navigation;
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: fonts.header, marginBottom: 20 }}>{I18n.t('title/your_conversations')}</Text>
-      <Text style={{ fontSize: fonts.large, marginBottom: 10 }}>{teamName}</Text>
       <FlatList
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.header}>{I18n.t('title/your_conversations')}</Text>
+            <Text style={styles.teamName}>{teamName}</Text>
+          </View>
+        }
+        ListEmptyComponent={
+          <View>
+            <Text style={styles.empty}>{I18n.t('conversations/no_visits')}</Text>
+          </View>
+        }
         style={styles.inner_container}
         data={visits}
         renderItem={({ item }) => <Visit {...item} navigate={() => navigate('FollowUp', { locationKey: item.locationKey })} />}

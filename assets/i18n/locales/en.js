@@ -22,6 +22,7 @@ export default {
   'components/update_users': 'Update',
   'components/uploaded': 'Uploaded',
   'components/visits': '{{num_visits}} Visit(s)',
+  'conversations/no_visits': 'No visits yet!',
   'follow_up/add_notes': 'Add notes...',
   'initial/first_visit': 'First Visit',
   'initial/or': 'OR',

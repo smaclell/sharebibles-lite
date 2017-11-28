@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Text,
   TextInput,
   View,
 } from 'react-native';
@@ -12,6 +11,7 @@ import * as visitActions from '../actions/visits';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import ChooseStatus from '../containers/ChooseStatus';
 import VisitStatus from '../components/VisitStatus';
+import Section from '../components/Section';
 import Switch from '../components/Switch';
 import Users from '../containers/Users';
 import styles from '../styles/followUp';
@@ -85,18 +85,11 @@ class FollowUp extends React.Component {
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.users_container}>
-            <View style={styles.container_heading}>
-              <Text style={styles.container_heading_text}> 1 </Text>
-            </View>
+          <Section style={styles.users_container} order={1}>
             <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
-          </View>
+          </Section>
 
-          <View style={styles.status_container}>
-            <View style={styles.container_heading}>
-              <Text style={styles.container_heading_text}> 2 </Text>
-            </View>
-
+          <Section style={styles.status_container} order={2}>
             {
               this.props.currentStatus && this.props.currentStatus.success ?
                 <View style={styles.accepted_container}>
@@ -104,21 +97,15 @@ class FollowUp extends React.Component {
                 </View> :
                 <ChooseStatus updateStatus={this.updateStatus} />
             }
-          </View>
+          </Section>
 
-          <View style={styles.tags_container}>
-            <View style={styles.container_heading}>
-              <Text style={styles.container_heading_text}> 3 </Text>
-            </View>
+          <Section style={styles.tags_container} order={3}>
             <View style={{ flex: 1, margin: 10 }}>
               { this.props.tags.map(this.showTag) }
             </View>
-          </View>
+          </Section>
 
-          <View style={styles.notes_container}>
-            <View style={styles.container_heading}>
-              <Text style={styles.container_heading_text}> 4 </Text>
-            </View>
+          <Section style={styles.notes_container} order={4}>
             <TextInput
               style={styles.note_input}
               placeholder={I18n.t('follow_up/add_notes')}
@@ -129,7 +116,7 @@ class FollowUp extends React.Component {
               maxHeight={90}
               onChangeText={notes => this.setState(p => ({ ...p, notes }))}
             />
-          </View>
+          </Section>
         </KeyboardAwareScrollView>
         <View style={styles.actions_container}>
           <PrimaryButton style={{ margin: 10 }} onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>

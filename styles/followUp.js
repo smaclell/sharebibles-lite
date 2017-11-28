@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 
-const containerMargin = 10;
-
 export default StyleSheet.create({
   container: {
     alignItems: 'stretch',
@@ -21,36 +19,12 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
 
-  container_heading: {
-    alignItems: 'center',
-    backgroundColor: colours.black,
-    height: '100%',
-    justifyContent: 'center',
-    marginRight: 5,
-    width: 15,
-  },
-
-  container_heading_text: {
-    color: colours.white,
-  },
-
   users_container: {
-    alignItems: 'center',
-    backgroundColor: colours.white,
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginBottom: containerMargin,
   },
 
   status_container: {
-    alignItems: 'flex-start',
-    backgroundColor: colours.white,
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    marginBottom: containerMargin,
   },
 
   accepted_container: {
@@ -63,20 +37,12 @@ export default StyleSheet.create({
 
   tags_container: {
     alignItems: 'center',
-    backgroundColor: colours.white,
     flex: 1,
-    flexDirection: 'row',
     flexGrow: 4,
-    marginBottom: containerMargin,
   },
 
   notes_container: {
-    alignItems: 'flex-start',
-    backgroundColor: colours.white,
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginBottom: containerMargin,
   },
 
   note_input: {

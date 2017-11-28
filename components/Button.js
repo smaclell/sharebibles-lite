@@ -62,10 +62,10 @@ const styles = {
 
 const ignore = () => {};
 
-const Button = ({ children, disabled, onClick, type }) => (
+const Button = ({ children, disabled, onClick, style, type }) => (
   <TouchableOpacity
     onPress={!disabled ? onClick : ignore}
-    style={disabled ? styles[type].disabled : styles[type].container}
+    style={[disabled ? styles[type].disabled : styles[type].container, style]}
   >
     <Text style={styles[type].text}>{children}</Text>
   </TouchableOpacity>
@@ -76,10 +76,12 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 Button.defaultProps = {
   disabled: false,
+  style: null,
 };
 
 const Primary = props => <Button type="primary" {...props} />;

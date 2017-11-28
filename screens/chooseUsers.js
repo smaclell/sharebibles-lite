@@ -136,8 +136,8 @@ class ChooseUsers extends Component {
           { this.showUsers(unselected, false) }
         </ScrollView>
         <View style={styles.actions_container}>
-          <PrimaryButton onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>
-          <SecondaryButton onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>
+          <PrimaryButton style={{ margin: 10 }} onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>
+          <SecondaryButton style={{ margin: 10 }} onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>
         </View>
       </View>
     );

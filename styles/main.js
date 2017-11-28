@@ -8,6 +8,7 @@ import fonts from '../styles/fonts';
 export default StyleSheet.create({
   outer_container: {
     flex: 1,
+    backgroundColor: colours.teals.base,
   },
 
   inner_container: {
@@ -15,9 +16,9 @@ export default StyleSheet.create({
     flexShrink: 0,
     flexGrow: 1,
     borderRadius: 0,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
     flexDirection: 'column',
     backgroundColor: colours.teals.base,
   },
@@ -31,6 +32,12 @@ export default StyleSheet.create({
     backgroundColor: colours.white,
   },
 
+  header_container: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+
   header: {
     color: colours.text,
     fontSize: fonts.header,
@@ -39,16 +46,16 @@ export default StyleSheet.create({
   },
 
   subtitle: {
+    textAlign: 'center',
     color: colours.text,
     fontSize: fonts.large,
     fontStyle: 'normal',
-    marginBottom: 20,
   },
 
   instructions: {
     color: colours.text,
     fontSize: fonts.normal,
-    margin: 10,
+    marginBottom: 10,
     textAlign: 'center',
   },
 
@@ -61,8 +68,9 @@ export default StyleSheet.create({
   white_box: {
     backgroundColor: colours.white,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
   },
 
   logo_container: {
@@ -76,7 +84,6 @@ export default StyleSheet.create({
 
   textinput_container: {
     height: 40,
-    width: 250,
     borderRadius: 0,
     textAlign: 'left',
     color: 'black',
@@ -89,34 +96,28 @@ export default StyleSheet.create({
   },
 
   notice_container: {
-    width: 270,
-    padding: 5,
+    padding: 20,
     borderRadius: 0,
     marginBottom: 10,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: colours.greys.lightest,
   },
 
   login_button: {
     flexDirection: 'row',
     height: 60,
-    width: 250,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  sign_in_container: {
-    width: 250,
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  loading: {
+    paddingLeft: 5,
   },
 
-  sign_up_container: {
-    width: 250,
-    padding: 10,
+  link_container: {
+    margin: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

@@ -106,13 +106,23 @@ class SignIn extends React.Component {
             (not hide the text fields)
         */ }
         <KeyboardAvoidingView behavior="padding" style={styles.inner_container}>
-          <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
-          <View style={styles.logo_container}>
-            <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+          <View style={styles.header_container}>
+            <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+            <View style={styles.logo_container}>
+              <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+            </View>
           </View>
 
           <View style={styles.white_box}>
             <Text style={styles.subtitle}> {I18n.t('title/sign_in')} </Text>
+
+            <View style={styles.link_container}>
+              <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_in/no_account')} </Text>
+              <TouchableOpacity onPress={() => navigate('SignUp')}>
+                <Text style={{ color: colours.teals.base, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                  {I18n.t('sign_in/create_one')} </Text>
+              </TouchableOpacity>
+            </View>
 
             <TextInput
               style={styles.textinput_container}
@@ -150,17 +160,8 @@ class SignIn extends React.Component {
               >
                 {this.getButtonText()}
               </Button>
-              {this.state.loading && <ActivityIndicator />}
+              {this.state.loading && <ActivityIndicator style={styles.loading} />}
             </View>
-
-            <View style={styles.sign_up_container}>
-              <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_in/no_account')} </Text>
-              <TouchableOpacity onPress={() => navigate('SignUp')}>
-                <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
-                  {I18n.t('sign_in/create_one')} </Text>
-              </TouchableOpacity>
-            </View>
-
           </View>
         </KeyboardAvoidingView>
       </View>

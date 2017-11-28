@@ -14,7 +14,6 @@ const container = {
   borderRadius: 0,
   justifyContent: 'center',
   alignItems: 'center',
-  margin: 10,
   padding: 10,
 };
 

@@ -95,16 +95,26 @@ class SignUp extends Component {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.inner_container}>
-            <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+            <View style={styles.header_container}>
+              <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
 
-            <View style={styles.logo_container}>
-              <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+              <View style={styles.logo_container}>
+                <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+              </View>
             </View>
 
             <View style={styles.white_box}>
               <Text style={styles.subtitle}>
                 {I18n.t('sign_up/create_your_account')}
               </Text>
+
+              <View style={styles.link_container}>
+                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_up/existing')} </Text>
+                <TouchableOpacity onPress={() => navigate('SignIn')}>
+                  <Text style={{ color: colours.teals.base, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                    {I18n.t('sign_up/sign_in')} </Text>
+                </TouchableOpacity>
+              </View>
 
               <TextInput
                 onChangeText={name => this.setState({ name })}
@@ -178,15 +188,7 @@ class SignUp extends Component {
                 >
                   {this.getButtonText()}
                 </Button>
-                {this.state.loading && <ActivityIndicator />}
-              </View>
-
-              <View style={styles.sign_in_container}>
-                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_up/existing')} </Text>
-                <TouchableOpacity onPress={() => navigate('SignIn')}>
-                  <Text style={{ color: colours.primaryButton, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
-                    {I18n.t('sign_up/sign_in')} </Text>
-                </TouchableOpacity>
+                {this.state.loading && <ActivityIndicator style={styles.loading} />}
               </View>
 
               <Text style={styles.terms}>

@@ -13,7 +13,7 @@ import { PrimaryButton, SecondaryButton } from '../components/Button';
 import ChooseStatus from '../containers/ChooseStatus';
 import VisitStatus from '../components/VisitStatus';
 import Switch from '../components/Switch';
-import User from '../components/User';
+import Users from '../containers/Users';
 import styles from '../styles/followUp';
 import I18n from '../assets/i18n/i18n';
 
@@ -34,9 +34,7 @@ class FollowUp extends React.Component {
     createVisit: PropTypes.func.isRequired,
     currentStatus: PropTypes.object,
     navigation: PropTypes.object.isRequired,
-    statuses: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -91,7 +89,7 @@ class FollowUp extends React.Component {
             <View style={styles.container_heading}>
               <Text style={styles.container_heading_text}> 1 </Text>
             </View>
-            <User {...this.props.user} />
+            <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
           </View>
 
           <View style={styles.status_container}>
@@ -158,9 +156,7 @@ function getLocationStatus({ locations, statuses }, { navigation: { state } }) {
 
 const mapStateToProps = (state, ownProps) => ({
   currentStatus: getLocationStatus(state, ownProps),
-  statuses: state.statuses,
   tags: state.tags.followUp,
-  user: state.users[state.user],
 });
 
 const mapDispatchToProps = dispatch => ({

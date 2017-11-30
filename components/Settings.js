@@ -65,7 +65,7 @@ const Settings = (props) => {
         <Text style={styles.teamName}>{team.name}</Text>
       </View>
       <View style={styles.options_container}>
-        { user && team && team.owers && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
+        { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>

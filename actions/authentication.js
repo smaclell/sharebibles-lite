@@ -22,6 +22,16 @@ function onAuthenticated(user) {
   };
 }
 
+export function restoreSignIn(navigate) {
+  return (dispatch) => {
+    apis.restoreSignIn((user) => {
+      return Promise.resolve()
+        .then(() => dispatch(onAuthenticated(user)))
+        .then(navigate);
+    });
+  };
+}
+
 export const SIGN_OUT = 'SIGN_OUT';
 export function signOut() {
   return dispatch =>

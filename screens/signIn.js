@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -44,6 +45,8 @@ class SignIn extends React.Component {
     I18n.setDateLocale();
 
     this.setState({ appIsReady: true }); // when all above promises above are resolved
+
+    this.props.restoreSignIn(() => this.props.navigation.navigate('Home'));
   }
 
   getButtonText() {
@@ -171,6 +174,7 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   connected: PropTypes.bool.isRequired,
+  restoreSignIn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -178,7 +182,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: (email, password) => dispatch(actions.signIn(email, password)),
+  ...bindActionCreators(actions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

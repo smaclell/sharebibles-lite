@@ -44,9 +44,10 @@ class SignIn extends React.Component {
 
     I18n.setDateLocale();
 
-    this.setState({ appIsReady: true }); // when all above promises above are resolved
-
     this.props.restoreSignIn(() => this.props.navigation.navigate('Home'));
+
+    // Wait a bit for the restore to finish and the previous promises
+    setTimeout(() => this.setState({ appIsReady: true }), 1200);
   }
 
   getButtonText() {

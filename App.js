@@ -7,7 +7,10 @@ import thunk from 'redux-thunk';
 import Navigation from './nav';
 import reducer from './reducers';
 
+import { initialize } from './apis';
 import { setup } from './actions/connectivity';
+
+initialize();
 
 const store = createStore(
   reducer,

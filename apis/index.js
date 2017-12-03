@@ -36,16 +36,41 @@ function saveGeoData(created, locatinonKey, regionKey, creator) {
   return [geoRegion, geoUser, geoTeam];
 }
 
+function persist(action) {
+  return firebase.auth()
+    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(action);
+}
+
+export function fetchUser(userKey) {
+  initialize();
+  return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
+}
+
 export function signOut() {
   initialize();
 
   return firebase.auth().signOut();
 }
 
+export function restoreSignIn(callback) {
+  initialize();
+
+  const completed = firebase.auth().onAuthStateChanged(async (raw) => {
+    completed();
+    if (!raw) {
+      return;
+    }
+
+    const user = await fetchUser(raw.uid);
+    callback(user);
+  });
+}
+
 export function signIn(email, password) {
   initialize();
 
-  return firebase.auth().signInWithEmailAndPassword(email, password)
+  return persist(() => firebase.auth().signInWithEmailAndPassword(email, password))
     .then(({ uid }) => firebase.database().ref(`users/${uid}`).once('value').then(v => v.val()));
 }
 
@@ -76,7 +101,9 @@ export async function signUp(name, email, password, accessCode) {
 
   const hashCode = hashAccessCode(accessCode);
 
-  const { uid: userKey } = await firebase.auth().createUserWithEmailAndPassword(email, password);
+  const { uid: userKey } = await persist(
+    firebase.auth().createUserWithEmailAndPassword(email, password),
+  );
 
   await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);
 
@@ -126,11 +153,6 @@ export async function createAccessCode(forced) {
 export function fetchTeam(teamKey) {
   initialize();
   return firebase.database().ref(`teams/${teamKey}`).once('value').then(v => v.val());
-}
-
-export function fetchUser(userKey) {
-  initialize();
-  return firebase.database().ref(`users/${userKey}`).once('value').then(v => v.val());
 }
 
 export function fetchVisits({ userKey, last }) {

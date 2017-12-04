@@ -2,7 +2,6 @@
 import {
   Alert,
   Image,
-  KeyboardAvoidingView,
   Text,
   TextInput,
   TouchableOpacity,

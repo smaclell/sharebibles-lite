@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import {
   Text,
   View,
@@ -131,8 +132,8 @@ class Initial extends React.Component {
           </Section>
 
           <Section style={styles.add_location_section_container} order={2}>
-            <Photo onPhotoChanged={this.updateImageUrl} />
-            { !latitude && <Text> {I18n.t('initial/or')} </Text> }
+            { __DEV__ && <Photo onPhotoChanged={this.updateImageUrl} /> }
+            { __DEV__ && !latitude && <Text> {I18n.t('initial/or')} </Text> }
             <CurrentLocation
               latitude={latitude}
               longitude={longitude}

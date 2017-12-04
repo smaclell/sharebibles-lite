@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   text: {
+    padding: 5,
     fontSize: fonts.header,
   },
   active_text: {

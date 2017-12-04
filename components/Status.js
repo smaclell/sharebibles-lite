@@ -40,7 +40,7 @@ const normal = {
 const text = {
   color: colours.text,
   fontSize: fonts.small,
-  margin: 5,
+  marginVertical: 5,
   textAlign: 'center',
 };
 

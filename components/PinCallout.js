@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import React from 'react';
 import {
   View,
@@ -16,7 +17,7 @@ const relativeTime = time => moment.utc(time).clone().local().fromNow();
 
 const Callout = ({ created, visits }) => (
   <View style={styles.callout_container}>
-    <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} />
+    { __DEV__ && <Image source={require('../assets/logo/logo.png')} style={styles.callout_image} /> }
     <View style={{ marginBottom: 5 }}>
       <Text style={{ fontSize: fonts.normal }}>{I18n.t('components/last_visited', { visited_time: relativeTime(created) })}</Text>
       <Text style={{ fontSize: fonts.normal }}> {I18n.t('components/visits', { num_visits: visits })} </Text>

@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
+import KeyboardScroll from '../components/KeyboardScroll';
 import * as authenticationActions from '../actions/authentication';
 import styles from '../styles/main';
 import colours from '../styles/colours';
@@ -40,6 +40,8 @@ class SignUp extends Component {
 
     this.createAccount = this.createAccount.bind(this);
   }
+
+  onFocus = event => this.scroll.onFocus(event)
 
   getButtonText() {
     if (!this.props.connected) {
@@ -90,9 +92,11 @@ class SignUp extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView
+        <KeyboardScroll
+          ref={(r) => {
+            this.scroll = r;
+          }}
           style={styles.outer_container}
-          showsVerticalScrollIndicator={false}
         >
           <View style={styles.inner_container}>
             <View style={styles.header_container}>
@@ -117,6 +121,7 @@ class SignUp extends Component {
               </View>
 
               <TextInput
+                onFocus={this.onFocus}
                 onChangeText={name => this.setState({ name })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
@@ -130,6 +135,7 @@ class SignUp extends Component {
                 ref={(t) => {
                   this.email = t;
                 }}
+                onFocus={this.onFocus}
                 onChangeText={email => this.setState({ email })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
@@ -143,6 +149,7 @@ class SignUp extends Component {
                 ref={(t) => {
                   this.password = t;
                 }}
+                onFocus={this.onFocus}
                 onChangeText={password => this.setState({ password })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
@@ -156,6 +163,7 @@ class SignUp extends Component {
                 ref={(t) => {
                   this.confirmPassword = t;
                 }}
+                onFocus={this.onFocus}
                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 style={styles.textinput_container}
                 placeholderTextColor={colours.placeholder}
@@ -174,6 +182,7 @@ class SignUp extends Component {
                   ref={(t) => {
                     this.accessCode = t;
                   }}
+                  onFocus={this.onFocus}
                   onChangeText={accessCode => this.setState({ accessCode })}
                   style={styles.textinput_container}
                   placeholder={I18n.t('sign_up/your_access_code')}
@@ -197,7 +206,7 @@ class SignUp extends Component {
 
             </View>
           </View>
-        </KeyboardAwareScrollView>
+        </KeyboardScroll>
       </View>
     );
   }

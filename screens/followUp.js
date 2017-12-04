@@ -3,11 +3,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as visitActions from '../actions/visits';
+import KeyboardScroll from '../components/KeyboardScroll';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import ChooseStatus from '../containers/ChooseStatus';
 import VisitStatus from '../components/VisitStatus';
@@ -41,6 +41,8 @@ class FollowUp extends React.Component {
     super(props);
     this.state = createInitialState();
   }
+
+  onFocus = event => this.scroll.onFocus(event)
 
   showTag = tag => (
     <Switch
@@ -80,10 +82,11 @@ class FollowUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView
+        <KeyboardScroll
+          ref={(r) => {
+            this.scroll = r;
+          }}
           style={styles.scroll}
-          contentContainerStyle={styles.scroll}
-          showsVerticalScrollIndicator={false}
         >
           <Section style={styles.users_container} order={1}>
             <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
@@ -108,6 +111,7 @@ class FollowUp extends React.Component {
           <Section style={styles.notes_container} order={4}>
             <TextInput
               style={styles.note_input}
+              onFocus={this.onFocus}
               placeholder={I18n.t('follow_up/add_notes')}
               multiline
               numberOfLines={5}
@@ -117,7 +121,7 @@ class FollowUp extends React.Component {
               onChangeText={notes => this.setState(p => ({ ...p, notes }))}
             />
           </Section>
-        </KeyboardAwareScrollView>
+        </KeyboardScroll>
         <View style={styles.actions_container}>
           <PrimaryButton style={{ margin: 10 }} onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>
           <SecondaryButton style={{ margin: 10 }} onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>

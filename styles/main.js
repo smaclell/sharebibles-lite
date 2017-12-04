@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
 
   inner_container: {
-    flex: 1,
+    flex: 0,
     flexShrink: 0,
     flexGrow: 1,
     borderRadius: 0,

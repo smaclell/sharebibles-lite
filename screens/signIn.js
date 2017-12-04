@@ -2,7 +2,6 @@
 import {
   Alert,
   Image,
-  KeyboardAvoidingView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -16,6 +15,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import * as actions from '../actions/authentication';
 import Button from '../components/Button';
+import KeyboardScroll from '../components/KeyboardScroll';
 import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
@@ -49,6 +49,8 @@ class SignIn extends React.Component {
     // Wait a bit for the restore to finish and the previous promises
     setTimeout(() => this.setState({ appIsReady: true }), 1200);
   }
+
+  onFocus = event => this.scroll.onFocus(event)
 
   getButtonText() {
     if (!this.props.connected) {
@@ -104,70 +106,73 @@ class SignIn extends React.Component {
     return (
 
       <View style={styles.container}>
-        { /*
-          TODO:
-            Need to figure out how to make the keyboard work better
-            (not hide the text fields)
-        */ }
-        <KeyboardAvoidingView behavior="padding" style={styles.inner_container}>
-          <View style={styles.header_container}>
-            <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
-            <View style={styles.logo_container}>
-              <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+        <KeyboardScroll
+          ref={(r) => {
+            this.scroll = r;
+          }}
+          style={styles.outer_container}
+        >
+          <View style={styles.inner_container}>
+            <View style={styles.header_container}>
+              <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+              <View style={styles.logo_container}>
+                <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+              </View>
+            </View>
+
+            <View style={styles.white_box}>
+              <Text style={styles.subtitle}> {I18n.t('title/sign_in')} </Text>
+
+              <View style={styles.link_container}>
+                <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_in/no_account')} </Text>
+                <TouchableOpacity onPress={() => navigate('SignUp')}>
+                  <Text style={{ color: colours.teals.base, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
+                    {I18n.t('sign_in/create_one')} </Text>
+                </TouchableOpacity>
+              </View>
+
+              <TextInput
+                style={styles.textinput_container}
+                onFocus={this.onFocus}
+                placeholderTextColor={colours.placeholder}
+                placeholder={I18n.t('sign_in/your_email')}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                autoCorrect={false}
+                onChangeText={(email) => { this.setState({ email }); }}
+                value={this.state.email}
+                returnKeyType="next"
+                onSubmitEditing={() => this.password.focus()}
+              />
+
+              <TextInput
+                ref={(t) => {
+                  this.password = t;
+                }}
+                style={styles.textinput_container}
+                onFocus={this.onFocus}
+                placeholder={I18n.t('sign_in/your_password')}
+                placeholderTextColor={colours.placeholder}
+                secureTextEntry
+                autoCapitalize="none"
+                onChangeText={(password) => { this.setState({ password }); }}
+                value={this.state.password}
+                returnKeyType="go"
+                onSubmitEditing={signIn}
+              />
+
+              <View style={styles.login_button}>
+                <Button
+                  disabled={!this.props.connected || this.state.loading}
+                  onClick={signIn}
+                >
+                  {this.getButtonText()}
+                </Button>
+                {this.state.loading && <ActivityIndicator style={styles.loading} />}
+              </View>
             </View>
           </View>
-
-          <View style={styles.white_box}>
-            <Text style={styles.subtitle}> {I18n.t('title/sign_in')} </Text>
-
-            <View style={styles.link_container}>
-              <Text style={{ color: colours.text, fontSize: fonts.small, fontWeight: 'normal' }}> {I18n.t('sign_in/no_account')} </Text>
-              <TouchableOpacity onPress={() => navigate('SignUp')}>
-                <Text style={{ color: colours.teals.base, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
-                  {I18n.t('sign_in/create_one')} </Text>
-              </TouchableOpacity>
-            </View>
-
-            <TextInput
-              style={styles.textinput_container}
-              placeholderTextColor={colours.placeholder}
-              placeholder={I18n.t('sign_in/your_email')}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoFocus
-              onChangeText={(email) => { this.setState({ email }); }}
-              value={this.state.email}
-              returnKeyType="next"
-              onSubmitEditing={() => this.password.focus()}
-            />
-
-            <TextInput
-              ref={(t) => {
-                this.password = t;
-              }}
-              style={styles.textinput_container}
-              placeholder={I18n.t('sign_in/your_password')}
-              placeholderTextColor={colours.placeholder}
-              secureTextEntry
-              autoCapitalize="none"
-              onChangeText={(password) => { this.setState({ password }); }}
-              value={this.state.password}
-              returnKeyType="go"
-              onSubmitEditing={signIn}
-            />
-
-            <View style={styles.login_button}>
-              <Button
-                disabled={!this.props.connected || this.state.loading}
-                onClick={signIn}
-              >
-                {this.getButtonText()}
-              </Button>
-              {this.state.loading && <ActivityIndicator style={styles.loading} />}
-            </View>
-          </View>
-        </KeyboardAvoidingView>
+        </KeyboardScroll>
       </View>
     );
   }

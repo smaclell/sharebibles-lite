@@ -52,11 +52,11 @@ class Initial extends React.Component {
 
     // Filter out resources that don't match the chosen status:
     const filteredResources = {};
-    for (const key in this.props.resources) {
+    Object.keys(this.props.resources).forEach((key) => {
       if (this.props.resources[key].statuses.includes(status)) {
         filteredResources[key] = resources[key];
       }
-    }
+    });
     // Same for tags:
     const filteredTags = tags.filter(tag => tag.statuses.includes(status));
 
@@ -80,7 +80,7 @@ class Initial extends React.Component {
     this.setState(createInitialState());
   };
 
-  showResource = resource => {
+  showResource = (resource) => {
     if (!resource.statuses.includes(this.state.status)) { return null; }
 
     let count = resource.startCount;
@@ -88,26 +88,30 @@ class Initial extends React.Component {
       count = this.state.resources[resource.key].given || count;
     }
 
-    return <ResourceCounter
-              key={resource.key}
-              resourceKey={resource.key}
-              format={resource.format}
-              summary={I18n.t(resource.summary)}
-              count={count}
-              onCountChanged={this.updateCount}
-            />
+    return (
+      <ResourceCounter
+        key={resource.key}
+        resourceKey={resource.key}
+        format={resource.format}
+        summary={I18n.t(resource.summary)}
+        count={count}
+        onCountChanged={this.updateCount}
+      />
+    );
   };
 
-  showTag = tag => {
+  showTag = (tag) => {
     if (!tag.statuses.includes(this.state.status)) { return null; }
 
-    return <Switch
-              key={tag.key}
-              onChange={enabled => this.updateTag(tag.key, enabled)}
-              value={!!this.state.tags[tag.key]}
-            >
-              {I18n.t(tag.label)}
-            </Switch>
+    return (
+      <Switch
+        key={tag.key}
+        onChange={enabled => this.updateTag(tag.key, enabled)}
+        value={!!this.state.tags[tag.key]}
+      >
+        {I18n.t(tag.label)}
+      </Switch>
+    );
   };
 
   updateCount = ({ count, resourceKey }) => {

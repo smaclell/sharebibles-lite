@@ -51,6 +51,10 @@ class ResourceCounter extends Component {
     count: PropTypes.number,
   }
 
+  static defaultProps = {
+    count: 0,
+  }
+
   constructor(props) {
     super(props);
     this.state = {

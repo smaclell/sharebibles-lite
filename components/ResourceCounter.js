@@ -48,12 +48,13 @@ class ResourceCounter extends Component {
     format: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
     onCountChanged: PropTypes.func.isRequired,
+    count: PropTypes.number,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count: props.count || 0,
     };
 
     this.handleCountChanged = this.handleCountChanged.bind(this);

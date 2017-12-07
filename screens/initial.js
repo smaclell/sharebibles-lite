@@ -76,6 +76,7 @@ class Initial extends React.Component {
       resourceKey={resource.key}
       format={resource.format}
       summary={I18n.t(resource.summary)}
+      count={1}
       onCountChanged={this.updateCount}
     />
   );

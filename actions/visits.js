@@ -16,6 +16,17 @@ export function fetchLastVisits(onReceived) {
   };
 }
 
+export function fetchVisitsByLocation(locationKey) {
+  return async (dispatch) => {
+    const visits = await Promise.all(
+      apis.fetchVisitsByLocation(locationKey)
+        .map(p => p.catch(() => null)),
+    );
+
+    visits.forEach(visit => dispatch(receiveVisit(visit)));
+  };
+}
+
 export function startListener(onReceived) {
   return (dispatch, getState) => {
     const { user: userKey } = getState();

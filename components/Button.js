@@ -22,6 +22,13 @@ const text = {
   fontWeight: 'bold',
 };
 
+const shadow = {
+  shadowColor: colours.greys.base,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 2,
+  shadowOpacity: 1.0,
+};
+
 const styles = {
   primary: StyleSheet.create({
     disabled: {
@@ -58,6 +65,44 @@ const styles = {
       color: colours.secondaryButtonText,
     },
   }),
+
+  selected: StyleSheet.create({
+    disabled: {
+      ...container,
+      backgroundColor: colours.greys.darkest,
+      opacity: 0.7,
+    },
+
+    container: {
+      ...container,
+      ...shadow,
+      backgroundColor: colours.black,
+    },
+
+    text: {
+      ...text,
+      color: colours.white,
+    },
+  }),
+
+  unselected: StyleSheet.create({
+    disabled: {
+      ...container,
+      backgroundColor: colours.greys.darkest,
+      opacity: 0.7,
+    },
+
+    container: {
+      ...container,
+      ...shadow,
+      backgroundColor: colours.greys.lighter,
+    },
+
+    text: {
+      ...text,
+      color: colours.white,
+    },
+  }),
 };
 
 const ignore = () => {};
@@ -72,11 +117,11 @@ const Button = ({ children, disabled, onClick, style, type }) => (
 );
 
 Button.propTypes = {
-  type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
+  type: PropTypes.oneOf(['primary', 'secondary', 'selected', 'unselected']).isRequired,
   disabled: PropTypes.bool,
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
 };
 
 Button.defaultProps = {
@@ -87,6 +132,12 @@ Button.defaultProps = {
 const Primary = props => <Button type="primary" {...props} />;
 const Secondary = props => <Button type="secondary" {...props} />;
 
+const Togglable = props => <Button type={props.selected ? 'selected' : 'unselected'} {...props} />;
+Togglable.propTypes = {
+  selected: PropTypes.bool.isRequired,
+};
+
 export default Primary;
 export const PrimaryButton = Primary;
 export const SecondaryButton = Secondary;
+export const Toggle = Togglable;

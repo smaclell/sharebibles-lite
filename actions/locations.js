@@ -1,6 +1,6 @@
 import * as apis from '../apis';
 import { updatePosition } from './position';
-import { createVisit } from './visits';
+import { createVisit, fetchVisitsByLocation } from './visits';
 import { failed, pending, uploaded } from './uploads';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
@@ -23,6 +23,13 @@ export function fetchLocation(locationKey) {
         }
         return Promise.resolve(location);
       });
+  };
+}
+
+export function fetchAllLocationData(locationKey) {
+  return async (dispatch) => {
+    await dispatch(fetchVisitsByLocation(locationKey));
+    await dispatch(fetchLocation(locationKey));
   };
 }
 

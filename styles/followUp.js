@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import colours from '../styles/colours';
-import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   container: {
@@ -38,18 +37,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexGrow: 4,
-  },
-
-  notes_container: {
-    flex: 1,
-  },
-
-  note_input: {
-    alignSelf: 'stretch',
-    flex: 1,
-    fontSize: fonts.normal,
-    margin: 10,
-    padding: 10,
   },
 
   actions_container: {

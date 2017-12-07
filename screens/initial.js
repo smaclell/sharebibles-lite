@@ -2,7 +2,6 @@
 import {
   Text,
   View,
-  ScrollView,
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,10 +10,12 @@ import { connect } from 'react-redux';
 import * as locationActions from '../actions/locations';
 import Users from '../containers/Users';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
+import ChooseStatus from '../containers/ChooseStatus';
 import CurrentLocation from '../components/CurrentLocation';
+import KeyboardScroll from '../components/KeyboardScroll';
+import Notes from '../components/Notes';
 import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
-import ChooseStatus from '../containers/ChooseStatus';
 import Section from '../components/Section';
 import Switch from '../components/Switch';
 import styles from '../styles/initial';
@@ -37,8 +38,7 @@ class Initial extends React.Component {
     this.state = createInitialState();
   }
 
-  /* NOTES: */
-  /* CAMERA ON THE LEFT */
+  onFocus = event => this.scroll.onFocus(event)
 
   add = () => {
     const {
@@ -46,6 +46,7 @@ class Initial extends React.Component {
       status,
       longitude,
       latitude,
+      notes,
       resources,
       tags,
     } = this.state;
@@ -57,7 +58,7 @@ class Initial extends React.Component {
       address: null,
       longitude,
       latitude,
-      notes: 'none',
+      notes,
       resources,
       tags,
     });
@@ -126,7 +127,12 @@ class Initial extends React.Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scroll}>
+        <KeyboardScroll
+          ref={(r) => {
+            this.scroll = r;
+          }}
+          contentContainerStyle={styles.scroll}
+        >
           <Section style={styles.add_members_section_container} order={1}>
             <Users showUpdateUsers={() => this.props.navigation.navigate('ChooseUsers')} />
           </Section>
@@ -153,7 +159,13 @@ class Initial extends React.Component {
               </View>
             </View>
           </Section>
-        </ScrollView>
+
+          <Notes
+            sectionNumber={4}
+            onFocus={this.onFocus}
+            onChangeText={notes => this.setState(p => ({ ...p, notes }))}
+          />
+        </KeyboardScroll>
         <View style={styles.actions_container}>
           <PrimaryButton style={{ margin: 10 }} onClick={this.add}>{I18n.t('button/add')}</PrimaryButton>
           <SecondaryButton style={{ margin: 10 }} onClick={this.goBack}>{I18n.t('button/cancel')}</SecondaryButton>

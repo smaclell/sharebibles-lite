@@ -50,6 +50,16 @@ class Initial extends React.Component {
       tags,
     } = this.state;
 
+    // Filter out resources that don't match the chosen status:
+    const filteredResources = {};
+    for (const { key, statuses } in this.props.resources) {
+      if (statuses.includes(status)) {
+        filteredResources[key] = resources[key];
+      }
+    }
+    // Same for tags:
+    const filteredTags = tags.filter(tag => tag.status.includes(status));
+
     this.props.createLocation({
       status,
       imageUrl,
@@ -58,8 +68,8 @@ class Initial extends React.Component {
       longitude,
       latitude,
       notes: 'none',
-      resources,
-      tags,
+      resources: filteredResources,
+      tags: filteredTags,
     });
 
     this.goBack();
@@ -70,27 +80,35 @@ class Initial extends React.Component {
     this.setState(createInitialState());
   };
 
-  showResource = resource => (
-    resource.statuses.includes(this.state.status) &&
-    <ResourceCounter
-      key={resource.key}
-      resourceKey={resource.key}
-      format={resource.format}
-      summary={I18n.t(resource.summary)}
-      count={resource.given || resource.startCount}
-      onCountChanged={this.updateCount}
-    />
-  );
+  showResource = resource => {
+    if (!resource.statuses.includes(this.state.status)) { return null; }
 
-  showTag = tag => (
-    <Switch
-      key={tag.key}
-      onChange={enabled => this.updateTag(tag.key, enabled)}
-      value={!!this.state.tags[tag.key]}
-    >
-      {I18n.t(tag.label)}
-    </Switch>
-  );
+    let count = resource.startCount;
+    if (this.state.resources[resource.key]) {
+      count = this.state.resources[resource.key].given || count;
+    }
+
+    return <ResourceCounter
+              key={resource.key}
+              resourceKey={resource.key}
+              format={resource.format}
+              summary={I18n.t(resource.summary)}
+              count={count}
+              onCountChanged={this.updateCount}
+            />
+  };
+
+  showTag = tag => {
+    if (!tag.statuses.includes(this.state.status)) { return null; }
+
+    return <Switch
+              key={tag.key}
+              onChange={enabled => this.updateTag(tag.key, enabled)}
+              value={!!this.state.tags[tag.key]}
+            >
+              {I18n.t(tag.label)}
+            </Switch>
+  };
 
   updateCount = ({ count, resourceKey }) => {
     this.setState(p => ({
@@ -111,12 +129,7 @@ class Initial extends React.Component {
     this.setState(p => ({ ...p, longitude, latitude }));
   }
 
-  updateStatus = value => {
-    const resources = this.props.resources
-      .filter(resource => resource.statuses.includes(value))
-      .map(resource => ({ ...resource, given: resource.startCount }));
-    this.setState({ status: value, resources });
-  };
+  updateStatus = value => this.setState({ status: value });
 
   updateTag = (tagKey, enabled) => {
     this.setState(p => ({

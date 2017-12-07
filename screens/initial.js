@@ -52,13 +52,13 @@ class Initial extends React.Component {
 
     // Filter out resources that don't match the chosen status:
     const filteredResources = {};
-    for (const { key, statuses } in this.props.resources) {
-      if (statuses.includes(status)) {
+    for (const key in this.props.resources) {
+      if (this.props.resources[key].statuses.includes(status)) {
         filteredResources[key] = resources[key];
       }
     }
     // Same for tags:
-    const filteredTags = tags.filter(tag => tag.status.includes(status));
+    const filteredTags = tags.filter(tag => tag.statuses.includes(status));
 
     this.props.createLocation({
       status,

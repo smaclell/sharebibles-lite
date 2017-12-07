@@ -26,7 +26,7 @@ export default {
   'follow_up/add_notes': 'Add notes...',
   'initial/first_visit': 'First Visit',
   'initial/or': 'OR',
-  'resource/english_bible_esv': 'Complete English Bible',
+  'resource/english_bible_esv': '# of Bibles Distributed',
   'settings/invite': 'Share Invite',
   'settings/logout': 'logout',
   'settings/not_implemented': "Sorry this feature isn't available yet.",

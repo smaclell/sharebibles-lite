@@ -71,12 +71,13 @@ class Initial extends React.Component {
   };
 
   showResource = resource => (
+    resource.statuses.includes(this.state.status) &&
     <ResourceCounter
       key={resource.key}
       resourceKey={resource.key}
       format={resource.format}
       summary={I18n.t(resource.summary)}
-      count={1}
+      count={resource.given || resource.startCount}
       onCountChanged={this.updateCount}
     />
   );
@@ -110,7 +111,12 @@ class Initial extends React.Component {
     this.setState(p => ({ ...p, longitude, latitude }));
   }
 
-  updateStatus = value => this.setState({ status: value });
+  updateStatus = value => {
+    const resources = this.props.resources
+      .filter(resource => resource.statuses.includes(value))
+      .map(resource => ({ ...resource, given: resource.startCount }));
+    this.setState({ status: value, resources });
+  };
 
   updateTag = (tagKey, enabled) => {
     this.setState(p => ({

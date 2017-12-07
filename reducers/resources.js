@@ -9,6 +9,8 @@ const initial = {
     language: 'en-us', // Language as a language code
     format: 'book', // ['book', 'documents', 'document', 'audio', 'app', 'sd-card', 'video']
     translation: 'ESV',
+    statuses: ['delivered', 'accepted'],
+    startCount: 1,
   },
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  TextInput,
   View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';

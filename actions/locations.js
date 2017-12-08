@@ -5,12 +5,22 @@ import { failed, pending, uploaded } from './uploads';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
-  return { type: RECIEVE_LOCATION, location };
+  return (dispatch, getState) => {
+    const { user: userKey, users } = getState();
+    const { teamKey } = users[userKey];
+
+    return dispatch({
+      type: RECIEVE_LOCATION,
+      location,
+      userKey,
+      teamKey,
+    });
+  };
 }
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { locations } = getState();
+    const { locations: { all: locations } } = getState();
     const existing = locations[locationKey];
     if (existing) {
       return Promise.resolve(existing);

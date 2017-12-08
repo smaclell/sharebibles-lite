@@ -75,16 +75,16 @@ class OverviewMap extends PureComponent {
             longitudeDelta: 0.000421,
           }}
         >
-          {locations.map(location => (
+          {locations.map(({ location, visits, pinColor }) => (
             <MapView.Marker
               key={location.key}
               coordinate={{
                 latitude: location.latitude,
                 longitude: location.longitude }}
-              pinColor={location.pinColor}
+              pinColor={pinColor}
             >
               <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
-                <PinCallout {...location} />
+                <PinCallout {...location} visits={visits} />
               </MapView.Callout>
             </MapView.Marker>
           ))}
@@ -116,17 +116,37 @@ const locationColor = (location, statuses) => {
   return 'wheat';
 };
 
-const mapStateToProps = state => ({
-  position: state.position,
-  locations: Object.keys(state.locations)
-    .map(x => state.locations[x])
-    .map(x => ({
-      ...x,
-      visits: (state.visits.byLocation[x.key] || []).length,
-      pinColor: locationColor(x, state.statuses),
-    })),
-  mode: state.overview.mode,
-});
+function getLocations(state, mode) {
+  if (mode === overviewActions.TEAM_MODE) {
+    return state.locations.byTeam;
+  }
+
+  if (mode === overviewActions.USER_MODE) {
+    return state.locations.byUser;
+  }
+
+  return {};
+}
+
+const noVisits = [];
+function enrichLocations({ statuses, visits: { byLocation } }, locations) {
+  return Object.values(locations).map(location => ({
+    location,
+    visits: (byLocation[location.key] || noVisits).length,
+    pinColor: locationColor(location, statuses),
+  }));
+}
+
+const mapStateToProps = (state) => {
+  const mode = state.overview.mode;
+  const locations = getLocations(state, mode);
+
+  return {
+    position: state.position,
+    mode,
+    locations: enrichLocations(state, locations),
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(overviewActions, dispatch);
 

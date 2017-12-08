@@ -74,12 +74,34 @@ const visitMapper = (uploads, tags, statuses, v) => {
   };
 };
 
-const mapStateToProps = state => ({
-  teamName: state.teams[state.users[state.user].teamKey].name,
-  visits: (state.visits.byUser[state.user] || [])
-    .map(k => state.visits.all[k])
-    .map(v => visitMapper(state.uploads, state.tags.followUp, state.statuses, v))
-    .sort((v1, v2) => v2.created - v1.created),
-});
+const unknown = {
+  teamName: 'Unknown',
+  visits: [],
+};
+
+const mapStateToProps = (state) => {
+  const { user: userKey, users, teams } = state;
+  if (!userKey || !users || !teams) {
+    return unknown;
+  }
+
+  const user = users[userKey];
+  if (!user) {
+    return unknown;
+  }
+
+  const team = teams[user.teamKey];
+  if (team) {
+    return unknown;
+  }
+
+  return {
+    teamName: team.name,
+    visits: (state.visits.byUser[userKey] || [])
+      .map(k => state.visits.all[k])
+      .map(v => visitMapper(state.uploads, state.tags.followUp, state.statuses, v))
+      .sort((v1, v2) => v2.created - v1.created),
+  };
+};
 
 export default connect(mapStateToProps)(Visits);

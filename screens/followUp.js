@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  TextInput,
   View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
@@ -10,10 +9,11 @@ import * as visitActions from '../actions/visits';
 import KeyboardScroll from '../components/KeyboardScroll';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import ChooseStatus from '../containers/ChooseStatus';
-import VisitStatus from '../components/VisitStatus';
+import Notes from '../components/Notes';
 import Section from '../components/Section';
 import Switch from '../components/Switch';
 import Users from '../containers/Users';
+import VisitStatus from '../components/VisitStatus';
 import styles from '../styles/followUp';
 import I18n from '../assets/i18n/i18n';
 
@@ -108,19 +108,11 @@ class FollowUp extends React.Component {
             </View>
           </Section>
 
-          <Section style={styles.notes_container} order={4}>
-            <TextInput
-              style={styles.note_input}
-              onFocus={this.onFocus}
-              placeholder={I18n.t('follow_up/add_notes')}
-              multiline
-              numberOfLines={5}
-              maxLength={1000}
-              autoGrow
-              maxHeight={90}
-              onChangeText={notes => this.setState(p => ({ ...p, notes }))}
-            />
-          </Section>
+          <Notes
+            sectionNumber={4}
+            onFocus={this.onFocus}
+            onChangeText={notes => this.setState(p => ({ ...p, notes }))}
+          />
         </KeyboardScroll>
         <View style={styles.actions_container}>
           <PrimaryButton style={{ margin: 10 }} onClick={this.update}>{I18n.t('button/update')}</PrimaryButton>

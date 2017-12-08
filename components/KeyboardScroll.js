@@ -48,7 +48,7 @@ class KeyboardScroll extends PureComponent {
 
 KeyboardScroll.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  style: PropTypes.any.isRequired,
+  style: PropTypes.any,
   // eslint-disable-next-line react/forbid-prop-types
   contentContainerStyle: PropTypes.any,
   // eslint-disable-next-line react/forbid-prop-types
@@ -56,6 +56,7 @@ KeyboardScroll.propTypes = {
 };
 
 KeyboardScroll.defaultProps = {
+  style: null,
   contentContainerStyle: null,
 };
 

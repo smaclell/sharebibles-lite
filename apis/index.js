@@ -26,8 +26,8 @@ function getGeoFire(path) {
 }
 
 export const GEO_REGION_KEY = 'geofireRegion';
-export const GEO_TEAM_KEY = 'geofireUser';
-export const GEO_USER_KEY = 'geofireTeam';
+export const GEO_TEAM_KEY = 'geofireTeam';
+export const GEO_USER_KEY = 'geofireUser';
 
 function saveGeoData(created, locationKey, regionKey, creator) {
   const geoKey = `locations--${locationKey}`;
@@ -46,7 +46,7 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5,
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey.replace('location--', '')));
+  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
 
   return query;
 }
@@ -196,9 +196,9 @@ export function fetchLocation(locationKey) {
     .then(location => location.val());
 }
 
-async function useOrFetchVisit([visitKey, visit]) {
+function useOrFetchVisit([visitKey, visit]) {
   if (visit instanceof Object) {
-    return visit;
+    return Promise.resolve(visit);
   }
 
   return fetchVisit(visitKey);
@@ -210,7 +210,14 @@ export async function fetchVisitsByLocation(locationKey) {
   const x = await firebase.database().ref(`visitsByLocation/${locationKey}/visits`).once('value');
   const raw = await x.val();
 
-  return Object.entries(raw).map(useOrFetchVisit);
+  if (!raw) {
+    return [];
+  }
+
+  const mapped = Object.entries(raw).map(useOrFetchVisit);
+  const safe = mapped.map(p => p.catch(() => null));
+
+  return Promise.all(safe);
 }
 
 export function startVisitListener(userKey, onReceived) {

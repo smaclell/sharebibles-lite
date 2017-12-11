@@ -139,7 +139,11 @@ function enrichLocations({ statuses, visits: { byLocation } }, locations) {
 
 const mapStateToProps = (state) => {
   const mode = state.overview.mode;
-  const locations = getLocations(state, mode);
+  const locationKeys = getLocations(state, mode);
+  const locations =
+    Object.keys(locationKeys)
+      .map(locationKey => state.locations.all[locationKey])
+      .filter(x => x);
 
   return {
     position: state.position,

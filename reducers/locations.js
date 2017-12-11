@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { RECIEVE_LOCATION } from '../actions/locations';
+import { RECEIVE_VISIT } from '../actions/visits';
 import { SIGN_OUT } from '../actions/authentication';
 
 const initial = {};
@@ -27,7 +28,7 @@ function byTeam(state = initial, action) {
 
     return {
       ...state,
-      [action.location.key]: action.location,
+      [action.location.key]: action.location.key,
     };
   }
 
@@ -39,19 +40,19 @@ function byTeam(state = initial, action) {
 }
 
 function byUser(state = initial, action) {
-  if (action.type === RECIEVE_LOCATION) {
-    const { userKey, location: { createdBy, visitors } } = action;
+  if (action.type === RECEIVE_VISIT) {
+    const { userKey, visit: { locationKey, createdBy, visitors } } = action;
 
     const created = userKey === createdBy;
     const visited = visitors && visitors[userKey];
 
-    if (!created || visited) {
+    if (!(created || visited)) {
       return state;
     }
 
     return {
       ...state,
-      [action.location.key]: action.location,
+      [locationKey]: locationKey,
     };
   }
 

@@ -5,14 +5,14 @@ export const TEAM_MODE = apis.GEO_TEAM_KEY;
 export const USER_MODE = apis.GEO_USER_KEY;
 
 const initial = {
-  updateCenter() {},
+  updateCriteria() {},
   cancel() {},
 };
 let query = initial;
 
-export function updateCenter(latitude, longitude) {
+export function update(latitude, longitude) {
   return () =>
-    query.updateCenter({
+    query.updateCriteria({
       center: [latitude, longitude],
     });
 }

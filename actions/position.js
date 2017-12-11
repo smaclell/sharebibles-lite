@@ -1,5 +1,5 @@
 import { getCurrentPosition } from '../apis/geo';
-import { updateCenter } from './overview';
+import { update } from './overview';
 
 export const UPDATE_POSITION = 'UPDATE_POSITION';
 export function updatePosition(latitude, longitude) {
@@ -10,7 +10,7 @@ export function updatePosition(latitude, longitude) {
       longitude,
     });
 
-    dispatch(updateCenter(latitude, longitude));
+    dispatch(update(latitude, longitude));
   };
 }
 

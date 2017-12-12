@@ -43,7 +43,7 @@ function saveGeoData(created, locationKey, regionKey, creator) {
 export function queryGeoData(geoFireKey, position, callback) {
   const query = getGeoFire(geoFireKey).query({
     center: [position.latitude, position.longitude],
-    radius: 0.5,
+    radius: 0.5, // This is in KMs
   });
 
   query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));

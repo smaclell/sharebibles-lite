@@ -51,6 +51,16 @@ class Initial extends React.Component {
       tags,
     } = this.state;
 
+    // Filter out resources that don't match the chosen status:
+    const filteredResources = {};
+    Object.keys(this.props.resources).forEach((key) => {
+      if (this.props.resources[key].statuses.includes(status)) {
+        filteredResources[key] = resources[key];
+      }
+    });
+    // Same for tags:
+    const filteredTags = tags.filter(tag => tag.statuses.includes(status));
+
     this.props.createLocation({
       status,
       imageUrl,
@@ -59,8 +69,8 @@ class Initial extends React.Component {
       longitude,
       latitude,
       notes,
-      resources,
-      tags,
+      resources: filteredResources,
+      tags: filteredTags,
     });
 
     this.goBack();
@@ -71,25 +81,39 @@ class Initial extends React.Component {
     this.setState(createInitialState());
   };
 
-  showResource = resource => (
-    <ResourceCounter
-      key={resource.key}
-      resourceKey={resource.key}
-      format={resource.format}
-      summary={I18n.t(resource.summary)}
-      onCountChanged={this.updateCount}
-    />
-  );
+  showResource = (resource) => {
+    if (!resource.statuses.includes(this.state.status)) { return null; }
 
-  showTag = tag => (
-    <Switch
-      key={tag.key}
-      onChange={enabled => this.updateTag(tag.key, enabled)}
-      value={!!this.state.tags[tag.key]}
-    >
-      {I18n.t(tag.label)}
-    </Switch>
-  );
+    let count = resource.startCount;
+    if (this.state.resources[resource.key]) {
+      count = this.state.resources[resource.key].given || count;
+    }
+
+    return (
+      <ResourceCounter
+        key={resource.key}
+        resourceKey={resource.key}
+        format={resource.format}
+        summary={I18n.t(resource.summary)}
+        count={count}
+        onCountChanged={this.updateCount}
+      />
+    );
+  };
+
+  showTag = (tag) => {
+    if (!tag.statuses.includes(this.state.status)) { return null; }
+
+    return (
+      <Switch
+        key={tag.key}
+        onChange={enabled => this.updateTag(tag.key, enabled)}
+        value={!!this.state.tags[tag.key]}
+      >
+        {I18n.t(tag.label)}
+      </Switch>
+    );
+  };
 
   updateCount = ({ count, resourceKey }) => {
     this.setState(p => ({

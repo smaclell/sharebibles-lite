@@ -25,15 +25,30 @@ function getGeoFire(path) {
   return new GeoFire(ref);
 }
 
-function saveGeoData(created, locatinonKey, regionKey, creator) {
-  const geoKey = `locations--${locatinonKey}`;
+export const GEO_REGION_KEY = 'geofireRegion';
+export const GEO_TEAM_KEY = 'geofireTeam';
+export const GEO_USER_KEY = 'geofireUser';
+
+function saveGeoData(created, locationKey, regionKey, creator) {
+  const geoKey = `locations--${locationKey}`;
   const geo = [created.latitude, created.longitude];
 
-  const geoRegion = getGeoFire(`geofireRegion/${regionKey}`).set(geoKey, geo);
-  const geoUser = getGeoFire(`geofireUser/${creator.key}`).set(geoKey, geo);
-  const geoTeam = getGeoFire(`geofireTeam/${creator.teamKey}`).set(geoKey, geo);
+  const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
+  const geoTeam = getGeoFire(`${GEO_TEAM_KEY}/${creator.teamKey}`).set(geoKey, geo);
+  const geoUser = getGeoFire(`${GEO_USER_KEY}/${creator.key}`).set(geoKey, geo);
 
-  return [geoRegion, geoUser, geoTeam];
+  return [geoRegion, geoTeam, geoUser];
+}
+
+export function queryGeoData(geoFireKey, position, callback) {
+  const query = getGeoFire(geoFireKey).query({
+    center: [position.latitude, position.longitude],
+    radius: 0.5, // This is in KMs
+  });
+
+  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
+
+  return query;
 }
 
 function persist(action) {
@@ -155,6 +170,14 @@ export function fetchTeam(teamKey) {
   return firebase.database().ref(`teams/${teamKey}`).once('value').then(v => v.val());
 }
 
+function fetchVisit(visitKey) {
+  initialize();
+  return firebase.database()
+    .ref(`visits/${visitKey}`)
+    .once('value')
+    .then(visit => visit.val());
+}
+
 export function fetchVisits({ userKey, last }) {
   initialize();
   return firebase.database()
@@ -171,6 +194,30 @@ export function fetchLocation(locationKey) {
     .ref(`locations/${locationKey}`)
     .once('value')
     .then(location => location.val());
+}
+
+function useOrFetchVisit([visitKey, visit]) {
+  if (visit instanceof Object) {
+    return Promise.resolve(visit);
+  }
+
+  return fetchVisit(visitKey);
+}
+
+export async function fetchVisitsByLocation(locationKey) {
+  initialize();
+
+  const x = await firebase.database().ref(`visitsByLocation/${locationKey}/visits`).once('value');
+  const raw = await x.val();
+
+  if (!raw) {
+    return [];
+  }
+
+  const mapped = Object.entries(raw).map(useOrFetchVisit);
+  const safe = mapped.map(p => p.catch(() => null));
+
+  return Promise.all(safe);
 }
 
 export function startVisitListener(userKey, onReceived) {
@@ -275,7 +322,7 @@ export function createVisit(locationKey, creator, options) {
   const saved = pushed.set(created);
 
   const byLocation = firebase.database().ref(`visitsByLocation/${created.locationKey}/visits`).update({
-    [pushed.key]: true,
+    [pushed.key]: created,
   });
 
   const byUser = Object.keys(created.visitors)

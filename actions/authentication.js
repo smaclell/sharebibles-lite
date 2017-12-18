@@ -1,6 +1,7 @@
 import * as apis from '../apis';
 import * as positionActions from './position';
 import * as locationActions from './locations';
+import * as overviewActions from './overview';
 import * as userActions from './user';
 import * as usersActions from './users';
 import * as visitActions from './visits';
@@ -17,6 +18,7 @@ function onAuthenticated(user) {
       .then(() => dispatch(usersActions.receiveUser(user)))
       .then(() => dispatch(usersActions.fetchUser(user.key)))
       .then(() => dispatch(userActions.setUser(user)))
+      .then(() => dispatch(overviewActions.initialize()))
       .then(() => dispatch(visitActions.fetchLastVisits(onReceived)))
       .then(() => dispatch(visitActions.startListener(onReceived)));
   };

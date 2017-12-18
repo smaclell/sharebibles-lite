@@ -1,16 +1,26 @@
 import * as apis from '../apis';
 import { updatePosition } from './position';
-import { createVisit } from './visits';
+import { createVisit, fetchVisitsByLocation } from './visits';
 import { failed, pending, uploaded } from './uploads';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
-  return { type: RECIEVE_LOCATION, location };
+  return (dispatch, getState) => {
+    const { user: userKey, users } = getState();
+    const { teamKey } = users[userKey];
+
+    return dispatch({
+      type: RECIEVE_LOCATION,
+      location,
+      userKey,
+      teamKey,
+    });
+  };
 }
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { locations } = getState();
+    const { locations: { all: locations } } = getState();
     const existing = locations[locationKey];
     if (existing) {
       return Promise.resolve(existing);
@@ -23,6 +33,13 @@ export function fetchLocation(locationKey) {
         }
         return Promise.resolve(location);
       });
+  };
+}
+
+export function fetchAllLocationData(locationKey) {
+  return async (dispatch) => {
+    await dispatch(fetchVisitsByLocation(locationKey));
+    await dispatch(fetchLocation(locationKey));
   };
 }
 

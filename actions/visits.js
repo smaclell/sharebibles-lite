@@ -4,7 +4,17 @@ import { updateLocation } from './locations';
 
 export const RECEIVE_VISIT = 'RECEIVE_VISIT';
 export function receiveVisit(visit) {
-  return { type: RECEIVE_VISIT, visit };
+  return (dispatch, getState) => {
+    const { user: userKey, users } = getState();
+    const { teamKey } = users[userKey];
+
+    return dispatch({
+      type: RECEIVE_VISIT,
+      visit,
+      userKey,
+      teamKey,
+    });
+  };
 }
 
 export function fetchLastVisits(onReceived) {
@@ -13,6 +23,13 @@ export function fetchLastVisits(onReceived) {
 
     return apis.fetchVisits({ userKey, last: 25 })
       .then(visits => visits.forEach(onReceived));
+  };
+}
+
+export function fetchVisitsByLocation(locationKey) {
+  return async (dispatch) => {
+    const visits = await apis.fetchVisitsByLocation(locationKey);
+    visits.forEach(visit => visit && dispatch(receiveVisit(visit)));
   };
 }
 

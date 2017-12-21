@@ -4,10 +4,10 @@
     "description": "An empty new project",
     "slug": "sharebibles-dev",
     "privacy": "unlisted",
-    "sdkVersion": "23.0.0",
-    "version": "0.4.0",
+    "sdkVersion": "24.0.0",
+    "version": "0.5.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
+    "primaryColor": "#65B7C7",
     "icon": "./assets/icons/app-icon.png",
     "loading": {
       "icon": "./assets/icons/loading-icon.png"
@@ -15,6 +15,10 @@
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
     },
+    "assetBundlePatterns": [
+      "assets/images/logo/**",
+      "assets/images/icons/**"
+    ],
     "android": {
       "config": {
         "googleMaps": {
@@ -26,6 +30,11 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Give us permission to know your location when saving your visits and viewing the map.",
+        "NSCameraUsageDescription": "Let us take photos for remembering your visits",
+        "NSPhotoLibraryUsageDescription": "Let us use your existing photos for remembering your visits"
       }
     },
     "extra": {

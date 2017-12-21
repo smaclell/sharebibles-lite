@@ -30,6 +30,11 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Give us permission to know your location when saving your visits and viewing the map.",
+        "NSCameraUsageDescription": "Let us take photos for remembering your visits",
+        "NSPhotoLibraryUsageDescription": "Let us use your existing photos for remembering your visits"
       }
     },
     "extra": {

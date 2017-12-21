@@ -43,8 +43,12 @@ if (__DEV__) {
 }
 
 const drawer = new DrawerNavigator(drawerScreens, {
+  drawerOpenRoute: 'DrawerOpen',
+  drawerCloseRoute: 'DrawerClose',
+  drawerToggleRoute: 'DrawerToggle',
   headerMode: 'float',
   drawerLockMode: 'locked-closed',
+  initialRouteName: 'Tabs',
   contentComponent: Settings,
   navigationOptions: {
     headerStyle: { backgroundColor: colours.white },

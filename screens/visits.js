@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
   }
 
   const team = teams[user.teamKey];
-  if (team) {
+  if (!team) {
     return unknown;
   }
 

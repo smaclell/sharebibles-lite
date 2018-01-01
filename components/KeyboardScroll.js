@@ -20,7 +20,7 @@ class KeyboardScroll extends PureComponent {
         (x, y, width, height) => {
           const inputBottom = (y + height) - Platform.select({
             ios: height + 20,
-            android: StatusBar.currentHeight + 20,
+            android: StatusBar.currentHeight + height + 20,
           });
           this.scroll.scrollTo({ x: 0, y: inputBottom, animated: true });
         },

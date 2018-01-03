@@ -1,13 +1,17 @@
 import I18n from 'ex-react-native-i18n';
 import moment from 'moment';
 import en from './locales/en';
+import es from './locales/es';
 import fr from './locales/fr';
+import th from './locales/th';
 
 I18n.fallbacks = true;
 
 I18n.translations = {
   en, // default
+  es,
   fr,
+  th,
 };
 
 function getDateLocale() {

@@ -3,12 +3,11 @@
 
 // Based on https://trello.com/c/rIzf09DV
 const initial = {
-  english_bible_esv: {
-    key: 'english_bible_esv',
-    summary: 'resource/english_bible_esv',
+  generic_bible: {
+    key: 'generic_bible',
+    summary: 'resource/generic_bible',
     language: 'en-us', // Language as a language code
     format: 'book', // ['book', 'documents', 'document', 'audio', 'app', 'sd-card', 'video']
-    translation: 'ESV',
     statuses: ['delivered', 'accepted'],
     startCount: 1,
   },

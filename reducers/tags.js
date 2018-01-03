@@ -1,16 +1,17 @@
 // A hardcoded list of interactions for each location and visit
-const shared = ['accepted', 'need', 'have', 'rejected', 'delivered'];
+const home = ['accepted', 'need', 'have', 'rejected'];
+const shared = [...home, 'delivered'];
 const tags = {
   initial: [
     {
       key: 'cannot_read',
       label: 'tag/initial/cannot_read',
-      statuses: shared,
+      statuses: home,
     },
     {
       key: 'christian',
       label: 'tag/initial/christian',
-      statuses: shared,
+      statuses: home,
     },
   ],
   followUp: [

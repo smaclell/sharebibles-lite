@@ -18,6 +18,7 @@ import Photo from '../components/Photo';
 import ResourceCounter from '../components/ResourceCounter';
 import Section from '../components/Section';
 import Switch from '../components/Switch';
+import { filterResources, filterTags } from '../utils/filters';
 import styles from '../styles/initial';
 import I18n from '../assets/i18n/i18n';
 
@@ -51,15 +52,9 @@ class Initial extends React.Component {
       tags,
     } = this.state;
 
-    // Filter out resources that don't match the chosen status:
-    const filteredResources = {};
-    Object.keys(this.props.resources).forEach((key) => {
-      if (this.props.resources[key].statuses.includes(status)) {
-        filteredResources[key] = resources[key];
-      }
-    });
-    // Same for tags:
-    const filteredTags = tags.filter(tag => tag.statuses.includes(status));
+    // Filter out resources and tags that don't match the chosen status:
+    const filteredResources = filterResources(this.props.resources, resources, status);
+    const filteredTags = filterTags(this.props.tags, tags, status);
 
     this.props.createLocation({
       status,
@@ -86,7 +81,9 @@ class Initial extends React.Component {
 
     let count = resource.startCount;
     if (this.state.resources[resource.key]) {
-      count = this.state.resources[resource.key].given || count;
+      count = this.state.resources[resource.key].given;
+    } else if (count > 0) {
+      this.updateCount({ count, resourceKey: resource.key });
     }
 
     return (
@@ -207,7 +204,7 @@ Initial.propTypes = { // Sorted Alphabetically
 };
 
 const mapStateToProps = state => ({
-  resources: Object.keys(state.resources).map(r => state.resources[r]),
+  resources: Object.values(state.resources),
   tags: state.tags.initial,
 });
 

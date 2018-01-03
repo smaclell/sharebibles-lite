@@ -23,6 +23,7 @@ export default {
   'conversations/no_visits': 'Français',
   'initial/first_visit': 'Français',
   'initial/or': 'Français',
+  'resource/generic_bible': 'Français',
   'resource/english_bible_esv': 'Français',
   'settings/invite': 'Français',
   'settings/logout': 'Français',

@@ -27,6 +27,7 @@ export default {
   'conversations/no_visits': 'No visits yet!',
   'initial/first_visit': 'First Visit',
   'initial/or': 'OR',
+  'resource/generic_bible': '# of Bibles Distributed',
   'resource/english_bible_esv': '# of Bibles Distributed',
   'settings/invite': 'Share Invite',
   'settings/logout': 'logout',

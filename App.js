@@ -33,6 +33,7 @@ const paddingTop = Platform.select({
 const App = () => (
   <Provider store={store}>
     <View style={{ flex: 1, paddingTop }}>
+      <StatusBar barStyle="dark-content" />
       <Navigation />
     </View>
   </Provider>

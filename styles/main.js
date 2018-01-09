@@ -59,10 +59,29 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  terms: {
-    color: colours.text,
-    fontSize: fonts.small,
-    textAlign: 'center',
+  privacy_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingVertical: 5,
+    marginVertical: 5,
+  },
+
+  checkbox: {
+    padding: 5,
+    borderColor: colours.black,
+    borderWidth: 2 * StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 5,
+  },
+
+  privacy: {
+    textAlign: 'left',
+    paddingHorizontal: 5,
+    color: colours.teals.base,
+    fontSize: fonts.normal,
+    textDecorationLine: 'underline',
   },
 
   white_box: {

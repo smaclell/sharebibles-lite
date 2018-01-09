@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  Linking,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,7 +12,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import KeyboardScroll from '../components/KeyboardScroll';
@@ -36,6 +37,7 @@ class SignUp extends Component {
       confirmPassword: '',
       accessCode: '',
       loading: false,
+      accepted: false,
     };
 
     this.createAccount = this.createAccount.bind(this);
@@ -56,6 +58,15 @@ class SignUp extends Component {
   }
 
   createAccount() {
+    if (!this.state.accepted) {
+      return Alert.alert(
+        I18n.t('sign_up/must_accept_conditions_agreement_title'),
+        I18n.t('sign_up/must_accept_conditions_agreement_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+
     if (this.state.password !== this.state.confirmPassword) {
       return Alert.alert(
         I18n.t('sign_up/failed_confirmation_title'),
@@ -87,6 +98,8 @@ class SignUp extends Component {
       });
   }
 
+  toggleAccepted = () => this.setState(s => ({ ...s, accepted: !s.accepted }))
+
   render() {
     const { navigation: { navigate } } = this.props;
 
@@ -117,6 +130,21 @@ class SignUp extends Component {
                 <TouchableOpacity onPress={() => navigate('SignIn')}>
                   <Text style={{ color: colours.teals.base, fontSize: fonts.small, fontWeight: 'normal', textDecorationLine: 'underline' }}>
                     {I18n.t('sign_up/sign_in')} </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.privacy_container}>
+                <TouchableOpacity style={styles.checkbox} onPress={this.toggleAccepted}>
+                  <FontAwesome
+                    name="check"
+                    size={fonts.normal}
+                    color={this.state.accepted ? colours.text : 'transparent'}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('http://www.sharebibles.com/privacy-policy-en.html')}>
+                  <Text style={styles.privacy}>
+                    {I18n.t('sign_up/conditions_agreement')}
+                  </Text>
                 </TouchableOpacity>
               </View>
 
@@ -199,11 +227,6 @@ class SignUp extends Component {
                 </Button>
                 {this.state.loading && <ActivityIndicator style={styles.loading} />}
               </View>
-
-              <Text style={styles.terms}>
-                {I18n.t('sign_up/conditions_agreement')}
-              </Text>
-
             </View>
           </View>
         </KeyboardScroll>

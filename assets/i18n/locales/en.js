@@ -78,7 +78,7 @@ export default {
   'title/sign_up': 'Sign Up',
   'title/your_conversations': 'Your Conversations',
   'validation/no_location_title': 'No location',
-  'validation/no_location_message': 'You must provide a location before you can save',
+  'validation/no_location_message': 'You must provide a location',
   'validation/no_notes_title': 'No notes',
   'validation/no_notes_message': 'You must provide a notes for the current status',
 };

@@ -46,10 +46,7 @@ const Section = ({ children, order, style }) => (
 );
 
 Section.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   order: PropTypes.number.isRequired,
   style: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
 };

@@ -1,5 +1,6 @@
 /* globals __DEV__ */
 import {
+  Alert,
   Text,
   View,
 } from 'react-native';
@@ -41,6 +42,7 @@ class Initial extends React.Component {
 
   onFocus = event => this.scroll.onFocus(event)
 
+  // eslint-disable-next-line consistent-return
   add = () => {
     const {
       imageUrl,
@@ -51,6 +53,24 @@ class Initial extends React.Component {
       resources,
       tags,
     } = this.state;
+
+    if (!longitude || !latitude) {
+      return Alert.alert(
+        I18n.t('validation/no_location_title'),
+        I18n.t('validation/no_location_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+
+    if ((notes || '').trim() === '' && status === 'need') {
+      return Alert.alert(
+        I18n.t('validation/no_location_title'),
+        I18n.t('validation/no_location_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
 
     // Filter out resources and tags that don't match the chosen status:
     const filteredResources = filterResources(this.props.resources, resources, status);

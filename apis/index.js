@@ -128,6 +128,7 @@ export async function signUp(name, email, password, accessCode) {
 
   const user = {
     key: userKey,
+    email,
     imageUrl,
     name,
     teamKey,

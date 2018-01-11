@@ -65,8 +65,8 @@ class Initial extends React.Component {
 
     if ((notes || '').trim() === '' && status === 'need') {
       return Alert.alert(
-        I18n.t('validation/no_location_title'),
-        I18n.t('validation/no_location_message'),
+        I18n.t('validation/no_notes_title'),
+        I18n.t('validation/no_notes_message'),
         [{ text: I18n.t('button/ok'), onPress() {} }],
         { cancelable: false },
       );

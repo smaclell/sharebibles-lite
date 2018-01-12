@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 import User from '../components/User';
 
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
+import list from '../assets/i18n/locales/list';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,6 +67,17 @@ const Settings = (props) => {
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
+        <Picker
+          selectedValue={I18n.locale.substring(0, 2)}
+          onValueChange={value => I18n.updateLocale(value)}
+          style={SettingsItem.styles.container}
+          itemStyle={SettingsItem.styles.text}
+          enabled
+        >
+          {Object.entries(list).map(([key, value]) => (
+            <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
+          ))}
+        </Picker>
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>

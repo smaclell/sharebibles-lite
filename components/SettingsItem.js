@@ -31,4 +31,6 @@ SettingsItem.propTypes = {
   onPress: PropTypes.func.isRequired,
 };
 
+SettingsItem.styles = styles;
+
 export default SettingsItem;

@@ -73,4 +73,8 @@ export default {
   'title/sign_in': 'เข้าสู่ระบบ',
   'title/sign_up': 'สร้างบัญชี',
   'title/your_conversations': 'คำสนทนาของคุณ',
+  'validation/no_location_title': 'ไม่มีสถานที่',
+  'validation/no_location_message': 'คุณต้องระบุสถานที่',
+  'validation/no_notes_title': 'ไม่มีโน้ต',
+  'validation/no_notes_message': 'คุณต้องระบุโน้ตสำหรับสถานะการแจกพระคัมภีร์นี้',
 };

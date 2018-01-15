@@ -14,6 +14,11 @@ I18n.translations = {
   th,
 };
 
+I18n.updateLocale = (locale) => {
+  I18n.locale = (locale) ? locale.replace(/_/, '-') : '';
+  I18n.setDateLocale();
+};
+
 function getDateLocale() {
   const locales = moment.locales();
   if (locales.includes(I18n.locale)) {

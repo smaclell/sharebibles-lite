@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import Settings from '../components/Settings';
 import I18n from '../assets/i18n/i18n';
 import * as authenticationActions from '../actions/authentication';
+import { updateLocale } from '../actions/i18n';
 
 const dialogOptions = {
   dialogTitle: I18n.t('settings/shareInvite'),
@@ -23,6 +24,7 @@ const createLogout = ({ navigation }) => () => {
 };
 
 const mapStateToProps = state => ({
+  locale: state.i18n.locale, // triggers rerender on local change
   team: state.teams[state.users[state.user].teamKey],
   user: state.users[state.user],
   version: Constants.manifest.version,
@@ -35,6 +37,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   shareInvite: () =>
     dispatch(authenticationActions.shareInvite())
       .then(options => Share.share(options, dialogOptions)),
+  updateLocale: locale => dispatch(updateLocale(locale)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

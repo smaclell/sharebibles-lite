@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, shareInvite, team, user, version } = props;
+  const { logout, shareInvite, team, updateLocale, user, version } = props;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -69,7 +69,7 @@ const Settings = (props) => {
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
         <Picker
           selectedValue={I18n.locale.substring(0, 2)}
-          onValueChange={value => I18n.updateLocale(value)}
+          onValueChange={updateLocale}
           style={SettingsItem.styles.container}
           itemStyle={SettingsItem.styles.text}
           enabled
@@ -95,6 +95,7 @@ Settings.propTypes = {
   logout: PropTypes.func.isRequired,
   shareInvite: PropTypes.func.isRequired,
   team: PropTypes.object.isRequired,
+  updateLocale: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   version: PropTypes.string.isRequired,
 };

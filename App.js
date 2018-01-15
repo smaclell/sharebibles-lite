@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import Sentry from 'sentry-expo';
 import thunk from 'redux-thunk';
 
 import Navigation from './nav';
@@ -9,6 +10,8 @@ import reducer from './reducers';
 
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
+
+Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
 initialize();
 
@@ -30,13 +33,22 @@ const paddingTop = Platform.select({
   android: StatusBar.currentHeight,
 });
 
-const App = () => (
-  <Provider store={store}>
-    <View style={{ flex: 1, paddingTop }}>
-      <StatusBar barStyle="dark-content" />
-      <Navigation />
-    </View>
-  </Provider>
-);
+class App extends Component {
+  componentDidCatch(error, errorInfo) {
+    Sentry.captureException(error, { extra: errorInfo });
+    throw error;
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={{ flex: 1, paddingTop }}>
+          <StatusBar barStyle="dark-content" />
+          <Navigation />
+        </View>
+      </Provider>
+    );
+  }
+}
 
 export default App;

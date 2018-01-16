@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Sentry from 'sentry-expo';
 import * as locationActions from '../actions/locations';
 import Users from '../containers/Users';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
@@ -43,7 +44,7 @@ class Initial extends React.Component {
   onFocus = event => this.scroll.onFocus(event)
 
   // eslint-disable-next-line consistent-return
-  add = () => {
+  add = async () => {
     const {
       imageUrl,
       status,
@@ -72,23 +73,34 @@ class Initial extends React.Component {
       );
     }
 
-    // Filter out resources and tags that don't match the chosen status:
-    const filteredResources = filterResources(this.props.resources, resources, status);
-    const filteredTags = filterTags(this.props.tags, tags, status);
+    try {
+      // Filter out resources and tags that don't match the chosen status:
+      const filteredResources = filterResources(this.props.resources, resources, status);
+      const filteredTags = filterTags(this.props.tags, tags, status);
 
-    this.props.createLocation({
-      status,
-      imageUrl,
-      name: 'TBD',
-      address: null,
-      longitude,
-      latitude,
-      notes,
-      resources: filteredResources,
-      tags: filteredTags,
-    });
+      await this.props.createLocation({
+        status,
+        imageUrl,
+        name: 'TBD',
+        address: null,
+        longitude,
+        latitude,
+        notes,
+        resources: filteredResources,
+        tags: filteredTags,
+      });
 
-    this.goBack();
+      this.goBack();
+    } catch (err) {
+      Sentry.captureException(err, { extra: { status } });
+
+      Alert.alert(
+        I18n.t('validation/unknown_error_title'),
+        I18n.t('validation/unknown_error_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
   }
 
   goBack = () => {

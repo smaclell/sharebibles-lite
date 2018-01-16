@@ -1,3 +1,4 @@
+import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { updatePosition } from './position';
 import { createVisit, fetchVisitsByLocation } from './visits';
@@ -64,7 +65,7 @@ export function createLocation(options) {
   const { imageUrl, name, latitude, longitude, address, resources, tags, status } = options;
   const { notes } = options;
 
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
@@ -83,22 +84,28 @@ export function createLocation(options) {
 
     dispatch(updatePosition(latitude, longitude));
 
-    return Promise.resolve()
-      .then(() => apis.createLocation(creator, team, locationData))
-      .then(({ created: location, saved }) => {
-        dispatch(receiveLocation(location));
+    const { created: location, saved } =
+      await apis.createLocation(creator, team, locationData);
 
-        dispatch(pending(location.key));
-        saved
-          .then(() => dispatch(uploaded(location.key)))
-          .catch(() => dispatch(failed(location.key)));
+    dispatch(receiveLocation(location));
 
-        return dispatch(createVisit({
-          locationKey: location.key,
-          notes,
-          status,
-          tags: { ...tags, initial: true },
-        }));
+    dispatch(pending(location.key));
+    saved
+      .then(() => dispatch(uploaded(location.key)))
+      .catch((err) => {
+        Sentry.captureException(err, {
+          extra: {
+            locationKey: location.key,
+          },
+        });
+        dispatch(failed(location.key));
       });
+
+    return dispatch(createVisit({
+      locationKey: location.key,
+      notes,
+      status,
+      tags: { ...tags, initial: true },
+    }));
   };
 }

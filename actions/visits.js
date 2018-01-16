@@ -1,3 +1,4 @@
+import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { failed, pending, uploaded } from './uploads';
 import { updateLocation } from './locations';
@@ -41,23 +42,33 @@ export function startListener(onReceived) {
 }
 
 export function createVisit({ locationKey, notes, status = 'unknown', tags = {} }) {
-  return (dispatch, getState) => {
+  // eslint-disable-next-line consistent-return
+  return async (dispatch, getState) => {
     // TODO: selector
     const state = getState();
     const creator = state.users[state.user];
     const visitors = state.visitors;
 
-    return apis.createVisit(locationKey, creator, { notes, status, tags, visitors })
-      .then(({ created: visit, saved }) => { // eslint-disable-line consistent-return
-        dispatch(pending(visit.key));
-        saved
-          .then(() => dispatch(uploaded(visit.key)))
-          .catch(() => dispatch(failed(visit.key)));
+    const { created: visit, saved } = await
+      apis.createVisit(locationKey, creator, { notes, status, tags, visitors });
 
-        dispatch(receiveVisit(visit));
-        if (!tags.initial && status !== 'unknown') {
-          return dispatch(updateLocation({ key: locationKey, status }));
-        }
+    dispatch(pending(visit.key));
+    saved
+      .then(() => dispatch(uploaded(visit.key)))
+      .catch((err) => {
+        Sentry.captureException(err, {
+          extra: {
+            userKey: creator.key,
+            locationKey,
+            visitKey: visit.key,
+          },
+        });
+        dispatch(failed(visit.key));
       });
+
+    dispatch(receiveVisit(visit));
+    if (!tags.initial && status !== 'unknown') {
+      return dispatch(updateLocation({ key: locationKey, status }));
+    }
   };
 }

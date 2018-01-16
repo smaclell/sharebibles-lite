@@ -6,6 +6,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Sentry from 'sentry-expo';
 import * as visitActions from '../actions/visits';
 import KeyboardScroll from '../components/KeyboardScroll';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
@@ -61,7 +62,7 @@ class FollowUp extends React.Component {
   }
 
   // eslint-disable-next-line consistent-return
-  update = () => {
+  update = async () => {
     const { params: { locationKey } } = this.props.navigation.state;
     const { notes, tags, status } = this.state;
 
@@ -74,8 +75,20 @@ class FollowUp extends React.Component {
       );
     }
 
-    this.props.createVisit({ locationKey, notes, tags, status });
-    this.goBack();
+    try {
+      await this.props.createVisit({ locationKey, notes, tags, status });
+
+      this.goBack();
+    } catch (err) {
+      Sentry.captureException(err, { extra: { locationKey, status } });
+
+      Alert.alert(
+        I18n.t('validation/unknown_error_title'),
+        I18n.t('validation/unknown_error_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
   }
 
   updateStatus = status => this.setState({ status });

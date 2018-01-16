@@ -79,4 +79,6 @@ export default {
   'validation/no_location_message': 'Hay que proveer ubicación',
   'validation/no_notes_title': 'Sin notas',
   'validation/no_notes_message': 'Una nota para su estado de distribución actual',
+  'validation/unknown_error_title': 'Ocurrió un error',
+  'validation/unknown_error_message': 'Se produjo un error inesperado, intente de nuevo.',
 };

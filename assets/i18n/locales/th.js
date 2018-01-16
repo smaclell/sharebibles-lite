@@ -77,4 +77,6 @@ export default {
   'validation/no_location_message': 'คุณต้องระบุสถานที่',
   'validation/no_notes_title': 'ไม่มีโน้ต',
   'validation/no_notes_message': 'คุณต้องระบุโน้ตสำหรับสถานะการแจกพระคัมภีร์นี้',
+  'validation/unknown_error_title': 'เกิดข้อผิดพลาด',
+  'validation/unknown_error_message': 'เกิดข้อผิดพลาดที่ไม่คาดคิดโปรดลองอีกครั้ง',
 };

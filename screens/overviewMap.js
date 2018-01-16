@@ -184,7 +184,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
 });

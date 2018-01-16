@@ -51,6 +51,7 @@ const drawer = new DrawerNavigator(drawerScreens, {
   initialRouteName: 'Tabs',
   contentComponent: Settings,
   navigationOptions: {
+    gesturesEnabled: false,
     headerStyle: { backgroundColor: colours.white },
     headerTintColor: colours.text,
   },

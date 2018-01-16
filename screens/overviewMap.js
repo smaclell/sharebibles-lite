@@ -42,6 +42,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const initialLatitudeDelta = 0.0000922;
+const initialLongitudeDelta = 0.0000421;
+
+const minLatitudeDelta = initialLatitudeDelta / 2;
+const minLongitudeDelta = initialLongitudeDelta / 2;
+
 class OverviewMap extends PureComponent {
   constructor(props) {
     super(props);
@@ -50,8 +56,8 @@ class OverviewMap extends PureComponent {
     this.initialRegion = {
       latitude,
       longitude,
-      latitudeDelta: 0.0000922,
-      longitudeDelta: 0.0000421,
+      latitudeDelta: initialLatitudeDelta,
+      longitudeDelta: initialLongitudeDelta,
     };
 
     this.state = { ...this.initialRegion };
@@ -66,8 +72,13 @@ class OverviewMap extends PureComponent {
       return;
     }
 
-    this.setState({ latitude, longitude, latitudeDelta, longitudeDelta });
     this.props.updatePosition(latitude, longitude);
+    this.setState({
+      latitude,
+      longitude,
+      latitudeDelta: Math.max(latitudeDelta, minLatitudeDelta),
+      longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
+    });
   }
 
   renderMode = (mode, translation) => (
@@ -82,13 +93,8 @@ class OverviewMap extends PureComponent {
   )
 
   render() {
-    const { navigation, position, locations } = this.props;
+    const { navigation, locations } = this.props;
     const { navigate } = navigation;
-
-    const region = {
-      ...position,
-      ...this.state,
-    };
 
     return (
       <View style={styles.container}>
@@ -101,7 +107,7 @@ class OverviewMap extends PureComponent {
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          region={region}
+          region={this.state}
           initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
           onRegionChange={this.onRegionChange}

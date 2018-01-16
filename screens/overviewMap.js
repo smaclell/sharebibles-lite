@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import { View, StyleSheet } from 'react-native';
 import * as overviewActions from '../actions/overview';
+import * as positionActions from '../actions/position';
 import { Toggle } from '../components/Button';
 import PinCallout from '../components/PinCallout';
 import I18n from '../assets/i18n/i18n';
@@ -41,7 +42,45 @@ const styles = StyleSheet.create({
   },
 });
 
+const initialLatitudeDelta = 0.0000922;
+const initialLongitudeDelta = 0.0000421;
+
+const minLatitudeDelta = initialLatitudeDelta / 2;
+const minLongitudeDelta = initialLongitudeDelta / 2;
+
 class OverviewMap extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    const { position: { latitude, longitude } } = props;
+    this.initialRegion = {
+      latitude,
+      longitude,
+      latitudeDelta: initialLatitudeDelta,
+      longitudeDelta: initialLongitudeDelta,
+    };
+
+    this.state = { ...this.initialRegion };
+  }
+
+  onMapReady = () => {
+    this.isReady = true;
+  }
+
+  onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+    if (!this.isReady) {
+      return;
+    }
+
+    this.props.updatePosition(latitude, longitude);
+    this.setState({
+      latitude,
+      longitude,
+      latitudeDelta: Math.max(latitudeDelta, minLatitudeDelta),
+      longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
+    });
+  }
+
   renderMode = (mode, translation) => (
     <Toggle
       key={mode}
@@ -54,9 +93,9 @@ class OverviewMap extends PureComponent {
   )
 
   render() {
-    const { navigation, position, locations } = this.props;
+    const { navigation, locations } = this.props;
     const { navigate } = navigation;
-    const { latitude, longitude } = position;
+
     return (
       <View style={styles.container}>
         <MapView
@@ -68,12 +107,10 @@ class OverviewMap extends PureComponent {
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.000922,
-            longitudeDelta: 0.000421,
-          }}
+          region={this.state}
+          initialRegion={this.initialRegion}
+          onMapReady={this.onMapReady}
+          onRegionChange={this.onRegionChange}
         >
           {locations.map(({ location, visits, pinColor }) => (
             <MapView.Marker
@@ -107,6 +144,7 @@ OverviewMap.propTypes = {
     longitude: PropTypes.number.isRequired,
   }).isRequired,
   updateMode: PropTypes.func.isRequired,
+  updatePosition: PropTypes.func.isRequired,
 };
 
 const locationColor = (location, statuses) => {
@@ -152,6 +190,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(overviewActions, dispatch);
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(overviewActions, dispatch),
+  ...bindActionCreators(positionActions, dispatch),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);

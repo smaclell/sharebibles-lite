@@ -75,4 +75,8 @@ export default {
   'title/sign_in': 'Iniciar Sesión',
   'title/sign_up': 'Registrar',
   'title/your_conversations': 'Tus conversaciones',
+  'validation/no_location_title': 'Sin ubicación',
+  'validation/no_location_message': 'Hay que proveer ubicación',
+  'validation/no_notes_title': 'Sin notas',
+  'validation/no_notes_message': 'Una nota para su estado de distribución actual',
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   View,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
@@ -59,9 +60,19 @@ class FollowUp extends React.Component {
     this.setState(createInitialState());
   }
 
+  // eslint-disable-next-line consistent-return
   update = () => {
     const { params: { locationKey } } = this.props.navigation.state;
     const { notes, tags, status } = this.state;
+
+    if ((notes || '').trim() === '' && status === 'need') {
+      return Alert.alert(
+        I18n.t('validation/no_notes_title'),
+        I18n.t('validation/no_notes_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
 
     this.props.createVisit({ locationKey, notes, tags, status });
     this.goBack();

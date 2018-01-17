@@ -133,7 +133,10 @@ class ChooseUsers extends Component {
             onChangeText={filter => this.setState({ filter: filter.trim().toUpperCase() })}
           />
         </View>
-        <ScrollView styles={styles.users_outer_container} contentContainerStyle={styles.users_container}>
+        <ScrollView
+          styles={styles.users_outer_container}
+          contentContainerStyle={styles.users_container}
+        >
           { this.showUsers(selected, true) }
           { this.showUsers(unselected, false) }
         </ScrollView>

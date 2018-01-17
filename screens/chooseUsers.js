@@ -46,8 +46,10 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     paddingLeft: 6,
   },
-  users_container: {
+  users_outer_container: {
     flex: 1,
+  },
+  users_container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -131,7 +133,7 @@ class ChooseUsers extends Component {
             onChangeText={filter => this.setState({ filter: filter.trim().toUpperCase() })}
           />
         </View>
-        <ScrollView styles={styles.users_container} contentContainerStyle={styles.users_container}>
+        <ScrollView styles={styles.users_outer_container} contentContainerStyle={styles.users_container}>
           { this.showUsers(selected, true) }
           { this.showUsers(unselected, false) }
         </ScrollView>

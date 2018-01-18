@@ -30,6 +30,7 @@ function createInitialState() {
     status: 'unknown',
     longitude: null,
     latitude: null,
+    notes: null,
     resources: {},
     tags: {},
   };

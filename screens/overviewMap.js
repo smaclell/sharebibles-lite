@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
@@ -85,6 +86,19 @@ class OverviewMap extends PureComponent {
     });
   }
 
+  goToFollowUp = debounce(
+    locationKey => this.innerFollowUp(locationKey),
+    500,
+    { leading: true, trailing: false },
+  );
+
+  innerFollowUp = (locationKey) => {
+    const { navigation: { navigate, state: { routeName } } } = this.props;
+    if (routeName === 'OverviewMap') {
+      navigate('FollowUp', { locationKey });
+    }
+  };
+
   renderMode = (mode, translation) => (
     <Toggle
       key={mode}
@@ -97,8 +111,7 @@ class OverviewMap extends PureComponent {
   )
 
   render() {
-    const { navigation, locations } = this.props;
-    const { navigate } = navigation;
+    const { locations } = this.props;
 
     return (
       <View style={styles.container}>
@@ -124,7 +137,7 @@ class OverviewMap extends PureComponent {
                 longitude: location.longitude }}
               pinColor={pinColor}
             >
-              <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
+              <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>
                 <PinCallout {...location} visits={visits} />
               </MapView.Callout>
             </MapView.Marker>

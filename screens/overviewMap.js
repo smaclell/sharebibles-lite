@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialLatitudeDelta = 0.0000922;
-const initialLongitudeDelta = 0.0000421;
+const initialLatitudeDelta = 0.0012;
+const initialLongitudeDelta = 0.0006;
 
 const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
@@ -60,15 +60,19 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion };
+    this.state = { ...this.initialRegion, isReady: false };
+  }
+
+  componentDidMount() {
+    setTimeout(this.onMapReady, 250);
   }
 
   onMapReady = () => {
-    this.isReady = true;
+    this.setState({ isReady: true });
   }
 
   onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
-    if (!this.isReady) {
+    if (!this.state.isReady) {
       return;
     }
 

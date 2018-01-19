@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
@@ -42,8 +43,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialLatitudeDelta = 0.0000922;
-const initialLongitudeDelta = 0.0000421;
+const initialLatitudeDelta = 0.0012;
+const initialLongitudeDelta = 0.0006;
 
 const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
@@ -60,15 +61,19 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion };
+    this.state = { ...this.initialRegion, isReady: false };
+  }
+
+  componentDidMount() {
+    setTimeout(this.onMapReady, 250);
   }
 
   onMapReady = () => {
-    this.isReady = true;
+    this.setState({ isReady: true });
   }
 
   onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
-    if (!this.isReady) {
+    if (!this.state.isReady) {
       return;
     }
 
@@ -80,6 +85,19 @@ class OverviewMap extends PureComponent {
       longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
     });
   }
+
+  goToFollowUp = debounce(
+    locationKey => this.innerFollowUp(locationKey),
+    500,
+    { leading: true, trailing: false },
+  );
+
+  innerFollowUp = (locationKey) => {
+    const { navigation: { navigate, state: { routeName } } } = this.props;
+    if (routeName === 'OverviewMap') {
+      navigate('FollowUp', { locationKey });
+    }
+  };
 
   renderMode = (mode, translation) => (
     <Toggle
@@ -93,8 +111,7 @@ class OverviewMap extends PureComponent {
   )
 
   render() {
-    const { navigation, locations } = this.props;
-    const { navigate } = navigation;
+    const { locations } = this.props;
 
     return (
       <View style={styles.container}>
@@ -120,7 +137,7 @@ class OverviewMap extends PureComponent {
                 longitude: location.longitude }}
               pinColor={pinColor}
             >
-              <MapView.Callout onPress={() => navigate('FollowUp', { locationKey: location.key })}>
+              <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>
                 <PinCallout {...location} visits={visits} />
               </MapView.Callout>
             </MapView.Marker>

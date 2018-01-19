@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   user_container: {
     flex: 0,
-    padding: 24,
+    padding: 18,
   },
   options_container: {
     flex: 1,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 24,
+    padding: 18,
   },
   teamName: {
     color: colours.text,
@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
   },
   header: {
     color: colours.text,
-    fontSize: fonts.header,
+    fontSize: fonts.large,
     fontWeight: 'bold',
   },
   logo_container: {
   },
   logo: {
-    height: 80,
-    width: 80,
+    height: 60,
+    width: 60,
   },
   version: {
     color: colours.text,

@@ -1,4 +1,6 @@
 /* globals navigator */
+import Sentry from 'sentry-expo';
+
 // eslint-disable-next-line import/prefer-default-export
 export async function getCurrentPosition(accuracy = true) {
   return new Promise((resolve) => {
@@ -12,6 +14,7 @@ export async function getCurrentPosition(accuracy = true) {
         });
       },
       (error) => {
+        Sentry.captureException(error, { extra: { accuracy } });
         resolve({
           accuracy,
           error: error.message,

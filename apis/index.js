@@ -8,6 +8,7 @@ import CryptoJS from 'crypto-js/core';
 import md5 from 'crypto-js/md5';
 import pbkdf2 from 'crypto-js/pbkdf2';
 import Base64 from 'crypto-js/enc-base64';
+import { wrapLatitude, wrapLongitude } from '../utils/geo';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -31,7 +32,7 @@ export const GEO_USER_KEY = 'geofireUser';
 
 function saveGeoData(created, locationKey, regionKey, creator) {
   const geoKey = `locations--${locationKey}`;
-  const geo = [created.latitude, created.longitude];
+  const geo = [wrapLatitude(created.latitude), wrapLongitude(created.longitude)];
 
   const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
   const geoTeam = getGeoFire(`${GEO_TEAM_KEY}/${creator.teamKey}`).set(geoKey, geo);
@@ -42,7 +43,7 @@ function saveGeoData(created, locationKey, regionKey, creator) {
 
 export function queryGeoData(geoFireKey, position, callback) {
   const query = getGeoFire(geoFireKey).query({
-    center: [position.latitude, position.longitude],
+    center: [wrapLatitude(position.latitude), wrapLongitude(position.longitude)],
     radius: 0.5, // This is in KMs
   });
 

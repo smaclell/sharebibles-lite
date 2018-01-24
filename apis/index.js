@@ -118,7 +118,7 @@ export async function signUp(name, email, password, accessCode) {
   const hashCode = hashAccessCode(accessCode);
 
   const { uid: userKey } = await persist(
-    firebase.auth().createUserWithEmailAndPassword(email, password),
+    () => firebase.auth().createUserWithEmailAndPassword(email, password),
   );
 
   await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);

@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FontAwesome } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import Sentry from 'sentry-expo';
 import Button from '../components/Button';
 import KeyboardScroll from '../components/KeyboardScroll';
 import * as authenticationActions from '../actions/authentication';
@@ -83,6 +84,7 @@ class SignUp extends Component {
     return signUp(this.state.name, this.state.email, this.state.password, this.state.accessCode)
       .then(() => navigate('Home'))
       .catch((e) => {
+        Sentry.captureException(e, { extra: { email: this.state.email } });
         if (__DEV__) {
           console.error(e); // eslint-disable-line no-console
         }

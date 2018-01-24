@@ -27,6 +27,7 @@ export default {
   'initial/or': 'O',
   'resource/generic_bible': '# de biblias distribuidas',
   'resource/english_bible_esv': '# de biblias distribuidas',
+  'settings/change_language': 'cambiar idioma',
   'settings/invite': 'Comparte Invitación',
   'settings/logout': 'Cerrar Sesión',
   'settings/not_implemented': 'Lo siento, esta característica no está disponible',

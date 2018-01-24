@@ -25,6 +25,7 @@ export default {
   'initial/or': 'หรือ',
   'resource/generic_bible': 'จำนวนพระคัมภีร์ที่แจก',
   'resource/english_bible_esv': 'จำนวนพระคัมภีร์ที่แจก',
+  'settings/change_language': 'เปลี่ยนภาษา',
   'settings/invite': 'แชร์คำเชิญ',
   'settings/logout': 'ออกจากระบบ',
   'settings/not_implemented': 'ขออภัย ตัวเลือกนี้ยังไม่รองรับ',

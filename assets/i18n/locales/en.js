@@ -29,6 +29,7 @@ export default {
   'initial/or': 'OR',
   'resource/generic_bible': '# of Bibles Distributed',
   'resource/english_bible_esv': '# of Bibles Distributed',
+  'settings/change_language': 'Change Language',
   'settings/invite': 'Share Invite',
   'settings/logout': 'logout',
   'settings/not_implemented': "Sorry this feature isn't available yet.",

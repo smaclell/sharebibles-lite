@@ -1,5 +1,6 @@
 import * as apis from '../apis';
 import { fetchAllLocationData } from './locations';
+import { wrapLatitude, wrapLongitude } from '../utils/geo';
 
 export const TEAM_MODE = apis.GEO_TEAM_KEY;
 export const USER_MODE = apis.GEO_USER_KEY;
@@ -13,7 +14,10 @@ let query = initial;
 export function update(latitude, longitude) {
   return () =>
     query.updateCriteria({
-      center: [latitude, longitude],
+      center: [
+        wrapLatitude(latitude),
+        wrapLongitude(longitude),
+      ],
     });
 }
 

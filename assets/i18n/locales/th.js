@@ -75,6 +75,8 @@ export default {
   'title/your_conversations': 'คำสนทนาของคุณ',
   'validation/no_location_title': 'ไม่มีสถานที่',
   'validation/no_location_message': 'คุณต้องระบุสถานที่',
+  'validation/no_status_title': 'ไม่มีสถานะ',
+  'validation/no_status_message': 'คุณต้องระบุสถานะ',
   'validation/no_notes_title': 'ไม่มีโน้ต',
   'validation/no_notes_message': 'คุณต้องระบุโน้ตสำหรับสถานะการแจกพระคัมภีร์นี้',
   'validation/unknown_error_title': 'เกิดข้อผิดพลาด',

@@ -65,6 +65,15 @@ class Initial extends React.Component {
       );
     }
 
+    if (!status || status === 'unknown') {
+      return Alert.alert(
+        I18n.t('validation/no_status_title'),
+        I18n.t('validation/no_status_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+
     if ((notes || '').trim() === '' && status === 'need') {
       return Alert.alert(
         I18n.t('validation/no_notes_title'),

@@ -2,5 +2,5 @@
 export default {
   'locale/en': 'English',
   'locale/es': 'Español',
-  'locale/th': 'ภาษาเขียน',
+  'locale/th': 'ภาษาไทย',
 };

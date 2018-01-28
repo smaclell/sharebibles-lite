@@ -77,6 +77,8 @@ export default {
   'title/your_conversations': 'Tus conversaciones',
   'validation/no_location_title': 'Sin ubicación',
   'validation/no_location_message': 'Hay que proveer ubicación',
+  'validation/no_status_title': 'Sin estado',
+  'validation/no_status_message': 'Hay que proveer estado',
   'validation/no_notes_title': 'Sin notas',
   'validation/no_notes_message': 'Una nota para su estado de distribución actual',
   'validation/unknown_error_title': 'Ocurrió un error',

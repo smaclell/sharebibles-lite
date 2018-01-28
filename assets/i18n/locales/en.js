@@ -79,6 +79,8 @@ export default {
   'title/your_conversations': 'Your Conversations',
   'validation/no_location_title': 'No location',
   'validation/no_location_message': 'You must provide a location',
+  'validation/no_status_title': 'No status',
+  'validation/no_status_message': 'You must provide a status',
   'validation/no_notes_title': 'No notes',
   'validation/no_notes_message': 'You must provide a notes for the current status',
   'validation/unknown_error_title': 'An error occurred',

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     alignContent: 'flex-start',
-    margin: 10,
+    margin: 5,
   },
   text: {
     flex: 1,

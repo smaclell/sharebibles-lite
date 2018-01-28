@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     padding: 18,
   },
   options_container: {
-    flex: 1,
+    flex: 5,
+    flexShrink: 0,
     padding: 10,
     flexDirection: 'column',
     alignItems: 'flex-start',

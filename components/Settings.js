@@ -54,6 +54,14 @@ const styles = StyleSheet.create({
     color: colours.text,
     fontSize: fonts.normal,
   },
+  changeLanguageTitle: {
+    flex: 2,
+  },
+  changeLanguagePicker: {
+    margin: 0,
+    marginVertical: 0,
+    marginHorizontal: 10,
+  },
 });
 
 const Settings = (props) => {
@@ -67,17 +75,20 @@ const Settings = (props) => {
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
-        <Picker
-          selectedValue={I18n.locale.substring(0, 2)}
-          onValueChange={updateLocale}
-          style={SettingsItem.styles.container}
-          itemStyle={SettingsItem.styles.text}
-          enabled
-        >
-          {Object.entries(list).map(([key, value]) => (
-            <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
-          ))}
-        </Picker>
+        <View style={[SettingsItem.styles.container, styles.changeLanguageTitle]}>
+          <Text style={SettingsItem.styles.text}>{I18n.t('settings/change_language').toUpperCase()}</Text>
+          <Picker
+            selectedValue={I18n.locale.substring(0, 2)}
+            onValueChange={updateLocale}
+            style={[SettingsItem.styles.container, styles.changeLanguagePicker]}
+            itemStyle={SettingsItem.styles.text}
+            enabled
+          >
+            {Object.entries(list).map(([key, value]) => (
+              <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
+            ))}
+          </Picker>
+        </View>
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>

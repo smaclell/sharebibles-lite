@@ -1,3 +1,4 @@
+import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { fetchTeam } from './teams';
 
@@ -5,9 +6,19 @@ export const FETCH_USER = 'FETCH_USER';
 export const RECEIVED_USER = 'RECEIVED_USER';
 
 export function receiveUser(user) {
-  return {
-    type: RECEIVED_USER,
-    user,
+  return (dispatch) => {
+    if (!user.key) {
+      Sentry.captureMessage('Invalid user received', {
+        extra: {
+          user,
+        },
+      });
+    }
+
+    return dispatch({
+      type: RECEIVED_USER,
+      user,
+    });
   };
 }
 

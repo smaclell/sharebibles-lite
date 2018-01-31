@@ -13,6 +13,21 @@ const tags = {
       label: 'tag/initial/christian',
       statuses: home,
     },
+    {
+      key: 'prayer',
+      label: 'tag/initial/prayer',
+      statuses: home,
+    },
+    {
+      key: 'read_bible',
+      label: 'tag/initial/read_bible',
+      statuses: home,
+    },
+    {
+      key: 'received_baptism',
+      label: 'tag/initial/received_baptism',
+      statuses: home,
+    },
   ],
   followUp: [
     {

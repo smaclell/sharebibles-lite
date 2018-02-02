@@ -3,11 +3,16 @@ const home = ['accepted', 'need', 'have', 'rejected'];
 const shared = [...home, 'delivered'];
 const tags = {
   initial: [
+    // Dropping cannot read so we can have sudden_healing
+    // Leaving this here so we can see the previous values
+    // The terms have also been left
+    /*
     {
       key: 'cannot_read',
       label: 'tag/initial/cannot_read',
       statuses: home,
     },
+    */
     {
       key: 'christian',
       label: 'tag/initial/christian',
@@ -26,6 +31,11 @@ const tags = {
     {
       key: 'received_baptism',
       label: 'tag/initial/received_baptism',
+      statuses: home,
+    },
+    {
+      key: 'sudden_healing',
+      label: 'tag/initial/sudden_healing',
       statuses: home,
     },
   ],

@@ -70,6 +70,7 @@ export default {
   'tag/initial/prayer': 'ได้อธิษฐานด้วยผู้รับ',
   'tag/initial/read_bible': 'เราแบ่งปันข่าวประเสริฐ',
   'tag/initial/received_baptism': 'คนกลายเป็นสาวกของพระเยซู',
+  'tag/initial/sudden_healing': 'คนได้รับการรักษามหัศจรรย์',
   'title/choose_users': 'อัพเดตผู้ใช้',
   'title/map': 'แผนที่',
   'title/settings': 'ตั้งค่า',

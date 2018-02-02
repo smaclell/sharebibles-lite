@@ -72,6 +72,7 @@ export default {
   'tag/initial/prayer': 'Oramos con la gente',
   'tag/initial/read_bible': 'Compartimos el evangelio',
   'tag/initial/received_baptism': 'La persona se hizo seguidor de Jesús',
+  'tag/initial/sudden_healing': 'Alguien fue sanado milagrosamente',
   'title/choose_users': 'Eligir usuarios',
   'title/map': 'Mapa',
   'title/settings': 'Configuraciones',

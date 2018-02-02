@@ -74,6 +74,7 @@ export default {
   'tag/initial/prayer': 'Prayed with Recipient',
   'tag/initial/read_bible': 'Shared the gospel',
   'tag/initial/received_baptism': 'Person became follower of Jesus',
+  'tag/initial/sudden_healing': 'Someone was miraculously healed',
   'title/choose_users': 'Update vistors',
   'title/map': 'Map',
   'title/settings': 'Settings',

@@ -32,6 +32,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   family: 'font-awesome',
   colour: 'white',
+  styles: {},
 };
 
 export default Icon;

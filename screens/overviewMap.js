@@ -102,12 +102,6 @@ class OverviewMap extends PureComponent {
     });
   }
 
-  goToFollowUp = debounce(
-    locationKey => this.innerFollowUp(locationKey),
-    500,
-    { leading: true, trailing: false },
-  );
-
   onLocationPress = async () => {
     const { location } = await getCurrentPosition(true);
     if (location) {
@@ -119,6 +113,12 @@ class OverviewMap extends PureComponent {
       });
     }
   }
+
+  goToFollowUp = debounce(
+    locationKey => this.innerFollowUp(locationKey),
+    500,
+    { leading: true, trailing: false },
+  );
 
   innerFollowUp = (locationKey) => {
     const { navigation: { navigate, state: { routeName } } } = this.props;
@@ -183,8 +183,8 @@ class OverviewMap extends PureComponent {
             name="crosshairs"
             family="font-awesome"
             size="large"
-            colour={ this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)' }
-            styles={ {backgroundColor: 'rgba(0,0,0,0)'} }
+            colour={this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)'}
+            styles={{ backgroundColor: 'rgba(0,0,0,0)' }}
           />
         </TouchableOpacity>
       </View>

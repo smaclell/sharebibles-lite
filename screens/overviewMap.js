@@ -4,12 +4,15 @@ import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
+import * as locationActions from '../actions/locations';
 import { Toggle } from '../components/Button';
+import Icon from '../components/Icon';
 import PinCallout from '../components/PinCallout';
 import I18n from '../assets/i18n/i18n';
+import { getCurrentPosition } from '../apis/geo';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +36,19 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 5,
+  },
+  locationButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: 10,
+    paddingTop: 3,
+    paddingBottom: 3,
+    paddingRight: 6,
+    paddingLeft: 6,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: 'rgba(3, 3, 3, 0.4)',
+    backgroundColor: 'rgba(228, 229, 227, 1)',
   },
   map: {
     position: 'absolute',
@@ -61,7 +77,7 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, isReady: false };
+    this.state = { ...this.initialRegion, centered: true, isReady: false };
   }
 
   componentDidMount() {
@@ -83,6 +99,7 @@ class OverviewMap extends PureComponent {
       longitude,
       latitudeDelta: Math.max(latitudeDelta, minLatitudeDelta),
       longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
+      centered: false,
     });
   }
 
@@ -110,6 +127,19 @@ class OverviewMap extends PureComponent {
     </Toggle>
   )
 
+  onLocationPress = async () => {
+    this.setState({ ...this.initialRegion })
+    const {location} = await getCurrentPosition(true)
+    if (location) {
+      this.props.updatePosition(location.latitude, location.longitude);
+      this.setState({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        centered: true,
+      });
+    }
+  }
+
   render() {
     const { locations } = this.props;
 
@@ -119,7 +149,6 @@ class OverviewMap extends PureComponent {
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
-          showsMyLocationButton
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
@@ -147,6 +176,18 @@ class OverviewMap extends PureComponent {
           {this.renderMode(overviewActions.TEAM_MODE, 'button/show_team')}
           {this.renderMode(overviewActions.USER_MODE, 'button/show_user')}
         </View>
+        <TouchableOpacity
+          style={styles.locationButton}
+          onPress={this.onLocationPress}
+          activeOpacity={0.9}
+        >
+          <Icon name='crosshairs'
+            family='font-awesome'
+            size='large'
+            colour={this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)'}
+            styles={{backgroundColor: 'rgba(0,0,0,0)'}}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -210,6 +251,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
+  ...bindActionCreators(locationActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);

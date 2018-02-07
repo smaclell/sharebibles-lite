@@ -14,10 +14,10 @@ const sizes = {
 };
 
 
-const Icon = ({ size, name, family, colour, styles }) => {
+const Icon = ({ size, name, family, colour, styles = null }) => {
   const Actual = families[family];
   return (
-    <Actual size={sizes[size]} name={name} color={colour} style={styles}/>
+    <Actual size={sizes[size]} name={name} color={colour} style={styles} />
   );
 };
 
@@ -26,7 +26,7 @@ Icon.propTypes = {
   family: PropTypes.oneOf(Object.keys(families)),
   name: PropTypes.string.isRequired,
   size: PropTypes.oneOf(Object.keys(sizes)).isRequired,
-  style: PropTypes.object,
+  styles: PropTypes.object,
 };
 
 Icon.defaultProps = {

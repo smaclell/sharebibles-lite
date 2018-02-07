@@ -127,8 +127,7 @@ class OverviewMap extends PureComponent {
   )
 
   onLocationPress = async () => {
-    this.setState({ ...this.initialRegion })
-    const {location} = await getCurrentPosition(true)
+    const { location } = await getCurrentPosition(true);
     if (location) {
       this.props.updatePosition(location.latitude, location.longitude);
       this.setState({
@@ -180,11 +179,12 @@ class OverviewMap extends PureComponent {
           onPress={this.onLocationPress}
           activeOpacity={0.9}
         >
-          <Icon name='crosshairs'
-            family='font-awesome'
-            size='large'
-            colour={this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)'}
-            styles={{backgroundColor: 'rgba(0,0,0,0)'}}
+          <Icon
+            name="crosshairs"
+            family="font-awesome"
+            size="large"
+            colour={ this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)' }
+            styles={ {backgroundColor: 'rgba(0,0,0,0)'} }
           />
         </TouchableOpacity>
       </View>

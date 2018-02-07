@@ -108,6 +108,18 @@ class OverviewMap extends PureComponent {
     { leading: true, trailing: false },
   );
 
+  onLocationPress = async () => {
+    const { location } = await getCurrentPosition(true);
+    if (location) {
+      this.props.updatePosition(location.latitude, location.longitude);
+      this.setState({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        centered: true,
+      });
+    }
+  }
+
   innerFollowUp = (locationKey) => {
     const { navigation: { navigate, state: { routeName } } } = this.props;
     if (routeName === 'OverviewMap') {
@@ -125,18 +137,6 @@ class OverviewMap extends PureComponent {
       {I18n.t(translation)}
     </Toggle>
   )
-
-  onLocationPress = async () => {
-    const { location } = await getCurrentPosition(true);
-    if (location) {
-      this.props.updatePosition(location.latitude, location.longitude);
-      this.setState({
-        latitude: location.latitude,
-        longitude: location.longitude,
-        centered: true,
-      });
-    }
-  }
 
   render() {
     const { locations } = this.props;

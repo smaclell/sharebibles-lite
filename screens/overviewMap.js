@@ -7,7 +7,6 @@ import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
-import * as locationActions from '../actions/locations';
 import { Toggle } from '../components/Button';
 import Icon from '../components/Icon';
 import PinCallout from '../components/PinCallout';
@@ -251,7 +250,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
-  ...bindActionCreators(locationActions, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);

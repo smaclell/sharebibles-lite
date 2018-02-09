@@ -9,7 +9,6 @@ import md5 from 'crypto-js/md5';
 import pbkdf2 from 'crypto-js/pbkdf2';
 import Base64 from 'crypto-js/enc-base64';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
-//import I18n from '../assets/i18n/i18n';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -120,9 +119,7 @@ export async function signUp(name, email, password, accessCode) {
 
   const { uid: userKey } = await persist(
     () => firebase.auth().createUserWithEmailAndPassword(email, password)
-      .catch(error => {
-        return Promise.reject(error);
-      }),
+      .catch(error => Promise.reject(error) ),
   );
 
   await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);

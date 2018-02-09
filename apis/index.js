@@ -9,6 +9,7 @@ import md5 from 'crypto-js/md5';
 import pbkdf2 from 'crypto-js/pbkdf2';
 import Base64 from 'crypto-js/enc-base64';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
+//import I18n from '../assets/i18n/i18n';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -92,7 +93,7 @@ export function signIn(email, password) {
 
 // Standardizes the results from crypto into something safe to send
 function normalize(wordArray) {
-// From uuid-safe
+  // From uuid-safe
   const EQUAL_END_REGEXP = /=+$/;
   const PLUS_GLOBAL_REGEXP = /\+/g;
   const SLASH_GLOBAL_REGEXP = /\//g;
@@ -118,7 +119,10 @@ export async function signUp(name, email, password, accessCode) {
   const hashCode = hashAccessCode(accessCode);
 
   const { uid: userKey } = await persist(
-    () => firebase.auth().createUserWithEmailAndPassword(email, password),
+    () => firebase.auth().createUserWithEmailAndPassword(email, password)
+      .catch(error => {
+        return Promise.reject(error);
+      }),
   );
 
   await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);

@@ -5,6 +5,10 @@ import 'moment/locale/en-ie';
 import 'moment/locale/en-nz';
 
 export default {
+  'auth/weak-password': 'Password does not meet security requirements, please use a stronger password (at least 6 characters)',
+  'auth/email-already-in-use': 'Entered email address is already in use, please use another email address',
+  'auth/invalid-email': 'The entered email is not valid (Could be caused by unnacepted symbols)',
+  'auth/operation-not-allowed': 'Email/password accounts disabled. Please contact sharebibles@faithtech.com',
   'button/add': 'ADD',
   'button/cancel': 'CANCEL',
   'button/create_account': 'Create Account',

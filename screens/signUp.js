@@ -58,6 +58,18 @@ class SignUp extends Component {
     return I18n.t('button/create_account');
   }
 
+  // displayAuthenticationError(error) {
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  
+  //   Alert.alert(
+  //     I18n.t('sign_up/failed_sign_up_title'),
+  //     I18n.t(errorCode),
+  //     [{ text: I18n.t('button/ok'), onPress() { } }],
+  //     { cancelable: false },
+  //   );
+  // }
+
   createAccount() {
     if (!this.state.accepted) {
       return Alert.alert(
@@ -83,16 +95,19 @@ class SignUp extends Component {
 
     return signUp(this.state.name, this.state.email, this.state.password, this.state.accessCode)
       .then(() => navigate('Home'))
-      .catch((e) => {
+      .catch((error) => {
+        console.log(error);
         Sentry.captureException(e, { extra: { email: this.state.email } });
         if (__DEV__) {
           console.error(e); // eslint-disable-line no-console
         }
 
+        const errorMessage = error.code || 'sign_up/failed_sign_up_message';
+
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
-          I18n.t('sign_up/failed_sign_up_message'),
-          [{ text: I18n.t('button/ok'), onPress() {} }],
+          I18n.t(errorMessage),
+          [{ text: I18n.t('button/ok'), onPress() { } }],
           { cancelable: false },
         );
 

@@ -40,10 +40,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 100,
     right: 10,
-    paddingTop: 3,
-    paddingBottom: 3,
-    paddingRight: 6,
-    paddingLeft: 6,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
     borderRadius: 100,
     borderWidth: 1,
     borderColor: 'rgba(3, 3, 3, 0.4)',
@@ -140,6 +138,8 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { locations } = this.props;
+    const iconColour = this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)';
+    const backgroundColor = 'rgba(0,0,0,0)';
 
     return (
       <View style={styles.container}>
@@ -183,8 +183,8 @@ class OverviewMap extends PureComponent {
             name="crosshairs"
             family="font-awesome"
             size="large"
-            colour={this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)'}
-            styles={{ backgroundColor: 'rgba(0,0,0,0)' }}
+            colour={iconColour}
+            styles={{ backgroundColor }}
           />
         </TouchableOpacity>
       </View>

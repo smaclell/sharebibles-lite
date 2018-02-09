@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ViewPropTypes } from 'react-native'
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const families = {
@@ -26,7 +27,7 @@ Icon.propTypes = {
   family: PropTypes.oneOf(Object.keys(families)),
   name: PropTypes.string.isRequired,
   size: PropTypes.oneOf(Object.keys(sizes)).isRequired,
-  styles: PropTypes.object,
+  styles: ViewPropTypes.style,
 };
 
 Icon.defaultProps = {

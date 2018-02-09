@@ -119,7 +119,7 @@ export async function signUp(name, email, password, accessCode) {
 
   const { uid: userKey } = await persist(
     () => firebase.auth().createUserWithEmailAndPassword(email, password)
-      .catch(error => Promise.reject(error) ),
+      .catch(error => Promise.reject(error)),
   );
 
   await firebase.database().ref(`accessCodes/${hashCode}/userKey`).set(userKey);

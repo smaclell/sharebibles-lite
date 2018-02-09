@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ViewPropTypes } from 'react-native'
+import { ViewPropTypes } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const families = {

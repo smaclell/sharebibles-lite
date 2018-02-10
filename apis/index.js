@@ -92,7 +92,7 @@ export function signIn(email, password) {
 
 // Standardizes the results from crypto into something safe to send
 function normalize(wordArray) {
-// From uuid-safe
+  // From uuid-safe
   const EQUAL_END_REGEXP = /=+$/;
   const PLUS_GLOBAL_REGEXP = /\+/g;
   const SLASH_GLOBAL_REGEXP = /\//g;

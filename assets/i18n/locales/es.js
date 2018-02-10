@@ -3,6 +3,10 @@ import 'moment/locale/es-do';
 import 'moment/locale/es-us';
 
 export default {
+  'auth/weak-password': 'La contraseña no cumple con los requisitos de seguridad, use una contraseña más segura (al menos 6 caracteres)',
+  'auth/email-already-in-use': 'La dirección de correo electrónico ingresada ya está en uso, por favor use otra dirección de correo electrónico',
+  'auth/invalid-email': 'El correo electrónico ingresado no es válido (podría ser causado por símbolos no aceptados)',
+  'auth/operation-not-allowed': 'Cuentas de correo electrónico / contraseña desactivadas. Por favor, póngase en contacto con sharebibles@faithtech.com',
   'button/add': 'AÑADIR',
   'button/cancel': 'CANCELAR',
   'button/create_account': 'Crear Cuenta',

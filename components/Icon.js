@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ViewPropTypes } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const families = {
@@ -10,13 +11,14 @@ const families = {
 const sizes = {
   small: 10,
   medium: 24,
+  large: 34,
 };
 
 
-const Icon = ({ size, name, family, colour }) => {
+const Icon = ({ size, name, family, colour, styles = null }) => {
   const Actual = families[family];
   return (
-    <Actual size={sizes[size]} name={name} color={colour} />
+    <Actual size={sizes[size]} name={name} color={colour} style={styles} />
   );
 };
 
@@ -25,11 +27,13 @@ Icon.propTypes = {
   family: PropTypes.oneOf(Object.keys(families)),
   name: PropTypes.string.isRequired,
   size: PropTypes.oneOf(Object.keys(sizes)).isRequired,
+  styles: ViewPropTypes.style,
 };
 
 Icon.defaultProps = {
   family: 'font-awesome',
   colour: 'white',
+  styles: {},
 };
 
 export default Icon;

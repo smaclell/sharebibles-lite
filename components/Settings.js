@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
+import { Alert, Image, Picker, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 import User from '../components/User';
 
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignSelf: 'flex-start',
     paddingVertical: 10,
-    paddingHorizontal:  20,
+    paddingHorizontal: 20,
     width: '100%',
   },
   version_container: {
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   changeLanguagePicker: {
     flex: 1,
     margin: 0,
-    margin: 0,
   },
   pickerText: {
     fontSize: fonts.extraSmall,
@@ -95,11 +94,12 @@ const Settings = (props) => {
 
   const sendFeedback = () => {
     Linking.canOpenURL(`mailto:${emails.feedback}`)
-      .then( supported => {
-        if(supported) {
+      .then((supported) => {
+        if (supported) {
           const subject = I18n.t('feedback/feedback_subject');
           return Linking.openURL(`mailto:${emails.feedback}?subject=${subject}`);
         }
+        return null;
       })
       .catch(err => {
         return Alert.alert(
@@ -116,7 +116,7 @@ const Settings = (props) => {
       <View style={styles.user_container}>
         <User {...user} />
         <Text style={styles.teamName}>{team.name}</Text>
-        <View style={styles.divider}></View>
+        <View style={styles.divider}/>
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
@@ -127,7 +127,7 @@ const Settings = (props) => {
             onValueChange={updateLocale}
             style={styles.changeLanguagePicker}
             itemStyle={SettingsItem.styles.text}
-            mode='dropdown'
+            mode="dropdown"
             enabled
           >
             {Object.entries(list).map(([key, value]) => (

@@ -1,5 +1,5 @@
-import emails from '../../constants/emails';
 import 'moment/locale/th';
+import emails from '../../constants/emails';
 
 export default {
   'auth/weak-password': 'รหัสผ่านไม่ตรงกับข้อกำหนดด้านความปลอดภัยโปรดใช้รหัสผ่านที่ดีกว่า (อย่างน้อย 6 ตัวอักษร)',

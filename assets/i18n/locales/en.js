@@ -1,9 +1,9 @@
-import emails from '../../constants/emails';
 import 'moment/locale/en-au';
 import 'moment/locale/en-ca';
 import 'moment/locale/en-gb';
 import 'moment/locale/en-ie';
 import 'moment/locale/en-nz';
+import emails from '../../constants/emails';
 
 export default {
   'auth/weak-password': 'Password does not meet security requirements, please use a stronger password (at least 6 characters)',

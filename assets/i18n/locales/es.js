@@ -1,7 +1,7 @@
-import emails from '../../constants/emails';
 import 'moment/locale/es';
 import 'moment/locale/es-do';
 import 'moment/locale/es-us';
+import emails from '../../constants/emails';
 
 export default {
   'auth/weak-password': 'La contraseña no cumple con los requisitos de seguridad, use una contraseña más segura (al menos 6 caracteres)',

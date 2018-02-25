@@ -1,5 +1,5 @@
-import emails from '../../constants/emails';
 import 'moment/locale/fr';
+import emails from '../../constants/emails';
 
 export default {
   'button/add': 'Français',

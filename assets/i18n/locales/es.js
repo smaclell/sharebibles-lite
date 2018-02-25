@@ -1,3 +1,4 @@
+import emails from '../../constants/emails';
 import 'moment/locale/es';
 import 'moment/locale/es-do';
 import 'moment/locale/es-us';
@@ -27,13 +28,17 @@ export default {
   'components/update_users': 'Actualizar',
   'components/visits': '{{num_visits}} Visita(s)',
   'conversations/no_visits': 'Todavía no visitado!',
+  'feedback/feedback_error': `No se pudo iniciar la aplicación de correo. Enviar comentarios manualmente a ${emails.feedback}`,
+  'feedback/feedback_subject': 'Comparta las Biblias Feedback',
+  'feedback/feedback_title': 'Enviar Comentarios',
   'initial/first_visit': 'Primera Visita',
   'initial/or': 'O',
   'resource/generic_bible': '# de biblias distribuidas',
   'resource/english_bible_esv': '# de biblias distribuidas',
-  'settings/change_language': 'cambiar idioma',
+  'settings/change_language': 'Idioma:',
   'settings/invite': 'Comparte Invitación',
   'settings/logout': 'Cerrar Sesión',
+  'settings/send_feedback': 'Enviar Comentarios',
   'settings/not_implemented': 'Lo siento, esta característica no está disponible',
   'settings/shareInvite': 'Comparte un código de acceso de Share Bibles',
   'sign_in/check_email_password': 'Por favor revise su correo electronico',
@@ -54,7 +59,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Contraseñas no son iguales',
   'sign_up/failed_confirmation_message': 'Su contraseña y confirmación no coinciden, intente de nuevo',
   'sign_up/failed_sign_up_title': 'No se pudo registrar',
-  'sign_up/failed_sign_up_message': 'Se produjo un error durante el registro. Por favor, póngase en contacto con sharebibles@faithtech.com',
+  'sign_up/failed_sign_up_message': `Se produjo un error durante el registro. Por favor, póngase en contacto con ${emails.sharebibles}`,
   'sign_up/instructions': 'Necesitará un código de acceso para que su equipo continúe.',
   'sign_up/your_access_code': 'Código de acceso',
   'status/accepted': 'Aceptada',

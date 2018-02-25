@@ -1,3 +1,4 @@
+import emails from '../../constants/emails';
 import 'moment/locale/fr';
 
 export default {
@@ -21,12 +22,17 @@ export default {
   'components/update_users': 'Français',
   'components/visits': '{{num_visits}} Français',
   'conversations/no_visits': 'Français',
+  'feedback/feedback_error': `Français ${emails.feedback}`,
+  'feedback/feedback_subject': 'แบ่งปันข้อคิดเห็นเกี่ยวกับพระคัมภีร์',
+  'feedback/feedback_title': 'Français',
   'initial/first_visit': 'Français',
   'initial/or': 'Français',
   'resource/generic_bible': 'Français',
   'resource/english_bible_esv': 'Français',
+  'settings/change_language': 'Français',
   'settings/invite': 'Français',
   'settings/logout': 'Français',
+  'settings/send_feedback': 'Français',
   'settings/not_implemented': 'Français',
   'settings/shareInvite': 'Français',
   'sign_in/check_email_password': 'Français',

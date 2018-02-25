@@ -1,3 +1,4 @@
+import emails from '../../constants/emails';
 import 'moment/locale/en-au';
 import 'moment/locale/en-ca';
 import 'moment/locale/en-gb';
@@ -29,13 +30,17 @@ export default {
   'components/update_users': 'Update',
   'components/visits': '{{num_visits}} Visit(s)',
   'conversations/no_visits': 'No visits yet!',
+  'feedback/feedback_error': `Unable to launch mail app. Send feedback manually to ${emails.feedback}`,
+  'feedback/feedback_subject': 'Share Bibles Feedback',
+  'feedback/feedback_title': 'Send Feedback',
   'initial/first_visit': 'First Visit',
   'initial/or': 'OR',
   'resource/generic_bible': '# of Bibles Distributed',
   'resource/english_bible_esv': '# of Bibles Distributed',
-  'settings/change_language': 'Change Language',
+  'settings/change_language': 'Language:',
   'settings/invite': 'Share Invite',
-  'settings/logout': 'logout',
+  'settings/logout': 'Logout',
+  'settings/send_feedback': 'Send Feedback',
   'settings/not_implemented': "Sorry this feature isn't available yet.",
   'settings/shareInvite': 'Share a Share Bibles Access Code',
   'sign_in/check_email_password': 'Please check your email and password',
@@ -56,7 +61,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Passwords did not match',
   'sign_up/failed_confirmation_message': 'Your password and confirmation did not match, please try again',
   'sign_up/failed_sign_up_title': 'Could not sign up',
-  'sign_up/failed_sign_up_message': 'An error occurred during sign up. Please contact sharebibles@faithtech.com',
+  'sign_up/failed_sign_up_message': `An error occurred during sign up. Please contact ${emails.sharebibles}`,
   'sign_up/instructions': 'You will need an access code for your team to continue.',
   'sign_up/your_access_code': 'Access Code',
   'status/accepted': 'Accepted',

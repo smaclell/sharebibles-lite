@@ -62,6 +62,10 @@ const initialLongitudeDelta = 0.0006;
 const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
 
+const black = 'rgb(0,0,0)';
+const blue = 'rgb(12, 128, 252)';
+const backgroundColor = 'rgba(0,0,0,0)';
+
 class OverviewMap extends PureComponent {
   constructor(props) {
     super(props);
@@ -138,9 +142,7 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { locations } = this.props;
-    const iconColour = this.state.centered ? 'rgb(12, 128, 252)' : 'rgb(0,0,0)';
-    const backgroundColor = 'rgba(0,0,0,0)';
-
+    const iconColour = this.state.centered ? blue : black;
     return (
       <View style={styles.container}>
         <MapView

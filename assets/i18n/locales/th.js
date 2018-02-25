@@ -1,3 +1,4 @@
+import emails from '../../constants/emails';
 import 'moment/locale/th';
 
 export default {
@@ -25,13 +26,17 @@ export default {
   'components/update_users': 'อัพเดต',
   'components/visits': '{{num_visits}} ครั้งที่เยี่ยมเยียน',
   'conversations/no_visits': 'ยังไม่ได้เยี่ยมเยียน',
+  'feedback/feedback_error': `โปรแกรมจดหมายไม่สามารถเริ่มต้นได้ ส่งความคิดเห็นด้วยตนเองไปที่ ${emails.feedback}`,
+  'feedback/feedback_subject': 'แบ่งปันข้อคิดเห็นเกี่ยวกับพระคัมภีร์',
+  'feedback/feedback_title': 'ส่งความคิดเห็น',
   'initial/first_visit': 'เยี่ยมครั้งแรก',
   'initial/or': 'หรือ',
   'resource/generic_bible': 'จำนวนพระคัมภีร์ที่แจก',
   'resource/english_bible_esv': 'จำนวนพระคัมภีร์ที่แจก',
-  'settings/change_language': 'เปลี่ยนภาษา',
+  'settings/change_language': 'ภาษา',
   'settings/invite': 'แชร์คำเชิญ',
   'settings/logout': 'ออกจากระบบ',
+  'settings/send_feedback': 'ส่งความคิดเห็น',
   'settings/not_implemented': 'ขออภัย ตัวเลือกนี้ยังไม่รองรับ',
   'settings/shareInvite': 'แชร์โค้ดแจกพระคัมภีร์',
   'sign_in/check_email_password': 'กรุณาตรวจสอบอีเมลและรหัสผ่าน',
@@ -52,7 +57,7 @@ export default {
   'sign_up/failed_confirmation_title': 'รหัสผ่านไม่ถูกต้อง',
   'sign_up/failed_confirmation_message': 'รหัสผ่านทั้งสองช่องไม่ตรงกัน',
   'sign_up/failed_sign_up_title': 'ไม่สามารถสร้างบัญชี',
-  'sign_up/failed_sign_up_message': 'เกิดข้อผิดพลาดระหว่างสร้างบัญชี โปรดติดต่อ sharebibles@faithtech.com',
+  'sign_up/failed_sign_up_message': `เกิดข้อผิดพลาดระหว่างสร้างบัญชี โปรดติดต่อ ${emails.sharebibles}`,
   'sign_up/instructions': 'คุณต้องใช้โค้ดกลุ่มเพื่อดำเนินการต่อ',
   'sign_up/your_access_code': 'โค้ด',
   'status/accepted': 'ได้รับ',

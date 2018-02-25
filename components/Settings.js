@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 import User from '../components/User';
 
@@ -8,6 +8,7 @@ import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 import list from '../assets/i18n/locales/list';
+import emails from '../assets/constants/emails';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,22 +20,35 @@ const styles = StyleSheet.create({
   },
   user_container: {
     flex: 0,
-    padding: 18,
+    width: '100%',
+    paddingHorizontal: 18,
+    paddingVertical: 5,
+    alignItems: 'center',
+  },
+  divider: {
+    marginTop: 5,
+    borderBottomColor: colours.greys.base,
+    borderBottomWidth: 1,
+    width: '60%',
   },
   options_container: {
     flex: 5,
     flexShrink: 0,
-    padding: 10,
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    alignSelf: 'flex-start',
+    paddingVertical: 10,
+    paddingHorizontal:  20,
+    width: '100%',
   },
   version_container: {
     flex: 0,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 18,
+    paddingHorizontal: 18,
+    paddingVertical: 5,
   },
   teamName: {
     color: colours.text,
@@ -48,41 +62,72 @@ const styles = StyleSheet.create({
   logo_container: {
   },
   logo: {
-    height: 60,
-    width: 60,
+    height: 40,
+    width: 40,
   },
   version: {
     color: colours.text,
-    fontSize: fonts.normal,
+    fontSize: fonts.small,
+  },
+  language_container: {
+    margin: 5,
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    alignContent: 'flex-start',
+    alignItems: 'center',
   },
   changeLanguageTitle: {
-    flex: 2,
+    flex: 1,
   },
   changeLanguagePicker: {
+    flex: 1,
     margin: 0,
-    marginVertical: 0,
-    marginHorizontal: 10,
+    margin: 0,
+  },
+  pickerText: {
+    fontSize: fonts.extraSmall,
   },
 });
 
 const Settings = (props) => {
   const { logout, shareInvite, team, updateLocale, user, version } = props;
 
+  const sendFeedback = () => {
+    Linking.canOpenURL(`mailto:${emails.feedback}`)
+      .then( supported => {
+        if(supported) {
+          const subject = I18n.t('feedback/feedback_subject');
+          return Linking.openURL(`mailto:${emails.feedback}?subject=${subject}`);
+        }
+      })
+      .catch(err => {
+        return Alert.alert(
+          I18n.t('feedback/feedback_title'),
+          I18n.t('feedback/feedback_error'),
+          [{ text: I18n.t('button/ok'), onPress() {} }],
+          { cancelable: false },
+        );
+      });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.user_container}>
         <User {...user} />
         <Text style={styles.teamName}>{team.name}</Text>
+        <View style={styles.divider}></View>
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
-        <View style={[SettingsItem.styles.container, styles.changeLanguageTitle]}>
-          <Text style={SettingsItem.styles.text}>{I18n.t('settings/change_language').toUpperCase()}</Text>
+        <View style={[styles.language_container, styles.changeLanguageTitle]}>
+          <Text style={SettingsItem.styles.text}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={I18n.locale.substring(0, 2)}
             onValueChange={updateLocale}
-            style={[SettingsItem.styles.container, styles.changeLanguagePicker]}
+            style={styles.changeLanguagePicker}
             itemStyle={SettingsItem.styles.text}
+            mode='dropdown'
             enabled
           >
             {Object.entries(list).map(([key, value]) => (
@@ -90,6 +135,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
+        <SettingsItem term="settings/send_feedback" onPress={() => sendFeedback()} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>

@@ -101,7 +101,7 @@ const Settings = (props) => {
         }
         return null;
       })
-      .catch(err => {
+      .catch(() => {
         return Alert.alert(
           I18n.t('feedback/feedback_title'),
           I18n.t('feedback/feedback_error'),
@@ -116,7 +116,7 @@ const Settings = (props) => {
       <View style={styles.user_container}>
         <User {...user} />
         <Text style={styles.teamName}>{team.name}</Text>
-        <View style={styles.divider}/>
+        <View style={styles.divider} />
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }

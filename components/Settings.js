@@ -101,14 +101,14 @@ const Settings = (props) => {
         }
         return null;
       })
-      .catch(() => {
-        return Alert.alert(
+      .catch(() => (
+        Alert.alert(
           I18n.t('feedback/feedback_title'),
           I18n.t('feedback/feedback_error'),
           [{ text: I18n.t('button/ok'), onPress() {} }],
           { cancelable: false },
-        );
-      });
+        )
+      ));
   };
 
   return (

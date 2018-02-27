@@ -69,14 +69,6 @@ const styles = StyleSheet.create({
     color: colours.text,
     fontSize: fonts.small,
   },
-  language_container: {
-    margin: 5,
-    flex: 1,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    alignContent: 'flex-start',
-    alignItems: 'center',
-  },
   changeLanguageTitle: {
     flex: 1,
   },
@@ -104,11 +96,18 @@ const Settings = (props) => {
       .catch(() => (
         Alert.alert(
           I18n.t('feedback/feedback_title'),
-          I18n.t('feedback/feedback_error'),
+          I18n.t('feedback/feedback_error').replace('EMAIL', email.feedback),
           [{ text: I18n.t('button/ok'), onPress() {} }],
           { cancelable: false },
         )
       ));
+
+      Alert.alert(
+        I18n.t('feedback/feedback_title'),
+        I18n.t('feedback/feedback_error').replace('EMAIL', emails.feedback),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
   };
 
   return (
@@ -120,8 +119,8 @@ const Settings = (props) => {
       </View>
       <View style={styles.options_container}>
         { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
-        <View style={[styles.language_container, styles.changeLanguageTitle]}>
-          <Text style={SettingsItem.styles.text}>{I18n.t('settings/change_language')}</Text>
+        <View style={SettingsItem.styles.container}>
+          <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={I18n.locale.substring(0, 2)}
             onValueChange={updateLocale}
@@ -135,7 +134,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
-        <SettingsItem term="settings/send_feedback" onPress={() => sendFeedback()} />
+        <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
       <View style={styles.version_container}>

@@ -1,13 +1,12 @@
 import 'moment/locale/es';
 import 'moment/locale/es-do';
 import 'moment/locale/es-us';
-import emails from '../../constants/emails';
 
 export default {
   'auth/weak-password': 'La contraseña no cumple con los requisitos de seguridad, use una contraseña más segura (al menos 6 caracteres)',
   'auth/email-already-in-use': 'La dirección de correo electrónico ingresada ya está en uso, por favor use otra dirección de correo electrónico',
   'auth/invalid-email': 'El correo electrónico ingresado no es válido (podría ser causado por símbolos no aceptados)',
-  'auth/operation-not-allowed': 'Cuentas de correo electrónico / contraseña desactivadas. Por favor, póngase en contacto con sharebibles@faithtech.com',
+  'auth/operation-not-allowed': 'Cuentas de correo electrónico / contraseña desactivadas. Por favor, póngase en contacto con EMAIL',
   'button/add': 'AÑADIR',
   'button/cancel': 'CANCELAR',
   'button/create_account': 'Crear Cuenta',
@@ -28,8 +27,8 @@ export default {
   'components/update_users': 'Actualizar',
   'components/visits': '{{num_visits}} Visita(s)',
   'conversations/no_visits': 'Todavía no visitado!',
-  'feedback/feedback_error': `No se pudo iniciar la aplicación de correo. Enviar comentarios manualmente a ${emails.feedback}`,
-  'feedback/feedback_subject': 'Comparta las Biblias Feedback',
+  'feedback/feedback_error': 'No se pudo iniciar la aplicación de correo. Enviar comentarios manualmente a EMAIL',
+  'feedback/feedback_subject': 'Share Bibles Feedback',
   'feedback/feedback_title': 'Enviar Comentarios',
   'initial/first_visit': 'Primera Visita',
   'initial/or': 'O',
@@ -59,7 +58,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Contraseñas no son iguales',
   'sign_up/failed_confirmation_message': 'Su contraseña y confirmación no coinciden, intente de nuevo',
   'sign_up/failed_sign_up_title': 'No se pudo registrar',
-  'sign_up/failed_sign_up_message': `Se produjo un error durante el registro. Por favor, póngase en contacto con ${emails.sharebibles}`,
+  'sign_up/failed_sign_up_message': `Se produjo un error durante el registro. Por favor, póngase en contacto con EMAIL`,
   'sign_up/instructions': 'Necesitará un código de acceso para que su equipo continúe.',
   'sign_up/your_access_code': 'Código de acceso',
   'status/accepted': 'Aceptada',

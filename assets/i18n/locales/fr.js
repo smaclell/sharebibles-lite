@@ -1,5 +1,4 @@
 import 'moment/locale/fr';
-import emails from '../../constants/emails';
 
 export default {
   'button/add': 'Français',
@@ -22,8 +21,8 @@ export default {
   'components/update_users': 'Français',
   'components/visits': '{{num_visits}} Français',
   'conversations/no_visits': 'Français',
-  'feedback/feedback_error': `Français ${emails.feedback}`,
-  'feedback/feedback_subject': 'แบ่งปันข้อคิดเห็นเกี่ยวกับพระคัมภีร์',
+  'feedback/feedback_error': 'Français EMAIL',
+  'feedback/feedback_subject': 'Français',
   'feedback/feedback_title': 'Français',
   'initial/first_visit': 'Français',
   'initial/or': 'Français',

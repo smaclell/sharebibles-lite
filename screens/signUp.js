@@ -22,6 +22,7 @@ import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
+import emails from '../assets/constants/emails';
 
 class SignUp extends Component {
   static propTypes = {
@@ -89,10 +90,15 @@ class SignUp extends Component {
           console.error(error); // eslint-disable-line no-console
         }
 
-        const errorMessage = error.code || 'sign_up/failed_sign_up_message';
+        let errorMessage = error.code || 'sign_up/failed_sign_up_message';
+        if(errorMessage === 'auth/operation-not-allowed') {
+          errorMessage = I18n.t(errorMessage).replace('EMAIL', emails.sharebibles);
+        } else {
+          errorMessage = I18n.t(errorMessage);
+        }
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
-          I18n.t(errorMessage),
+          errorMessage,
           [{ text: I18n.t('button/ok'), onPress() { } }],
           { cancelable: false },
         );

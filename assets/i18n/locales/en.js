@@ -3,13 +3,12 @@ import 'moment/locale/en-ca';
 import 'moment/locale/en-gb';
 import 'moment/locale/en-ie';
 import 'moment/locale/en-nz';
-import emails from '../../constants/emails';
 
 export default {
   'auth/weak-password': 'Password does not meet security requirements, please use a stronger password (at least 6 characters)',
   'auth/email-already-in-use': 'Entered email address is already in use, please use another email address',
   'auth/invalid-email': 'The entered email is not valid (Could be caused by unaccepted symbols)',
-  'auth/operation-not-allowed': 'Email/password accounts disabled. Please contact sharebibles@faithtech.com',
+  'auth/operation-not-allowed': 'Email/password accounts disabled. Please contact EMAIL',
   'button/add': 'ADD',
   'button/cancel': 'CANCEL',
   'button/create_account': 'Create Account',
@@ -30,7 +29,7 @@ export default {
   'components/update_users': 'Update',
   'components/visits': '{{num_visits}} Visit(s)',
   'conversations/no_visits': 'No visits yet!',
-  'feedback/feedback_error': `Unable to launch mail app. Send feedback manually to ${emails.feedback}`,
+  'feedback/feedback_error': 'Unable to launch mail app. Send feedback manually to EMAIL',
   'feedback/feedback_subject': 'Share Bibles Feedback',
   'feedback/feedback_title': 'Send Feedback',
   'initial/first_visit': 'First Visit',
@@ -61,7 +60,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Passwords did not match',
   'sign_up/failed_confirmation_message': 'Your password and confirmation did not match, please try again',
   'sign_up/failed_sign_up_title': 'Could not sign up',
-  'sign_up/failed_sign_up_message': `An error occurred during sign up. Please contact ${emails.sharebibles}`,
+  'sign_up/failed_sign_up_message': `An error occurred during sign up. Please contact EMAIL`,
   'sign_up/instructions': 'You will need an access code for your team to continue.',
   'sign_up/your_access_code': 'Access Code',
   'status/accepted': 'Accepted',

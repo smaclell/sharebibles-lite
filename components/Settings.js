@@ -96,18 +96,11 @@ const Settings = (props) => {
       .catch(() => (
         Alert.alert(
           I18n.t('feedback/feedback_title'),
-          I18n.t('feedback/feedback_error').replace('EMAIL', email.feedback),
+          I18n.t('feedback/feedback_error').replace('EMAIL', emails.feedback),
           [{ text: I18n.t('button/ok'), onPress() {} }],
           { cancelable: false },
         )
       ));
-
-      Alert.alert(
-        I18n.t('feedback/feedback_title'),
-        I18n.t('feedback/feedback_error').replace('EMAIL', emails.feedback),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
   };
 
   return (

@@ -60,7 +60,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Passwords did not match',
   'sign_up/failed_confirmation_message': 'Your password and confirmation did not match, please try again',
   'sign_up/failed_sign_up_title': 'Could not sign up',
-  'sign_up/failed_sign_up_message': `An error occurred during sign up. Please contact EMAIL`,
+  'sign_up/failed_sign_up_message': 'An error occurred during sign up. Please contact EMAIL',
   'sign_up/instructions': 'You will need an access code for your team to continue.',
   'sign_up/your_access_code': 'Access Code',
   'status/accepted': 'Accepted',

@@ -56,7 +56,7 @@ export default {
   'sign_up/failed_confirmation_title': 'รหัสผ่านไม่ถูกต้อง',
   'sign_up/failed_confirmation_message': 'รหัสผ่านทั้งสองช่องไม่ตรงกัน',
   'sign_up/failed_sign_up_title': 'ไม่สามารถสร้างบัญชี',
-  'sign_up/failed_sign_up_message': `เกิดข้อผิดพลาดระหว่างสร้างบัญชี โปรดติดต่อ EMAIL`,
+  'sign_up/failed_sign_up_message': 'เกิดข้อผิดพลาดระหว่างสร้างบัญชี โปรดติดต่อ EMAIL',
   'sign_up/instructions': 'คุณต้องใช้โค้ดกลุ่มเพื่อดำเนินการต่อ',
   'sign_up/your_access_code': 'โค้ด',
   'status/accepted': 'ได้รับ',

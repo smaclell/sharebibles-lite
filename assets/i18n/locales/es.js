@@ -58,7 +58,7 @@ export default {
   'sign_up/failed_confirmation_title': 'Contraseñas no son iguales',
   'sign_up/failed_confirmation_message': 'Su contraseña y confirmación no coinciden, intente de nuevo',
   'sign_up/failed_sign_up_title': 'No se pudo registrar',
-  'sign_up/failed_sign_up_message': `Se produjo un error durante el registro. Por favor, póngase en contacto con EMAIL`,
+  'sign_up/failed_sign_up_message': 'Se produjo un error durante el registro. Por favor, póngase en contacto con EMAIL',
   'sign_up/instructions': 'Necesitará un código de acceso para que su equipo continúe.',
   'sign_up/your_access_code': 'Código de acceso',
   'status/accepted': 'Aceptada',

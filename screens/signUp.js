@@ -91,7 +91,7 @@ class SignUp extends Component {
         }
 
         let errorMessage = error.code || 'sign_up/failed_sign_up_message';
-        if(errorMessage === 'auth/operation-not-allowed') {
+        if (errorMessage === 'auth/operation-not-allowed') {
           errorMessage = I18n.t(errorMessage).replace('EMAIL', emails.sharebibles);
         } else {
           errorMessage = I18n.t(errorMessage);

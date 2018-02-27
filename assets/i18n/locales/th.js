@@ -2,9 +2,9 @@ import 'moment/locale/th';
 
 export default {
   'auth/weak-password': 'รหัสผ่านไม่ตรงกับข้อกำหนดด้านความปลอดภัยโปรดใช้รหัสผ่านที่ดีกว่า (อย่างน้อย 6 ตัวอักษร)',
-  'auth/email-already-in-use': 'ป้อนที่อยู่อีเมลแล้วใช้ที่อยู่อีเมลอื่น',
-  'auth/invalid-email': 'อีเมลที่ป้อนไม่ถูกต้อง (อาจเกิดจากสัญลักษณ์ที่ไม่ได้ยอมรับ)',
-  'auth/operation-not-allowed': 'บัญชีอีเมล / รหัสผ่านถูกปิดใช้งาน กรุณาติดต่อ {{email}}',
+  'auth/email-already-in-use': 'กำลังใช้อีเมลนี้อยู่แล้ว โปรดใช้อีเมลอื่น',
+  'auth/invalid-email': 'อีเมลที่ใช้ไม่ถูกต้อง (อาจเกิดจากสัญลักษณ์ที่ไม่ได้ยอมรับ)',
+  'auth/operation-not-allowed': 'ปิดใช้งานบัญชีอีเมล / รหัสผ่านแล้ว กรุณาติดต่อ {{email}}',
   'button/add': 'เพิ่ม',
   'button/cancel': 'ยกเลิก',
   'button/create_account': 'สร้างบัญชี',

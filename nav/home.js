@@ -3,7 +3,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { FontAwesome } from '@expo/vector-icons';
 
 import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
@@ -14,10 +13,11 @@ import Dev from '../screens/dev';
 import FollowUp from '../screens/followUp';
 import ChooseUsers from '../screens/chooseUsers';
 import Tabs from './tabs';
+import DrawerButton from '../components/DrawerButton';
 
 const createGear = navigation => (
   <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={() => navigation.navigate('DrawerOpen')}>
-    <FontAwesome size={24} name="gear" color={colours.text} />
+    <DrawerButton />
   </TouchableOpacity>
 );
 

@@ -22,6 +22,7 @@ import styles from '../styles/main';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
+import emails from '../assets/constants/emails';
 
 class SignUp extends Component {
   static propTypes = {
@@ -92,7 +93,7 @@ class SignUp extends Component {
         const errorMessage = error.code || 'sign_up/failed_sign_up_message';
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
-          I18n.t(errorMessage),
+          I18n.t(errorMessage, { email: emails.sharebibles }),
           [{ text: I18n.t('button/ok'), onPress() { } }],
           { cancelable: false },
         );

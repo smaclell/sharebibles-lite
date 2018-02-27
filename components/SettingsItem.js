@@ -9,20 +9,23 @@ import I18n from '../assets/i18n/i18n';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     alignSelf: 'stretch',
     alignContent: 'flex-start',
+    alignItems: 'center',
     margin: 5,
   },
   text: {
     flex: 1,
     color: colours.greys.darkest,
     fontSize: fonts.large,
+    flexDirection: 'column',
   },
 });
 
 const SettingsItem = ({ term, onPress }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
-    <Text style={styles.text}>{I18n.t(term).toUpperCase()}</Text>
+    <Text style={styles.text}>{I18n.t(term)}</Text>
   </TouchableOpacity>
 );
 

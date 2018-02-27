@@ -93,7 +93,7 @@ class SignUp extends Component {
         const errorMessage = error.code || 'sign_up/failed_sign_up_message';
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
-          I18n.t(errorMessage, {email: emails.sharebibles}),
+          I18n.t(errorMessage, { email: emails.sharebibles }),
           [{ text: I18n.t('button/ok'), onPress() { } }],
           { cancelable: false },
         );

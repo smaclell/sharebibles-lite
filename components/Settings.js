@@ -96,7 +96,7 @@ const Settings = (props) => {
       .catch(() => (
         Alert.alert(
           I18n.t('feedback/feedback_title'),
-          I18n.t('feedback/feedback_error', {email: emails.feedback}),
+          I18n.t('feedback/feedback_error', { email: emails.feedback }),
           [{ text: I18n.t('button/ok'), onPress() {} }],
           { cancelable: false },
         )

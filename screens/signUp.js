@@ -90,15 +90,10 @@ class SignUp extends Component {
           console.error(error); // eslint-disable-line no-console
         }
 
-        let errorMessage = error.code || 'sign_up/failed_sign_up_message';
-        if (errorMessage === 'auth/operation-not-allowed') {
-          errorMessage = I18n.t(errorMessage).replace('EMAIL', emails.sharebibles);
-        } else {
-          errorMessage = I18n.t(errorMessage);
-        }
+        const errorMessage = error.code || 'sign_up/failed_sign_up_message';
         Alert.alert(
           I18n.t('sign_up/failed_sign_up_title'),
-          errorMessage,
+          I18n.t(errorMessage, {email: emails.sharebibles}),
           [{ text: I18n.t('button/ok'), onPress() { } }],
           { cancelable: false },
         );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StatusBar, View } from 'react-native';
+import { AppLoading, Font } from 'expo';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import Sentry from 'sentry-expo';
@@ -34,12 +36,34 @@ const paddingTop = Platform.select({
 });
 
 class App extends Component {
+  state = {
+    isReady: false,
+  };
+  
   componentDidCatch(error, errorInfo) {
     Sentry.captureException(error, { extra: errorInfo });
     throw error;
   }
 
+  async _loadAssetsAsync() {
+    const fonts = [ FontAwesome.font, Entypo.font ];
+
+    const cacheFonts = fonts.map(font => Font.loadAsync(font));
+
+    await Promise.all( ...cacheFonts );
+  }
+
   render() {
+    if(!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._loadAssetsAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+
     return (
       <Provider store={store}>
         <View style={{ flex: 1, paddingTop }}>

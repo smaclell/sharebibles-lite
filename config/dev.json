@@ -9,8 +9,8 @@
     "orientation": "portrait",
     "primaryColor": "#65B7C7",
     "icon": "./assets/icons/app-icon.png",
-    "loading": {
-      "icon": "./assets/icons/loading-icon.png"
+    "splash": {
+      "image": "./assets/icons/splash.png"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]

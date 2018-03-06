@@ -38,19 +38,16 @@ const paddingTop = Platform.select({
 });
 
 class App extends Component {
-  state = {
-    isReady: false,
-  };
-  
   constructor(props) {
     super(props);
-    
+    this.state = {
+      isReady: false,
+    };
     this.updateState = this.updateState.bind(this);
   }
-  
-  async updateState() {
-    console.log('called');
-    this.setState({ isReady: true });
+
+  componentDidMount() {
+    this.loadAssetsAsync();
   }
   
   componentDidCatch(error, errorInfo) {
@@ -58,29 +55,23 @@ class App extends Component {
     throw error;
   }
 
-  componentDidMount() {
-    this.loadAssetsAsync();
+  async updateState() {
+    this.setState({ isReady: true });
   }
 
   async loadAssetsAsync() {
     const fonts = [FontAwesome.font, Entypo.font];
 
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
-    console.log('started');
     await Promise.all([...cacheFonts, I18n.initAsync()]);
-    I18n.setDateLocale();
+    
     await store.dispatch(actions.restoreSignIn(() => this.updateState()));
-    console.log('finished');
+    I18n.setDateLocale();
   }
 
   render() {
     if (!this.state.isReady) {
       return (
-        // <AppLoading
-        //   startAsync={this.loadAssetsAsync}
-        //   onFinish={() => this.setState({ isReady: true })}
-        //   onError={console.warn}
-        // />
         <AppLoading />
       );
     }

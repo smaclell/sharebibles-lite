@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -25,7 +26,11 @@ class SignIn extends React.Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     signIn: PropTypes.func.isRequired,
-  }
+  };
+
+  static defaultProps = {
+    user: null,
+  };
 
   constructor(props) {
     super(props);
@@ -38,17 +43,12 @@ class SignIn extends React.Component {
   }
 
   componentWillMount() {
-
-    //this.props.restoreSignIn(() => this.props.navigation.navigate('Home'));
-
+    // If signin restore worked then skip signin screen
     if (this.props.user) {
       this.props.navigation.navigate('Home');
     }
 
     this.setState({ appIsReady: true });
-
-    // Wait a bit for the restore to finish and the previous promises
-    //setTimeout(() => this.setState({ appIsReady: true }), 1200);
   }
 
   onFocus = event => this.scroll.onFocus(event)
@@ -69,6 +69,7 @@ class SignIn extends React.Component {
     const { navigate } = this.props.navigation;
 
     const signIn = () => {
+      Keyboard.dismiss();
       const destination = 'Home';
       this.setState({ loading: true });
 
@@ -182,7 +183,7 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   connected: PropTypes.bool.isRequired,
-  restoreSignIn: PropTypes.func.isRequired,
+  user: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

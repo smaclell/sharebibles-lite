@@ -82,7 +82,6 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
-    console.log("Mounted");
     setTimeout(this.onMapReady, 250);
   }
 

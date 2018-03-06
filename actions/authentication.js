@@ -24,18 +24,16 @@ function onAuthenticated(user) {
   };
 }
 
-export function restoreSignIn(navigate) {
+export function restoreSignIn(callback) {
   return (dispatch) => {
     apis.restoreSignIn((user) => {
-      if(user){
+      if (user) {
         return Promise.resolve()
-        .then(() => dispatch(onAuthenticated(user)))
-        .then(navigate);
+          .then(() => dispatch(onAuthenticated(user)))
+          .then(callback);
       }
-      navigate();
-      // return dispatch(onAuthenticated(user))
-      //   .then(navigate)
-      //   .catch(navigate);
+      return Promise.resolve()
+        .then(callback);
     });
   };
 }

@@ -37,17 +37,18 @@ class SignIn extends React.Component {
     };
   }
 
-  async componentWillMount() {
-    await Promise.all([
-      I18n.initAsync(),
-    ]);
+  componentWillMount() {
 
-    I18n.setDateLocale();
+    //this.props.restoreSignIn(() => this.props.navigation.navigate('Home'));
 
-    this.props.restoreSignIn(() => this.props.navigation.navigate('Home'));
+    if (this.props.user) {
+      this.props.navigation.navigate('Home');
+    }
+
+    this.setState({ appIsReady: true });
 
     // Wait a bit for the restore to finish and the previous promises
-    setTimeout(() => this.setState({ appIsReady: true }), 1200);
+    //setTimeout(() => this.setState({ appIsReady: true }), 1200);
   }
 
   onFocus = event => this.scroll.onFocus(event)
@@ -97,6 +98,7 @@ class SignIn extends React.Component {
             /*
               LOADING
             */
+            <Text>Hey</Text>
           }
         </View>
       );
@@ -185,6 +187,7 @@ SignIn.propTypes = {
 
 const mapStateToProps = state => ({
   connected: state.connected,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({

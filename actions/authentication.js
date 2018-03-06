@@ -27,9 +27,15 @@ function onAuthenticated(user) {
 export function restoreSignIn(navigate) {
   return (dispatch) => {
     apis.restoreSignIn((user) => {
-      return Promise.resolve()
+      if(user){
+        return Promise.resolve()
         .then(() => dispatch(onAuthenticated(user)))
         .then(navigate);
+      }
+      navigate();
+      // return dispatch(onAuthenticated(user))
+      //   .then(navigate)
+      //   .catch(navigate);
     });
   };
 }

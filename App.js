@@ -10,8 +10,10 @@ import thunk from 'redux-thunk';
 import Navigation from './nav';
 import reducer from './reducers';
 
+import * as actions from './actions/authentication';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
+import I18n from './assets/i18n/i18n';
 
 Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
@@ -40,27 +42,46 @@ class App extends Component {
     isReady: false,
   };
   
+  constructor(props) {
+    super(props);
+    
+    this.updateState = this.updateState.bind(this);
+  }
+  
+  async updateState() {
+    console.log('called');
+    this.setState({ isReady: true });
+  }
+  
   componentDidCatch(error, errorInfo) {
     Sentry.captureException(error, { extra: errorInfo });
     throw error;
   }
 
-  async _loadAssetsAsync() {
-    const fonts = [ FontAwesome.font, Entypo.font ];
+  componentDidMount() {
+    this.loadAssetsAsync();
+  }
+
+  async loadAssetsAsync() {
+    const fonts = [FontAwesome.font, Entypo.font];
 
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
-
-    await Promise.all( ...cacheFonts );
+    console.log('started');
+    await Promise.all([...cacheFonts, I18n.initAsync()]);
+    I18n.setDateLocale();
+    await store.dispatch(actions.restoreSignIn(() => this.updateState()));
+    console.log('finished');
   }
 
   render() {
-    if(!this.state.isReady) {
+    if (!this.state.isReady) {
       return (
-        <AppLoading
-          startAsync={this._loadAssetsAsync}
-          onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
-        />
+        // <AppLoading
+        //   startAsync={this.loadAssetsAsync}
+        //   onFinish={() => this.setState({ isReady: true })}
+        //   onError={console.warn}
+        // />
+        <AppLoading />
       );
     }
 

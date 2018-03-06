@@ -49,7 +49,7 @@ class App extends Component {
   componentDidMount() {
     this.loadAssetsAsync();
   }
-  
+
   componentDidCatch(error, errorInfo) {
     Sentry.captureException(error, { extra: errorInfo });
     throw error;
@@ -64,7 +64,7 @@ class App extends Component {
 
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
     await Promise.all([...cacheFonts, I18n.initAsync()]);
-    
+
     await store.dispatch(actions.restoreSignIn(() => this.updateState()));
     I18n.setDateLocale();
   }

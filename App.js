@@ -43,7 +43,6 @@ class App extends Component {
     this.state = {
       isReady: false,
     };
-    this.updateState = this.updateState.bind(this);
   }
 
   componentDidMount() {
@@ -55,7 +54,7 @@ class App extends Component {
     throw error;
   }
 
-  async updateState() {
+  updateState = () => {
     this.setState({ isReady: true });
   }
 

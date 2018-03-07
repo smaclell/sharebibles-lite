@@ -27,13 +27,17 @@ function onAuthenticated(user) {
 export function restoreSignIn(callback) {
   return (dispatch) => {
     apis.restoreSignIn((user) => {
-      if (user) {
-        return Promise.resolve()
-          .then(() => dispatch(onAuthenticated(user)))
-          .then(callback);
-      }
       return Promise.resolve()
+        .then(() => user && dispatch(onAuthenticated(user)))
         .then(callback);
+
+      // if (user) {
+      //   return Promise.resolve()
+      //     .then(() => dispatch(onAuthenticated(user)))
+      //     .then(callback);
+      // }
+      // return Promise.resolve()
+      //   .then(callback);
     });
   };
 }

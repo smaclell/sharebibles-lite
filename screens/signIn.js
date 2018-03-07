@@ -99,7 +99,6 @@ class SignIn extends React.Component {
             /*
               LOADING
             */
-            <Text>Hey</Text>
           }
         </View>
       );

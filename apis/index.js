@@ -75,6 +75,7 @@ export function restoreSignIn(callback) {
   const completed = firebase.auth().onAuthStateChanged(async (raw) => {
     completed();
     if (!raw) {
+      callback();
       return;
     }
 

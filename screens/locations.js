@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import styles from '../styles/locations';
 import Location from '../components/Location';
 import I18n from '../assets/i18n/i18n';
+import { UploadStatus } from '../actions/uploads';
 
 const Locations = ({ navigation, locations }) => {
   const { navigate } = navigation;
@@ -40,7 +41,7 @@ Locations.propTypes = {
   locations: PropTypes.array.isRequired,
 };
 
-const uploadMapper = (uploads, location) => uploads[location.key];
+const uploadMapper = (uploads, location) => uploads[location.key] || UploadStatus.uploaded;
 
 const mapper = (uploads, statuses, location) => {
   const filteredStatus = statuses.find(s => (s.key === location.status)) || null;

@@ -8,13 +8,7 @@ import overview from './overview';
 import position from './position';
 import resources from './resources';
 import statuses from './statuses';
-import tags from './tags';
-import teams from './teams';
 import uploads from './uploads';
-import user from './user';
-import users from './users';
-import visitors from './visitors';
-import visits from './visits';
 
 // Sorted Alphabetically
 const reducer = combineReducers({
@@ -25,13 +19,8 @@ const reducer = combineReducers({
   position,
   resources,
   statuses,
-  tags,
-  teams,
   uploads,
-  user,
-  users,
-  visitors,
-  visits,
+  regionKey: (state = 'test-region') => state,
 });
 
 export default reducer;

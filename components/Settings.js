@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Image, Picker, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
-import User from '../components/User';
 
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
@@ -17,13 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  user_container: {
-    flex: 0,
-    width: '100%',
-    paddingHorizontal: 18,
-    paddingVertical: 5,
-    alignItems: 'center',
   },
   divider: {
     marginTop: 5,
@@ -49,10 +41,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 18,
     paddingVertical: 5,
-  },
-  teamName: {
-    color: colours.text,
-    fontSize: fonts.large,
   },
   header: {
     color: colours.text,
@@ -82,7 +70,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, shareInvite, team, updateLocale, user, version } = props;
+  const { logout, updateLocale, version } = props;
 
   const sendFeedback = () => {
     Linking.canOpenURL(`mailto:${emails.feedback}`)
@@ -105,13 +93,7 @@ const Settings = (props) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.user_container}>
-        <User {...user} />
-        <Text style={styles.teamName}>{team.name}</Text>
-        <View style={styles.divider} />
-      </View>
       <View style={styles.options_container}>
-        { user && team && team.owners && !!team.owners[user.key] && <SettingsItem term="settings/invite" onPress={shareInvite} /> }
         <View style={SettingsItem.styles.container}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
@@ -143,10 +125,7 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   logout: PropTypes.func.isRequired,
-  shareInvite: PropTypes.func.isRequired,
-  team: PropTypes.object.isRequired,
   updateLocale: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
   version: PropTypes.string.isRequired,
 };
 

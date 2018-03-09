@@ -1,55 +1,52 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { updatePosition } from './position';
-import { createVisit, fetchVisitsByLocation } from './visits';
 import { failed, pending, uploaded } from './uploads';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
-  return (dispatch, getState) => {
-    const { user: userKey, users } = getState();
-    const { teamKey } = users[userKey];
+  return {
+    type: RECIEVE_LOCATION,
+    location,
+  };
+}
 
-    return dispatch({
-      type: RECIEVE_LOCATION,
-      location,
-      userKey,
-      teamKey,
-    });
+export function fetchLocations() {
+  return (dispatch, getState) => {
+    const { regionKey } = getState();
+    return apis.fetchLocations({ regionKey, last: 25 })
+      .then((locations) => {
+        locations.forEach(location => location && dispatch(receiveLocation(location)));
+      });
   };
 }
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { locations: { all: locations } } = getState();
-    const existing = locations[locationKey];
-    if (existing) {
-      return Promise.resolve(existing);
-    }
+    const { regionKey } = getState();
 
-    return apis.fetchLocation(locationKey)
+    return apis.fetchLocation(regionKey, locationKey)
       .then((location) => {
         if (location) {
           dispatch(receiveLocation(location));
         }
-        return Promise.resolve(location);
+        return location;
       });
   };
 }
 
 export function fetchAllLocationData(locationKey) {
   return async (dispatch) => {
-    await dispatch(fetchVisitsByLocation(locationKey));
     await dispatch(fetchLocation(locationKey));
   };
 }
 
 export function updateLocation(options) {
   return (dispatch, getState) => {
-    const { locations } = getState();
+    const { regionKey, locations } = getState();
     const original = { ...locations[options.key] };
 
-    return apis.updateLocation({ ...original, ...options })
+    return apis.updateLocation(regionKey, { ...original, ...options })
       .then(({ updated, saved }) => {
         dispatch(receiveLocation({ ...original, ...updated }));
 
@@ -62,30 +59,22 @@ export function updateLocation(options) {
 }
 
 export function createLocation(options) {
-  const { imageUrl, name, latitude, longitude, address, resources, tags, status } = options;
-  const { notes } = options;
+  const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    // TODO: selector
-    const state = getState();
-    const creator = state.users[state.user];
-    const team = state.teams[creator.teamKey];
+    const { regionKey } = getState();
 
     const locationData = {
-      imageUrl,
-      name,
       latitude,
       longitude,
-      address,
       resources,
       status,
-      tags,
     };
 
     dispatch(updatePosition(latitude, longitude));
 
     const { created: location, saved } =
-      await apis.createLocation(creator, team, locationData);
+      await apis.createLocation(regionKey, locationData);
 
     dispatch(receiveLocation(location));
 
@@ -100,12 +89,5 @@ export function createLocation(options) {
         });
         dispatch(failed(location.key));
       });
-
-    return dispatch(createVisit({
-      locationKey: location.key,
-      notes,
-      status,
-      tags: { ...tags, initial: true },
-    }));
   };
 }

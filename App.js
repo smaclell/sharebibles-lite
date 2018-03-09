@@ -10,7 +10,6 @@ import thunk from 'redux-thunk';
 import Navigation from './nav';
 import reducer from './reducers';
 
-import * as actions from './actions/authentication';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
@@ -38,12 +37,9 @@ const paddingTop = Platform.select({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isReady: false,
-    };
-  }
+  state = {
+    isReady: false,
+  };
 
   componentDidMount() {
     this.loadAssetsAsync();
@@ -54,17 +50,13 @@ class App extends Component {
     throw error;
   }
 
-  updateState = () => {
-    this.setState({ isReady: true });
-  }
-
   async loadAssetsAsync() {
     const fonts = [FontAwesome.font, Entypo.font];
 
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
     await Promise.all([...cacheFonts, I18n.initAsync()]);
 
-    await store.dispatch(actions.restoreSignIn(() => this.updateState()));
+    this.setState({ isReady: true });
     I18n.setDateLocale();
   }
 

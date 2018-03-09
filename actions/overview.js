@@ -2,8 +2,7 @@ import * as apis from '../apis';
 import { fetchAllLocationData } from './locations';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
 
-export const TEAM_MODE = apis.GEO_TEAM_KEY;
-export const USER_MODE = apis.GEO_USER_KEY;
+const REGION_MODE = apis.GEO_REGION_KEY;
 
 const initial = {
   updateCriteria() {},
@@ -21,15 +20,10 @@ export function update(latitude, longitude) {
     });
 }
 
-function getGeoKey(mode) {
+function getGeoKey() {
   return (dispatch, getState) => {
-    const { user, users } = getState();
-    if (mode !== TEAM_MODE) {
-      return `${USER_MODE}/${user}`;
-    }
-
-    const { teamKey } = users[user];
-    return `${TEAM_MODE}/${teamKey}`;
+    const { regionKey } = getState();
+    return `${REGION_MODE}/${regionKey}`;
   };
 }
 
@@ -57,5 +51,5 @@ export function updateMode(mode) {
 }
 
 export function initialize() {
-  return dispatch => dispatch(updateMode(USER_MODE));
+  return dispatch => dispatch(updateMode(REGION_MODE));
 }

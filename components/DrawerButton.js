@@ -1,15 +1,13 @@
 import {
-  Image,
   View,
 } from 'react-native';
-import { connect } from 'react-redux';
 import React from 'react';
-import PropTypes from 'prop-types';
 import colours from '../styles/colours';
 
 const imageStyle = {
   height: 25,
   width: 25,
+  backgroundColor: 'pink',
 };
 
 const containerStyle = {
@@ -25,18 +23,13 @@ const containerStyle = {
   width: 25,
 };
 
-const DrawerButton = ({ user }) => (
+const DrawerButton = () => (
   <View style={containerStyle}>
-    <Image style={imageStyle} source={{ uri: user.imageUrl }} />
+    <View style={imageStyle} />
   </View>
 );
 
 DrawerButton.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  user: state.users[state.user],
-});
-
-export default connect(mapStateToProps, null)(DrawerButton);
+export default DrawerButton;

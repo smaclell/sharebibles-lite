@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
-import { Toggle } from '../components/Button';
 import Icon from '../components/Icon';
 import PinCallout from '../components/PinCallout';
-import I18n from '../assets/i18n/i18n';
 import { getCurrentPosition } from '../apis/geo';
 
 const styles = StyleSheet.create({
@@ -22,19 +21,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  buttons: {
-    position: 'absolute',
-    top: 0,
-    flex: 0,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 1,
-    flexDirection: 'row',
-  },
-  button: {
-    margin: 5,
   },
   locationButton: {
     position: 'absolute',
@@ -82,6 +68,7 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
+    this.props.fetchLocations();
     setTimeout(this.onMapReady, 250);
   }
 
@@ -129,17 +116,6 @@ class OverviewMap extends PureComponent {
     }
   };
 
-  renderMode = (mode, translation) => (
-    <Toggle
-      key={mode}
-      style={styles.button}
-      selected={this.props.mode === mode}
-      onClick={() => this.props.updateMode(mode)}
-    >
-      {I18n.t(translation)}
-    </Toggle>
-  )
-
   render() {
     const { locations } = this.props;
     const iconColour = this.state.centered ? blue : black;
@@ -158,7 +134,7 @@ class OverviewMap extends PureComponent {
           onMapReady={this.onMapReady}
           onRegionChange={this.onRegionChange}
         >
-          {locations.map(({ location, visits, pinColor }) => (
+          {locations.map(({ location, pinColor }) => (
             <MapView.Marker
               key={location.key}
               coordinate={{
@@ -167,15 +143,11 @@ class OverviewMap extends PureComponent {
               pinColor={pinColor}
             >
               <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>
-                <PinCallout {...location} visits={visits} />
+                <PinCallout {...location} />
               </MapView.Callout>
             </MapView.Marker>
           ))}
         </MapView>
-        <View style={styles.buttons}>
-          {this.renderMode(overviewActions.TEAM_MODE, 'button/show_team')}
-          {this.renderMode(overviewActions.USER_MODE, 'button/show_user')}
-        </View>
         <TouchableOpacity
           style={styles.locationButton}
           onPress={this.onLocationPress}
@@ -195,8 +167,8 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
+  fetchLocations: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
-  mode: PropTypes.string.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
@@ -213,33 +185,17 @@ const locationColor = (location, statuses) => {
   return 'wheat';
 };
 
-function getLocations(state, mode) {
-  if (mode === overviewActions.TEAM_MODE) {
-    return state.locations.byTeam;
-  }
-
-  if (mode === overviewActions.USER_MODE) {
-    return state.locations.byUser;
-  }
-
-  return {};
-}
-
-const noVisits = [];
-function enrichLocations({ statuses, visits: { byLocation } }, locations) {
+function enrichLocations({ statuses }, locations) {
   return Object.values(locations).map(location => ({
     location,
-    visits: (byLocation[location.key] || noVisits).length,
     pinColor: locationColor(location, statuses),
   }));
 }
 
 const mapStateToProps = (state) => {
   const mode = state.overview.mode;
-  const locationKeys = getLocations(state, mode);
   const locations =
-    Object.keys(locationKeys)
-      .map(locationKey => state.locations.all[locationKey])
+    Object.values(state.locations)
       .filter(x => x);
 
   return {
@@ -250,6 +206,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(locationActions, dispatch),
   ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
 });

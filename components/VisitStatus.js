@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../components/Icon';
-import styles from '../styles/visits';
+import styles from '../styles/locations';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 

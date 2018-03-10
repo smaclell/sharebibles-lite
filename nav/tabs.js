@@ -10,7 +10,7 @@ import colours from '../styles/colours';
 // Sorted Alphabetically
 import Initial from '../screens/initial';
 import OverviewMap from '../screens/overviewMap';
-import Visits from '../screens/visits';
+import Locations from '../screens/locations';
 
 const iconSize = 30;
 const tabHeight = 50;
@@ -69,8 +69,8 @@ const navigator = new TabNavigator({
       ),
     },
   },
-  Visits: {
-    screen: Visits,
+  Locations: {
+    screen: Locations,
     navigationOptions: {
       title: I18n.t('title/your_conversations'),
       tabBarIcon: ({ tintColor }) => (
@@ -82,7 +82,7 @@ const navigator = new TabNavigator({
   lazy: true,
   animationEnabled: true,
   tabBarPosition: 'bottom',
-  order: ['OverviewMap', 'Initial', 'Visits'],
+  order: ['OverviewMap', 'Initial', 'Locations'],
   swipeEnabled: false,
   initialRouteName: 'OverviewMap',
   tabBarOptions: {

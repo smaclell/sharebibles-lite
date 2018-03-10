@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "sharebibles-dev",
-    "description": "An empty new project",
-    "slug": "sharebibles-dev",
+    "name": "sharebibles-lite-dev",
+    "description": "A dev version for sharebibles lite",
+    "slug": "sharebibles-lite-dev",
     "privacy": "unlisted",
     "sdkVersion": "24.0.0",
     "version": "0.5.0",
@@ -32,19 +32,17 @@
         "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
       },
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Give us permission to know your location when saving your visits and viewing the map.",
-        "NSCameraUsageDescription": "Let us take photos for remembering your visits",
-        "NSPhotoLibraryUsageDescription": "Let us use your existing photos for remembering your visits"
+        "NSLocationWhenInUseUsageDescription": "Give us permission to know your location when saving your visits and viewing the map."
       }
     },
     "extra": {
       "firebase": {
-        "apiKey": "AIzaSyC8AO42wX7wmzhZ4jY4rAnAOPbDPIBb5xg",
-        "authDomain": "sharebible-scott.firebaseapp.com",
-        "databaseURL": "https://sharebible-scott.firebaseio.com",
-        "projectId": "sharebible-scott",
-        "storageBucket": "sharebible-scott.appspot.com",
-        "messagingSenderId": "717650859495"
+        "apiKey": "AIzaSyD1MJsvOB171NxB4Cg_dd5bCwA26LCqKxA",
+        "authDomain": "sharebibles-lite-scott.firebaseapp.com",
+        "databaseURL": "https://sharebibles-lite-scott.firebaseio.com",
+        "projectId": "sharebibles-lite-scott",
+        "storageBucket": "",
+        "messagingSenderId": "180261206879"
       }
     }
   }

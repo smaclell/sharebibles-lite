@@ -9,9 +9,6 @@ const statuses = [
   // Not Home
   { key: 'delivered', label: 'status/delivered', icon: 'book', iconFamily: 'font-awesome', pinColor: 'green', group: 'not_home', success: true },
   { key: 'unfinished', label: 'status/unfinished', icon: 'block', iconFamily: 'entypo', pinColor: 'grey', group: 'not_home', success: false },
-
-  // From testing, remove after next reset
-  { key: 'not_home', label: 'status/not_home', icon: 'home', pinColor: 'grey', group: 'ignore' },
 ];
 
 function reducer(state = statuses) {

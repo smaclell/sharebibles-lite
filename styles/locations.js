@@ -25,12 +25,6 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
 
-  teamName: {
-    fontSize: fonts.large,
-    color: colours.greys.base,
-    marginBottom: 20,
-  },
-
   empty: {
     fontSize: fonts.large,
     color: colours.text,

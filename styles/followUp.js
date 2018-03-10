@@ -17,10 +17,6 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
 
-  users_container: {
-    flex: 1,
-  },
-
   status_container: {
     flex: 1,
   },

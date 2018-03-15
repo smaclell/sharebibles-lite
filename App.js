@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StatusBar, View } from 'react-native';
-import { AppLoading, Font } from 'expo';
+import { AppLoading, Font, SQLite } from 'expo';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -9,10 +9,11 @@ import thunk from 'redux-thunk';
 
 import Navigation from './nav';
 import reducer from './reducers';
-
+import { getCurrentPosition } from './apis/geo';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
+import { updatePosition } from './actions/position';
 
 Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
@@ -55,6 +56,12 @@ class App extends Component {
 
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
     await Promise.all([...cacheFonts, I18n.initAsync()]);
+
+    const { location: { longitude, latitude } } = await getCurrentPosition(true);
+    longitude && store.dispatch(updatePosition(longitude, latitude));
+
+    const db = SQLite.openDatabase('locations.db');
+    db.transaction( tx => tx.executeSql('create table if not exists locations (id integer primary key not null, locationKey text, resources text, status text, coordinateKey text, createdAt int, uploaded int);'));
 
     this.setState({ isReady: true });
     I18n.setDateLocale();

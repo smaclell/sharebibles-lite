@@ -2,9 +2,11 @@ import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { updatePosition } from './position';
 import { failed, pending, uploaded } from './uploads';
+import { addLocalLocation, updateUploadStatus } from '../apis/database';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
+  console.log('recieved', location);
   return {
     type: RECIEVE_LOCATION,
     location,
@@ -62,7 +64,7 @@ export function createLocation(options) {
   const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { regionKey, connected } = getState();
 
     const locationData = {
       latitude,
@@ -73,21 +75,26 @@ export function createLocation(options) {
 
     dispatch(updatePosition(latitude, longitude));
 
-    const { created: location, saved } =
-      await apis.createLocation(regionKey, locationData);
+    let localLocation = await addLocalLocation(locationData, regionKey);
+    let newKey;
+    if (connected) {
+      const { created: location, saved } = await apis.createLocation(regionKey, locationData);
+      console.log(localLocation);
 
-    dispatch(receiveLocation(location));
-
-    dispatch(pending(location.key));
-    saved
-      .then(() => dispatch(uploaded(location.key)))
-      .catch((err) => {
-        Sentry.captureException(err, {
-          extra: {
-            locationKey: location.key,
-          },
+      dispatch(pending(location.key));
+      saved
+        .then(() => dispatch(uploaded(location.key)))
+        .then(() => updateUploadStatus(localLocation.key, location.key , true).then(newKey => dispatch(receiveLocation({ key: newKey, ...location }))))
+        .catch((err) => {
+          Sentry.captureException(err, {
+            extra: {
+              locationKey: location.key,
+            },
+          });
+          dispatch(failed(location.key));
         });
-        dispatch(failed(location.key));
-      });
+    } else {
+      dispatch(receiveLocation(localLocation));
+    }
   };
 }

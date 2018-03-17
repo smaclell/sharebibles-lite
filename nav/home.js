@@ -10,11 +10,11 @@ import Settings from '../containers/Settings';
 
 import FollowUp from '../screens/followUp';
 import Tabs from './tabs';
-import DrawerButton from '../components/DrawerButton';
+import Icon from '../components/Icon';
 
 const createGear = navigation => (
   <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={() => navigation.navigate('DrawerOpen')}>
-    <DrawerButton />
+    <Icon size='medium' family='font-awesome' name='bars' colour={colours.black}  />
   </TouchableOpacity>
 );
 

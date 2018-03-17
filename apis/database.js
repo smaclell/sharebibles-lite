@@ -3,23 +3,22 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 import Sentry from 'sentry-expo';
 import { TEAM_KEY, GEO_REGION_KEY } from './index';
+import { convertToLocations } from '../utils/database';
 
-// HELPER FUNCTIONS
-// function getCoordinateId() {
-// return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-// }
-
-// DATABASE FUNCTIONS
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);
 }
 
+export function executeTransaction(statement, args, completed, error) {
+  const db = openDatabase();
+  db.transaction((tx) => {
+    tx.executeSql(statement, args, completed, error);
+  });
+}
+
 export function clearDatabase() {
   return new Promise((resolve, reject) => {
-    const db = openDatabase();
-    db.transaction((tx) => {
-      tx.executeSql('drop table locations', null, resolve(true), reject(false));
-    });
+    executeTransaction('drop table locations', null, resolve(true), reject(false));
   });
 }
 
@@ -32,14 +31,23 @@ export function updateUploadStatus(key, isUploaded) {
     const error = (tx, err) => {
       reject(err);
     };
-    const db = openDatabase();
-    db.transaction((tx) => {
-      tx.executeSql('update locations set uploaded = ? where key = ?',
-        [isUploaded, key],
-        completed,
-        error,
-      );
-    });
+    executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key], completed, error);
+  });
+}
+
+export function updateLocalLocation(options) {
+  return new Promise((resolve, reject) => {
+    const completed = () => {
+      resolve(true);
+    };
+    const error = () => {
+      reject(false);
+    };
+
+    const { longitude, latitude, resources, status, key } = options;
+    // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude })); Uncomment this if user is ever able to change location position
+
+    executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [resources, status, key], completed, error);
   });
 }
 
@@ -47,12 +55,16 @@ export function updateUploadStatus(key, isUploaded) {
 export function fetchLocalLocation(locationKey) {
   return new Promise((resolve, reject) => {
     const completed = (tx, { rows }) => {
-      const { key, resources, status, createdAt, coordinateKey, uploaded } = rows.item(0);
+      if (rows.length < 1) {
+        resolve(false);
+        return;
+      }
+      const { key, resources, status, createdAt: created, coordinateKey, uploaded } = rows.item(0);
       SecureStore.getItemAsync(coordinateKey).then((coordinates) => {
         const { longitude, latitude } = JSON.parse(coordinates);
         const location = {
           key,
-          created: createdAt,
+          created,
           status,
           resources,
           longitude,
@@ -66,65 +78,63 @@ export function fetchLocalLocation(locationKey) {
       reject(err);
     };
 
-    const db = openDatabase();
-    db.transaction((tx) => {
-      tx.executeSql('select * from locations where key = ?;',
-        [locationKey],
-        completed,
-        error,
-      );
-    });
+    executeTransaction('select * from locations where key = ?', [locationKey], completed, error);
   });
 }
 
 // fetch all locations in db
 export function fetchLocalLocations() {
   return new Promise((resolve, reject) => {
-    const complete = (tx, result) => {
-      console.log(result);
-      resolve(result);
+    const completed = async (tx, result) => {
+      const locations = await convertToLocations(result.rows._array);
+      resolve(locations);
     };
     const error = (tx, err) => {
       reject(err);
     };
-    const db = openDatabase();
-    db.transaction((tx) => {
-      tx.executeSql('select * from locations', null, complete, error);
-    });
+    executeTransaction('select * from locations', null, completed, error);
   });
 }
 
 export async function addLocalLocation(locationData, regionKey = GEO_REGION_KEY, team = TEAM_KEY) {
   const { resources, status = null, latitude, longitude } = locationData;
-  const resourceString = JSON.stringify(resources);
+  const resourcesString = JSON.stringify(resources);
   const key = firebase.database().ref(`regions/${regionKey}/locations`).push().key;
-  const createdAt = moment.utc().valueOf();
+  const created = moment.utc().valueOf();
 
   // Store the longitude and latitude in secure storage with same locationKey from DB
   SecureStore.setItemAsync(key, JSON.stringify({ latitude, longitude }));
 
   return new Promise((resolve, reject) => {
-    const complete = () => {
+    const complete = (tx, result) => {
+      console.log(result.rows._array);
       resolve({
         key,
-        created: createdAt,
+        created,
         status,
-        resources: {},
+        resources,
         longitude,
         latitude,
       });
     };
-    const error = (t, err) => {
+    const error = (tx, err) => {
       Sentry.captureException(err);
       reject(err);
     };
-    const db = openDatabase();
-    db.transaction((tx) => {
-      tx.executeSql('insert into locations (key, coordinateKey, createdAt, team, resources, status, uploaded) values (?, ?, ?, ?, ?, ?, ?)',
-        [key, key, createdAt, team, resourceString, status, 0],
-        complete,
-        error,
-      );
-    });
+    executeTransaction('insert into locations (key, coordinateKey, createdAt, team, resources, status, uploaded) values (?, ?, ?, ?, ?, ?, ?)',
+      [key, key, created, team, resourcesString, status, 0], complete, error);
+  });
+}
+
+export function getLocalOnlyLocations() {
+  return new Promise((resolve, reject) => {
+    const completed = async (tx, result) => {
+      const locations = await convertToLocations(result.rows._array);
+      resolve(locations);
+    }
+    const error = (tx, err) => {
+      reject(err);
+    }
+    executeTransaction('select * from locations where uploaded = 0', null, completed, error);
   });
 }

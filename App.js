@@ -13,7 +13,8 @@ import { getCurrentPosition } from './apis/geo';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
-import { updatePosition } from './actions/position';
+import * as positionActions from './actions/position';
+import { fetchCombinedLocations } from './actions/locations';
 
 Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
@@ -57,11 +58,14 @@ class App extends Component {
     const cacheFonts = fonts.map(font => Font.loadAsync(font));
     await Promise.all([...cacheFonts, I18n.initAsync()]);
 
-    const { location: { longitude, latitude } } = await getCurrentPosition(true);
-    store.dispatch(updatePosition(longitude, latitude));
+    // Fetches users current position and sets state
+    await store.dispatch(positionActions.initialize());
+    // Fetches locations
+    await store.dispatch(fetchCombinedLocations());
 
     const db = SQLite.openDatabase('locations.db');
-    db.transaction(tx => tx.executeSql('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int);'));
+    // db.transaction(tx => tx.executeSql('drop table locations'));
+    db.transaction(tx => tx.executeSql('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)'));
 
     this.setState({ isReady: true });
     I18n.setDateLocale();

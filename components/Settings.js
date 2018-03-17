@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, updateLocale, version } = props;
+  const { logout, updateLocale, version, pushLocations, connected } = props;
 
   const sendFeedback = () => {
     Linking.canOpenURL(`mailto:${emails.feedback}`)
@@ -91,6 +91,24 @@ const Settings = (props) => {
       ));
   };
 
+  const showPushLocations = () => {
+    if (!connected) {
+      Alert.alert(
+        I18n.t('button/offline'),
+        I18n.t('connectivity/action_requires_connection'),
+        [{ text: I18n.t('button/ok'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() {pushLocations()} }],
+        { cancelable: false },
+      )
+      return;
+    }
+    Alert.alert(
+      I18n.t('settings/push_locations'),
+      I18n.t('settings/push_locations_message'),
+      [{ text: I18n.t('button/cancel'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() {pushLocations()} }],
+      { cancelable: true },
+    )
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.options_container}>
@@ -109,6 +127,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
+        <SettingsItem term="settings/push_locations" onPress={showPushLocations} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
@@ -127,6 +146,7 @@ Settings.propTypes = {
   logout: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
+  pushLocations: PropTypes.func.isRequired,
 };
 
 export default Settings;

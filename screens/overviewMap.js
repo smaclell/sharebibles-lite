@@ -68,7 +68,6 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchLocations();
     setTimeout(this.onMapReady, 250);
   }
 
@@ -126,6 +125,7 @@ class OverviewMap extends PureComponent {
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
+          showsMyLocationButton={false}
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}

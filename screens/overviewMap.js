@@ -92,6 +92,7 @@ class OverviewMap extends PureComponent {
   }
 
   onLocationPress = async () => {
+    if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
       this.props.updatePosition(location.latitude, location.longitude);

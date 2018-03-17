@@ -21,6 +21,7 @@ function getGeoFire(path) {
 }
 
 export const GEO_REGION_KEY = 'geofireRegion';
+export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
   const geoKey = `locations--${locationKey}`;
@@ -78,10 +79,15 @@ export function updateLocation(regionKey, options) {
   return Promise.resolve({ updated, saved });
 }
 
-export async function createLocation(regionKey, options) {
+export async function createLocation(regionKey, options, key) {
   initialize();
 
-  const pushed = firebase.database().ref(`regions/${regionKey}/locations`).push();
+  let pushed;
+  if (key) {
+    pushed = firebase.database().ref(`locations/${key}`);
+  } else {
+    pushed = firebase.database().ref('locations').push();
+  }
 
   const created = {
     key: pushed.key,

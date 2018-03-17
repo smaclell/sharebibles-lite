@@ -6,7 +6,6 @@ import { addLocalLocation, updateUploadStatus } from '../apis/database';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
-  console.log('recieved', location);
   return {
     type: RECIEVE_LOCATION,
     location,
@@ -75,16 +74,17 @@ export function createLocation(options) {
 
     dispatch(updatePosition(latitude, longitude));
 
-    let localLocation = await addLocalLocation(locationData, regionKey);
-    let newKey;
+    const localLocation = await addLocalLocation(locationData, regionKey);
+    const key = localLocation.key;
+
     if (connected) {
-      const { created: location, saved } = await apis.createLocation(regionKey, locationData);
-      console.log(localLocation);
+      const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
 
       dispatch(pending(location.key));
       saved
+        .then(() => dispatch(receiveLocation(location)))
+        .then(() => updateUploadStatus(localLocation.key, 1))
         .then(() => dispatch(uploaded(location.key)))
-        .then(() => updateUploadStatus(localLocation.key, location.key , true).then(newKey => dispatch(receiveLocation({ key: newKey, ...location }))))
         .catch((err) => {
           Sentry.captureException(err, {
             extra: {

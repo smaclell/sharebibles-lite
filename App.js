@@ -58,10 +58,10 @@ class App extends Component {
     await Promise.all([...cacheFonts, I18n.initAsync()]);
 
     const { location: { longitude, latitude } } = await getCurrentPosition(true);
-    longitude && store.dispatch(updatePosition(longitude, latitude));
+    store.dispatch(updatePosition(longitude, latitude));
 
     const db = SQLite.openDatabase('locations.db');
-    db.transaction( tx => tx.executeSql('create table if not exists locations (id integer primary key not null, locationKey text, resources text, status text, coordinateKey text, createdAt int, uploaded int);'));
+    db.transaction(tx => tx.executeSql('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int);'));
 
     this.setState({ isReady: true });
     I18n.setDateLocale();

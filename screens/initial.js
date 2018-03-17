@@ -77,7 +77,6 @@ class Initial extends React.Component {
 
       this.goBack();
     } catch (err) {
-      console.log('error', err);
       Sentry.captureException(err, { extra: { status } });
 
       Alert.alert(

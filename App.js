@@ -64,7 +64,6 @@ class App extends Component {
     await store.dispatch(fetchCombinedLocations());
 
     const db = SQLite.openDatabase('locations.db');
-    // db.transaction(tx => tx.executeSql('drop table locations'));
     db.transaction(tx => tx.executeSql('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)'));
 
     this.setState({ isReady: true });

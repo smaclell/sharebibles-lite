@@ -5,16 +5,26 @@ export function mergeLocations(local, online) {
   return _.unionWith(local, online, (val1, val2) => val1.key === val2.key);
 }
 
+export async function convertToLocation(location) {
+  const { key, createdAt: created, resources, status } = location;
+  const { longitude, latitude } = await getCoordinates(key);
+  return {
+    key,
+    created,
+    status,
+    resources,
+    longitude,
+    latitude
+  };
+}
+
 // converts array from local db to app type location object: { key, created, status, resources, longitude, latitude }
-export async function convertToLocations(databaseArray) {
+export async function convertArrayToLocations(databaseArray) {
   let locations = [];
-
   for (const location of databaseArray) {
-    const { key, createdAt: created, resources, status } = location;
-    const { longitude, latitude } = await getCoordinates(key);
-    locations.push({ key, created, status, resources, longitude, latitude });
+    const data = await convertToLocation(location);
+    locations.push(data);
   }
-
   return locations;
 }
 

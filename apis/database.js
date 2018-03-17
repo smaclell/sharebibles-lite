@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 import Sentry from 'sentry-expo';
 import { TEAM_KEY, GEO_REGION_KEY } from './index';
-import { convertToLocations } from '../utils/database';
+import { convertArrayToLocations, convertToLocation } from '../utils/database';
 
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);
@@ -59,20 +59,8 @@ export function fetchLocalLocation(locationKey) {
         resolve(false);
         return;
       }
-      const { key, resources, status, createdAt: created, coordinateKey, uploaded } = rows.item(0);
-      SecureStore.getItemAsync(coordinateKey).then((coordinates) => {
-        const { longitude, latitude } = JSON.parse(coordinates);
-        const location = {
-          key,
-          created,
-          status,
-          resources,
-          longitude,
-          latitude,
-          uploaded,
-        };
-        resolve(location);
-      }).catch(err => Sentry.captureException(err));
+      const location = convertToLocation(rows.item(0));
+      resolve(location);
     };
     const error = (tx, err) => {
       reject(err);
@@ -86,7 +74,7 @@ export function fetchLocalLocation(locationKey) {
 export function fetchLocalLocations() {
   return new Promise((resolve, reject) => {
     const completed = async (tx, result) => {
-      const locations = await convertToLocations(result.rows._array);
+      const locations = await convertArrayToLocations(result.rows._array);
       resolve(locations);
     };
     const error = (tx, err) => {
@@ -107,7 +95,6 @@ export async function addLocalLocation(locationData, regionKey = GEO_REGION_KEY,
 
   return new Promise((resolve, reject) => {
     const complete = (tx, result) => {
-      console.log(result.rows._array);
       resolve({
         key,
         created,
@@ -129,7 +116,7 @@ export async function addLocalLocation(locationData, regionKey = GEO_REGION_KEY,
 export function getLocalOnlyLocations() {
   return new Promise((resolve, reject) => {
     const completed = async (tx, result) => {
-      const locations = await convertToLocations(result.rows._array);
+      const locations = await convertArrayToLocations(result.rows._array);
       resolve(locations);
     }
     const error = (tx, err) => {

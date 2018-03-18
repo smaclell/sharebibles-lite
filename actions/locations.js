@@ -13,17 +13,6 @@ export function receiveLocation(location) {
   };
 }
 
-// Gets online locations only
-export function fetchLocations() {
-  return (dispatch, getState) => {
-    const { regionKey } = getState();
-    return apis.fetchLocations({ regionKey, last: 25 })
-      .then((locations) => {
-        locations.forEach(location => location && dispatch(receiveLocation(location)));
-      });
-  };
-}
-
 // Gets local and online (if possible) locations and combines them
 export function fetchCombinedLocations() {
   return async (dispatch, getState) => {
@@ -31,17 +20,12 @@ export function fetchCombinedLocations() {
     
     try {
       const localLocations = await database.fetchLocalLocations();
-      if(connected) {
-        const onlineLocations = await apis.fetchLocations({ regionKey, last: 25 });
-        if(localLocations.length > 0) {
-          const locations = mergeLocations(localLocations, onlineLocations);
-          locations.forEach(location => location && dispatch(receiveLocation(location)));
-        } else {
-          onlineLocations.forEach(location => location && dispatch(receiveLocation(location)));
-        }
-      } else {
-        localLocations.forEach(location => location && dispatch(receiveLocation(location)));
+      let onlineLocations;
+      if (connected) {
+        onlineLocations = await apis.fetchLocations({ regionKey, last: 25 });
       }
+      const locations = mergeLocations(localLocations, onlineLocations);
+      locations.forEach(location => location && dispatch(receiveLocation(location)));
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -92,13 +76,13 @@ export function updateLocation(options) {
       return apis.updateLocation(regionKey, { ...original, ...options })
         .then(({ updated, saved }) => {
           dispatch(receiveLocation({ ...original, ...updated }));
-          database.updateUploadStatus(options.key, 1);
 
-          saved.catch(() => {
-            dispatch(receiveLocation(original));
-            dispatch(fetchLocation(original.key));
-            database.updateUploadStatus(options.key, 0);
-          });
+          saved
+            .then(() => database.updateUploadStatus(options.key, database.LOCATION_UPLOADED.true))
+            .catch(() => {
+              dispatch(receiveLocation(original));
+              dispatch(fetchLocation(original.key));
+            });
         });
     }
 
@@ -125,7 +109,7 @@ export function createLocation(options) {
       dispatch(pending(location.key));
       saved
         .then(() => dispatch(receiveLocation(location)))
-        .then(() => database.updateUploadStatus(localLocation.key, 1))
+        .then(() => database.updateUploadStatus(localLocation.key, database.LOCATION_UPLOADED.true))
         .then(() => dispatch(uploaded(location.key)))
         .catch((err) => {
           Sentry.captureException(err, {
@@ -159,7 +143,7 @@ export function pushLocalLocations() {
 
       dispatch(pending(location.key));
       saved
-        .then(() => database.updateUploadStatus(localLocation.key, 1))
+        .then(() => database.updateUploadStatus(localLocation.key, database.LOCATION_UPLOADED.true))
         .then(() => dispatch(uploaded(location.key)))
         .catch((err) => {
           Sentry.captureException(err, {

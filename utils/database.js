@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import unionWith from 'lodash/unionWith';
 import { SecureStore } from 'expo';
 
 export function mergeLocations(local, online) {
-  return _.unionWith(local, online, (val1, val2) => val1.key === val2.key);
+  return unionWith(local, online, (val1, val2) => val1.key === val2.key);
 }
 
 export async function convertToLocation(location) {
@@ -28,7 +28,7 @@ export async function convertArrayToLocations(databaseArray) {
   return locations;
 }
 
-export function getCoordinates(key) {
+export async function getCoordinates(key) {
   return new Promise((resolve, reject) => {
     SecureStore.getItemAsync(key)
       .then(result => {

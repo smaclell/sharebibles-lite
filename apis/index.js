@@ -46,17 +46,17 @@ export function queryGeoData(geoFireKey, position, callback) {
 export function fetchLocations({ regionKey, last }) {
   initialize();
   return firebase.database()
-    .ref(`regions/${regionKey}/locations`)
+    .ref(`locations`)
     .limitToLast(last)
     .once('value')
     .then(locations => Object.values(locations.val() || {}))
     .catch(() => []);
 }
 
-export function fetchLocation(regionKey, locationKey) {
+export function fetchLocation(locationKey) {
   initialize();
   return firebase.database()
-    .ref(`regions/${regionKey}locations/${locationKey}`)
+    .ref(`locations/${locationKey}`)
     .once('value')
     .then(location => location.val());
 }
@@ -74,7 +74,7 @@ export function updateLocation(regionKey, options) {
     updateKeys[`${key}/${item}`] = value;
   });
 
-  const saved = firebase.database().ref(`regions/${regionKey}/locations`).update(updateKeys);
+  const saved = firebase.database().ref(`locations`).update(updateKeys);
 
   return Promise.resolve({ updated, saved });
 }

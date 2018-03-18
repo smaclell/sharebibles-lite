@@ -96,7 +96,7 @@ const Settings = (props) => {
       Alert.alert(
         I18n.t('button/offline'),
         I18n.t('connectivity/action_requires_connection'),
-        [{ text: I18n.t('button/ok'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() {pushLocations()} }],
+        [{ text: I18n.t('button/ok'), onPress() {} }],
         { cancelable: false },
       )
       return;

@@ -5,6 +5,11 @@ import Sentry from 'sentry-expo';
 import { TEAM_KEY, GEO_REGION_KEY } from './index';
 import { convertArrayToLocations, convertToLocation } from '../utils/database';
 
+export function createDatabase() {
+  const db = openDatabase();
+  executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
+}
+
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);
 }
@@ -23,6 +28,7 @@ export function clearDatabase() {
 }
 
 // NOTE: use 1 and 0 for isUploaded (1 = true, 0 = false)
+export const LOCATION_UPLOADED = Object.freeze({ true: 1, false: 0 });
 export function updateUploadStatus(key, isUploaded) {
   return new Promise((resolve, reject) => {
     const completed = () => {
@@ -40,8 +46,8 @@ export function updateLocalLocation(options) {
     const completed = () => {
       resolve(true);
     };
-    const error = () => {
-      reject(false);
+    const error = (tx, err) => {
+      reject(err);
     };
 
     const { longitude, latitude, resources, status, key } = options;
@@ -59,8 +65,12 @@ export function fetchLocalLocation(locationKey) {
         resolve(false);
         return;
       }
-      const location = convertToLocation(rows.item(0));
-      resolve(location);
+      try {
+        const location = convertToLocation(rows.item(0));
+        resolve(location);
+      } catch (err) {
+        reject(err);
+      }
     };
     const error = (tx, err) => {
       reject(err);
@@ -74,8 +84,12 @@ export function fetchLocalLocation(locationKey) {
 export function fetchLocalLocations() {
   return new Promise((resolve, reject) => {
     const completed = async (tx, result) => {
-      const locations = await convertArrayToLocations(result.rows._array);
-      resolve(locations);
+      try {
+        const locations = await convertArrayToLocations(result.rows._array);
+        resolve(locations);
+      } catch (err) {
+        reject(err);
+      }
     };
     const error = (tx, err) => {
       reject(err);

@@ -168,7 +168,6 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
-  fetchLocations: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({

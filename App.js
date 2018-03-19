@@ -11,6 +11,7 @@ import Navigation from './nav';
 import reducer from './reducers';
 
 import { initialize } from './apis';
+import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
 
@@ -42,7 +43,14 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.loadAssetsAsync();
+    Promise.all([
+      ...this.loadFontsAsync(),
+      store.dispatch(restore()),
+      I18n.initAsync(),
+    ]).then(() => {
+      I18n.setDateLocale();
+      this.setState({ isReady: true });
+    });
   }
 
   componentDidCatch(error, errorInfo) {
@@ -50,14 +58,9 @@ class App extends Component {
     throw error;
   }
 
-  async loadAssetsAsync() {
+  async loadFontsAsync() {
     const fonts = [FontAwesome.font, Entypo.font];
-
-    const cacheFonts = fonts.map(font => Font.loadAsync(font));
-    await Promise.all([...cacheFonts, I18n.initAsync()]);
-
-    this.setState({ isReady: true });
-    I18n.setDateLocale();
+    return fonts.map(Font.loadAsync);
   }
 
   render() {

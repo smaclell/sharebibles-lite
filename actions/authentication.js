@@ -1,6 +1,6 @@
 /* global fetch */
 import { Constants, SecureStore } from 'expo';
-import { signIn } from '../apis';
+import { signIn, signOut } from '../apis';
 
 const { serviceUrl } = Constants.manifest.extra.serviceUrl;
 
@@ -10,6 +10,10 @@ async function save(values) {
 
 async function load() {
   return SecureStore.getItemAsync('auth');
+}
+
+async function clear() {
+  return SecureStore.deleteItemAsync('auth');
 }
 
 export const ACCEPTED = 'ACCEPTED';
@@ -34,6 +38,10 @@ export function restore() {
   return async (dispatch) => {
     const values = await load();
 
+    if (!values.refreshToken) {
+      return;
+    }
+
     dispatch(accepted(values));
     await authenticate(values.refreshToken);
   };
@@ -54,5 +62,13 @@ export function accept(token) {
 
     dispatch(accepted(values));
     await authenticate(values.refreshToken);
+  };
+}
+
+export function logout() {
+  return async (dispatch) => {
+    await clear();
+    dispatch(accepted({}));
+    await signOut();
   };
 }

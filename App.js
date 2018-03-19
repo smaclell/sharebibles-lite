@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
@@ -30,11 +30,6 @@ store.dispatch(setup());
 console.ignoredYellowBox = console.ignoredYellowBox || [];
 // eslint-disable-next-line no-console
 console.ignoredYellowBox = console.ignoredYellowBox.concat('Setting a timer for a long period');
-
-const paddingTop = Platform.select({
-  ios: 0,
-  android: StatusBar.currentHeight,
-});
 
 class App extends Component {
   state = {
@@ -69,7 +64,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <View style={{ flex: 1, paddingTop }}>
+        <View style={{ flex: 1 }}>
           <StatusBar barStyle="dark-content" />
           <Navigation />
         </View>

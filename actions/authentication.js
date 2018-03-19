@@ -38,7 +38,7 @@ export function restore() {
   return async (dispatch) => {
     const values = await load();
 
-    if (!values.refreshToken) {
+    if (!values || !values.refreshToken) {
       return;
     }
 

@@ -2,7 +2,7 @@
 import { Constants, SecureStore } from 'expo';
 import { signIn, signOut } from '../apis';
 
-const { serviceUrl } = Constants.manifest.extra.serviceUrl;
+const { serviceUrl } = Constants.manifest.extra;
 
 async function save(values) {
   return SecureStore.setItemAsync('auth', JSON.stringify(values));

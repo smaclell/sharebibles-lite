@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Image, Picker, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 import list from '../assets/i18n/locales/list';
-import emails from '../assets/constants/emails';
 
 const styles = StyleSheet.create({
   container: {
@@ -70,26 +69,7 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, updateLocale, version } = props;
-
-  const sendFeedback = () => {
-    Linking.canOpenURL(`mailto:${emails.feedback}`)
-      .then((supported) => {
-        if (supported) {
-          const subject = I18n.t('feedback/feedback_subject');
-          return Linking.openURL(`mailto:${emails.feedback}?subject=${subject}`);
-        }
-        return null;
-      })
-      .catch(() => (
-        Alert.alert(
-          I18n.t('feedback/feedback_title'),
-          I18n.t('feedback/feedback_error', { email: emails.feedback }),
-          [{ text: I18n.t('button/ok'), onPress() {} }],
-          { cancelable: false },
-        )
-      ));
-  };
+  const { logout, acceptInvite, sendFeedback, updateLocale, version } = props;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -109,6 +89,17 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
+        <View style={SettingsItem.styles.container}>
+          <TextInput
+            style={SettingsItem.styles.text}
+            autoCorrect={false}
+            spellCheck={false}
+            onSubmitEditing={acceptInvite}
+            returnKeyType="send"
+            placeholderTextColor={colours.greys.lighter}
+            placeholder={I18n.t('settings/token_placeholder')}
+          />
+        </View>
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
@@ -125,6 +116,8 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   logout: PropTypes.func.isRequired,
+  acceptInvite: PropTypes.func.isRequired,
+  sendFeedback: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };

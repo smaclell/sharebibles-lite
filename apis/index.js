@@ -24,7 +24,8 @@ export const GEO_REGION_KEY = 'geofireRegion';
 export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
-  const geoKey = `locations--${locationKey}`;
+  // const geoKey = `locations--${locationKey}`;
+  const geoKey = locationKey;
   const geo = [wrapLatitude(created.latitude), wrapLongitude(created.longitude)];
 
   const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
@@ -38,15 +39,15 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5, // This is in KMs
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
+  query.on('key_entered', geoSubKey => callback(geoSubKey));
 
   return query;
 }
 
-export function fetchLocations({ regionKey, last }) {
+export function fetchLocations({ last }) {
   initialize();
   return firebase.database()
-    .ref(`locations`)
+    .ref('locations')
     .limitToLast(last)
     .once('value')
     .then(locations => Object.values(locations.val() || {}))
@@ -74,7 +75,7 @@ export function updateLocation(regionKey, options) {
     updateKeys[`${key}/${item}`] = value;
   });
 
-  const saved = firebase.database().ref(`locations`).update(updateKeys);
+  const saved = firebase.database().ref('locations').update(updateKeys);
 
   return Promise.resolve({ updated, saved });
 }

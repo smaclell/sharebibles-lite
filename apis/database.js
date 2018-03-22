@@ -5,11 +5,6 @@ import Sentry from 'sentry-expo';
 import { TEAM_KEY, GEO_REGION_KEY } from './index';
 import { convertArrayToLocations, convertToLocation } from '../utils/database';
 
-export function createDatabase() {
-  const db = openDatabase();
-  executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
-}
-
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);
 }
@@ -19,6 +14,10 @@ export function executeTransaction(statement, args, completed, error) {
   db.transaction((tx) => {
     tx.executeSql(statement, args, completed, error);
   });
+}
+
+export function createDatabase() {
+  executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
 }
 
 export function clearDatabase() {
@@ -50,7 +49,7 @@ export function updateLocalLocation(options) {
       reject(err);
     };
 
-    const { longitude, latitude, resources, status, key } = options;
+    const { resources, status, key } = options;
     // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude })); Uncomment this if user is ever able to change location position
 
     executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [resources, status, key], completed, error);
@@ -108,7 +107,7 @@ export async function addLocalLocation(locationData, regionKey = GEO_REGION_KEY,
   SecureStore.setItemAsync(key, JSON.stringify({ latitude, longitude }));
 
   return new Promise((resolve, reject) => {
-    const complete = (tx, result) => {
+    const complete = () => {
       resolve({
         key,
         created,

@@ -68,6 +68,7 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
+    this.props.updatePosition(this.state.latitude, this.state.longitude);
     setTimeout(this.onMapReady, 250);
   }
 
@@ -80,7 +81,7 @@ class OverviewMap extends PureComponent {
       return;
     }
 
-    this.props.updatePosition(latitude, longitude);
+    // this.props.updatePosition(latitude, longitude);
     this.setState({
       latitude,
       longitude,

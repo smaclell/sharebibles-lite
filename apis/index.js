@@ -24,8 +24,7 @@ export const GEO_REGION_KEY = 'geofireRegion';
 export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
-  // const geoKey = `locations--${locationKey}`;
-  const geoKey = locationKey;
+  const geoKey = `locations--${locationKey}`;
   const geo = [wrapLatitude(created.latitude), wrapLongitude(created.longitude)];
 
   const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
@@ -39,7 +38,7 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5, // This is in KMs
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey));
+  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
 
   return query;
 }

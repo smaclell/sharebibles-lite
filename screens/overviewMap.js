@@ -64,11 +64,11 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
+    this.onLocationChange = debounce(this.onLocationChange, 500);
     this.state = { ...this.initialRegion, centered: true, isReady: false };
   }
 
   componentDidMount() {
-    this.props.updatePosition(this.state.latitude, this.state.longitude);
     setTimeout(this.onMapReady, 250);
   }
 
@@ -81,7 +81,6 @@ class OverviewMap extends PureComponent {
       return;
     }
 
-    // this.props.updatePosition(latitude, longitude);
     this.setState({
       latitude,
       longitude,
@@ -89,6 +88,14 @@ class OverviewMap extends PureComponent {
       longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
       centered: false,
     });
+  }
+
+  onLocationChange = ({ latitude, longitude }) => {
+    if (!this.state.isReady) {
+      return;
+    }
+    console.log('location change');
+    this.props.updatePosition(latitude, longitude);
   }
 
   onLocationPress = async () => {
@@ -135,6 +142,7 @@ class OverviewMap extends PureComponent {
           initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
           onRegionChange={this.onRegionChange}
+          onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker

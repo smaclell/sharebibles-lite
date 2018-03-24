@@ -1,9 +1,8 @@
-import { SQLite, SecureStore } from 'expo';
+import { SQLite } from 'expo';
 import * as firebase from 'firebase';
-import moment from 'moment';
 import Sentry from 'sentry-expo';
-import { TEAM_KEY, GEO_REGION_KEY } from './index';
-import { convertArrayToLocations, convertToLocation } from '../utils/database';
+import { TEAM_KEY } from './index';
+import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);
@@ -80,7 +79,7 @@ export function fetchLocalLocation(locationKey) {
 }
 
 // fetch all locations in db
-export function fetchLocalLocations() {
+export function fetchLocalLocations(offlineOnly = false) {
   return new Promise((resolve, reject) => {
     const completed = async (tx, result) => {
       try {
@@ -93,48 +92,32 @@ export function fetchLocalLocations() {
     const error = (tx, err) => {
       reject(err);
     };
-    executeTransaction('select * from locations', null, completed, error);
+    if (offlineOnly) {
+      executeTransaction('select * from locations where uploaded = 0', null, completed, error);
+    } else {
+      executeTransaction('select * from locations', null, completed, error);
+    }
   });
 }
 
-export async function addLocalLocation(locationData, regionKey = GEO_REGION_KEY, team = TEAM_KEY) {
+export async function addLocalLocation(locationData, team = TEAM_KEY) {
   const { resources, status = null, latitude, longitude } = locationData;
   const resourcesString = JSON.stringify(resources);
-  const key = firebase.database().ref(`regions/${regionKey}/locations`).push().key;
-  const created = moment.utc().valueOf();
+  const key = firebase.database().ref('locations').push().key;
+  const locationObject = createLocationObject(key, status, resources, longitude, latitude);
 
   // Store the longitude and latitude in secure storage with same locationKey from DB
-  SecureStore.setItemAsync(key, JSON.stringify({ latitude, longitude }));
+  saveCoordinates(key, latitude, longitude);
 
   return new Promise((resolve, reject) => {
     const complete = () => {
-      resolve({
-        key,
-        created,
-        status,
-        resources,
-        longitude,
-        latitude,
-      });
+      resolve(locationObject);
     };
     const error = (tx, err) => {
       Sentry.captureException(err);
       reject(err);
     };
     executeTransaction('insert into locations (key, coordinateKey, createdAt, team, resources, status, uploaded) values (?, ?, ?, ?, ?, ?, ?)',
-      [key, key, created, team, resourcesString, status, 0], complete, error);
-  });
-}
-
-export function getLocalOnlyLocations() {
-  return new Promise((resolve, reject) => {
-    const completed = async (tx, result) => {
-      const locations = await convertArrayToLocations(result.rows._array);
-      resolve(locations);
-    }
-    const error = (tx, err) => {
-      reject(err);
-    }
-    executeTransaction('select * from locations where uploaded = 0', null, completed, error);
+      [key, key, locationObject.created, team, resourcesString, status, 0], complete, error);
   });
 }

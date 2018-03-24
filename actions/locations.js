@@ -1,6 +1,6 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
-import { updatePosition } from './position';
+//import { updatePosition } from './position';
 import { failed, pending, uploaded } from './uploads';
 import * as database from '../apis/database';
 
@@ -27,16 +27,14 @@ function wrapper(work, location) {
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
-  console.log('recieved location: ', location);
   return {
     type: RECIEVE_LOCATION,
     location,
   };
 }
 
-// Retores the local local locations, other locations are loaded by the geo query
-export function fetchLocalLocations() {
-  console.log('getting local locations');
+// Restores the local local locations, other locations are loaded by the geo query
+export function restoreLocalLocations() {
   return async (dispatch) => {
     try {
       const locations = await database.fetchLocalLocations();
@@ -54,19 +52,16 @@ export function fetchLocation(locationKey) {
       return Promise.resolve();
     }
 
-    return apis.fetchLocation(regionKey, locationKey)
+    return apis.fetchLocation(locationKey, regionKey)
       .then((location) => {
         if (location) {
-          console.log('location found');
           dispatch(receiveLocation(location));
         }
-        console.log('location:', location);
       });
   };
 }
 
 export function fetchAllLocationData(locationKey) {
-  console.log('Fetching all location data for:', locationKey);
   return async (dispatch) => {
     await dispatch(fetchLocation(locationKey));
   };
@@ -109,9 +104,10 @@ export function createLocation(options) {
 
     const locationData = { latitude, longitude, resources, status };
 
-    dispatch(updatePosition(latitude, longitude));
+    // dispatch(updatePosition(latitude, longitude)); Is this needed?
 
     const localLocation = await database.addLocalLocation(locationData, regionKey);
+    console.log(localLocation);
     const key = localLocation.key;
 
     dispatch(pending(localLocation.key));
@@ -131,7 +127,7 @@ export function pushLocalLocations() {
       return false;
     }
 
-    const offlineLocations = await database.getLocalOnlyLocations();
+    const offlineLocations = await database.fetchLocalLocations(true);
     if (!offlineLocations) {
       return false;
     }

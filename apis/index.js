@@ -1,8 +1,8 @@
-import moment from 'moment';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
+import { createLocationObject } from '../utils/database';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -24,7 +24,7 @@ export const GEO_REGION_KEY = 'geofireRegion';
 export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
-  const geoKey = `locations--${locationKey}`;
+  const geoKey = locationKey;
   const geo = [wrapLatitude(created.latitude), wrapLongitude(created.longitude)];
 
   const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
@@ -38,7 +38,7 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5, // This is in KMs
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
+  query.on('key_entered', geoSubKey => callback(geoSubKey));
 
   return query;
 }
@@ -89,13 +89,7 @@ export async function createLocation(regionKey, options, key) {
     pushed = firebase.database().ref('locations').push();
   }
 
-  const created = {
-    key: pushed.key,
-    created: moment.utc().valueOf(),
-    status: null,
-    resources: {}, // { given: number, needed: number }
-    ...options,
-  };
+  const created = createLocationObject(pushed.key, null, {}, options.longitude, options.latitude);
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

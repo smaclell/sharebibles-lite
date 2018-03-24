@@ -9,12 +9,12 @@ import thunk from 'redux-thunk';
 
 import Navigation from './nav';
 import reducer from './reducers';
-import { createDatabase } from './apis/database';
+import { createDatabase, clearDatabase } from './apis/database';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
 import * as positionActions from './actions/position';
-import { fetchLocalLocations } from './actions/locations';
+import { restoreLocalLocations } from './actions/locations';
 
 Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
@@ -64,7 +64,7 @@ class App extends Component {
     // Fetches users current position and sets state
     await store.dispatch(positionActions.initialize());
     // Fetches locations
-    await store.dispatch(fetchLocalLocations());
+    await store.dispatch(restoreLocalLocations());
 
     this.setState({ isReady: true });
     I18n.setDateLocale();

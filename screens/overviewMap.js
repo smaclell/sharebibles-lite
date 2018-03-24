@@ -141,7 +141,7 @@ class OverviewMap extends PureComponent {
           region={this.state}
           initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
-          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChange}
           onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (

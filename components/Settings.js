@@ -73,15 +73,9 @@ const Settings = (props) => {
     logout,
     updateLocale,
     version,
-    showPushLocations,
-    pushLocations,
-    connected,
+    showPushDialog,
     sendFeedback,
   } = props;
-
-  const showPushDialog = () => {
-    showPushLocations(connected, pushLocations);
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -120,9 +114,7 @@ Settings.propTypes = {
   logout: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
-  pushLocations: PropTypes.func.isRequired,
-  showPushLocations: PropTypes.func.isRequired,
-  connected: PropTypes.bool.isRequired,
+  showPushDialog: PropTypes.func.isRequired,
   sendFeedback: PropTypes.func.isRequired,
 };
 

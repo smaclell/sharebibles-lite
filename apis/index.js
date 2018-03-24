@@ -89,7 +89,7 @@ export async function createLocation(regionKey, options, key) {
     pushed = firebase.database().ref('locations').push();
   }
 
-  const created = createLocationObject(pushed.key, null, {}, options.longitude, options.latitude);
+  const created = createLocationObject(pushed.key, options);
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

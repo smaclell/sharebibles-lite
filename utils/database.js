@@ -1,15 +1,12 @@
 import { SecureStore } from 'expo';
 import moment from 'moment';
 
-export function createLocationObject(key, status = null, resources = {}, longitude, latitude) {
+export function createLocationObject(key, options) {
   const created = moment.utc().valueOf();
   return {
     key,
     created,
-    status,
-    resources,
-    latitude,
-    longitude,
+    ...options,
   };
 }
 

@@ -3,7 +3,6 @@ import { update } from './overview';
 
 export const UPDATE_POSITION = 'UPDATE_POSITION';
 export function updatePosition(latitude, longitude) {
-  console.log('updated position');
   return (dispatch) => {
     dispatch({
       type: UPDATE_POSITION,

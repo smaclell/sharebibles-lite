@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
 import { Alert, Linking } from 'react-native';
@@ -6,11 +7,31 @@ import Settings from '../components/Settings';
 import { updateLocale } from '../actions/i18n';
 import { pushLocalLocations } from '../actions/locations';
 
-
 import I18n from '../assets/i18n/i18n';
 import emails from '../assets/constants/emails';
 
-const SettingsContainer = props => <Settings {...props} />;
+const SettingsContainer = (props) => {
+  const { connected, pushLocations } = props;
+  const showPushDialog = () => {
+    if (!connected) {
+      Alert.alert(
+        I18n.t('button/offline'),
+        I18n.t('connectivity/action_requires_connection'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+      return;
+    }
+    Alert.alert(
+      I18n.t('settings/push_locations'),
+      I18n.t('settings/push_locations_message'),
+      [{ text: I18n.t('button/cancel'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() { pushLocations(); } }],
+      { cancelable: true },
+    );
+  };
+
+  return <Settings showPushDialog={showPushDialog} {...props} />;
+};
 
 const sendFeedback = () => {
   Linking.canOpenURL(`mailto:${emails.feedback}`)
@@ -31,22 +52,9 @@ const sendFeedback = () => {
     ));
 };
 
-const showPushLocations = (connected, pushLocations) => {
-  if (!connected) {
-    Alert.alert(
-      I18n.t('button/offline'),
-      I18n.t('connectivity/action_requires_connection'),
-      [{ text: I18n.t('button/ok'), onPress() {} }],
-      { cancelable: false },
-    );
-    return;
-  }
-  Alert.alert(
-    I18n.t('settings/push_locations'),
-    I18n.t('settings/push_locations_message'),
-    [{ text: I18n.t('button/cancel'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() { pushLocations(); } }],
-    { cancelable: true },
-  );
+SettingsContainer.propTypes = {
+  pushLocations: PropTypes.func.isRequired,
+  connected: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -60,7 +68,6 @@ const mapDispatchToProps = dispatch => ({
   updateLocale: locale => dispatch(updateLocale(locale)),
   pushLocations: () => dispatch(pushLocalLocations()),
   sendFeedback,
-  showPushLocations,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer);

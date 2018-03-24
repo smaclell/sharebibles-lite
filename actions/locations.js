@@ -103,10 +103,7 @@ export function createLocation(options) {
 
     const locationData = { latitude, longitude, resources, status };
 
-    // dispatch(updatePosition(latitude, longitude)); Is this needed?
-
     const localLocation = await database.addLocalLocation(locationData, regionKey);
-    console.log(localLocation);
     const key = localLocation.key;
 
     dispatch(pending(localLocation.key));
@@ -132,8 +129,9 @@ export function pushLocalLocations() {
     }
     
     for (const localLocation of offlineLocations) {
-      const { latitude, longitude } = localLocation;
-      const { created: location, saved } = await apis.createLocation(regionKey, { latitude, longitude }, location.key);
+      const { latitude, longitude, status, resources, key } = localLocation;
+      const options = { latitude, longitude, status, resources };
+      const { created: location, saved } = await apis.createLocation(regionKey, options, key);
 
       wrapper(saved, location);
     }

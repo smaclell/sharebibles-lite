@@ -94,7 +94,7 @@ class OverviewMap extends PureComponent {
     if (!this.state.isReady) {
       return;
     }
-    console.log('location change');
+
     this.props.updatePosition(latitude, longitude);
   }
 

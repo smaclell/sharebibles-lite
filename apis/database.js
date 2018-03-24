@@ -49,7 +49,8 @@ export function updateLocalLocation(options) {
     };
 
     const { resources, status, key } = options;
-    // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude })); Uncomment this if user is ever able to change location position
+    // Uncomment this if user is ever able to change location position
+    // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
 
     executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [resources, status, key], completed, error);
   });

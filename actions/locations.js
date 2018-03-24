@@ -1,6 +1,5 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
-//import { updatePosition } from './position';
 import { failed, pending, uploaded } from './uploads';
 import * as database from '../apis/database';
 

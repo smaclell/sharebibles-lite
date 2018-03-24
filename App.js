@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 import Navigation from './nav';
 import reducer from './reducers';
-import { createDatabase, clearDatabase } from './apis/database';
+import { createDatabase } from './apis/database';
 import { initialize } from './apis';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';

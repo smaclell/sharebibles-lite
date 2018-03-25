@@ -90,14 +90,6 @@ class OverviewMap extends PureComponent {
     });
   }
 
-  onLocationChange = ({ latitude, longitude }) => {
-    if (!this.state.isReady) {
-      return;
-    }
-
-    this.props.updatePosition(latitude, longitude);
-  }
-
   onLocationPress = async () => {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
@@ -133,7 +125,6 @@ class OverviewMap extends PureComponent {
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
-          showsMyLocationButton={false}
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
@@ -142,7 +133,6 @@ class OverviewMap extends PureComponent {
           initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
           onRegionChangeComplete={this.onRegionChange}
-          onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker

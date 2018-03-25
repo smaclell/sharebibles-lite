@@ -76,12 +76,12 @@ class OverviewMap extends PureComponent {
     this.setState({ isReady: true });
   }
 
+  // Called when user finishes moving the map on device
   onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
     if (!this.state.isReady) {
       return;
     }
 
-    this.props.updatePosition(latitude, longitude);
     this.setState({
       latitude,
       longitude,
@@ -89,17 +89,31 @@ class OverviewMap extends PureComponent {
       longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
       centered: false,
     });
+
+    if (this.state.latitude === this.props.position.latitude && this.state.longitude === this.props.position.longitude) {
+      this.setState({ centered: true });
+    }
   }
 
   onLocationPress = async () => {
     const { location } = await getCurrentPosition(true);
     if (location) {
+      this.map.animateToCoordinate(location, 1000);
+
       this.props.updatePosition(location.latitude, location.longitude);
       this.setState({
         latitude: location.latitude,
         longitude: location.longitude,
         centered: true,
       });
+    }
+  }
+
+  // Called when the users physical location changes
+  onLocationChange = (coord) => {
+    if (this.state.centered) {
+      this.props.updatePosition(coord.latitude, coord.longitude)
+      this.map.animateToCoordinate(coord, 1000);
     }
   }
 
@@ -122,24 +136,27 @@ class OverviewMap extends PureComponent {
     return (
       <View style={styles.container}>
         <MapView
+          ref={map => this.map = map}
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
+          showsMyLocationButton={false}
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          region={this.state}
-          initialRegion={this.initialRegion}
+          initialRegion={this.state}
           onMapReady={this.onMapReady}
           onRegionChangeComplete={this.onRegionChange}
+          onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker
               key={location.key}
               coordinate={{
                 latitude: location.latitude,
-                longitude: location.longitude }}
+                longitude: location.longitude
+              }}
               pinColor={pinColor}
             >
               <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>

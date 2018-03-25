@@ -155,8 +155,7 @@ class OverviewMap extends PureComponent {
               key={location.key}
               coordinate={{
                 latitude: location.latitude,
-                longitude: location.longitude
-              }}
+                longitude: location.longitude }}
               pinColor={pinColor}
             >
               <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>

@@ -4,6 +4,33 @@ import { signIn, signOut } from '../apis';
 
 const { serviceUrl } = Constants.manifest.extra;
 
+async function refetch(url, options) {
+  const params = Object.assign({ headers: {} }, options);
+
+  params.headers['content-type'] = 'application/json';
+
+  const response = await fetch(url, params);
+
+  let values;
+
+  try {
+    if (response.status !== 204) {
+      values = await response.json();
+    }
+  } catch (e) {
+    values = {};
+  }
+
+  if (!response.ok) {
+    const error = new Error(`Response was not okay when calling: ${url}`);
+    error.status = response.status;
+    error.reason = values.error || values.message || 'unknown';
+    throw error;
+  }
+
+  return values;
+}
+
 async function save(values) {
   return SecureStore.setItemAsync('auth', JSON.stringify(values));
 }
@@ -22,15 +49,13 @@ function accepted({ regionKey, teamKey }) {
 }
 
 async function authenticate(refreshToken) {
-  const response = await fetch(`${serviceUrl}/api/auth/token`, {
+  const { token } = await refetch(`${serviceUrl}/api/auth/token`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
       authorization: `Bearer ${refreshToken}`,
     },
   });
 
-  const { token } = await response.json();
   return signIn(token);
 }
 
@@ -49,15 +74,11 @@ export function restore() {
 
 export function accept(token) {
   return async (dispatch) => {
-    const response = await fetch(`${serviceUrl}/api/auth/invites/accept`, {
+    const values = await refetch(`${serviceUrl}/api/auth/invites/accept`, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
       body: JSON.stringify({ token: token.trim() }),
     });
 
-    const values = await response.json();
     await save(values);
 
     dispatch(accepted(values));

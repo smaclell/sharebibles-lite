@@ -94,7 +94,7 @@ const Settings = (props) => {
             style={SettingsItem.styles.text}
             autoCorrect={false}
             spellCheck={false}
-            onSubmitEditing={acceptInvite}
+            onSubmitEditing={e => acceptInvite(e.nativeEvent.text)}
             returnKeyType="send"
             placeholderTextColor={colours.greys.lighter}
             placeholder={I18n.t('settings/token_placeholder')}

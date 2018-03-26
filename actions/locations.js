@@ -13,7 +13,7 @@ export function receiveLocation(location) {
 
 export function fetchLocations() {
   return (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { authentication: { regionKey } } = getState();
     return apis.fetchLocations({ regionKey, last: 25 })
       .then((locations) => {
         locations.forEach(location => location && dispatch(receiveLocation(location)));
@@ -23,7 +23,7 @@ export function fetchLocations() {
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { authentication: { regionKey } } = getState();
 
     return apis.fetchLocation(regionKey, locationKey)
       .then((location) => {
@@ -43,7 +43,7 @@ export function fetchAllLocationData(locationKey) {
 
 export function updateLocation(options) {
   return (dispatch, getState) => {
-    const { regionKey, locations } = getState();
+    const { authentication: { regionKey }, locations } = getState();
     const original = { ...locations[options.key] };
 
     return apis.updateLocation(regionKey, { ...original, ...options })
@@ -62,7 +62,7 @@ export function createLocation(options) {
   const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { authentication: { regionKey } } = getState();
 
     const locationData = {
       latitude,

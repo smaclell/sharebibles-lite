@@ -22,7 +22,6 @@ const reducer = combineReducers({
   resources,
   statuses,
   uploads,
-  regionKey: (state = 'test-region') => state,
 });
 
 export default reducer;

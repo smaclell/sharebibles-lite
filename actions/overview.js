@@ -22,7 +22,10 @@ export function update(latitude, longitude) {
 
 function getGeoKey() {
   return (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { authentication: { regionKey } } = getState();
+    if (!regionKey) {
+      return null;
+    }
     return `${REGION_MODE}/${regionKey}`;
   };
 }
@@ -36,6 +39,9 @@ export function updateMode(mode) {
 
     const { position } = getState();
     const key = dispatch(getGeoKey(mode));
+    if (!key) {
+      return;
+    }
 
     query = apis.queryGeoData(
       key,

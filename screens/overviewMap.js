@@ -48,6 +48,8 @@ const initialLongitudeDelta = 0.0006;
 const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
 
+const animationTime = 800;
+
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
 const backgroundColor = 'rgba(0,0,0,0)';
@@ -77,7 +79,7 @@ class OverviewMap extends PureComponent {
   }
 
   // Called when user finishes moving the map on device
-  onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+  onRegionChangeComplete = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
     if (!this.state.isReady) {
       return;
     }
@@ -90,30 +92,30 @@ class OverviewMap extends PureComponent {
       centered: false,
     });
 
-    if (this.state.latitude === this.props.position.latitude && this.state.longitude === this.props.position.longitude) {
-      this.setState({ centered: true });
-    }
+    this.props.updatePosition(latitude, longitude);
   }
 
   onLocationPress = async () => {
     const { location } = await getCurrentPosition(true);
     if (location) {
-      this.map.animateToCoordinate(location, 1000);
+      this.map.animateToCoordinate(location, animationTime);
 
       this.props.updatePosition(location.latitude, location.longitude);
       this.setState({
         latitude: location.latitude,
         longitude: location.longitude,
-        centered: true,
       });
+
+      //Wait for animation to finish then set centered
+      setTimeout(() => this.setState({ centered: true }), animationTime + 100);
     }
   }
 
   // Called when the users physical location changes
   onLocationChange = (coord) => {
     if (this.state.centered) {
-      this.props.updatePosition(coord.latitude, coord.longitude)
-      this.map.animateToCoordinate(coord, 1000);
+      this.props.updatePosition(coord.latitude, coord.longitude);
+      this.map.animateToCoordinate(coord, animationTime);
     }
   }
 
@@ -147,7 +149,7 @@ class OverviewMap extends PureComponent {
           provider="google"
           initialRegion={this.state}
           onMapReady={this.onMapReady}
-          onRegionChangeComplete={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (

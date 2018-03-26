@@ -8,6 +8,7 @@ import I18n, { updateLocale } from '../actions/i18n';
 import emails from '../assets/constants/emails';
 
 const mapStateToProps = state => ({
+  ...state.authentication,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
 });

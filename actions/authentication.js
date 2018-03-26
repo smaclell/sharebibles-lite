@@ -36,7 +36,7 @@ async function save(values) {
 }
 
 async function load() {
-  return SecureStore.getItemAsync('auth');
+  return SecureStore.getItemAsync('auth').then(JSON.parse);
 }
 
 async function clear() {
@@ -61,7 +61,12 @@ async function authenticate(refreshToken) {
 
 export function restore() {
   return async (dispatch) => {
-    const values = await load();
+    let values;
+    try {
+      values = await load();
+    } catch (e) {
+      values = null;
+    }
 
     if (!values || !values.refreshToken) {
       return;

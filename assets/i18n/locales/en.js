@@ -39,6 +39,7 @@ export default {
   'settings/change_language': 'Language:',
   'settings/invite': 'Share Invite',
   'settings/logout': 'Logout',
+  'settings/region': 'Region: {{region}}',
   'settings/send_feedback': 'Send Feedback',
   'settings/token_title': 'Access Token',
   'settings/token_success': 'Thank you for entering your access token!',

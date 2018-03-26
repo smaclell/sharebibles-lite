@@ -37,6 +37,7 @@ export default {
   'settings/change_language': 'Idioma:',
   'settings/invite': 'Comparte Invitación',
   'settings/logout': 'Cerrar Sesión',
+  'settings/region': 'Región: {{region}}',
   'settings/send_feedback': 'Enviar Comentarios',
   'settings/token_title': 'Translate',
   'settings/token_success': 'Translate',

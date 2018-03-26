@@ -35,6 +35,7 @@ export default {
   'settings/change_language': 'ภาษา:',
   'settings/invite': 'แชร์คำเชิญ',
   'settings/logout': 'ออกจากระบบ',
+  'settings/region': 'Translate ภูมิภาค: {{region}}',
   'settings/send_feedback': 'ส่งความคิดเห็น',
   'settings/token_title': 'Translate',
   'settings/token_success': 'Translate',

@@ -48,12 +48,12 @@ export function update(latitude, longitude) {
 export const UPDATE_OVERVIEW_MODE = 'UPDATE_OVERVIEW_MODE';
 export function updateMode(mode) {
   return (dispatch) => {
-    dispatch(updateLocations());
-
     dispatch({
       type: UPDATE_OVERVIEW_MODE,
       mode,
     });
+
+    dispatch(updateLocations());
   };
 }
 

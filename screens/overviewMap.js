@@ -64,7 +64,6 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.onLocationChange = debounce(this.onLocationChange, 500);
     this.state = { ...this.initialRegion, centered: true, isReady: false };
   }
 

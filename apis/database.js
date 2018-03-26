@@ -1,7 +1,6 @@
 import { SQLite } from 'expo';
-import * as firebase from 'firebase';
 import Sentry from 'sentry-expo';
-import { TEAM_KEY } from './index';
+import { TEAM_KEY, pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
 export function openDatabase(databaseName = 'locations.db') {
@@ -104,7 +103,7 @@ export function fetchLocalLocations(offlineOnly = false) {
 export async function addLocalLocation(locationData, team = TEAM_KEY) {
   const { resources, status = null, latitude, longitude } = locationData;
   const resourcesString = JSON.stringify(resources);
-  const key = firebase.database().ref('locations').push().key;
+  const key = pushRef('locations').key;
   const locationObject = createLocationObject(key, locationData);
 
   // Store the longitude and latitude in secure storage with same locationKey from DB

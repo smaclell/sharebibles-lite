@@ -20,6 +20,16 @@ function getGeoFire(path) {
   return new GeoFire(ref);
 }
 
+export function pushRef(ref) {
+  initialize();
+  return firebase.database().ref(ref).push();
+}
+
+export function getRef(ref) {
+  initialize();
+  return firebase.database().ref(ref);
+}
+
 export const GEO_REGION_KEY = 'geofireRegion';
 export const TEAM_KEY = 'test_team';
 
@@ -84,9 +94,9 @@ export async function createLocation(regionKey, options, key) {
 
   let pushed;
   if (key) {
-    pushed = firebase.database().ref(`locations/${key}`);
+    pushed = getRef(`locations/${key}`);
   } else {
-    pushed = firebase.database().ref('locations').push();
+    pushed = pushRef('locations');
   }
 
   const created = createLocationObject(pushed.key, options);

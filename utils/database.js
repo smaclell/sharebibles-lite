@@ -39,9 +39,8 @@ export async function convertToLocation(location) {
 
 // converts array from local db to app type location object:
 // { key, created, status, resources, longitude, latitude }
-export async function convertArrayToLocations(databaseArray) {
-  const promises = databaseArray.map(location => convertToLocation(location));
+export function convertArrayToLocations(databaseArray) {
+  const promises = databaseArray.map(convertToLocation);
 
-  const locations = await Promise.all(promises);
-  return locations;
+  return Promise.all(promises);
 }

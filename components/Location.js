@@ -15,7 +15,7 @@ import VisitStatus from './VisitStatus';
 import I18n from '../assets/i18n/i18n';
 
 const Location = ({ created, status, initial, navigate, upload }) => (
-  <TouchableOpacity onPress={() => navigate()}>
+  <TouchableOpacity>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 110, marginRight: 5 }}>

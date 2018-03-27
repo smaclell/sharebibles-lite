@@ -69,7 +69,15 @@ const styles = StyleSheet.create({
 });
 
 const Settings = (props) => {
-  const { logout, acceptInvite, regionKey, sendFeedback, updateLocale, version } = props;
+  const {
+    acceptInvite,
+    logout,
+    regionKey,
+    showPushDialog,
+    sendFeedback,
+    updateLocale,
+    version,
+  } = props;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -107,6 +115,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
+        <SettingsItem term="settings/push_locations" onPress={showPushDialog} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
@@ -122,10 +131,11 @@ const Settings = (props) => {
 };
 
 Settings.propTypes = {
-  logout: PropTypes.func.isRequired,
   acceptInvite: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,
+  showPushDialog: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };

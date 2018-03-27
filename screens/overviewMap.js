@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   locationButton: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 50,
     right: 10,
     paddingVertical: 3,
     paddingHorizontal: 6,
@@ -48,6 +48,8 @@ const initialLongitudeDelta = 0.0006;
 const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
 
+const animationTime = 800;
+
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
 const backgroundColor = 'rgba(0,0,0,0)';
@@ -68,7 +70,6 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchLocations();
     setTimeout(this.onMapReady, 250);
   }
 
@@ -76,12 +77,12 @@ class OverviewMap extends PureComponent {
     this.setState({ isReady: true });
   }
 
-  onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+  // Called when user finishes moving the map on device
+  onRegionChangeComplete = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
     if (!this.state.isReady) {
       return;
     }
 
-    this.props.updatePosition(latitude, longitude);
     this.setState({
       latitude,
       longitude,
@@ -89,17 +90,32 @@ class OverviewMap extends PureComponent {
       longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
       centered: false,
     });
+
+    this.props.updatePosition(latitude, longitude);
   }
 
   onLocationPress = async () => {
+    if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
+      this.map.animateToCoordinate(location, animationTime);
+
       this.props.updatePosition(location.latitude, location.longitude);
       this.setState({
         latitude: location.latitude,
         longitude: location.longitude,
-        centered: true,
       });
+
+      //Wait for animation to finish then set centered
+      setTimeout(() => this.setState({ centered: true }), animationTime + 100);
+    }
+  }
+
+  // Called when the users physical location changes
+  onLocationChange = (coord) => {
+    if (this.state.centered) {
+      this.props.updatePosition(coord.latitude, coord.longitude);
+      this.map.animateToCoordinate(coord, animationTime);
     }
   }
 
@@ -122,17 +138,19 @@ class OverviewMap extends PureComponent {
     return (
       <View style={styles.container}>
         <MapView
+          ref={map => this.map = map}
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
+          showsMyLocationButton={false}
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          region={this.state}
-          initialRegion={this.initialRegion}
+          initialRegion={this.state}
           onMapReady={this.onMapReady}
-          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          onUserLocationChange={this.onLocationChange}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker
@@ -167,7 +185,6 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
-  fetchLocations: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({

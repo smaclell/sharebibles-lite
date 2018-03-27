@@ -1,8 +1,8 @@
-import moment from 'moment';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
+import { createLocationObject } from '../utils/database';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -28,10 +28,21 @@ function getGeoFire(path) {
   return new GeoFire(ref);
 }
 
+export function pushRef(ref) {
+  initialize();
+  return firebase.database().ref(ref).push();
+}
+
+export function getRef(ref) {
+  initialize();
+  return firebase.database().ref(ref);
+}
+
 export const GEO_REGION_KEY = 'geofireRegion';
+export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
-  const geoKey = `locations--${locationKey}`;
+  const geoKey = locationKey;
   const geo = [wrapLatitude(created.latitude), wrapLongitude(created.longitude)];
 
   const geoRegion = getGeoFire(`${GEO_REGION_KEY}/${regionKey}`).set(geoKey, geo);
@@ -45,25 +56,25 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5, // This is in KMs
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey.replace(/^(locations?--)/, '')));
+  query.on('key_entered', geoSubKey => callback(geoSubKey));
 
   return query;
 }
 
-export function fetchLocations({ regionKey, last }) {
+export function fetchLocations({ last }) {
   initialize();
   return firebase.database()
-    .ref(`regions/${regionKey}/locations`)
+    .ref('locations')
     .limitToLast(last)
     .once('value')
     .then(locations => Object.values(locations.val() || {}))
     .catch(() => []);
 }
 
-export function fetchLocation(regionKey, locationKey) {
+export function fetchLocation(locationKey) {
   initialize();
   return firebase.database()
-    .ref(`regions/${regionKey}locations/${locationKey}`)
+    .ref(`locations/${locationKey}`)
     .once('value')
     .then(location => location.val());
 }
@@ -81,23 +92,22 @@ export function updateLocation(regionKey, options) {
     updateKeys[`${key}/${item}`] = value;
   });
 
-  const saved = firebase.database().ref(`regions/${regionKey}/locations`).update(updateKeys);
+  const saved = firebase.database().ref('locations').update(updateKeys);
 
   return Promise.resolve({ updated, saved });
 }
 
-export async function createLocation(regionKey, options) {
+export async function createLocation(regionKey, options, key) {
   initialize();
 
-  const pushed = firebase.database().ref(`regions/${regionKey}/locations`).push();
+  let pushed;
+  if (key) {
+    pushed = getRef(`locations/${key}`);
+  } else {
+    pushed = pushRef('locations');
+  }
 
-  const created = {
-    key: pushed.key,
-    created: moment.utc().valueOf(),
-    status: null,
-    resources: {}, // { given: number, needed: number }
-    ...options,
-  };
+  const created = createLocationObject(pushed.key, options);
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

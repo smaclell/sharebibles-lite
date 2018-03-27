@@ -5,12 +5,14 @@ import { Constants } from 'expo';
 import Settings from '../components/Settings';
 import { accept, logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
+import { pushLocalLocations } from '../actions/locations';
 import emails from '../assets/constants/emails';
 
 const mapStateToProps = state => ({
   ...state.authentication,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
+  connected: state.connected,
 });
 
 const sendFeedback = () => {
@@ -57,6 +59,34 @@ const mapDispatchToProps = dispatch => ({
   },
   sendFeedback,
   updateLocale: locale => dispatch(updateLocale(locale)),
+  pushLocations: () => dispatch(pushLocalLocations()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+const mergeProps = (stateProps, dispatchProps) => {
+  const props = Object.assign({}, stateProps, dispatchProps);
+
+  props.showPushDialog = () => {
+    if (!stateProps.connected) {
+      Alert.alert(
+        I18n.t('button/offline'),
+        I18n.t('connectivity/action_requires_connection'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+      return;
+    }
+    Alert.alert(
+      I18n.t('settings/push_locations'),
+      I18n.t('settings/push_locations_message'),
+      [
+        { text: I18n.t('button/cancel'), onPress() {} },
+        { text: I18n.t('button/push_locations'), onPress() { dispatchProps.pushLocations(); } },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  return props;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Settings);

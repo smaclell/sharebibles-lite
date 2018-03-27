@@ -1,7 +1,6 @@
 import {
   Text,
   Image,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
@@ -14,8 +13,8 @@ import uploadStyles from '../styles/upload';
 import VisitStatus from './VisitStatus';
 import I18n from '../assets/i18n/i18n';
 
-const Location = ({ created, status, initial, navigate, upload }) => (
-  <TouchableOpacity onPress={() => navigate()}>
+const Location = ({ created, status, initial, upload }) => (
+  <View>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />
       <View style={{ flex: 1, minWidth: 110, marginRight: 5 }}>
@@ -28,7 +27,7 @@ const Location = ({ created, status, initial, navigate, upload }) => (
       </View>
       <View style={[styles.circle, uploadStyles[upload]]} />
     </View>
-  </TouchableOpacity>
+  </View>
 );
 
 Location.propTypes = {

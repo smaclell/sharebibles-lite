@@ -21,9 +21,6 @@ const Callout = ({ created }) => (
     <View style={{ marginBottom: 5 }}>
       <Text style={{ fontSize: fonts.normal }}>{I18n.t('components/last_visited', { visited_time: relativeTime(created) })}</Text>
     </View>
-    <Text style={{ fontSize: fonts.small, color: 'red', fontWeight: 'bold' }}>
-      {I18n.t('components/tap_to_visit')}
-    </Text>
   </View>
 );
 

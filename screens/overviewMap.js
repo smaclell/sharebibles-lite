@@ -66,15 +66,14 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: true, isReady: false };
-  }
-
-  componentDidMount() {
-    setTimeout(this.onMapReady, 250);
+    this.state = { ...this.initialRegion, centered: false, isReady: false };
   }
 
   onMapReady = () => {
     this.setState({ isReady: true });
+
+    // Initially map will be centered, need to wait till map is done setting up
+    setTimeout(() => this.setState({ centered: true }), 250);
   }
 
   // Called when user finishes moving the map on device
@@ -100,13 +99,7 @@ class OverviewMap extends PureComponent {
     if (location) {
       this.map.animateToCoordinate(location, animationTime);
 
-      this.props.updatePosition(location.latitude, location.longitude);
-      this.setState({
-        latitude: location.latitude,
-        longitude: location.longitude,
-      });
-
-      //Wait for animation to finish then set centered
+      // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
     }
   }
@@ -138,7 +131,7 @@ class OverviewMap extends PureComponent {
     return (
       <View style={styles.container}>
         <MapView
-          ref={map => this.map = map}
+          ref={(map) => { this.map = map; }}
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
@@ -160,7 +153,7 @@ class OverviewMap extends PureComponent {
                 longitude: location.longitude }}
               pinColor={pinColor}
             >
-              <MapView.Callout onPress={() => this.goToFollowUp(location.key)}>
+              <MapView.Callout>
                 <PinCallout {...location} />
               </MapView.Callout>
             </MapView.Marker>

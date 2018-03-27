@@ -11,6 +11,7 @@ import Navigation from './nav';
 import reducer from './reducers';
 import { createDatabase } from './apis/database';
 import { initialize } from './apis';
+import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
 import * as positionActions from './actions/position';
@@ -39,7 +40,17 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.loadAssetsAsync();
+    Promise.all([
+      ...this.loadFontsAsync(),
+      createDatabase(),
+      store.dispatch(positionActions.initialize()),
+      store.dispatch(restore()),
+      I18n.initAsync(),
+    ]).then(() => {
+      I18n.setDateLocale();
+      this.setState({ isReady: true });
+      return store.dispatch(restoreLocalLocations());
+    });
   }
 
   componentDidCatch(error, errorInfo) {
@@ -47,22 +58,9 @@ class App extends Component {
     throw error;
   }
 
-  async loadAssetsAsync() {
+  async loadFontsAsync() {
     const fonts = [FontAwesome.font, Entypo.font];
-
-    const cacheFonts = fonts.map(font => Font.loadAsync(font));
-    await Promise.all([...cacheFonts, I18n.initAsync()]);
-
-    // Creates locations database if it doesn't already exist
-    createDatabase();
-
-    // Fetches users current position and sets state
-    await store.dispatch(positionActions.initialize());
-    // Fetches locations
-    await store.dispatch(restoreLocalLocations());
-
-    this.setState({ isReady: true });
-    I18n.setDateLocale();
+    return fonts.map(Font.loadAsync);
   }
 
   render() {

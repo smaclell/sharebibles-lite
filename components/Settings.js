@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
@@ -70,16 +70,36 @@ const styles = StyleSheet.create({
 
 const Settings = (props) => {
   const {
+    acceptInvite,
     logout,
-    updateLocale,
-    version,
+    regionKey,
     showPushDialog,
     sendFeedback,
+    updateLocale,
+    version,
   } = props;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.options_container}>
+        { regionKey && (
+          <View style={SettingsItem.styles.container}>
+            <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
+          </View>
+        )}
+        { !regionKey && (
+          <View style={SettingsItem.styles.container}>
+            <TextInput
+              style={SettingsItem.styles.text}
+              autoCorrect={false}
+              spellCheck={false}
+              onSubmitEditing={e => acceptInvite(e.nativeEvent.text)}
+              returnKeyType="send"
+              placeholderTextColor={colours.greys.lighter}
+              placeholder={I18n.t('settings/token_placeholder')}
+            />
+          </View>
+        )}
         <View style={SettingsItem.styles.container}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
@@ -111,11 +131,17 @@ const Settings = (props) => {
 };
 
 Settings.propTypes = {
+  acceptInvite: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  regionKey: PropTypes.string,
+  sendFeedback: PropTypes.func.isRequired,
+  showPushDialog: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
-  showPushDialog: PropTypes.func.isRequired,
-  sendFeedback: PropTypes.func.isRequired,
+};
+
+Settings.defaultProps = {
+  regionKey: null,
 };
 
 export default Settings;

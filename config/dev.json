@@ -36,6 +36,7 @@
       }
     },
     "extra": {
+      "serviceUrl": "https://sharebibles-lite-scott.firebaseapp.com",
       "firebase": {
         "apiKey": "AIzaSyD1MJsvOB171NxB4Cg_dd5bCwA26LCqKxA",
         "authDomain": "sharebibles-lite-scott.firebaseapp.com",

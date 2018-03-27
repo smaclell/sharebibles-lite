@@ -12,7 +12,10 @@ let query = initial;
 
 function getGeoKey() {
   return (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { authentication: { regionKey } } = getState();
+    if (!regionKey) {
+      return null;
+    }
     return `${REGION_MODE}/${regionKey}`;
   };
 }
@@ -24,6 +27,9 @@ function updateLocations() {
     }
     const { position } = getState();
     const key = dispatch(getGeoKey());
+    if (!key) {
+      return;
+    }
 
     query = apis.queryGeoData(
       key,

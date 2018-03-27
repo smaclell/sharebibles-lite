@@ -46,7 +46,7 @@ export function restoreLocalLocations() {
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { regionKey, connected } = getState();
+    const { authentication: { regionKey }, connected } = getState();
     if (!connected) {
       return Promise.resolve();
     }
@@ -68,7 +68,7 @@ export function fetchAllLocationData(locationKey) {
 
 export function updateLocation(options) {
   return async (dispatch, getState) => {
-    const { regionKey, locations, connected } = getState();
+    const { authentication: { regionKey }, locations, connected } = getState();
     const original = { ...locations[options.key] };
 
     const isUpdated = await database.updateLocalLocation({ ...original, ...options });
@@ -99,7 +99,7 @@ export function createLocation(options) {
   const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { regionKey, connected } = getState();
+    const { authentication: { regionKey }, connected } = getState();
 
     const locationData = { latitude, longitude, resources, status };
 
@@ -118,7 +118,7 @@ export function createLocation(options) {
 
 export function pushLocalLocations() {
   return async (dispatch, getState) => {
-    const { regionKey, connected } = getState();
+    const { authentication: { regionKey }, connected } = getState();
     if (!connected) {
       return false;
     }
@@ -127,10 +127,14 @@ export function pushLocalLocations() {
     if (!offlineLocations) {
       return false;
     }
-    
+
+    // We know this might not be great, but we love it!
+    // eslint-disable-next-line no-restricted-syntax
     for (const localLocation of offlineLocations) {
       const { latitude, longitude, status, resources, key } = localLocation;
       const options = { latitude, longitude, status, resources };
+      // Let's come back
+      // eslint-disable-next-line no-await-in-loop
       const { created: location, saved } = await apis.createLocation(regionKey, options, key);
 
       wrapper(saved, location);

@@ -1,12 +1,19 @@
+import Sentry from 'sentry-expo';
+import { Alert, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
-import { Alert, Linking } from 'react-native';
 import Settings from '../components/Settings';
-import { updateLocale } from '../actions/i18n';
+import { accept, logout } from '../actions/authentication';
+import I18n, { updateLocale } from '../actions/i18n';
 import { pushLocalLocations } from '../actions/locations';
-
-import I18n from '../assets/i18n/i18n';
 import emails from '../assets/constants/emails';
+
+const mapStateToProps = state => ({
+  ...state.authentication,
+  locale: state.i18n.locale, // triggers rerender on local change
+  version: Constants.manifest.version,
+  connected: state.connected,
+});
 
 const sendFeedback = () => {
   Linking.canOpenURL(`mailto:${emails.feedback}`)
@@ -27,17 +34,32 @@ const sendFeedback = () => {
     ));
 };
 
-const mapStateToProps = state => ({
-  locale: state.i18n.locale, // triggers rerender on local change
-  version: Constants.manifest.version,
-  connected: state.connected,
-});
-
 const mapDispatchToProps = dispatch => ({
-  logout: () => Promise.resolve(),
+  logout: () => dispatch(logout()),
+  acceptInvite: (invite) => {
+    const result = dispatch(accept(invite))
+      .then(() => {
+        Alert.alert(
+          I18n.t('settings/token_title'),
+          I18n.t('settings/token_success', { email: emails.sharebibles }),
+          [{ text: I18n.t('button/ok'), onPress() {} }],
+          { cancelable: false },
+        );
+      })
+      .catch((err) => {
+        Sentry.captureException(err);
+        Alert.alert(
+          I18n.t('settings/token_title'),
+          I18n.t('settings/token_error', { email: emails.sharebibles }),
+          [{ text: I18n.t('button/ok'), onPress() {} }],
+          { cancelable: false },
+        );
+      });
+    return result;
+  },
+  sendFeedback,
   updateLocale: locale => dispatch(updateLocale(locale)),
   pushLocations: () => dispatch(pushLocalLocations()),
-  sendFeedback,
 });
 
 const mergeProps = (stateProps, dispatchProps) => {
@@ -56,7 +78,10 @@ const mergeProps = (stateProps, dispatchProps) => {
     Alert.alert(
       I18n.t('settings/push_locations'),
       I18n.t('settings/push_locations_message'),
-      [{ text: I18n.t('button/cancel'), onPress() {} }, { text: I18n.t('button/push_locations'), onPress() { dispatchProps.pushLocations(); } }],
+      [
+        { text: I18n.t('button/cancel'), onPress() {} },
+        { text: I18n.t('button/push_locations'), onPress() { dispatchProps.pushLocations(); } },
+      ],
       { cancelable: true },
     );
   };

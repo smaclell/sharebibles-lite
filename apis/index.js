@@ -13,6 +13,14 @@ export function initialize() {
   firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 }
 
+export function signIn(token) {
+  return firebase.auth().signInWithCustomToken(token);
+}
+
+export function signOut() {
+  return firebase.auth().signOut();
+}
+
 function getGeoFire(path) {
   initialize();
 

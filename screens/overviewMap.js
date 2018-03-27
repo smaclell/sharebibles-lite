@@ -71,7 +71,9 @@ class OverviewMap extends PureComponent {
 
   onMapReady = () => {
     this.setState({ isReady: true });
-    setTimeout(() => this.setState({ centered: true }), 2000);
+
+    // Initially map will be centered, need to wait till map is done setting up
+    setTimeout(() => this.setState({ centered: true }), 250);
   }
 
   // Called when user finishes moving the map on device

@@ -10,16 +10,6 @@ const initial = {
 };
 let query = initial;
 
-export function update(latitude, longitude) {
-  return () =>
-    query.updateCriteria({
-      center: [
-        wrapLatitude(latitude),
-        wrapLongitude(longitude),
-      ],
-    });
-}
-
 function getGeoKey() {
   return (dispatch, getState) => {
     const { regionKey } = getState();
@@ -27,26 +17,43 @@ function getGeoKey() {
   };
 }
 
-export const UPDATE_OVERVIEW_MODE = 'UPDATE_OVERVIEW_MODE';
-export function updateMode(mode) {
+function updateLocations() {
   return (dispatch, getState) => {
     if (query) {
       query.cancel();
     }
-
     const { position } = getState();
-    const key = dispatch(getGeoKey(mode));
+    const key = dispatch(getGeoKey());
 
     query = apis.queryGeoData(
       key,
       position,
       locationKey => dispatch(fetchAllLocationData(locationKey)),
     );
+  };
+}
 
+export function update(latitude, longitude) {
+  return (dispatch) => {
+    query.updateCriteria({
+      center: [
+        wrapLatitude(latitude),
+        wrapLongitude(longitude),
+      ],
+    });
+    dispatch(updateLocations());
+  };
+}
+
+export const UPDATE_OVERVIEW_MODE = 'UPDATE_OVERVIEW_MODE';
+export function updateMode(mode) {
+  return (dispatch) => {
     dispatch({
       type: UPDATE_OVERVIEW_MODE,
       mode,
     });
+
+    dispatch(updateLocations());
   };
 }
 

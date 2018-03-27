@@ -1,7 +1,28 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
-import { updatePosition } from './position';
 import { failed, pending, uploaded } from './uploads';
+import * as database from '../apis/database';
+
+function wrapper(work, location) {
+  return async (dispatch) => {
+    dispatch(pending(location.key));
+
+    try {
+      await work;
+      await database.updateUploadStatus(location.key, database.LOCATION_UPLOADED.true);
+      dispatch(uploaded(location.key));
+    } catch (err) {
+      Sentry.captureException(err, {
+        extra: {
+          locationKey: location.key,
+        },
+      });
+
+      dispatch(failed(location.key));
+    }
+  };
+}
+
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
@@ -11,26 +32,30 @@ export function receiveLocation(location) {
   };
 }
 
-export function fetchLocations() {
-  return (dispatch, getState) => {
-    const { regionKey } = getState();
-    return apis.fetchLocations({ regionKey, last: 25 })
-      .then((locations) => {
-        locations.forEach(location => location && dispatch(receiveLocation(location)));
-      });
+// Restores the local local locations, other locations are loaded by the geo query
+export function restoreLocalLocations() {
+  return async (dispatch) => {
+    try {
+      const locations = await database.fetchLocalLocations();
+      locations.forEach(location => location && dispatch(receiveLocation(location)));
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   };
 }
 
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { regionKey, connected } = getState();
+    if (!connected) {
+      return Promise.resolve();
+    }
 
-    return apis.fetchLocation(regionKey, locationKey)
+    return apis.fetchLocation(locationKey, regionKey)
       .then((location) => {
         if (location) {
           dispatch(receiveLocation(location));
         }
-        return location;
       });
   };
 }
@@ -42,19 +67,31 @@ export function fetchAllLocationData(locationKey) {
 }
 
 export function updateLocation(options) {
-  return (dispatch, getState) => {
-    const { regionKey, locations } = getState();
+  return async (dispatch, getState) => {
+    const { regionKey, locations, connected } = getState();
     const original = { ...locations[options.key] };
 
-    return apis.updateLocation(regionKey, { ...original, ...options })
-      .then(({ updated, saved }) => {
-        dispatch(receiveLocation({ ...original, ...updated }));
+    const isUpdated = await database.updateLocalLocation({ ...original, ...options });
 
-        saved.catch(() => {
-          dispatch(receiveLocation(original));
-          dispatch(fetchLocation(original.key));
+    if (!isUpdated) {
+      throw new Error('Unable to update location! Please try again.');
+    }
+
+    if (connected) {
+      return apis.updateLocation(regionKey, { ...original, ...options })
+        .then(({ updated, saved }) => {
+          dispatch(receiveLocation({ ...original, ...updated }));
+
+          saved
+            .then(() => database.updateUploadStatus(options.key, database.LOCATION_UPLOADED.true))
+            .catch(() => {
+              dispatch(receiveLocation(original));
+              dispatch(fetchLocation(original.key));
+            });
         });
-      });
+    }
+
+    return true;
   };
 }
 
@@ -62,32 +99,43 @@ export function createLocation(options) {
   const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { regionKey } = getState();
+    const { regionKey, connected } = getState();
 
-    const locationData = {
-      latitude,
-      longitude,
-      resources,
-      status,
-    };
+    const locationData = { latitude, longitude, resources, status };
 
-    dispatch(updatePosition(latitude, longitude));
+    const localLocation = await database.addLocalLocation(locationData, regionKey);
+    const key = localLocation.key;
 
-    const { created: location, saved } =
-      await apis.createLocation(regionKey, locationData);
+    dispatch(pending(localLocation.key));
+    dispatch(receiveLocation(localLocation));
+    if (connected) {
+      const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
 
-    dispatch(receiveLocation(location));
+      wrapper(saved, location);
+    }
+  };
+}
 
-    dispatch(pending(location.key));
-    saved
-      .then(() => dispatch(uploaded(location.key)))
-      .catch((err) => {
-        Sentry.captureException(err, {
-          extra: {
-            locationKey: location.key,
-          },
-        });
-        dispatch(failed(location.key));
-      });
+export function pushLocalLocations() {
+  return async (dispatch, getState) => {
+    const { regionKey, connected } = getState();
+    if (!connected) {
+      return false;
+    }
+
+    const offlineLocations = await database.fetchLocalLocations(true);
+    if (!offlineLocations) {
+      return false;
+    }
+    
+    for (const localLocation of offlineLocations) {
+      const { latitude, longitude, status, resources, key } = localLocation;
+      const options = { latitude, longitude, status, resources };
+      const { created: location, saved } = await apis.createLocation(regionKey, options, key);
+
+      wrapper(saved, location);
+    }
+
+    return true;
   };
 }

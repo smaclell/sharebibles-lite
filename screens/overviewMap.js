@@ -68,7 +68,6 @@ class OverviewMap extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchLocations();
     setTimeout(this.onMapReady, 250);
   }
 
@@ -81,7 +80,6 @@ class OverviewMap extends PureComponent {
       return;
     }
 
-    this.props.updatePosition(latitude, longitude);
     this.setState({
       latitude,
       longitude,
@@ -92,6 +90,7 @@ class OverviewMap extends PureComponent {
   }
 
   onLocationPress = async () => {
+    if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
       this.props.updatePosition(location.latitude, location.longitude);
@@ -167,7 +166,6 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
-  fetchLocations: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({

@@ -97,7 +97,7 @@ class OverviewMap extends PureComponent {
     if (location) {
       this.map.animateToCoordinate(location, animationTime);
 
-      //Wait for animation to finish then set centered
+      // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
     }
   }
@@ -129,7 +129,7 @@ class OverviewMap extends PureComponent {
     return (
       <View style={styles.container}>
         <MapView
-          ref={map => this.map = map}
+          ref={(map) => { this.map = map; }}
           style={styles.map}
           mapType="hybrid"
           showsUserLocation

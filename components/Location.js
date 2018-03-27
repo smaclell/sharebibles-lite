@@ -32,7 +32,6 @@ const Location = ({ created, status, initial, upload }) => (
 
 Location.propTypes = {
   created: PropTypes.number.isRequired,
-  navigate: PropTypes.func.isRequired,
   status: PropTypes.object,
   initial: PropTypes.bool,
   upload: PropTypes.oneOf(Object.keys(UploadStatus)).isRequired,

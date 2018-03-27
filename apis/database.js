@@ -83,6 +83,8 @@ export function fetchLocalLocations(offlineOnly = false) {
   return new Promise((resolve, reject) => {
     const completed = async (tx, result) => {
       try {
+        // This is the shape of the data and cannot really be changed
+        // eslint-disable-next-line no-underscore-dangle
         const locations = await convertArrayToLocations(result.rows._array);
         resolve(locations);
       } catch (err) {

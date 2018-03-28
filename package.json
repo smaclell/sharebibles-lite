@@ -8,7 +8,6 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prestart": "cp ./config/dev.json ./app.json",
     "start": "react-native-scripts start",
     "preandroid": "cp ./config/dev.json ./app.json",
     "android": "react-native-scripts android",

@@ -9,8 +9,15 @@ import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
+import ChooseStatus from '../containers/ChooseStatus';
+import ResourceCounter from '../components/ResourceCounter';
 import PinCallout from '../components/PinCallout';
 import { getCurrentPosition } from '../apis/geo';
+import colours from '../styles/colours';
+import I18n from '../assets/i18n/i18n';
+
+import tempStyles from '../styles/initial';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +28,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  createLocationContainer: {
+    position: 'absolute',
+    bottom: 2,
+    left: '1%',
+    right: '1%',
+    borderRadius: 2,
+    width: '98%',
+    height: '50%',
+    backgroundColor: colours.white,
+    zIndex: 1,
   },
   locationButton: {
     position: 'absolute',
@@ -49,6 +67,9 @@ const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
 
 const animationTime = 800;
+const shortAnimationTime = 400;
+
+const offSet = 0.0003;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
@@ -66,7 +87,7 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: false, isReady: false };
+    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, status: 'unknown' };
   }
 
   onMapReady = () => {
@@ -112,6 +133,37 @@ class OverviewMap extends PureComponent {
     }
   }
 
+  onLongPress = (event) => {
+    const coord = event.nativeEvent.coordinate;
+    this.setState({ tempLocation: coord });
+    const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
+    this.map.animateToCoordinate(temp, shortAnimationTime);
+  }
+
+  showResource = (resource) => {
+    if (!resource.statuses.includes(this.state.status)) { return null; }
+
+    let count = resource.startCount;
+    if (this.state.resources[resource.key]) {
+      count = this.state.resources[resource.key].given;
+    } else if (count > 0) {
+      this.updateCount({ count, resourceKey: resource.key });
+    }
+
+    return (
+      <ResourceCounter
+        key={resource.key}
+        resourceKey={resource.key}
+        format={resource.format}
+        summary={I18n.t(resource.summary)}
+        count={count}
+        onCountChanged={this.updateCount}
+      />
+    );
+  };
+
+  updateStatus = value => this.setState({ status: value });
+
   goToFollowUp = debounce(
     locationKey => this.innerFollowUp(locationKey),
     500,
@@ -127,6 +179,7 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { locations } = this.props;
+    const { tempLocation } = this.state;
     const iconColour = this.state.centered ? blue : black;
     return (
       <View style={styles.container}>
@@ -144,6 +197,7 @@ class OverviewMap extends PureComponent {
           onMapReady={this.onMapReady}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
+          onLongPress={this.onLongPress}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker
@@ -158,7 +212,29 @@ class OverviewMap extends PureComponent {
               </MapView.Callout>
             </MapView.Marker>
           ))}
+          { tempLocation &&
+            <MapView.Marker
+              key="tempLocation"
+              coordinate={{
+                latitude: tempLocation.latitude,
+                longitude: tempLocation.longitude }}
+              pinColor="yellow"
+              draggable
+              stopPropagation
+            />
+          }
         </MapView>
+        { tempLocation &&
+          <View style={styles.createLocationContainer}>
+            <View style={tempStyles.results_inner_container}>
+              <ChooseStatus updateStatus={this.updateStatus} />
+
+              <View style={tempStyles.resources_container}>
+                {this.props.resources.map(this.showResource) }
+              </View>
+            </View>
+          </View>
+        }
         <TouchableOpacity
           style={styles.locationButton}
           onPress={this.onLocationPress}
@@ -186,6 +262,7 @@ OverviewMap.propTypes = {
   }).isRequired,
   updateMode: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
+  resources: PropTypes.array.isRequired,
 };
 
 const locationColor = (location, statuses) => {
@@ -212,6 +289,7 @@ const mapStateToProps = (state) => {
     position: state.position,
     mode,
     locations: enrichLocations(state, locations),
+    resources: Object.values(state.resources),
   };
 };
 

@@ -128,17 +128,12 @@ export function pushLocalLocations() {
       return false;
     }
 
-    // We know this might not be great, but we love it!
-    // eslint-disable-next-line no-restricted-syntax
-    for (const localLocation of offlineLocations) {
+    Promise.all(offlineLocations.map((localLocation) => {
       const { latitude, longitude, status, resources, key } = localLocation;
       const options = { latitude, longitude, status, resources };
-      // Let's come back
-      // eslint-disable-next-line no-await-in-loop
-      const { created: location, saved } = await apis.createLocation(regionKey, options, key);
-
-      wrapper(saved, location);
-    }
+      return apis.createLocation(regionKey, options, key)
+        .then(({ created: location, saved }) => wrapper(saved, location));
+    }));
 
     return true;
   };

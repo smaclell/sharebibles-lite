@@ -128,9 +128,7 @@ export function pushLocalLocations() {
       return false;
     }
 
-    Promise.all(offlineLocations.map((localLocation) => {
-      const { latitude, longitude, status, resources, key } = localLocation;
-      const options = { latitude, longitude, status, resources };
+    Promise.all(offlineLocations.map(({ key, ...options }) => {
       return apis.createLocation(regionKey, options, key)
         .then(({ created: location, saved }) => wrapper(saved, location));
     }));

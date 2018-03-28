@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
   UIManager,
+  ViewPropTypes,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -47,12 +48,9 @@ class KeyboardScroll extends PureComponent {
 }
 
 KeyboardScroll.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  style: PropTypes.any,
-  // eslint-disable-next-line react/forbid-prop-types
-  contentContainerStyle: PropTypes.any,
-  // eslint-disable-next-line react/forbid-prop-types
-  children: PropTypes.any.isRequired,
+  style: ViewPropTypes.style,
+  contentContainerStyle: ViewPropTypes.style,
+  children: PropTypes.node.isRequired,
 };
 
 KeyboardScroll.defaultProps = {

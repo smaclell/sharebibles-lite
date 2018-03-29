@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ViewPropTypes,
 } from 'react-native';
 
 import colours from '../styles/colours';
@@ -48,7 +49,7 @@ const Section = ({ children, order, style }) => (
 Section.propTypes = {
   children: PropTypes.node.isRequired,
   order: PropTypes.number.isRequired,
-  style: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
+  style: ViewPropTypes.style.isRequired,
 };
 
 export default Section;

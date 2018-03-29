@@ -1,5 +1,6 @@
 /* global fetch */
 import { Constants, SecureStore } from 'expo';
+import Sentry from 'sentry-expo';
 import { signIn, signOut } from '../apis';
 
 const { serviceUrl } = Constants.manifest.extra;
@@ -48,15 +49,39 @@ function accepted({ regionKey, teamKey }) {
   return { type: ACCEPTED, regionKey, teamKey };
 }
 
-async function authenticate(refreshToken) {
-  const { token } = await refetch(`${serviceUrl}/api/auth/token`, {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ${refreshToken}`,
-    },
-  });
+export function logout() {
+  return async (dispatch) => {
+    await clear();
+    dispatch(accepted({}));
+    await signOut();
+  };
+}
 
-  return signIn(token);
+function authenticate(refreshToken) {
+  return async (dispatch) => {
+    let token;
+    try {
+      const response = await refetch(`${serviceUrl}/api/auth/token`, {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${refreshToken}`,
+        },
+      });
+
+      token = response.token;
+    } catch (err) {
+      Sentry.captureException(err);
+      if (err.status !== 401) {
+        throw err;
+      }
+    }
+
+    if (!token) {
+      return signIn(token);
+    }
+
+    return dispatch(logout());
+  };
 }
 
 export function restore() {
@@ -73,7 +98,7 @@ export function restore() {
     }
 
     dispatch(accepted(values));
-    await authenticate(values.refreshToken);
+    await dispatch(authenticate(values.refreshToken));
   };
 }
 
@@ -87,14 +112,6 @@ export function accept(token) {
     await save(values);
 
     dispatch(accepted(values));
-    await authenticate(values.refreshToken);
-  };
-}
-
-export function logout() {
-  return async (dispatch) => {
-    await clear();
-    dispatch(accepted({}));
-    await signOut();
+    await dispatch(authenticate(values.refreshToken));
   };
 }

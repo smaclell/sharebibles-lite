@@ -9,15 +9,11 @@ import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
-import ChooseStatus from '../containers/ChooseStatus';
-import ResourceCounter from '../components/ResourceCounter';
 import PinCallout from '../components/PinCallout';
+import LocationCreation from '../containers/LocationCreation';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
-
-import tempStyles from '../styles/initial';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -28,17 +24,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  createLocationContainer: {
-    position: 'absolute',
-    bottom: 2,
-    left: '1%',
-    right: '1%',
-    borderRadius: 2,
-    width: '98%',
-    height: '50%',
-    backgroundColor: colours.white,
-    zIndex: 1,
   },
   locationButton: {
     position: 'absolute',
@@ -87,14 +72,16 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, status: 'unknown' };
+    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, movingTemp: false };
+
+    // this.onDrag = debounce(this.onDrag, 100);
   }
 
   onMapReady = () => {
     this.setState({ isReady: true });
 
     // Initially map will be centered, need to wait till map is done setting up
-    setTimeout(() => this.setState({ centered: true }), 250);
+    setTimeout(() => this.setState({ centered: true }), 500);
   }
 
   // Called when user finishes moving the map on device
@@ -140,29 +127,20 @@ class OverviewMap extends PureComponent {
     this.map.animateToCoordinate(temp, shortAnimationTime);
   }
 
-  showResource = (resource) => {
-    if (!resource.statuses.includes(this.state.status)) { return null; }
+  onDragStart = (event) => {
+    this.setState({ movingTemp: true });
+    event.persist();    
+  }
 
-    let count = resource.startCount;
-    if (this.state.resources[resource.key]) {
-      count = this.state.resources[resource.key].given;
-    } else if (count > 0) {
-      this.updateCount({ count, resourceKey: resource.key });
-    }
+  onDrag = (event) => {
+    event.persist();
+  }
 
-    return (
-      <ResourceCounter
-        key={resource.key}
-        resourceKey={resource.key}
-        format={resource.format}
-        summary={I18n.t(resource.summary)}
-        count={count}
-        onCountChanged={this.updateCount}
-      />
-    );
-  };
-
-  updateStatus = value => this.setState({ status: value });
+  onDragEnd = (event) => {
+    const coord = event.nativeEvent.coordinate;
+    this.setState({ movingTemp: false, tempLocation: coord });
+    event.persist();    
+  }
 
   goToFollowUp = debounce(
     locationKey => this.innerFollowUp(locationKey),
@@ -221,19 +199,14 @@ class OverviewMap extends PureComponent {
               pinColor="yellow"
               draggable
               stopPropagation
+              onDragStart={this.onDragStart}
+              onDrag={this.onDrag}
+              onDragEnd={this.onDragEnd}
             />
           }
         </MapView>
         { tempLocation &&
-          <View style={styles.createLocationContainer}>
-            <View style={tempStyles.results_inner_container}>
-              <ChooseStatus updateStatus={this.updateStatus} />
-
-              <View style={tempStyles.resources_container}>
-                {this.props.resources.map(this.showResource) }
-              </View>
-            </View>
-          </View>
+          <LocationCreation />
         }
         <TouchableOpacity
           style={styles.locationButton}

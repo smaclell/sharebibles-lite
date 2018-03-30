@@ -4,15 +4,8 @@ import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   createLocationContainer: {
-    position: 'absolute',
-    bottom: '1%',
-    left: '1%',
-    right: '1%',
-    borderRadius: 5,
-    width: '98%',
-    height: '50%',
-    backgroundColor: colours.white,
-    zIndex: 1,
+    width: '100%',
+    height: '100%',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',

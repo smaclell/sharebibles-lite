@@ -12,6 +12,7 @@ import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
 import PinCallout from '../components/PinCallout';
 import LocationCreation from '../containers/LocationCreation';
+import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
@@ -24,6 +25,18 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     flexDirection: 'column',
+    alignItems: 'center',
+  },
+  animatedContainer: {
+    position: 'absolute',
+    borderRadius: 5,
+    width: '98%',
+    height: '50%',
+    backgroundColor: colours.white,
+    zIndex: 1,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   locationButton: {
@@ -73,7 +86,7 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, movingTemp: false };
+    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, movingTemp: false, mapHeight: 0 };
 
     // this.onDrag = debounce(this.onDrag, 100);
   }
@@ -194,10 +207,10 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { locations } = this.props;
-    const { tempLocation } = this.state;
+    const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height})}>
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}
@@ -243,9 +256,12 @@ class OverviewMap extends PureComponent {
             />
           }
         </MapView>
-        { tempLocation &&
+        {/* tempLocation &&
           <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation}/>
-        }
+        */}
+        <SlideIn visible={!!tempLocation} style={styles.animatedContainer} containerHeight={mapHeight} endPercentage={0.49}>
+          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation}/>
+        </SlideIn>
         <TouchableOpacity
           style={styles.locationButton}
           onPress={this.onLocationPress}

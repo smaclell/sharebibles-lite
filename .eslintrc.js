@@ -6,6 +6,8 @@ module.exports = {
     "global-require": "off",
     "class-methods-use-this": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/forbid-prop-types": ["error", { forbid: ["any"] }],
+    "react/forbid-prop-types": ["error", { forbid: [] }],
+    "max-len": [0],
+    "linebreak-style": [0],
   },
 };

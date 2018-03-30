@@ -41,11 +41,10 @@ class LocationCreation extends Component {
     // Filter out resources and tags that don't match the chosen status:
     const filteredResources = filterResources(this.props.resources, resources, status);
 
-    this.props.saveLocation({
+    return this.props.saveLocation({
       status,
       resources: filteredResources,
     });
-    return;
   }
 
   updateCount = ({ count, resourceKey }) => {

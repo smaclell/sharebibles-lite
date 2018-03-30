@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   async loadFontsAsync() {
-    const fonts = [FontAwesome.font, Entypo.font, Ionicons];
+    const fonts = [FontAwesome.font, Entypo.font, Ionicons.font];
     return fonts.map(Font.loadAsync);
   }
 

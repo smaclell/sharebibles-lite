@@ -140,12 +140,14 @@ class OverviewMap extends PureComponent {
 
   onLongPress = (event) => {
     const coord = event.nativeEvent.coordinate;
-    !this.state.tempLocation && this.createTempPin(coord);
+    if (!this.state.tempLocation) {
+      this.createTempPin(coord);
+    }
   }
 
   onDragStart = (event) => {
     this.setState({ movingTemp: true });
-    event.persist();    
+    event.persist();
   }
 
   onDragEnd = (event) => {
@@ -174,7 +176,7 @@ class OverviewMap extends PureComponent {
         latitude,
         resources,
       });
-    } catch(err) {
+    } catch (err) {
       Sentry.captureException(err, { extra: { status } });
 
       Alert.alert(
@@ -205,7 +207,7 @@ class OverviewMap extends PureComponent {
     const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
     return (
-      <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height})}>
+      <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}
@@ -246,7 +248,7 @@ class OverviewMap extends PureComponent {
               draggable
               stopPropagation
               onDragStart={this.onDragStart}
-              onDrag={(e) => e.persist()}
+              onDrag={e => e.persist()}
               onDragEnd={this.onDragEnd}
             />
           }
@@ -273,6 +275,7 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
+  createLocation: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({

@@ -12,7 +12,7 @@ class SlideIn extends Component {
 
   componentWillMount() {
     const { visible, containerHeight, endPercentage } = this.props;
-    this.visibility = new Animated.Value(visible ? containerHeight*endPercentage : containerHeight);
+    this.visibility = new Animated.Value(visible ? containerHeight * endPercentage : containerHeight);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,14 +24,14 @@ class SlideIn extends Component {
       toValue: visible ? containerHeight * endPercentage : containerHeight,
       easing: Easing.bezier(0.76, 0.01, 0.4, 1),
       duration: 500,
-    }).start(() => this.setState({ visible: visible }));
+    }).start(() => this.setState({ visible }));
   }
 
   render() {
     const { visible, style, children, ...rest } = this.props;
 
     const containerStyle = {
-      transform: [{ translateY: this.visibility }]
+      transform: [{ translateY: this.visibility }],
     };
 
     const combinedStyle = [containerStyle, style];
@@ -50,8 +50,9 @@ SlideIn.defaultProps = {
 
 SlideIn.propTypes = {
   containerHeight: PropTypes.number.isRequired,
-  style: ViewPropTypes.style,
+  children: PropTypes.any.isRequired,
   endPercentage: PropTypes.number.isRequired,
+  style: ViewPropTypes.style,
   visible: PropTypes.bool,
 };
 

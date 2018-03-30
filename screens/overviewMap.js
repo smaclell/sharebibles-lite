@@ -68,8 +68,6 @@ const minLongitudeDelta = initialLongitudeDelta / 2;
 const animationTime = 800;
 const shortAnimationTime = 400;
 
-//const offSet = 0.0003;
-
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
 const backgroundColor = 'rgba(0,0,0,0)';
@@ -86,9 +84,14 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: false, isReady: false, tempLocation: null, movingTemp: false, mapHeight: 0 };
-
-    // this.onDrag = debounce(this.onDrag, 100);
+    this.state = {
+      ...this.initialRegion,
+      centered: false,
+      isReady: false,
+      tempLocation: null,
+      movingTemp: false,
+      mapHeight: 0,
+    };
   }
 
   onMapReady = () => {
@@ -135,13 +138,6 @@ class OverviewMap extends PureComponent {
     }
   }
 
-  createTempPin = (coord) => {
-    this.setState({ tempLocation: coord });
-    const offSet = this.state.latitudeDelta / 4;
-    const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
-    this.map.animateToCoordinate(temp, shortAnimationTime);
-  }
-
   onLongPress = (event) => {
     const coord = event.nativeEvent.coordinate;
     !this.state.tempLocation && this.createTempPin(coord);
@@ -152,34 +148,34 @@ class OverviewMap extends PureComponent {
     event.persist();    
   }
 
-  onDrag = (event) => {
-    event.persist();
-  }
-
   onDragEnd = (event) => {
     const coord = event.nativeEvent.coordinate;
     this.setState({ movingTemp: false, tempLocation: coord });
-    event.persist();    
+    event.persist();
   }
 
   onLocationCancel = () => {
     this.setState({ tempLocation: null });
   }
 
+  createTempPin = (coord) => {
+    this.setState({ tempLocation: coord });
+    const offSet = this.state.latitudeDelta / 4;
+    const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
+    this.map.animateToCoordinate(temp, shortAnimationTime);
+  }
+
   saveLocation = async ({ status, resources }) => {
     try {
       const { longitude, latitude } = this.state.tempLocation;
-
       await this.props.createLocation({
         status,
         longitude,
         latitude,
         resources,
       });
-
     } catch(err) {
       Sentry.captureException(err, { extra: { status } });
-      console.log(err);
 
       Alert.alert(
         I18n.t('validation/unknown_error_title'),
@@ -188,7 +184,6 @@ class OverviewMap extends PureComponent {
         { cancelable: false },
       );
     }
-
     this.setState({ tempLocation: null });
   }
 
@@ -251,16 +246,13 @@ class OverviewMap extends PureComponent {
               draggable
               stopPropagation
               onDragStart={this.onDragStart}
-              onDrag={this.onDrag}
+              onDrag={(e) => e.persist()}
               onDragEnd={this.onDragEnd}
             />
           }
         </MapView>
-        {/* tempLocation &&
-          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation}/>
-        */}
         <SlideIn visible={!!tempLocation} style={styles.animatedContainer} containerHeight={mapHeight} endPercentage={0.49}>
-          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation}/>
+          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
         </SlideIn>
         <TouchableOpacity
           style={styles.locationButton}

@@ -37,7 +37,7 @@ class LocationCreation extends Component {
         { cancelable: false },
       );
     }
-    
+
     // Filter out resources and tags that don't match the chosen status:
     const filteredResources = filterResources(this.props.resources, resources, status);
 
@@ -45,8 +45,9 @@ class LocationCreation extends Component {
       status,
       resources: filteredResources,
     });
+    return;
   }
-  
+
   updateCount = ({ count, resourceKey }) => {
     this.setState(p => ({
       ...p,
@@ -81,9 +82,10 @@ class LocationCreation extends Component {
       />
     );
   }
-  
+
   render() {
     const isDisabled = this.state.status === 'unknown';
+    const buttonColour = isDisabled ? colours.greys.base : colours.greens.base;
     return (
       <View style={styles.createLocationContainer}>
         <View style={styles.controlsContainer}>
@@ -91,12 +93,11 @@ class LocationCreation extends Component {
             <Ionicons name="md-arrow-round-back" size={fonts.header} color={colours.black} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.controlButton} onPress={this.addLocation} disabled={isDisabled}>
-            <FontAwesome name="check" size={fonts.header} color={isDisabled ? colours.greys.base : colours.greens.base} />
+            <FontAwesome name="check" size={fonts.header} color={buttonColour} />
           </TouchableOpacity>
         </View>
         <View style={styles.results_inner_container}>
           <ChooseStatus updateStatus={this.updateStatus} />
-  
           <View style={styles.resources_container}>
             {this.props.resources.map(this.showResource) }
           </View>

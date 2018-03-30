@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import { Animated, Easing, ViewPropTypes } from 'react-native'
+import { Animated, Easing, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
 class SlideIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: props.visible
+      visible: props.visible,
     };
-
-    console.log(props.style);
   }
 
   componentWillMount() {
-    const { visible, containerHeight } = this.props;
-    this.visibility = new Animated.Value(visible ? containerHeight * endPercentage : containerHeight);
+    const { visible, containerHeight, endPercentage } = this.props;
+    this.visibility = new Animated.Value(visible ? containerHeight*endPercentage : containerHeight);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,18 +22,16 @@ class SlideIn extends Component {
     }
     Animated.timing(this.visibility, {
       toValue: visible ? containerHeight * endPercentage : containerHeight,
-      easing: Easing.bezier(0.76,0.01,0.4,1),
+      easing: Easing.bezier(0.76, 0.01, 0.4, 1),
       duration: 500,
-    }).start(() => {
-      this.setState({ visible: visible });
-    });
+    }).start(() => this.setState({ visible: visible }));
   }
 
   render() {
     const { visible, style, children, ...rest } = this.props;
 
     const containerStyle = {
-      transform: [{translateY: this.visibility}]
+      transform: [{ translateY: this.visibility }]
     };
 
     const combinedStyle = [containerStyle, style];
@@ -49,6 +45,7 @@ class SlideIn extends Component {
 
 SlideIn.defaultProps = {
   visible: false,
+  style: {},
 };
 
 SlideIn.propTypes = {

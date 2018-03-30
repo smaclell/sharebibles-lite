@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native';
-import colours from '../styles/colours';
-import fonts from '../styles/fonts';
 
 export default StyleSheet.create({
   createLocationContainer: {

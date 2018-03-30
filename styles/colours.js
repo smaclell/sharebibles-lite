@@ -13,6 +13,10 @@ const colours = {
     base: '#65B7C7',
   },
 
+  greens: {
+    base: '#2fce3c',
+  },
+
   oranges: {
     base: '#F75C03',
   },

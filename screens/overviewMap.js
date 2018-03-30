@@ -4,7 +4,8 @@ import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import Sentry from 'sentry-expo';
+import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
@@ -54,7 +55,7 @@ const minLongitudeDelta = initialLongitudeDelta / 2;
 const animationTime = 800;
 const shortAnimationTime = 400;
 
-const offSet = 0.0003;
+//const offSet = 0.0003;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
@@ -101,6 +102,7 @@ class OverviewMap extends PureComponent {
     this.props.updatePosition(latitude, longitude);
   }
 
+  // Called when user taps current location button
   onLocationPress = async () => {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
@@ -120,11 +122,16 @@ class OverviewMap extends PureComponent {
     }
   }
 
-  onLongPress = (event) => {
-    const coord = event.nativeEvent.coordinate;
+  createTempPin = (coord) => {
     this.setState({ tempLocation: coord });
+    const offSet = this.state.latitudeDelta / 4;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
     this.map.animateToCoordinate(temp, shortAnimationTime);
+  }
+
+  onLongPress = (event) => {
+    const coord = event.nativeEvent.coordinate;
+    !this.state.tempLocation && this.createTempPin(coord);
   }
 
   onDragStart = (event) => {
@@ -140,6 +147,36 @@ class OverviewMap extends PureComponent {
     const coord = event.nativeEvent.coordinate;
     this.setState({ movingTemp: false, tempLocation: coord });
     event.persist();    
+  }
+
+  onLocationCancel = () => {
+    this.setState({ tempLocation: null });
+  }
+
+  saveLocation = async ({ status, resources }) => {
+    try {
+      const { longitude, latitude } = this.state.tempLocation;
+
+      await this.props.createLocation({
+        status,
+        longitude,
+        latitude,
+        resources,
+      });
+
+    } catch(err) {
+      Sentry.captureException(err, { extra: { status } });
+      console.log(err);
+
+      Alert.alert(
+        I18n.t('validation/unknown_error_title'),
+        I18n.t('validation/unknown_error_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+
+    this.setState({ tempLocation: null });
   }
 
   goToFollowUp = debounce(
@@ -171,8 +208,9 @@ class OverviewMap extends PureComponent {
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          initialRegion={this.state}
+          initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
+          onRegionChange={() => this.setState({ centered: false })}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
           onLongPress={this.onLongPress}
@@ -206,7 +244,7 @@ class OverviewMap extends PureComponent {
           }
         </MapView>
         { tempLocation &&
-          <LocationCreation />
+          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation}/>
         }
         <TouchableOpacity
           style={styles.locationButton}

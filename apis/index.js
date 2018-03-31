@@ -107,7 +107,7 @@ export async function createLocation(regionKey, options, key) {
     pushed = pushRef('locations');
   }
 
-  const created = createLocationObject(pushed.key, options);
+  const created = createLocationObject(pushed.key, { ...options, uploaded: true });
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

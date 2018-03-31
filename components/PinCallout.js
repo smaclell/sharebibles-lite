@@ -1,4 +1,3 @@
-/* globals __DEV__ */
 import React from 'react';
 import {
   View,
@@ -27,20 +26,26 @@ const Callout = ({ created, status, resources, uploaded }) => {
       <View style={[styles.row, { justifyContent: 'space-around', marginVertical: 5 }]}>
         <View style={styles.container}>
           <Text style={styles.statusHeader}>Status</Text>
-          <View style={styles.valueContainer}><Text style={styles.value}>{statusString}</Text></View>
+          <View style={styles.valueContainer}>
+            <Text style={styles.value}>{statusString}</Text>
+          </View>
         </View>
 
         { resources && resources.generic_bible &&
         <View style={styles.container}>
           <FontAwesome name="book" size={25} color={colours.black} style={{ marginTop: 5 }}/>
-          <View style={[styles.valueContainer, { marginTop: 0 }]}><Text style={styles.value}>{resources.generic_bible.given}</Text></View>
+          <View style={[styles.valueContainer, { marginTop: 0 }]}>
+            <Text style={styles.value}>{resources.generic_bible.given}</Text>
+          </View>
         </View>
         }
       </View>
 
       <View style={styles.timeContainer}>
         <FontAwesome name="clock-o" size={fonts.normal} color={colours.black} />
-        <Text style={{ fontSize: fonts.normal }}>{I18n.t('components/last_visited', { visited_time: relativeTime(created) })}</Text>
+        <Text style={{ fontSize: fonts.normal }}>
+          {I18n.t('components/last_visited', { visited_time: relativeTime(created) })}
+        </Text>
       </View>
     </View>
   );

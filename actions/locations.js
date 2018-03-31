@@ -13,10 +13,10 @@ export function receiveLocation(location) {
 
 export function updateUploadStatus(location, isUploaded) {
   return (dispatch) => {
-    const newLocation = { ...location, uploaded: isUploaded }
+    const newLocation = { ...location, uploaded: isUploaded };
     dispatch(receiveLocation(newLocation));
-    console.log(newLocation);
-    const numericValue = isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
+    const numericValue =
+      isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
     return database.updateUploadStatus(newLocation.key, numericValue);
   };
 }

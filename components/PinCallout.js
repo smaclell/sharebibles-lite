@@ -33,7 +33,7 @@ const Callout = ({ created, status, resources, uploaded }) => {
 
         { resources && resources.generic_bible &&
         <View style={styles.container}>
-          <FontAwesome name="book" size={25} color={colours.black} style={{ marginTop: 5 }}/>
+          <FontAwesome name="book" size={25} color={colours.black} style={{ marginTop: 5 }} />
           <View style={[styles.valueContainer, { marginTop: 0 }]}>
             <Text style={styles.value}>{resources.generic_bible.given}</Text>
           </View>

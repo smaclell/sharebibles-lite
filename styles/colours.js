@@ -13,6 +13,11 @@ const colours = {
     base: '#65B7C7',
   },
 
+  blues: {
+    lighter: '#96beff',
+    base: '#2f7efc',
+  },
+
   greens: {
     base: '#2fce3c',
   },

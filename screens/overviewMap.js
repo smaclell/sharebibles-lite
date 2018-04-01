@@ -150,6 +150,8 @@ class OverviewMap extends PureComponent {
     event.persist();
   }
 
+  onDrag = event => event.persist();
+
   onDragEnd = (event) => {
     const coord = event.nativeEvent.coordinate;
     this.setState({ movingTemp: false, tempLocation: coord });
@@ -162,6 +164,8 @@ class OverviewMap extends PureComponent {
 
   createTempPin = (coord) => {
     this.setState({ tempLocation: coord });
+    // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
+    // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
     const offSet = this.state.latitudeDelta / 4;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
     this.map.animateToCoordinate(temp, shortAnimationTime);
@@ -248,7 +252,7 @@ class OverviewMap extends PureComponent {
               draggable
               stopPropagation
               onDragStart={this.onDragStart}
-              onDrag={e => e.persist()}
+              onDrag={this.onDrag}
               onDragEnd={this.onDragEnd}
             />
           }

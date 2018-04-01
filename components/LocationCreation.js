@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, View, TouchableOpacity } from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Alert, View, TouchableOpacity, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import I18n from '../assets/i18n/i18n';
 import ChooseStatus from '../containers/ChooseStatus';
@@ -84,20 +84,21 @@ class LocationCreation extends Component {
 
   render() {
     const isDisabled = this.state.status === 'unknown';
-    const buttonColour = isDisabled ? colours.greys.base : colours.greens.base;
+    const buttonStyle = isDisabled ? styles.saveButtonDisabled : styles.saveButton;
+    const buttonTextStyle = isDisabled ? styles.buttonTextDisabled : styles.buttonText;
     return (
       <View style={styles.createLocationContainer}>
         <View style={styles.controlsContainer}>
           <TouchableOpacity style={styles.controlButton} onPress={this.props.onLocationCancel}>
             <Ionicons name="md-arrow-round-back" size={fonts.header} color={colours.black} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.controlButton} onPress={this.addLocation} disabled={isDisabled}>
-            <FontAwesome name="check" size={fonts.header} color={buttonColour} />
+          <TouchableOpacity onPress={this.addLocation} style={buttonStyle} disabled={isDisabled}>
+            <Text style={buttonTextStyle}>Save</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.results_inner_container}>
+        <View style={styles.resultsInnerContainer}>
           <ChooseStatus updateStatus={this.updateStatus} />
-          <View style={styles.resources_container}>
+          <View style={styles.resourcesContainer}>
             {this.props.resources.map(this.showResource) }
           </View>
         </View>
@@ -108,8 +109,8 @@ class LocationCreation extends Component {
 
 LocationCreation.propTypes = { // Sorted Alphabetically
   onLocationCancel: PropTypes.func.isRequired,
-  saveLocation: PropTypes.func.isRequired,
   resources: PropTypes.array.isRequired,
+  saveLocation: PropTypes.func.isRequired,
 };
 
 export default LocationCreation;

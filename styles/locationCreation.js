@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import colours from './colours';
+import fonts from './fonts';
 
 export default StyleSheet.create({
   createLocationContainer: {
@@ -24,7 +26,33 @@ export default StyleSheet.create({
     borderRadius: 5,
   },
 
-  results_inner_container: {
+  saveButton: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 3,
+    borderColor: colours.blues.base,
+    borderWidth: 1,
+  },
+
+  saveButtonDisabled: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 3,
+    borderColor: colours.blues.lighter,
+    borderWidth: 1,
+  },
+
+  buttonText: {
+    fontSize: fonts.large,
+    color: colours.black,
+  },
+
+  buttonTextDisabled: {
+    fontSize: fonts.large,
+    color: colours.greys.lighter,
+  },
+
+  resultsInnerContainer: {
     flex: 1,
     padding: 5,
     flexDirection: 'column',
@@ -32,7 +60,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  resource_container: {
+  resourceContainer: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',

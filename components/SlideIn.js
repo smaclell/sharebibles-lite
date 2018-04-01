@@ -50,7 +50,7 @@ SlideIn.defaultProps = {
 
 SlideIn.propTypes = {
   containerHeight: PropTypes.number.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node.isRequired,
   endPercentage: PropTypes.number.isRequired,
   style: ViewPropTypes.style,
   visible: PropTypes.bool,

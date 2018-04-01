@@ -1,4 +1,5 @@
 // A hardcoded list of interactions for each location and visit
+// NOTE: KEY value must match second part of LABEL. Not doing so will break all the things
 const statuses = [
   // Home
   { key: 'accepted', label: 'status/accepted', icon: 'book', iconFamily: 'font-awesome', pinColor: 'green', group: 'home', success: true },

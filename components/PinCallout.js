@@ -16,7 +16,7 @@ const relativeTime = time => moment.utc(time).clone().local().fromNow();
 
 const Callout = ({ created, status, resources, uploaded }) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';
-  const statusString = status.charAt(0).toUpperCase() + status.slice(1);
+  const statusString = `status/${status}`;
   return (
     <View style={styles.callout_container}>
       <View style={[styles.row, { justifyContent: 'flex-end' }]}>
@@ -25,9 +25,9 @@ const Callout = ({ created, status, resources, uploaded }) => {
 
       <View style={[styles.row, { justifyContent: 'space-around', marginVertical: 5 }]}>
         <View style={styles.container}>
-          <Text style={styles.statusHeader}>Status</Text>
+          <Text style={styles.statusHeader}>{I18n.t('status/status')}</Text>
           <View style={styles.valueContainer}>
-            <Text style={styles.value}>{statusString}</Text>
+            <Text style={styles.value}>{I18n.t(statusString)}</Text>
           </View>
         </View>
 
@@ -52,7 +52,7 @@ const Callout = ({ created, status, resources, uploaded }) => {
 };
 
 Callout.defaultProps = {
-  status: 'Unknown',
+  status: 'unknown',
   resources: null,
   uploaded: false,
 };

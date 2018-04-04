@@ -12,6 +12,7 @@ describe('actions/authentication', () => {
   let actions;
   let store;
   beforeEach(() => {
+    Constants.manifest.extra = Constants.manifest.extra || {};
     Constants.manifest.extra.serviceUrl = 'serviceUrl';
     SecureStore.setItemAsync = jest.fn().mockResolvedValue();
     SecureStore.getItemAsync = jest.fn().mockResolvedValue('{}');

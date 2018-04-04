@@ -18,7 +18,7 @@ async function clear() {
 }
 
 export const ACCEPTED = 'ACCEPTED';
-function accepted({ regionKey, teamKey }) {
+export function accepted({ regionKey, teamKey }) { // Exported for testing
   return { type: ACCEPTED, regionKey, teamKey };
 }
 
@@ -30,7 +30,7 @@ export function logout() {
   };
 }
 
-function authenticate(refreshToken) {
+export function authenticate(refreshToken) { // Exported for testing
   return async (dispatch) => {
     let token;
     try {

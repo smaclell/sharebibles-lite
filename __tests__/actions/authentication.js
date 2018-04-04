@@ -32,11 +32,7 @@ describe('actions/authentication', () => {
     });
 
     it('updates the store', () => {
-      expect(store.getActions()).toContainEqual({
-        type: actions.ACCEPTED,
-        regionKey: undefined,
-        teamKey: undefined,
-      });
+      expect(store.getActions()).toContainEqual(actions.accepted({}));
     });
 
     it('signs out of firebase', () => {

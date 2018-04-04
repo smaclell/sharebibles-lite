@@ -22,33 +22,33 @@ export default StyleSheet.create({
 
   row: {
     marginHorizontal: 10,
-    width: '100%',
+
     flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  col: {
+    marginHorizontal: 10,
+    width: '100%',
+    flexDirection: 'column',
     flex: 1,
   },
 
   statusHeader: {
-    fontSize: 25,
+    fontSize: 20,
     padding: 0,
     margin: 0,
   },
 
-  valueContainer: {
-    width: '100%',
-    paddingVertical: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    borderTopWidth: 1,
-    borderTopColor: colours.greys.lighter,
-    borderBottomWidth: 1,
-    borderBottomColor: colours.greys.lighter,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  subHeading: {
+    minWidth: '35%',
+    marginRight: 5,
   },
 
   value: {
     fontSize: 15,
+    marginVertical: 10,
   },
 
   timeContainer: {

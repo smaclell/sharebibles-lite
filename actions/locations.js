@@ -17,7 +17,11 @@ export function updateUploadStatus(location, isUploaded) {
     dispatch(receiveLocation(newLocation));
     const numericValue =
       isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
-    return database.updateUploadStatus(newLocation.key, numericValue);
+
+    return Promise.all([
+      database.updateUploadStatus(newLocation.key, numericValue),
+      apis.updateUploadStatus(newLocation)
+    ]);
   };
 }
 
@@ -28,7 +32,6 @@ function wrapper(work, location) {
     try {
       await work;
       await updateUploadStatus(location, true);
-      // await database.updateUploadStatus(location.key, database.LOCATION_UPLOADED.true);
       dispatch(uploaded(location.key));
     } catch (err) {
       Sentry.captureException(err, {

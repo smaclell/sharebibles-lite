@@ -49,7 +49,7 @@ export function authenticate(refreshToken) { // Exported for testing
       }
     }
 
-    if (!token) {
+    if (token) {
       return signIn(token);
     }
 

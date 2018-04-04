@@ -24,6 +24,39 @@ describe('actions/authentication', () => {
     actions = require('../../actions/authentication');
   });
 
+  describe('authenticate', () => {
+    it('signsIn with returned token', async () => {
+      refetch.mockResolvedValue({ token: 't9001' });
+
+      await store.dispatch(actions.authenticate('refreshToken'));
+
+      expect(refetch).toHaveBeenCalledWith('serviceUrl/api/auth/token', {
+        method: 'POST',
+        headers: {
+          authorization: 'Bearer refreshToken',
+        },
+      });
+
+      expect(signIn).toHaveBeenCalledWith('t9001');
+    });
+
+    it('signOut if there is no token', async () => {
+      refetch.mockResolvedValue({});
+
+      await store.dispatch(actions.authenticate('refreshToken'));
+
+      expect(refetch).toHaveBeenCalledWith('serviceUrl/api/auth/token', {
+        method: 'POST',
+        headers: {
+          authorization: 'Bearer refreshToken',
+        },
+      });
+
+      expect(signIn).not.toHaveBeenCalled();
+      expect(signOut).toHaveBeenCalled();
+    });
+  });
+
   describe('logout', () => {
     beforeEach(() => store.dispatch(actions.logout()));
 

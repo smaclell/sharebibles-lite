@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { FontAwesome, Entypo, Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import Sentry from 'sentry-expo';
@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   async loadFontsAsync() {
-    const fonts = [FontAwesome.font, Entypo.font];
+    const fonts = [FontAwesome.font, Entypo.font, Ionicons.font];
     return fonts.map(Font.loadAsync);
   }
 

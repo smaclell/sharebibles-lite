@@ -4,13 +4,18 @@ import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import Sentry from 'sentry-expo';
+import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
 import PinCallout from '../components/PinCallout';
+import LocationCreation from '../containers/LocationCreation';
+import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
+import colours from '../styles/colours';
+import I18n from '../assets/i18n/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +25,18 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     flexDirection: 'column',
+    alignItems: 'center',
+  },
+  animatedContainer: {
+    position: 'absolute',
+    borderRadius: 5,
+    width: '98%',
+    height: '50%',
+    backgroundColor: colours.white,
+    zIndex: 1,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   locationButton: {
@@ -49,6 +66,7 @@ const minLatitudeDelta = initialLatitudeDelta / 2;
 const minLongitudeDelta = initialLongitudeDelta / 2;
 
 const animationTime = 800;
+const shortAnimationTime = 400;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
@@ -66,14 +84,21 @@ class OverviewMap extends PureComponent {
       longitudeDelta: initialLongitudeDelta,
     };
 
-    this.state = { ...this.initialRegion, centered: false, isReady: false };
+    this.state = {
+      ...this.initialRegion,
+      centered: false,
+      isReady: false,
+      tempLocation: null,
+      movingTemp: false,
+      mapHeight: 0,
+    };
   }
 
   onMapReady = () => {
     this.setState({ isReady: true });
 
     // Initially map will be centered, need to wait till map is done setting up
-    setTimeout(() => this.setState({ centered: true }), 250);
+    setTimeout(() => this.setState({ centered: true }), 500);
   }
 
   // Called when user finishes moving the map on device
@@ -93,6 +118,7 @@ class OverviewMap extends PureComponent {
     this.props.updatePosition(latitude, longitude);
   }
 
+  // Called when user taps current location button
   onLocationPress = async () => {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
@@ -112,6 +138,61 @@ class OverviewMap extends PureComponent {
     }
   }
 
+  onLongPress = (event) => {
+    const coord = event.nativeEvent.coordinate;
+    if (!this.state.tempLocation) {
+      this.createTempPin(coord);
+    }
+  }
+
+  onDragStart = (event) => {
+    this.setState({ movingTemp: true });
+    event.persist();
+  }
+
+  onDrag = event => event.persist();
+
+  onDragEnd = (event) => {
+    const coord = event.nativeEvent.coordinate;
+    this.setState({ movingTemp: false, tempLocation: coord });
+    event.persist();
+  }
+
+  onLocationCancel = () => {
+    this.setState({ tempLocation: null });
+  }
+
+  createTempPin = (coord) => {
+    this.setState({ tempLocation: coord });
+    // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
+    // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
+    const offSet = this.state.latitudeDelta / 4;
+    const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
+    this.map.animateToCoordinate(temp, shortAnimationTime);
+  }
+
+  saveLocation = async ({ status, resources }) => {
+    try {
+      const { longitude, latitude } = this.state.tempLocation;
+      await this.props.createLocation({
+        status,
+        longitude,
+        latitude,
+        resources,
+      });
+    } catch (err) {
+      Sentry.captureException(err, { extra: { status } });
+
+      Alert.alert(
+        I18n.t('validation/unknown_error_title'),
+        I18n.t('validation/unknown_error_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+    this.setState({ tempLocation: null });
+  }
+
   goToFollowUp = debounce(
     locationKey => this.innerFollowUp(locationKey),
     500,
@@ -127,9 +208,10 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { locations } = this.props;
+    const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}
@@ -140,10 +222,12 @@ class OverviewMap extends PureComponent {
           showsIndoors={false}
           showsBuildings={false}
           provider="google"
-          initialRegion={this.state}
+          initialRegion={this.initialRegion}
           onMapReady={this.onMapReady}
+          onRegionChange={() => this.setState({ centered: false })}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
+          onLongPress={this.onLongPress}
         >
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker
@@ -158,7 +242,24 @@ class OverviewMap extends PureComponent {
               </MapView.Callout>
             </MapView.Marker>
           ))}
+          { tempLocation &&
+            <MapView.Marker
+              key="tempLocation"
+              coordinate={{
+                latitude: tempLocation.latitude,
+                longitude: tempLocation.longitude }}
+              pinColor="yellow"
+              draggable
+              stopPropagation
+              onDragStart={this.onDragStart}
+              onDrag={this.onDrag}
+              onDragEnd={this.onDragEnd}
+            />
+          }
         </MapView>
+        <SlideIn visible={!!tempLocation} style={styles.animatedContainer} containerHeight={mapHeight} endPercentage={0.49}>
+          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
+        </SlideIn>
         <TouchableOpacity
           style={styles.locationButton}
           onPress={this.onLocationPress}
@@ -178,6 +279,7 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
+  createLocation: PropTypes.func.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({
@@ -186,6 +288,7 @@ OverviewMap.propTypes = {
   }).isRequired,
   updateMode: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
+  resources: PropTypes.array.isRequired,
 };
 
 const locationColor = (location, statuses) => {
@@ -212,6 +315,7 @@ const mapStateToProps = (state) => {
     position: state.position,
     mode,
     locations: enrichLocations(state, locations),
+    resources: Object.values(state.resources),
   };
 };
 

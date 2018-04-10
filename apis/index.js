@@ -79,12 +79,6 @@ export function fetchLocation(locationKey) {
     .then(location => location.val());
 }
 
-export function updateUploadStatus(options) {
-  const { key, uploaded } = options;
-
-  return firebase.database().ref(`locations/${key}/uploaded`).update(uploaded);
-}
-
 export function updateLocation(regionKey, options) {
   initialize();
 
@@ -113,7 +107,7 @@ export async function createLocation(regionKey, options, key) {
     pushed = pushRef('locations');
   }
 
-  const created = createLocationObject(pushed.key, { ...options, uploaded: false });
+  const created = createLocationObject(pushed.key, options);
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

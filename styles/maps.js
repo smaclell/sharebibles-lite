@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
 
   row: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
 
     flexDirection: 'row',
     flex: 1,
@@ -37,6 +37,7 @@ export default StyleSheet.create({
 
   statusHeader: {
     fontSize: 20,
+    fontWeight: 'bold',
     padding: 0,
     margin: 0,
   },
@@ -44,11 +45,12 @@ export default StyleSheet.create({
   subHeading: {
     minWidth: '35%',
     marginRight: 5,
+    marginBottom: 3,
   },
 
   value: {
-    fontSize: 15,
-    marginVertical: 10,
+    fontSize: 18,
+    marginBottom: 3,
   },
 
   timeContainer: {

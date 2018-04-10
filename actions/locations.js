@@ -18,10 +18,7 @@ export function updateUploadStatus(location, isUploaded) {
     const numericValue =
       isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
 
-    return Promise.all([
-      database.updateUploadStatus(newLocation.key, numericValue),
-      apis.updateUploadStatus(newLocation)
-    ]);
+    return database.updateUploadStatus(newLocation.key, numericValue);
   };
 }
 
@@ -67,7 +64,7 @@ export function fetchLocation(locationKey) {
     return apis.fetchLocation(locationKey, regionKey)
       .then((location) => {
         if (location) {
-          dispatch(receiveLocation(location));
+          dispatch(receiveLocation({ ...location, uploaded: true }));
         }
       });
   };

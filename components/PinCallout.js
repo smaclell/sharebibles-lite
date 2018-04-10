@@ -23,7 +23,7 @@ const Callout = ({ created, status, resources, uploaded }) => {
         <Feather name={cloudIcon} size={fonts.large} color={colours.black} />
       </View>
 
-      <View style={styles.col}>
+      <View style={[styles.col, { minHeight: 75 }]}>
         <View style={styles.row}>
           <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/status_heading')}:</Text>
           <Text style={styles.value}>{I18n.t(statusString)}</Text>
@@ -31,7 +31,6 @@ const Callout = ({ created, status, resources, uploaded }) => {
 
         { resources && resources.generic_bible &&
         <View style={styles.row}>
-          {/* <View style={styles.subHeading}><FontAwesome name="book" size={25} color={colours.black} /></View> */}
           <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
           <Text style={styles.value}>{resources.generic_bible.given}</Text>
         </View>

@@ -16,13 +16,13 @@ export function executeTransaction(statement, args, completed, error) {
 
 export function createDatabases() {
   return new Promise((resolve, reject) => {
-    executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)', null, resolve(true), reject(false));
+    executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)', null, resolve, reject);
   });
 }
 
 export function clearDatabase() {
   return new Promise((resolve, reject) => {
-    executeTransaction('drop table locations', null, resolve(true), reject(false));
+    executeTransaction('drop table locations', null, resolve, reject);
   });
 }
 

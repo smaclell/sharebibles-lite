@@ -20,36 +20,36 @@ function getGeoKey() {
   };
 }
 
-function updateLocations() {
-  return (dispatch, getState) => {
-    if (query) {
-      query.cancel();
-    }
-    const { position } = getState();
-    const key = dispatch(getGeoKey());
-    if (!key) {
-      return;
-    }
+// function updateLocations() {
+//   return (dispatch, getState) => {
+//     if (query) {
+//       query.cancel();
+//     }
+//     const { position } = getState();
+//     const key = dispatch(getGeoKey());
+//     if (!key) {
+//       return;
+//     }
 
-    query = apis.queryGeoData(
-      key,
-      position,
-      locationKey => dispatch(fetchAllLocationData(locationKey)),
-    );
-  };
-}
+//     query = apis.queryGeoData(
+//       key,
+//       position,
+//       locationKey => dispatch(fetchAllLocationData(locationKey)),
+//     );
+//   };
+// }
 
-export function update(latitude, longitude) {
-  return (dispatch) => {
-    query.updateCriteria({
-      center: [
-        wrapLatitude(latitude),
-        wrapLongitude(longitude),
-      ],
-    });
-    // dispatch(updateLocations());
-  };
-}
+// export function update(latitude, longitude) {
+//   return (dispatch) => {
+//     query.updateCriteria({
+//       center: [
+//         wrapLatitude(latitude),
+//         wrapLongitude(longitude),
+//       ],
+//     });
+//     // dispatch(updateLocations());
+//   };
+// }
 
 export const UPDATE_OVERVIEW_MODE = 'UPDATE_OVERVIEW_MODE';
 export function updateMode(mode) {

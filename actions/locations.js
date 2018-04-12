@@ -68,7 +68,7 @@ export function fetchAllLocationData(locationKey) {
 
 export function updateLocation(options) {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, locations, connected } = getState();
+    const { locations } = getState();
     const original = { ...locations[options.key] };
 
     const isUpdated = await database.updateLocalLocation({ ...original, ...options });
@@ -100,12 +100,12 @@ export function createLocation(options) {
   const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, connected } = getState();
+    const { authentication: { regionKey } } = getState();
 
     const locationData = { latitude, longitude, resources, status };
 
     const localLocation = await database.addLocalLocation(locationData, regionKey);
-    const key = localLocation.key;
+    // const key = localLocation.key;
 
     // dispatch(pending(localLocation.key));
     dispatch(receiveLocation(localLocation));

@@ -47,7 +47,7 @@ export function update(latitude, longitude) {
         wrapLongitude(longitude),
       ],
     });
-    dispatch(updateLocations());
+    // dispatch(updateLocations());
   };
 }
 
@@ -59,7 +59,7 @@ export function updateMode(mode) {
       mode,
     });
 
-    dispatch(updateLocations());
+    // dispatch(updateLocations());
   };
 }
 

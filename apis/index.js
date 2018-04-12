@@ -14,7 +14,8 @@ export function initialize() {
 }
 
 export function signIn(token) {
-  return firebase.auth().signInWithCustomToken(token);
+  return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+    .then(() => firebase.auth().signInWithCustomToken(token));
 }
 
 export function signOut() {

@@ -53,7 +53,7 @@
     "redux-mock-store": "^1.5.1"
   },
   "resolutions": {
-    "moment-timezone/moment": "2.19.2"
+    "moment-timezone/moment": "2.22.0"
   },
   "jest": {
     "preset": "jest-expo",

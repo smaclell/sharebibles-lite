@@ -3,6 +3,17 @@ import { Animated, Easing, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
 class SlideIn extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.visible) {
+      return {
+        ...prevState,
+        visible: true,
+      };
+    }
+
+    return prevState;
+  }
+
   constructor(props) {
     super(props);
 
@@ -12,17 +23,6 @@ class SlideIn extends Component {
     };
 
     this.visibility = new Animated.Value(visible ? containerHeight * endPercentage : containerHeight);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.visible) {
-      return {
-        ...prevState,
-        visible: true,
-      }
-    }
-
-    return prevState;
   }
 
   componentDidUpdate() {

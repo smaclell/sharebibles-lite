@@ -221,8 +221,11 @@ class OverviewMap extends PureComponent {
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
+          region={this.state}
+          initialRegion={this.state}
           provider="google"
-          initialRegion={this.initialRegion}
+          minZoomLevel={10}
+          maxZoomLevel={20}
           onMapReady={this.onMapReady}
           onRegionChange={() => this.setState({ centered: false })}
           onRegionChangeComplete={this.onRegionChangeComplete}

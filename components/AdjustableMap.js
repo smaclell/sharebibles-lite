@@ -25,8 +25,12 @@ class AdjustableMap extends Component {
     this.onRegionChange = debounce(this.onRegionChange, 50);
   }
 
-  onRegionChange = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
-    this.setState({ latitude, longitude, latitudeDelta, longitudeDelta });
+  onRegionChange = ({
+    latitude, longitude, latitudeDelta, longitudeDelta,
+  }) => {
+    this.setState({
+      latitude, longitude, latitudeDelta, longitudeDelta,
+    });
     this.props.onLocationChanged({ latitude, longitude });
   }
 

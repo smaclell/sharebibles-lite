@@ -28,7 +28,9 @@ class SlideIn extends Component {
   }
 
   render() {
-    const { visible, style, children, ...rest } = this.props;
+    const {
+      visible, style, children, ...rest
+    } = this.props;
 
     const containerStyle = {
       transform: [{ translateY: this.visibility }],
@@ -52,6 +54,8 @@ SlideIn.propTypes = {
   containerHeight: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
   endPercentage: PropTypes.number.isRequired,
+  // They have abug around support custom proptypes
+  // eslint-disable-next-line react/no-typos
   style: ViewPropTypes.style,
   visible: PropTypes.bool,
 };

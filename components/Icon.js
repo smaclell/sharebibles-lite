@@ -15,10 +15,12 @@ const sizes = {
 };
 
 
-const Icon = ({ size, name, family, colour, styles = null }) => {
+const Icon = ({
+  size, name, family, colour, style = null,
+}) => {
   const Actual = families[family];
   return (
-    <Actual size={sizes[size]} name={name} color={colour} style={styles} />
+    <Actual size={sizes[size]} name={name} color={colour} style={style} />
   );
 };
 
@@ -27,13 +29,16 @@ Icon.propTypes = {
   family: PropTypes.oneOf(Object.keys(families)),
   name: PropTypes.string.isRequired,
   size: PropTypes.oneOf(Object.keys(sizes)).isRequired,
-  styles: ViewPropTypes.style,
+
+  // They have abug around support custom proptypes
+  // eslint-disable-next-line react/no-typos
+  style: ViewPropTypes.style,
 };
 
 Icon.defaultProps = {
   family: 'font-awesome',
   colour: 'white',
-  styles: {},
+  style: null,
 };
 
 export default Icon;

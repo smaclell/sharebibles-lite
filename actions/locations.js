@@ -96,17 +96,21 @@ export function updateLocation(options) {
 }
 
 export function createLocation(options) {
-  const { latitude, longitude, resources, status } = options;
+  const {
+    latitude, longitude, resources, status,
+  } = options;
 
   return async (dispatch, getState) => {
     const { authentication: { regionKey }, connected } = getState();
 
-    const locationData = { latitude, longitude, resources, status };
+    const locationData = {
+      latitude, longitude, resources, status,
+    };
 
     const localLocation = await database.addLocalLocation(locationData, regionKey);
-    const key = localLocation.key;
+    const { key } = localLocation;
 
-    dispatch(pending(localLocation.key));
+    dispatch(pending(key));
     dispatch(receiveLocation(localLocation));
     if (connected) {
       const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);

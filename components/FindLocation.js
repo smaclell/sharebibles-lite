@@ -63,7 +63,7 @@ class FindLocation extends Component {
     }
 
     if (this.state.error) {
-      return <FontAwesome name="warning" size={iconSize} color={'yellow'} />;
+      return <FontAwesome name="warning" size={iconSize} color="yellow" />;
     }
 
     if (!this.state.location) {
@@ -71,10 +71,10 @@ class FindLocation extends Component {
     }
 
     if (this.state.accuracy) {
-      return <FontAwesome name="crosshairs" size={iconSize} color={'green'} />;
+      return <FontAwesome name="crosshairs" size={iconSize} color="green" />;
     }
 
-    return <FontAwesome name="circle-o" size={iconSize} color={'green'} />;
+    return <FontAwesome name="circle-o" size={iconSize} color="green" />;
   }
 
   handleStateUpdate() {

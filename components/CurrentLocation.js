@@ -20,8 +20,7 @@ class CurrentLocation extends PureComponent {
   onLocationChanged = location => this.props.onLocationChanged(location);
 
   render() {
-    const onLocationChanged = this.onLocationChanged;
-    const childProps = { onLocationChanged };
+    const childProps = { onLocationChanged: this.onLocationChanged };
 
     const { latitude, longitude } = this.props;
     if (!latitude || !longitude) {

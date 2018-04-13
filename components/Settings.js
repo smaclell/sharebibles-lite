@@ -73,7 +73,7 @@ const Settings = (props) => {
     acceptInvite,
     logout,
     regionKey,
-    showPushDialog,
+    // showPushDialog,
     sendFeedback,
     updateLocale,
     version,
@@ -115,7 +115,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
-        <SettingsItem term="settings/push_locations" onPress={showPushDialog} />
+        {/* <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> */}
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
@@ -135,7 +135,7 @@ Settings.propTypes = {
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,
-  showPushDialog: PropTypes.func.isRequired,
+  // showPushDialog: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };

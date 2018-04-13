@@ -27,11 +27,13 @@ class SlideIn extends Component {
 
   componentDidUpdate() {
     const { visible, containerHeight, endPercentage } = this.props;
-    Animated.timing(this.visibility, {
-      toValue: visible ? containerHeight * endPercentage : containerHeight,
-      easing: Easing.bezier(0.76, 0.01, 0.4, 1),
-      duration: 500,
-    }).start(() => this.setState({ visible }));
+    if (visible) {
+      Animated.timing(this.visibility, {
+        toValue: visible ? containerHeight * endPercentage : containerHeight,
+        easing: Easing.bezier(0.76, 0.01, 0.4, 1),
+        duration: 500,
+      }).start(() => this.setState({ visible }));
+    }
   }
 
   render() {

@@ -314,7 +314,7 @@ function enrichLocations({ statuses }, locations) {
 }
 
 const mapStateToProps = (state) => {
-  const { overview: mode } = this.state;
+  const { overview: { mode } } = state;
   const locations =
     Object.values(state.locations)
       .filter(x => x);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
-import { FontAwesome, Entypo, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Entypo, Ionicons, Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import Sentry from 'sentry-expo';
@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 import Navigation from './nav';
 import reducer from './reducers';
-import { createDatabase } from './apis/database';
+import { createDatabases } from './apis/database';
 import { initialize } from './apis';
 import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';
@@ -42,7 +42,7 @@ class App extends Component {
   componentDidMount() {
     Promise.all([
       ...this.loadFontsAsync(),
-      createDatabase(),
+      createDatabases(),
       store.dispatch(positionActions.initialize()),
       store.dispatch(restore()),
       I18n.initAsync(),
@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   async loadFontsAsync() {
-    const fonts = [FontAwesome.font, Entypo.font, Ionicons.font];
+    const fonts = [FontAwesome.font, Entypo.font, Ionicons.font, Feather.font];
     return fonts.map(Font.loadAsync);
   }
 

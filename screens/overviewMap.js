@@ -72,6 +72,10 @@ const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
 const backgroundColor = 'rgba(0,0,0,0)';
 
+let id = 1;
+function randomColor() {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
 class OverviewMap extends PureComponent {
   constructor(props) {
     super(props);
@@ -86,12 +90,30 @@ class OverviewMap extends PureComponent {
 
     this.state = {
       ...this.initialRegion,
+      markers: [],
       centered: false,
       isReady: false,
       tempLocation: null,
       movingTemp: false,
       mapHeight: 0,
     };
+  }
+
+  onMapPress = (e) => {
+    const add = {
+      coordinate: e.nativeEvent.coordinate,
+      key: id++,
+      color: randomColor(),
+    };
+
+    console.log(add.color);
+
+    this.setState({
+      markers: [
+        ...this.state.markers,
+        add,
+      ],
+    });
   }
 
   onMapReady = () => {
@@ -231,7 +253,17 @@ class OverviewMap extends PureComponent {
           onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
           onLongPress={this.onLongPress}
+          onPress={this.onMapPress}
         >
+
+          {this.state.markers.map(marker => (
+            <MapView.Marker
+              key={marker.key}
+              coordinate={marker.coordinate}
+              pinColor={marker.color}
+            />
+          ))}
+
           {locations.map(({ location, pinColor }) => (
             <MapView.Marker
               key={location.key}

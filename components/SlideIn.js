@@ -5,21 +5,28 @@ import PropTypes from 'prop-types';
 class SlideIn extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      visible: props.visible,
-    };
-  }
 
-  componentWillMount() {
     const { visible, containerHeight, endPercentage } = this.props;
+    this.state = {
+      visible,
+    };
+
     this.visibility = new Animated.Value(visible ? containerHeight * endPercentage : containerHeight);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { visible, containerHeight, endPercentage } = nextProps;
-    if (visible) {
-      this.setState({ visible: true });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.visible) {
+      return {
+        ...prevState,
+        visible: true,
+      }
     }
+
+    return prevState;
+  }
+
+  componentDidUpdate() {
+    const { visible, containerHeight, endPercentage } = this.props;
     Animated.timing(this.visibility, {
       toValue: visible ? containerHeight * endPercentage : containerHeight,
       easing: Easing.bezier(0.76, 0.01, 0.4, 1),

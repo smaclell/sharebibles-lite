@@ -241,7 +241,7 @@ class OverviewMap extends PureComponent {
               coordinate={{
                 latitude: location.latitude,
                 longitude: location.longitude,
-}}
+              }}
               pinColor={pinColor}
             >
               <MapView.Callout>
@@ -255,7 +255,7 @@ class OverviewMap extends PureComponent {
               coordinate={{
                 latitude: tempLocation.latitude,
                 longitude: tempLocation.longitude,
-}}
+              }}
               pinColor="yellow"
               draggable
               stopPropagation

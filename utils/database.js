@@ -1,5 +1,6 @@
 import { SecureStore } from 'expo';
 import moment from 'moment';
+import { LOCATION_UPLOADED } from '../apis/database';
 
 export function createLocationObject(key, options) {
   const created = moment.utc().valueOf();
@@ -25,7 +26,7 @@ export async function getCoordinates(key) {
 }
 
 export async function convertToLocation(location) {
-  const { key, createdAt: created, resources, status } = location;
+  const { key, createdAt: created, resources, status, uploaded } = location;
   const { longitude, latitude } = await getCoordinates(key);
   return {
     key,
@@ -34,6 +35,7 @@ export async function convertToLocation(location) {
     resources,
     longitude,
     latitude,
+    uploaded: uploaded === LOCATION_UPLOADED.true,
   };
 }
 

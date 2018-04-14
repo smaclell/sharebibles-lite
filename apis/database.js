@@ -14,13 +14,15 @@ export function executeTransaction(statement, args, completed, error) {
   });
 }
 
-export function createDatabase() {
-  executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
+export function createDatabases() {
+  return new Promise((resolve, reject) => {
+    executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)', null, resolve, reject);
+  });
 }
 
 export function clearDatabase() {
   return new Promise((resolve, reject) => {
-    executeTransaction('drop table locations', null, resolve(true), reject(false));
+    executeTransaction('drop table locations', null, resolve, reject);
   });
 }
 
@@ -106,7 +108,7 @@ export async function addLocalLocation(locationData, team = TEAM_KEY) {
   const { resources, status = null, latitude, longitude } = locationData;
   const resourcesString = JSON.stringify(resources);
   const key = pushRef('locations').key;
-  const locationObject = createLocationObject(key, locationData);
+  const locationObject = createLocationObject(key, { ...locationData, uploaded: false });
 
   // Store the longitude and latitude in secure storage with same locationKey from DB
   saveCoordinates(key, latitude, longitude);

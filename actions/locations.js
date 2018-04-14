@@ -3,13 +3,32 @@ import * as apis from '../apis';
 import { failed, pending, uploaded } from './uploads';
 import * as database from '../apis/database';
 
+export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
+export function receiveLocation(location) {
+  return {
+    type: RECIEVE_LOCATION,
+    location,
+  };
+}
+
+export function updateUploadStatus(location, isUploaded) {
+  return (dispatch) => {
+    const newLocation = { ...location, uploaded: isUploaded };
+    dispatch(receiveLocation(newLocation));
+    const numericValue =
+      isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
+
+    return database.updateUploadStatus(newLocation.key, numericValue);
+  };
+}
+
 function wrapper(work, location) {
   return async (dispatch) => {
     dispatch(pending(location.key));
 
     try {
       await work;
-      await database.updateUploadStatus(location.key, database.LOCATION_UPLOADED.true);
+      await updateUploadStatus(location, true);
       dispatch(uploaded(location.key));
     } catch (err) {
       Sentry.captureException(err, {
@@ -20,15 +39,6 @@ function wrapper(work, location) {
 
       dispatch(failed(location.key));
     }
-  };
-}
-
-
-export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
-export function receiveLocation(location) {
-  return {
-    type: RECIEVE_LOCATION,
-    location,
   };
 }
 
@@ -54,7 +64,7 @@ export function fetchLocation(locationKey) {
     return apis.fetchLocation(locationKey, regionKey)
       .then((location) => {
         if (location) {
-          dispatch(receiveLocation(location));
+          dispatch(receiveLocation({ ...location, uploaded: true }));
         }
       });
   };
@@ -83,7 +93,7 @@ export function updateLocation(options) {
           dispatch(receiveLocation({ ...original, ...updated }));
 
           saved
-            .then(() => database.updateUploadStatus(options.key, database.LOCATION_UPLOADED.true))
+            .then(() => updateUploadStatus({ ...original, ...updated }, true))
             .catch(() => {
               dispatch(receiveLocation(original));
               dispatch(fetchLocation(original.key));

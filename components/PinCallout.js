@@ -14,7 +14,9 @@ import colours from '../styles/colours';
 
 const relativeTime = time => moment.utc(time).clone().local().fromNow();
 
-const Callout = ({ created, status, resources, uploaded }) => {
+const Callout = ({
+  created, status, resources, uploaded,
+}) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';
   const statusString = `status/${status}`;
   return (
@@ -48,7 +50,6 @@ const Callout = ({ created, status, resources, uploaded }) => {
 };
 
 Callout.defaultProps = {
-  status: 'unknown',
   resources: null,
   uploaded: false,
 };

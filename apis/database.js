@@ -75,7 +75,7 @@ export async function addLocalLocation(locationData, team = TEAM_KEY) {
   const resourcesString = JSON.stringify(resources);
   const { key } = pushRef('locations');
   const locationObject = createLocationObject(key, { ...locationData, uploaded: false });
-  
+
   // Store the longitude and latitude in secure storage with same locationKey from DB
   saveCoordinates(key, latitude, longitude);
 

@@ -13,7 +13,9 @@ import uploadStyles from '../styles/upload';
 import VisitStatus from './VisitStatus';
 import I18n from '../assets/i18n/i18n';
 
-const Location = ({ created, status, initial, upload }) => (
+const Location = ({
+  created, status, initial, upload,
+}) => (
   <View>
     <View style={styles.item}>
       <Image source={require('../assets/logo/logo.png')} style={styles.item_image} />

@@ -41,6 +41,7 @@ export function authenticate(refreshToken) { // Exported for testing
         },
       });
 
+      // eslint-disable-next-line prefer-destructuring
       token = response.token;
     } catch (err) {
       Sentry.captureException(err);

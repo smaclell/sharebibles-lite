@@ -40,7 +40,7 @@ class FollowUp extends React.Component {
   }
 
   goBack = () => {
-    this.props.navigation.goBack();
+    this.props.navigation.goBack(null);
     this.setState(createInitialState());
   }
 

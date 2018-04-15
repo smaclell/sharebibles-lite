@@ -27,8 +27,6 @@ export function setup() {
       info => dispatch(update(info)),
     );
 
-    NetInfo.getConnectionInfo().then(
-      info => dispatch(update(info)),
-    );
+    NetInfo.getConnectionInfo().then(info => dispatch(update(info)));
   };
 }

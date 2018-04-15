@@ -1,3 +1,4 @@
+/* eslint react/no-unused-state: 0 */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
@@ -102,7 +103,9 @@ class OverviewMap extends PureComponent {
   }
 
   // Called when user finishes moving the map on device
-  onRegionChangeComplete = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+  onRegionChangeComplete = ({
+    latitude, longitude, latitudeDelta, longitudeDelta,
+  }) => {
     if (!this.state.isReady) {
       return;
     }
@@ -237,7 +240,8 @@ class OverviewMap extends PureComponent {
               key={location.key}
               coordinate={{
                 latitude: location.latitude,
-                longitude: location.longitude }}
+                longitude: location.longitude,
+              }}
               pinColor={pinColor}
             >
               <MapView.Callout>
@@ -250,7 +254,8 @@ class OverviewMap extends PureComponent {
               key="tempLocation"
               coordinate={{
                 latitude: tempLocation.latitude,
-                longitude: tempLocation.longitude }}
+                longitude: tempLocation.longitude,
+              }}
               pinColor="yellow"
               draggable
               stopPropagation
@@ -309,7 +314,7 @@ function enrichLocations({ statuses }, locations) {
 }
 
 const mapStateToProps = (state) => {
-  const mode = state.overview.mode;
+  const { overview: { mode } } = state;
   const locations =
     Object.values(state.locations)
       .filter(x => x);

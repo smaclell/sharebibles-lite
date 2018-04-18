@@ -23,9 +23,7 @@ export function executeTransaction(statement, args = null) {
 }
 
 export function createDatabases() {
-  return new Promise((resolve, reject) => {
-    executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)', null, resolve, reject);
-  });
+  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
 }
 
 export function clearDatabase() {

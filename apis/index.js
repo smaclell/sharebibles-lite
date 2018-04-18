@@ -40,7 +40,6 @@ export function getRef(ref) {
 }
 
 export const GEO_REGION_KEY = 'geofireRegion';
-export const TEAM_KEY = 'test_team';
 
 function saveGeoData(created, locationKey, regionKey) {
   const geoKey = locationKey;

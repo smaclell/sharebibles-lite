@@ -1,6 +1,6 @@
 import { ACCEPTED } from '../actions/authentication';
 
-export default (state = { regionKey: 'test-region' }, action) => {
+export default (state = {}, action) => {
   if (action.type === ACCEPTED) {
     return {
       regionKey: action.regionKey,

@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
 const Settings = (props) => {
   const {
     acceptInvite,
+    enableInvitations,
     logout,
     regionKey,
     showPushDialog,
@@ -87,7 +88,7 @@ const Settings = (props) => {
             <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
           </View>
         )}
-        { !regionKey && (
+        { !regionKey && enableInvitations && (
           <View style={SettingsItem.styles.container}>
             <TextInput
               style={SettingsItem.styles.text}
@@ -115,7 +116,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
-        <SettingsItem term="settings/push_locations" onPress={showPushDialog} />
+        { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         <SettingsItem term="settings/logout" onPress={logout} />
       </View>
@@ -132,6 +133,7 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
+  enableInvitations: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,

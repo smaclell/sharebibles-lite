@@ -10,6 +10,7 @@ import emails from '../assets/constants/emails';
 
 const mapStateToProps = state => ({
   ...state.authentication,
+  ...state.settings,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   connected: state.connected,

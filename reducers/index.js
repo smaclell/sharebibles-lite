@@ -8,6 +8,7 @@ import locations from './locations';
 import overview from './overview';
 import position from './position';
 import resources from './resources';
+import settings from './settings';
 import statuses from './statuses';
 import uploads from './uploads';
 
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   overview,
   position,
   resources,
+  settings,
   statuses,
   uploads,
 });

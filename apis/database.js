@@ -1,7 +1,7 @@
 import { SQLite } from 'expo';
 import Sentry from 'sentry-expo';
 import { pushRef } from './index';
-import { LOCATION_UPLOADED, convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
+import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
 export function openDatabase(databaseName = 'locations.db') {
   return SQLite.openDatabase(databaseName);

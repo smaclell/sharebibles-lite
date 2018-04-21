@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
-import { AppLoading, Font } from 'expo';
+import { AppLoading, Constants, Font } from 'expo';
 import { FontAwesome, Entypo, Ionicons, Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -16,6 +16,7 @@ import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
 import * as positionActions from './actions/position';
 import { restoreLocalLocations } from './actions/locations';
+import * as settingsActions from './actions/settings';
 
 Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
 
@@ -46,6 +47,9 @@ class App extends Component {
       store.dispatch(positionActions.initialize()),
       store.dispatch(restore()),
       I18n.initAsync(),
+      store.dispatch(settingsActions.load({
+        enableInvitations: Constants.manifest.extra.enableInvitations,
+      })),
     ]).then(() => {
       I18n.setDateLocale();
       this.setState({ isReady: true });

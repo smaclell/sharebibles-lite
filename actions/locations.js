@@ -57,7 +57,7 @@ export function restoreLocalLocations() {
 export function fetchLocation(locationKey) {
   return (dispatch, getState) => {
     const { authentication: { regionKey }, connected } = getState();
-    if (!connected) {
+    if (!connected || !regionKey) {
       return Promise.resolve();
     }
 
@@ -122,7 +122,7 @@ export function createLocation(options) {
 
     dispatch(pending(key));
     dispatch(receiveLocation(localLocation));
-    if (connected) {
+    if (connected && regionKey) {
       const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
 
       wrapper(saved, location);

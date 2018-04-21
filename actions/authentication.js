@@ -59,7 +59,12 @@ export function authenticate(refreshToken) { // Exported for testing
 }
 
 export function restore() {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { settings: { enableInvitations } } = getState();
+    if (!enableInvitations) {
+      return;
+    }
+
     let values;
     try {
       values = await load();

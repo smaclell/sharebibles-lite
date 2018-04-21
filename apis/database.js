@@ -1,6 +1,6 @@
 import { SQLite } from 'expo';
 import Sentry from 'sentry-expo';
-import { TEAM_KEY, pushRef } from './index';
+import { pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
 export function openDatabase(databaseName = 'locations.db') {
@@ -23,7 +23,7 @@ export function executeTransaction(statement, args = null) {
 }
 
 export function createDatabases() {
-  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, team text, resources text, status text, uploaded int)');
+  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, resources text, status text, uploaded int)');
 }
 
 export function clearDatabase() {
@@ -66,7 +66,7 @@ export async function fetchLocalLocations(offlineOnly = false) {
   return convertArrayToLocations(result.rows._array);
 }
 
-export async function addLocalLocation(locationData, team = TEAM_KEY) {
+export async function addLocalLocation(locationData) {
   const {
     resources, status = null, latitude, longitude,
   } = locationData;
@@ -78,8 +78,8 @@ export async function addLocalLocation(locationData, team = TEAM_KEY) {
   saveCoordinates(key, latitude, longitude);
 
   await executeTransaction(
-    'insert into locations (key, coordinateKey, createdAt, team, resources, status, uploaded) values (?, ?, ?, ?, ?, ?, ?)',
-    [key, key, locationObject.created, team, resourcesString, status, 0],
+    'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
+    [key, key, locationObject.created, resourcesString, status, 0],
   );
 
   return locationObject;

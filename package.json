@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "6.3.1",
-    "ex-react-native-i18n": "0.0.3",
+    "ex-react-native-i18n": "0.0.4",
     "expo": "^26.0.0",
     "firebase": "^4.12.1",
     "geofire": "^4.1.2",

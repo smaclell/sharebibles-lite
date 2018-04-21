@@ -1,6 +1,8 @@
 import { SecureStore } from 'expo';
 import moment from 'moment';
-import { LOCATION_UPLOADED } from '../apis/database';
+
+// NOTE: use 1 and 0 for isUploaded (1 = true, 0 = false)
+export const LOCATION_UPLOADED = Object.freeze({ true: 1, false: 0 });
 
 export function createLocationObject(key, options) {
   const created = moment.utc().valueOf();
@@ -34,7 +36,7 @@ export async function convertToLocation(location) {
     key,
     created,
     status,
-    resources,
+    resources: JSON.parse(resources),
     longitude,
     latitude,
     uploaded: uploaded === LOCATION_UPLOADED.true,

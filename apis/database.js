@@ -30,8 +30,6 @@ export function clearDatabase() {
   return executeTransaction('drop table locations');
 }
 
-// NOTE: use 1 and 0 for isUploaded (1 = true, 0 = false)
-export const LOCATION_UPLOADED = Object.freeze({ true: 1, false: 0 });
 export function updateUploadStatus(key, isUploaded) {
   return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
 }

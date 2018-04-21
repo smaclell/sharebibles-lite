@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class SlideIn extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.visible) {
+    if (!prevState.visible && nextProps.visible) {
       return {
         ...prevState,
         visible: true,
@@ -25,14 +25,14 @@ class SlideIn extends Component {
     this.visibility = new Animated.Value(visible ? containerHeight * endPercentage : containerHeight);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { visible, containerHeight, endPercentage } = this.props;
-    if (visible) {
+    if (prevProps.visible !== visible) {
       Animated.timing(this.visibility, {
         toValue: visible ? containerHeight * endPercentage : containerHeight,
         easing: Easing.bezier(0.76, 0.01, 0.4, 1),
         duration: 500,
-      }).start(() => this.setState({ visible }));
+      }).start(() => this.state.visible !== visible && this.setState({ visible }));
     }
   }
 

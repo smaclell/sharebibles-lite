@@ -91,7 +91,7 @@ class OverviewMap extends PureComponent {
       isReady: false,
       tempLocation: null,
       movingTemp: false,
-      mapHeight: 0,
+      mapHeight: 400, // Ideally it would be zero but that results in the slide in coming in from the top
     };
   }
 
@@ -256,7 +256,9 @@ class OverviewMap extends PureComponent {
                 latitude: tempLocation.latitude,
                 longitude: tempLocation.longitude,
               }}
-              pinColor="yellow"
+              flat={false}
+              pinColor="purple"
+              opacity={0.9}
               draggable
               stopPropagation
               onDragStart={this.onDragStart}

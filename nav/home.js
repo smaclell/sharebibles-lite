@@ -8,8 +8,8 @@ import colours from '../styles/colours';
 
 import Settings from '../containers/Settings';
 
+import OverviewMap from '../screens/overviewMap';
 import FollowUp from '../screens/followUp';
-import Tabs from './tabs';
 import Icon from '../components/Icon';
 
 const createGear = navigation => (
@@ -19,13 +19,8 @@ const createGear = navigation => (
 );
 
 const drawerScreens = {
-  Tabs: {
-    screen: Tabs,
-    navigationOptions: ({ navigation }) => ({
-      title: I18n.t('title/share_bibles'),
-      gesturesEnabled: false,
-      headerLeft: createGear(navigation),
-    }),
+  OverviewMap: {
+    screen: OverviewMap,
   },
 };
 
@@ -35,10 +30,9 @@ const drawer = new DrawerNavigator(drawerScreens, {
   drawerToggleRoute: 'DrawerToggle',
   headerMode: 'float',
   drawerLockMode: 'locked-closed',
-  initialRouteName: 'Tabs',
+  initialRouteName: 'OverviewMap',
   contentComponent: Settings,
   navigationOptions: {
-    gesturesEnabled: false,
     headerStyle: { backgroundColor: colours.white },
     headerTintColor: colours.text,
   },
@@ -47,13 +41,15 @@ const drawer = new DrawerNavigator(drawerScreens, {
 const drawerStack = new StackNavigator({
   Drawer: {
     screen: drawer,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('title/share_bibles'),
+      headerLeft: createGear(navigation),
+    }),
   },
   FollowUp: {
     screen: FollowUp,
     navigationOptions: {
       title: I18n.t('components/follow_up'),
-      tabBarVisible: false,
-      gesturesEnabled: false,
     },
   },
 }, {

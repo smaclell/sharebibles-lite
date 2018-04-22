@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import Sentry from 'sentry-expo';
-import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
@@ -40,16 +40,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  locationButton: {
+  mapButton: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
-    paddingVertical: 3,
+    bottom: Platform.select({
+      ios: 20,
+      android: 0,
+    }),
+    margin: 10,
     paddingHorizontal: 6,
+    paddingVertical: 3,
     borderRadius: 100,
     borderWidth: 1,
     borderColor: 'rgba(3, 3, 3, 0.4)',
     backgroundColor: 'rgba(228, 229, 227, 1)',
+  },
+  buttonIcon: {
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  addButton: {
+    left: 0,
+  },
+  centerButton: {
+    right: 0,
   },
   map: {
     position: 'absolute',
@@ -60,18 +72,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialLatitudeDelta = 0.0012;
-const initialLongitudeDelta = 0.0006;
+const initialLatitudeDelta = 0.00000012;
+const initialLongitudeDelta = 0.00000006;
 
-const minLatitudeDelta = initialLatitudeDelta / 2;
-const minLongitudeDelta = initialLongitudeDelta / 2;
-
-const animationTime = 800;
-const shortAnimationTime = 400;
+const animationTime = 400;
+const shortAnimationTime = 200;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
-const backgroundColor = 'rgba(0,0,0,0)';
 
 class OverviewMap extends PureComponent {
   constructor(props) {
@@ -113,16 +121,15 @@ class OverviewMap extends PureComponent {
     this.setState({
       latitude,
       longitude,
-      latitudeDelta: Math.max(latitudeDelta, minLatitudeDelta),
-      longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
+      latitudeDelta,
+      longitudeDelta,
       centered: false,
     });
 
     this.props.updatePosition(latitude, longitude);
   }
 
-  // Called when user taps current location button
-  onLocationPress = async () => {
+  onCenterLocationPress = async () => {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
@@ -130,6 +137,12 @@ class OverviewMap extends PureComponent {
 
       // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
+    }
+  }
+
+  onAddLocationPress = async () => {
+    if (!this.state.tempLocation) {
+      this.createTempPin(this.state);
     }
   }
 
@@ -224,8 +237,7 @@ class OverviewMap extends PureComponent {
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
-          region={this.state}
-          initialRegion={this.state}
+          initialRegion={this.initialRegion}
           provider="google"
           minZoomLevel={10}
           maxZoomLevel={20}
@@ -271,8 +283,8 @@ class OverviewMap extends PureComponent {
           <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
         </SlideIn>
         <TouchableOpacity
-          style={styles.locationButton}
-          onPress={this.onLocationPress}
+          style={[styles.mapButton, styles.centerButton]}
+          onPress={this.onCenterLocationPress}
           activeOpacity={0.9}
         >
           <Icon
@@ -280,7 +292,20 @@ class OverviewMap extends PureComponent {
             family="font-awesome"
             size="large"
             colour={iconColour}
-            styles={{ backgroundColor }}
+            styles={styles.buttonIcon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.mapButton, styles.addButton]}
+          onPress={this.onAddLocationPress}
+          activeOpacity={0.9}
+        >
+          <Icon
+            name="plus"
+            family="font-awesome"
+            size="large"
+            colour={black}
+            styles={styles.buttonIcon}
           />
         </TouchableOpacity>
       </View>

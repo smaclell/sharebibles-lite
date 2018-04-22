@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: colours.greys.lightest,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   divider: {
     marginTop: 5,
@@ -101,7 +101,7 @@ const Settings = (props) => {
             />
           </View>
         )}
-        <View style={SettingsItem.styles.container}>
+        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={I18n.locale.substring(0, 2)}
@@ -118,7 +118,7 @@ const Settings = (props) => {
         </View>
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
-        <SettingsItem term="settings/logout" onPress={logout} />
+        { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
       </View>
       <View style={styles.version_container}>
         <View style={styles.logo_container}>

@@ -8,11 +8,11 @@ import I18n from '../assets/i18n/i18n';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     alignSelf: 'stretch',
     alignContent: 'flex-start',
     alignItems: 'center',
+    minHeight: 1.5 * fonts.large,
     margin: 5,
   },
   text: {

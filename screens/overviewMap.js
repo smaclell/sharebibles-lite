@@ -40,16 +40,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  locationButton: {
+  mapButton: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
-    paddingVertical: 3,
+    margin: 10,
     paddingHorizontal: 6,
+    paddingVertical: 3,
     borderRadius: 100,
     borderWidth: 1,
     borderColor: 'rgba(3, 3, 3, 0.4)',
     backgroundColor: 'rgba(228, 229, 227, 1)',
+  },
+  buttonIcon: {
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  addButton: {
+    bottom: 0,
+    left: 0,
+  },
+  centerButton: {
+    bottom: 0,
+    right: 0,
   },
   map: {
     position: 'absolute',
@@ -71,7 +81,6 @@ const shortAnimationTime = 400;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
-const backgroundColor = 'rgba(0,0,0,0)';
 
 class OverviewMap extends PureComponent {
   constructor(props) {
@@ -121,8 +130,7 @@ class OverviewMap extends PureComponent {
     this.props.updatePosition(latitude, longitude);
   }
 
-  // Called when user taps current location button
-  onLocationPress = async () => {
+  onCenterLocationPress = async () => {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
@@ -130,6 +138,12 @@ class OverviewMap extends PureComponent {
 
       // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
+    }
+  }
+
+  onAddLocationPress = async () => {
+    if (!this.state.tempLocation) {
+      this.createTempPin(this.state);
     }
   }
 
@@ -271,8 +285,8 @@ class OverviewMap extends PureComponent {
           <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
         </SlideIn>
         <TouchableOpacity
-          style={styles.locationButton}
-          onPress={this.onLocationPress}
+          style={[styles.mapButton, styles.centerButton]}
+          onPress={this.onCenterLocationPress}
           activeOpacity={0.9}
         >
           <Icon
@@ -280,7 +294,20 @@ class OverviewMap extends PureComponent {
             family="font-awesome"
             size="large"
             colour={iconColour}
-            styles={{ backgroundColor }}
+            styles={styles.buttonIcon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.mapButton, styles.addButton]}
+          onPress={this.onAddLocationPress}
+          activeOpacity={0.9}
+        >
+          <Icon
+            name="plus"
+            family="font-awesome"
+            size="large"
+            colour={black}
+            styles={styles.buttonIcon}
           />
         </TouchableOpacity>
       </View>

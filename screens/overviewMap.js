@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   locationButton: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 10,
     right: 10,
     paddingVertical: 3,
     paddingHorizontal: 6,

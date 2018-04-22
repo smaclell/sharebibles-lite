@@ -72,14 +72,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialLatitudeDelta = 0.0012;
-const initialLongitudeDelta = 0.0006;
+const initialLatitudeDelta = 0.00000012;
+const initialLongitudeDelta = 0.00000006;
 
-const minLatitudeDelta = initialLatitudeDelta / 2;
-const minLongitudeDelta = initialLongitudeDelta / 2;
-
-const animationTime = 800;
-const shortAnimationTime = 400;
+const animationTime = 400;
+const shortAnimationTime = 200;
 
 const black = 'rgb(0,0,0)';
 const blue = 'rgb(12, 128, 252)';
@@ -124,8 +121,8 @@ class OverviewMap extends PureComponent {
     this.setState({
       latitude,
       longitude,
-      latitudeDelta: Math.max(latitudeDelta, minLatitudeDelta),
-      longitudeDelta: Math.max(longitudeDelta, minLongitudeDelta),
+      latitudeDelta,
+      longitudeDelta,
       centered: false,
     });
 
@@ -240,8 +237,7 @@ class OverviewMap extends PureComponent {
           showsTraffic={false}
           showsIndoors={false}
           showsBuildings={false}
-          region={this.state}
-          initialRegion={this.state}
+          initialRegion={this.initialRegion}
           provider="google"
           minZoomLevel={10}
           maxZoomLevel={20}

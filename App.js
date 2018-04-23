@@ -18,7 +18,7 @@ import * as positionActions from './actions/position';
 import { restoreLocalLocations } from './actions/locations';
 import * as settingsActions from './actions/settings';
 
-Sentry.config('https://c054fcaae0394f1fa64d85f2860e04c7@sentry.io/271508').install();
+Sentry.config('https://b3f49b97fd1045d0b76429a73baf0396@sentry.io/1193850').install();
 
 initialize();
 

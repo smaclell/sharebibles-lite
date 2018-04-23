@@ -24,3 +24,14 @@
 5. Using the expo app on your phone see the awesomeness you have created!
 
 Create a card on the trello board if this does not work for you.
+
+# Publishing
+
+See [Expo Docs](https://docs.expo.io/versions/v26.0.0/guides/building-standalone-apps.html) on Standalone apps
+
+```
+exp build:android --release-channel prod-v1
+exp build:ios --release-channel prod-v1
+``
+
+Please publish to the `prod-v1` channel. If you need to change the standalone application please update this message to use the next prod version, i.e. `prod-v2`.

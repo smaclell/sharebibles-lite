@@ -5,11 +5,13 @@
     "slug": "sharebibles-lite-dev",
     "privacy": "unlisted",
     "sdkVersion": "26.0.0",
-    "version": "0.5.0",
+    "version": "0.9.0",
     "orientation": "portrait",
     "primaryColor": "#65B7C7",
     "icon": "./assets/icons/app-icon.png",
     "splash": {
+      "backgroundColor": "#FFFFFF",
+      "resizeMode": "contain",
       "image": "./assets/icons/splash.png"
     },
     "packagerOpts": {
@@ -17,7 +19,8 @@
     },
     "assetBundlePatterns": [
       "assets/images/logo/**",
-      "assets/images/icons/**"
+      "assets/images/icons/**",
+      "node_modules/@expo/vector-icons/fonts/**"
     ],
     "android": {
       "config": {
@@ -32,7 +35,7 @@
         "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
       },
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Give us permission to know your location when saving your visits and viewing the map."
+        "NSLocationWhenInUseUsageDescription": "We need your location to update the map and save your visits."
       }
     },
     "extra": {

@@ -38,6 +38,7 @@ const drawer = new DrawerNavigator(drawerScreens, {
   },
 });
 
+// Using a function to allow language changes to immediately update titles
 const drawerStack = new StackNavigator({
   Drawer: {
     screen: drawer,
@@ -48,9 +49,9 @@ const drawerStack = new StackNavigator({
   },
   FollowUp: {
     screen: FollowUp,
-    navigationOptions: {
+    navigationOptions: () => ({
       title: I18n.t('components/follow_up'),
-    },
+    }),
   },
 }, {
   headerMode: 'float',

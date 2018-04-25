@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import Sentry from 'sentry-expo';
-import { Alert, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as locationActions from '../actions/locations';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
@@ -42,10 +42,7 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     position: 'absolute',
-    bottom: Platform.select({
-      ios: 20,
-      android: 0,
-    }),
+    bottom: 20,
     margin: 10,
     paddingHorizontal: 6,
     paddingVertical: 3,

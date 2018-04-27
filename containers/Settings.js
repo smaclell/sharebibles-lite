@@ -2,6 +2,7 @@ import Sentry from 'sentry-expo';
 import { Alert, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
+import { withNavigation } from 'react-navigation';
 import Settings from '../components/Settings';
 import { accept, logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
@@ -35,7 +36,7 @@ const sendFeedback = () => {
     ));
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   logout: () => dispatch(logout()),
   acceptInvite: (invite) => {
     const result = dispatch(accept(invite))
@@ -59,7 +60,10 @@ const mapDispatchToProps = dispatch => ({
     return result;
   },
   sendFeedback,
-  updateLocale: locale => dispatch(updateLocale(locale)),
+  updateLocale: (locale) => {
+    ownProps.navigation.setParams({ locale });
+    dispatch(updateLocale(locale));
+  },
   pushLocations: () => dispatch(pushLocalLocations()),
 });
 
@@ -90,4 +94,4 @@ const mergeProps = (stateProps, dispatchProps) => {
   return props;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Settings);
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps, mergeProps)(Settings));

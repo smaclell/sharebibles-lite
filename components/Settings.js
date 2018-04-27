@@ -57,11 +57,12 @@ const styles = StyleSheet.create({
     fontSize: fonts.small,
   },
   changeLanguageTitle: {
-    flex: 1,
+    flex: 0,
   },
   changeLanguagePicker: {
     flex: 1,
-    margin: 0,
+    marginVertical: 0,
+    marginHorizontal: 5,
   },
   pickerText: {
     fontSize: fonts.extraSmall,

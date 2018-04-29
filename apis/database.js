@@ -23,7 +23,7 @@ export function executeTransaction(statement, args = null) {
 }
 
 export function createDatabases() {
-  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt int, resources text, status text, uploaded int)');
+  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)');
 }
 
 export function clearDatabase() {
@@ -75,9 +75,10 @@ export async function addLocalLocation(locationData) {
   // Store the longitude and latitude in secure storage with same locationKey from DB
   saveCoordinates(key, latitude, longitude);
 
+  const createdAt = locationObject.created.toString()
   await executeTransaction(
     'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
-    [key, key, locationObject.created, resourcesString, status, 0],
+    [key, key, createdAt, resourcesString, status, 0],
   );
 
   return locationObject;

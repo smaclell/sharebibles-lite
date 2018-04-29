@@ -75,7 +75,7 @@ export async function addLocalLocation(locationData) {
   // Store the longitude and latitude in secure storage with same locationKey from DB
   saveCoordinates(key, latitude, longitude);
 
-  const createdAt = locationObject.created.toString()
+  const createdAt = locationObject.created.toString();
   await executeTransaction(
     'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
     [key, key, createdAt, resourcesString, status, 0],

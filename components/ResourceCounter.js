@@ -1,8 +1,5 @@
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
+import Stepper from 'react-native-ui-stepper';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
@@ -32,54 +29,24 @@ const text = {
   textAlign: 'center',
 };
 
-const counter = {
-  padding: 5,
-};
-
-const fixed = {
-  flexGrow: 0,
-  flexShrink: 1,
-};
-
-// Using entirely local state/methods to simplify the reducer
 class ResourceCounter extends Component {
   static propTypes = {
-    resourceKey: PropTypes.string.isRequired,
     format: PropTypes.string.isRequired,
-    summary: PropTypes.string.isRequired,
+    initialCount: PropTypes.number,
     onCountChanged: PropTypes.func.isRequired,
-    count: PropTypes.number,
+    resourceKey: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
-    count: 0,
+    initialCount: 0,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: props.count,
-    };
-
-    this.handleCountChanged = this.handleCountChanged.bind(this);
-    this.updateCount = this.updateCount.bind(this);
-  }
-
-  handleCountChanged() {
+  onCountChanged = (count) => {
     this.props.onCountChanged({
-      count: this.state.count,
+      count,
       resourceKey: this.props.resourceKey,
     });
-  }
-
-  updateCount(delta) {
-    this.setState(
-      p => ({
-        ...p,
-        count: p.count + delta,
-      }),
-      this.handleCountChanged,
-    );
   }
 
   render() {
@@ -89,13 +56,7 @@ class ResourceCounter extends Component {
       <View style={container}>
         <FontAwesome name={iconName} size={fonts.large} color={colours.text} />
         <Text style={text}>{this.props.summary}</Text>
-        <TouchableOpacity style={fixed} onPressOut={() => this.updateCount(-1)}>
-          <FontAwesome name="minus" size={fonts.normal} color={colours.text} />
-        </TouchableOpacity>
-        <Text style={[text, counter, fixed]}>{this.state.count}</Text>
-        <TouchableOpacity style={fixed} onPressOut={() => this.updateCount(1)}>
-          <FontAwesome name="plus" size={fonts.normal} color={colours.text} />
-        </TouchableOpacity>
+        <Stepper initialValue={this.props.initialCount} displayValue maximumValue={999} minimumValue={0} onValueChange={this.onCountChanged} />
       </View>
     );
   }

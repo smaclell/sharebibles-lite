@@ -6253,6 +6253,12 @@ react-native-svg@6.2.2:
   dependencies:
     prop-types "^15.6.0"
 
+react-native-ui-stepper@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-ui-stepper/-/react-native-ui-stepper-1.2.4.tgz#aef786835615df8314177a516a98f2b24b5517cd"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-vector-icons@4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"

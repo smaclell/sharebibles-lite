@@ -73,6 +73,7 @@ const Settings = (props) => {
   const {
     acceptInvite,
     enableInvitations,
+    exportData,
     logout,
     regionKey,
     showPushDialog,
@@ -118,6 +119,7 @@ const Settings = (props) => {
           </Picker>
         </View>
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
+        <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
       </View>
@@ -135,6 +137,7 @@ const Settings = (props) => {
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
+  exportData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,

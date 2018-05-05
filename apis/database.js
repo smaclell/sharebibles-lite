@@ -1,9 +1,10 @@
 import { SQLite } from 'expo';
 import Sentry from 'sentry-expo';
+import moment from 'moment';
 import { pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
-export function openDatabase(databaseName = 'locations.db') {
+export function openDatabase(databaseName = 'locations.1.db') {
   return SQLite.openDatabase(databaseName);
 }
 
@@ -75,7 +76,7 @@ export async function addLocalLocation(locationData) {
   // Store the longitude and latitude in secure storage with same locationKey from DB
   saveCoordinates(key, latitude, longitude);
 
-  const createdAt = locationObject.created.toString();
+  const createdAt = moment.utc(locationObject.created).toISOString();
   await executeTransaction(
     'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
     [key, key, createdAt, resourcesString, status, 0],

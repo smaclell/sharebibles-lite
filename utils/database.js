@@ -31,7 +31,7 @@ export async function convertToLocation(location) {
   const {
     key, resources, status, uploaded,
   } = location;
-  const created = parseInt(location.createdAt, 10);
+  const created = moment(location.createdAt).valueOf();
   const { longitude, latitude } = await getCoordinates(key);
   return {
     key,

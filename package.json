@@ -30,6 +30,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-keyboard-spacer": "^0.4.1",
+    "react-native-ui-stepper": "^1.2.4",
     "react-navigation": "1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",

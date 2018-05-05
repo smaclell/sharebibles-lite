@@ -29,8 +29,9 @@ export async function getCoordinates(key) {
 
 export async function convertToLocation(location) {
   const {
-    key, createdAt: created, resources, status, uploaded,
+    key, resources, status, uploaded,
   } = location;
+  const created = moment(location.createdAt).valueOf();
   const { longitude, latitude } = await getCoordinates(key);
   return {
     key,

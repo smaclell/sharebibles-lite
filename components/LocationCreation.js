@@ -24,7 +24,15 @@ class LocationCreation extends Component {
     this.state = createInitialState();
   }
 
-  updateStatus = value => this.setState({ status: value })
+  updateStatus = (value) => {
+    this.setState({ status: value });
+    this.props.resources.forEach((resource) => {
+      const allowStatus = resource.statuses.includes(value);
+      if (allowStatus && resource.startCount > 0) {
+        this.updateCount({ count: resource.startCount, resourceKey: resource.key });
+      }
+    });
+  }
 
   addLocation = () => {
     const { status, resources } = this.state;

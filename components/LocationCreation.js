@@ -24,7 +24,16 @@ class LocationCreation extends Component {
     this.state = createInitialState();
   }
 
-  updateStatus = value => this.setState({ status: value })
+  updateStatus = (value) => {
+    this.setState({ status: value });
+    this.props.resources.forEach((resource) => {
+      const allowStatus = resource.statuses.includes(value);
+      const hasValue = this.state.resources[resource.key];
+      if (allowStatus && !hasValue && resource.startCount > 0) {
+        this.updateCount({ count: resource.startCount, resourceKey: resource.key });
+      }
+    });
+  }
 
   addLocation = () => {
     const { status, resources } = this.state;
@@ -63,13 +72,7 @@ class LocationCreation extends Component {
   showResource = (resource) => {
     if (!resource.statuses.includes(this.state.status)) { return null; }
 
-    let count = resource.startCount;
-    if (this.state.resources[resource.key]) {
-      count = this.state.resources[resource.key].given;
-    } else if (count > 0) {
-      this.updateCount({ count, resourceKey: resource.key });
-    }
-
+    const { given: count } = this.state.resources[resource.key] || { given: 0 };
     return (
       <ResourceCounter
         key={resource.key}

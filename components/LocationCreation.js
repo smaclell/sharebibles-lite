@@ -63,21 +63,14 @@ class LocationCreation extends Component {
   showResource = (resource) => {
     if (!resource.statuses.includes(this.state.status)) { return null; }
 
-    let count = resource.startCount;
-    if (this.state.resources[resource.key]) {
-      count = this.state.resources[resource.key].given;
-    } else if (count > 0) {
-      this.updateCount({ count, resourceKey: resource.key });
-    }
-
     return (
       <ResourceCounter
-        key={resource.key}
-        resourceKey={resource.key}
         format={resource.format}
-        summary={I18n.t(resource.summary)}
-        count={count}
+        initialCount={resource.startCount}
+        key={resource.key}
         onCountChanged={this.updateCount}
+        resourceKey={resource.key}
+        summary={I18n.t(resource.summary)}
       />
     );
   }

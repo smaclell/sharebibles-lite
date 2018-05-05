@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'stretch',
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   groups: {
     flexDirection: 'row',

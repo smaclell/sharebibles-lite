@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Picker, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -73,6 +74,7 @@ const Settings = (props) => {
   const {
     acceptInvite,
     enableInvitations,
+    exportData,
     logout,
     regionKey,
     showPushDialog,
@@ -102,22 +104,25 @@ const Settings = (props) => {
             />
           </View>
         )}
-        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
-          <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
-          <Picker
-            selectedValue={I18n.locale.substring(0, 2)}
-            onValueChange={updateLocale}
-            style={styles.changeLanguagePicker}
-            itemStyle={SettingsItem.styles.text}
-            mode="dropdown"
-            enabled
-          >
-            {Object.entries(list).map(([key, value]) => (
-              <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
-            ))}
-          </Picker>
-        </View>
+        { __DEV__ && (
+          <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
+            <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
+            <Picker
+              selectedValue={I18n.locale.substring(0, 2)}
+              onValueChange={updateLocale}
+              style={styles.changeLanguagePicker}
+              itemStyle={SettingsItem.styles.text}
+              mode="dropdown"
+              enabled
+            >
+              {Object.entries(list).map(([key, value]) => (
+                <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
+              ))}
+            </Picker>
+          </View>
+        )}
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
+        <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
       </View>
@@ -135,6 +140,7 @@ const Settings = (props) => {
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
+  exportData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,

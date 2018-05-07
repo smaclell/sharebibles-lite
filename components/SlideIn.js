@@ -27,9 +27,15 @@ class SlideIn extends Component {
 
   componentDidUpdate(prevProps) {
     const { visible, containerHeight, endPercentage } = this.props;
+    let visibleHeight = containerHeight * endPercentage;
+    if (this.props.fullHeight) {
+      const max = containerHeight - this.props.fullHeight - 10;
+      visibleHeight = Math.max(visibleHeight, max);
+    }
+
     if (prevProps.visible !== visible) {
       Animated.timing(this.visibility, {
-        toValue: visible ? containerHeight * endPercentage : containerHeight,
+        toValue: visible ? visibleHeight : containerHeight,
         easing: Easing.bezier(0.76, 0.01, 0.4, 1),
         duration: 500,
       }).start(() => this.state.visible !== visible && this.setState({ visible }));
@@ -57,6 +63,7 @@ class SlideIn extends Component {
 SlideIn.defaultProps = {
   visible: false,
   style: {},
+  fullHeight: null,
 };
 
 SlideIn.propTypes = {
@@ -66,6 +73,7 @@ SlideIn.propTypes = {
   // They have abug around support custom proptypes
   // eslint-disable-next-line react/no-typos
   style: ViewPropTypes.style,
+  fullHeight: PropTypes.number,
   visible: PropTypes.bool,
 };
 

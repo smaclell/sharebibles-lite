@@ -1,7 +1,13 @@
-# Get started
+# ShareBibles Lite
 
-[![Run Status](https://api.shippable.com/projects/59a3023bcf8c1407003521c5/badge?branch=master)](https://app.shippable.com/github/IanEdington/sharebibles)
-[![Coverage Badge](https://api.shippable.com/projects/59a3023bcf8c1407003521c5/coverageBadge?branch=master)](https://app.shippable.com/github/IanEdington/sharebibles)
+[![CircleCI](https://circleci.com/gh/smaclell/sharebibles-lite.svg?style=svg)](https://circleci.com/gh/smaclell/sharebibles-lite)
+
+This is a mobile application to help share the Bible throughout the world.
+
+[Android](https://play.google.com/store/apps/details?id=com.faithtech.sharebibles_lite)
+[iOS](https://itunes.apple.com/us/app/share-bibles-lite/id1375368792?ls=1&mt=8)
+
+# Get started
 
 1. In order to run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
@@ -13,17 +19,31 @@
 
     4. npm install -g react-native-cli
 
-2. Ensure you have `yarn` installed, i.e. `brew install yarn`
+2. Install the XDE and exp cli tool from [expo](https://docs.expo.io/versions/latest/introduction/installation.html)
 
-3. Run `yarn global add exp` to install the expo commandline tool
+3. Ensure you have `yarn` installed, i.e. `brew install yarn`
 
-4. Within the sharebibles directory run `yarn install`
+4. Install all the dependencies using `yarn install`
 
-4. Run `yarn start` or `yarn run android` or `yarn run ios`
+5. Using the XDE to run the project (open the project folder)
 
-5. Using the expo app on your phone see the awesomeness you have created!
+6. Using the expo app on your phone see the awesomeness you have created!
 
 Create a card on the trello board if this does not work for you.
+
+# Contributing
+
+We maintain an active backlog of new features and bugs we would love your help with.
+
+Have a great idea or change you want to share? Awesome. We actively welcome pull requests:
+
+1. Fork the repo and create your branch from `master`.
+2. If you've added code that should be tested, add tests.
+3. If you've changed APIs, update the documentation.
+4. Ensure the test suite passes.
+5. Make sure your code lints.
+
+We have adopted a [Code of Conduct]((https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)) that we expect project participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
 
 # Publishing
 
@@ -35,3 +55,7 @@ exp build:ios --release-channel prod-v1
 ``
 
 Please publish to the `prod-v1` channel. If you need to change the standalone application please update this message to use the next prod version, i.e. `prod-v2`.
+
+# License
+
+This project is [Apache 2.0](https://github.com/smaclell/sharebibles-lite/blob/master/LICENSE.md) Licensed. We also provide an additional patent grant.

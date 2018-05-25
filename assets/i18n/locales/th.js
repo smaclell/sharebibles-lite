@@ -30,8 +30,6 @@ export default {
   'feedback/feedback_error': 'โปรแกรมจดหมายไม่สามารถเริ่มต้นได้ ส่งความคิดเห็นด้วยตนเองไปที่ {{email}}',
   'feedback/feedback_subject': 'Share Bibles ข้อเสนอแนะ',
   'feedback/feedback_title': 'ส่งความคิดเห็น',
-  'initial/first_visit': 'เยี่ยมครั้งแรก',
-  'initial/or': 'หรือ',
   'pin_callout/bible_heading': 'พระคัมภีร์',
   'pin_callout/status_heading': 'สถานะ',
   'resource/generic_bible': 'จำนวนพระคัมภีร์ที่แจก',

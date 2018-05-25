@@ -32,8 +32,6 @@ export default {
   'feedback/feedback_error': 'No se pudo iniciar la aplicación de correo. Enviar comentarios manualmente a {{email}}',
   'feedback/feedback_subject': 'Share Bibles Feedback',
   'feedback/feedback_title': 'Enviar Comentarios',
-  'initial/first_visit': 'Primera Visita',
-  'initial/or': 'O',
   'pin_callout/bible_heading': 'Biblias',
   'pin_callout/status_heading': 'Estado',
   'resource/generic_bible': '# de biblias distribuidas',

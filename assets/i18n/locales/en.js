@@ -34,8 +34,6 @@ export default {
   'feedback/feedback_error': 'Unable to launch mail app. Send feedback manually to {{email}}',
   'feedback/feedback_subject': 'Share Bibles Feedback',
   'feedback/feedback_title': 'Send Feedback',
-  'initial/first_visit': 'First Visit',
-  'initial/or': 'OR',
   'pin_callout/bibles_heading': 'Bibles',
   'pin_callout/status_heading': 'Status',
   'resource/generic_bible': '# of Bibles Distributed',

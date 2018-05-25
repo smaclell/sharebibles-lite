@@ -9,7 +9,6 @@ import colours from '../styles/colours';
 import Settings from '../containers/Settings';
 
 import OverviewMap from '../screens/overviewMap';
-import FollowUp from '../screens/followUp';
 import Icon from '../components/Icon';
 
 const createGear = navigation => (
@@ -45,12 +44,6 @@ const drawerStack = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('title/share_bibles'),
       headerLeft: createGear(navigation),
-    }),
-  },
-  FollowUp: {
-    screen: FollowUp,
-    navigationOptions: () => ({
-      title: I18n.t('components/follow_up'),
     }),
   },
 }, {

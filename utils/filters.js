@@ -13,10 +13,7 @@ function filter(thing, selected, status) {
   return result;
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export function filterResources(resources, selected, status) {
   return filter(resources, selected, status);
-}
-
-export function filterTags(tags, selected, status) {
-  return filter(tags, selected, status);
 }

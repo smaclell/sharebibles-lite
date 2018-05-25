@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/smaclell/sharebibles-lite.svg?style=svg)](https://circleci.com/gh/smaclell/sharebibles-lite)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier-eslint/blob/master/CODE_OF_CONDUCT.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square)](https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This is a mobile application to help share the Bible throughout the world.

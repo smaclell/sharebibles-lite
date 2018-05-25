@@ -65,12 +65,8 @@ export default {
   'status/groups/home': 'Home',
   'status/groups/not_home': 'Not Home',
   'title/share_bibles': 'Share Bibles',
-  'validation/no_location_title': 'No location',
-  'validation/no_location_message': 'You must provide a location',
   'validation/no_status_title': 'No status',
   'validation/no_status_message': 'You must provide a status',
-  'validation/no_notes_title': 'No notes',
-  'validation/no_notes_message': 'You must provide a notes for the current status',
   'validation/unknown_error_title': 'An error occurred',
   'validation/unknown_error_message': 'An unexpected error has occurred, please try again.',
 };

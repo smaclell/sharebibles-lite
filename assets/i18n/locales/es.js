@@ -3,17 +3,9 @@ import 'moment/locale/es-do';
 import 'moment/locale/es-us';
 
 export default {
-  'button/add': 'AÑADIR',
   'button/cancel': 'CANCELAR',
-  'button/create_account': 'Crear Cuenta',
-  'button/loading': 'CARGANDO',
-  'button/offline': 'DESCONECTADO',
   'button/ok': 'ACEPTAR',
   'button/push_locations': 'Empujar',
-  'button/show_region': 'TODO',
-  'button/show_team': 'EQUIPO',
-  'button/show_user': 'YO',
-  'button/update': 'ACTUALIZAR',
   'connectivity/action_requires_connection': 'La acción solicitada requiere una conexión de red activa',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',

@@ -5,17 +5,9 @@ import 'moment/locale/en-ie';
 import 'moment/locale/en-nz';
 
 export default {
-  'button/add': 'ADD',
   'button/cancel': 'CANCEL',
-  'button/create_account': 'Create Account',
-  'button/loading': 'LOADING',
-  'button/offline': 'OFFLINE',
   'button/ok': 'OK',
   'button/push_locations': 'Push',
-  'button/show_region': 'ALL',
-  'button/show_team': 'TEAM',
-  'button/show_user': 'ME',
-  'button/update': 'UPDATE',
   'connectivity/action_requires_connection': 'The requested action requires an active network connection',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',

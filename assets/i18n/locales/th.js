@@ -1,17 +1,9 @@
 import 'moment/locale/th';
 
 export default {
-  'button/add': 'เพิ่ม',
   'button/cancel': 'ยกเลิก',
-  'button/create_account': 'สร้างบัญชี',
-  'button/loading': 'กำลังโหลด',
-  'button/offline': 'ออฟไลน์',
   'button/ok': 'ตกลง',
   'button/push_locations': 'ดัน',
-  'button/show_region': 'ทั้งหมด',
-  'button/show_team': 'กลุ่ม',
-  'button/show_user': 'ฉัน',
-  'button/update': 'อัพเดต',
   'connectivity/action_requires_connection': 'การดำเนินการที่ร้องขอต้องการการเชื่อมต่อเครือข่ายที่ใช้งานอยู่',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',

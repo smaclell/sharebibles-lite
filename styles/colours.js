@@ -29,11 +29,6 @@ const colours = {
 
 const semantic = {
   text: colours.black,
-  buttonText: colours.white,
-  secondaryButtonText: colours.greys.base,
-  placeholder: colours.greys.base,
-  primaryButton: colours.oranges.base,
-  secondaryButton: colours.white,
 };
 
 export default { ...colours, ...semantic };

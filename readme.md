@@ -1,5 +1,7 @@
 # ShareBibles Lite
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 [![CircleCI](https://circleci.com/gh/smaclell/sharebibles-lite.svg?style=svg)](https://circleci.com/gh/smaclell/sharebibles-lite)
 
 This is a mobile application to help share the Bible throughout the world.

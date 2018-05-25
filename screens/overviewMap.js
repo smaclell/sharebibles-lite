@@ -1,7 +1,6 @@
 /* eslint react/no-unused-state: 0 */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
@@ -211,19 +210,6 @@ class OverviewMap extends PureComponent {
     }
     this.setState({ tempLocation: null });
   }
-
-  goToFollowUp = debounce(
-    locationKey => this.innerFollowUp(locationKey),
-    500,
-    { leading: true, trailing: false },
-  );
-
-  innerFollowUp = (locationKey) => {
-    const { navigation: { navigate, state: { routeName } } } = this.props;
-    if (routeName === 'OverviewMap') {
-      navigate('FollowUp', { locationKey });
-    }
-  };
 
   render() {
     const { locations } = this.props;

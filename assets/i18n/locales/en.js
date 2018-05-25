@@ -26,7 +26,6 @@ export default {
   'components/update_users': 'Update',
   'components/visits': '{{num_visits}} Visit(s)',
   'connectivity/action_requires_connection': 'The requested action requires an active network connection',
-  'conversations/no_visits': 'No visits yet!',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',
   'export/generic_error': 'An unexpected error has occurred, please try again.',

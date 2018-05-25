@@ -24,7 +24,6 @@ export default {
   'components/update_users': 'Actualizar',
   'components/visits': '{{num_visits}} Visita(s)',
   'connectivity/action_requires_connection': 'La acción solicitada requiere una conexión de red activa',
-  'conversations/no_visits': 'Todavía no visitado!',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',
   'export/generic_error': 'Se produjo un error inesperado, intente de nuevo.',

@@ -22,7 +22,6 @@ export default {
   'components/update_users': 'อัพเดต',
   'components/visits': '{{num_visits}} ครั้งที่เยี่ยมเยียน',
   'connectivity/action_requires_connection': 'การดำเนินการที่ร้องขอต้องการการเชื่อมต่อเครือข่ายที่ใช้งานอยู่',
-  'conversations/no_visits': 'ยังไม่ได้เยี่ยมเยียน',
   'export/body': 'Here is my data from Sharebibles',
   'export/error_title': 'Export Failed',
   'export/generic_error': 'เกิดข้อผิดพลาดที่ไม่คาดคิดโปรดลองอีกครั้ง',

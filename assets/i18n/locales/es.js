@@ -14,7 +14,6 @@ export default {
   'button/show_team': 'EQUIPO',
   'button/show_user': 'YO',
   'button/update': 'ACTUALIZAR',
-  'choose_users/search': 'Buscar',
   'components/add_notes': 'Añadir notas…',
   'components/follow_up': 'Visitar',
   'components/get_location': 'Obtener Ubicación',

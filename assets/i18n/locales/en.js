@@ -16,7 +16,6 @@ export default {
   'button/show_team': 'TEAM',
   'button/show_user': 'ME',
   'button/update': 'UPDATE',
-  'choose_users/search': 'Search',
   'components/add_notes': 'Add notes...',
   'components/follow_up': 'Follow Up Visit',
   'components/get_location': 'Get Location',

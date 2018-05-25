@@ -12,7 +12,6 @@ export default {
   'button/show_team': 'กลุ่ม',
   'button/show_user': 'ฉัน',
   'button/update': 'อัพเดต',
-  'choose_users/search': 'ค้นหา',
   'components/add_notes': 'เพิ่มบันทึก...',
   'components/follow_up': 'ติดตาม',
   'components/get_location': 'ระบุตำแหน่ง',

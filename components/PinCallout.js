@@ -42,7 +42,7 @@ const Callout = ({
       <View style={styles.timeContainer}>
         <FontAwesome name="clock-o" size={fonts.normal} color={colours.black} />
         <Text style={{ fontSize: fonts.normal }}>
-          {I18n.t('components/last_visited', { visited_time: relativeTime(created) })}
+          {I18n.t('pin_callout/last_visited', { visited_time: relativeTime(created) })}
         </Text>
       </View>
     </View>

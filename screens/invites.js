@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { BarCodeScanner, Permissions } from 'expo';
-import { Text, Dimensions, View, StyleSheet } from 'react-native';
+import { Keyboard, TextInput, Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet } from 'react-native';
+import Spacer from 'react-native-keyboard-spacer';
 import { accept } from '../actions/authentication';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
@@ -13,17 +14,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: colours.black,
-  },
-  bottomBar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: colours.greys.lightest,
-    padding: 15,
-    flexDirection: 'row',
   },
   text: {
     color: colours.text,
@@ -31,10 +23,17 @@ const styles = StyleSheet.create({
   denied: {
     backgroundColor: colours.white,
   },
-  input: {
+  overlay: {
     flex: 1,
   },
-  inputText: {
+  bottomBar: {
+    width: '100%',
+    backgroundColor: colours.greys.lightest,
+    padding: 15,
+    flexDirection: 'row',
+  },
+  input: {
+    flex: 1,
     color: colours.text,
     fontSize: fonts.normal,
   },
@@ -52,6 +51,7 @@ const styles = StyleSheet.create({
 class Invites extends PureComponent {
   state = {
     hasCameraPermission: null,
+    inviteCode: null,
   };
 
   componentDidMount() {
@@ -73,25 +73,35 @@ class Invites extends PureComponent {
     try {
       const parsed = JSON.parse(result.data);
       if (parsed.type === 'sharebibles-invite-v1' && parsed.token) {
-        await this.props.acceptInvite(parsed.token);
-        this.props.navigation.navigate('OverviewMap');
+        this.setState({ inviteCode: parsed.token });
       }
     } catch (err) {
       // TODO
     }
   };
 
+  accept = async () => {
+    if (!this.state.inviteCode) {
+      return;
+    }
+
+    await this.props.acceptInvite(this.state.inviteCode);
+    this.props.navigation.navigate('OverviewMap');
+  }
+
+  dismissKeyboard = () => Keyboard.dismiss()
+
   render() {
     return (
       <View style={styles.container}>
         { this.state.hasCameraPermission && (
-          <BarCodeScanner
-            onBarCodeRead={this.readCode}
-            style={{
-              height: Dimensions.get('window').height,
-              width: Dimensions.get('window').width,
-            }}
-          />
+          <TouchableWithoutFeedback onPress={this.dismissKeyboard}>
+            <BarCodeScanner
+              onBarCodeRead={this.readCode}
+              barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+              style={StyleSheet.absoluteFill}
+            />
+          </TouchableWithoutFeedback>
         )}
         { this.state.hasCameraPermission === null && (
           <Text style={styles.text}>
@@ -103,21 +113,29 @@ class Invites extends PureComponent {
             {I18n.t('permissions/camera/denied') }
           </Text>
         )}
+        <View style={styles.overlay} />
+        <View style={styles.bottomBar}>
+          <TextInput
+            style={styles.input}
+            autoCorrect={false}
+            spellCheck={false}
+            clearButtonMode="always"
+            onSubmitEditing={this.accept}
+            returnKeyType="done"
+            onChangeText={inviteCode => this.setState({ inviteCode })}
+            value={this.state.inviteCode}
+            placeholderTextColor={colours.greys.lighter}
+            placeholder={I18n.t('invites/placeholder')}
+          />
+          <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={!!this.state.inviteCode}>
+            <Text style={styles.acceptButtonText}>{I18n.t('invites/accept')}</Text>
+          </TouchableOpacity>
+        </View>
+        <Spacer />
       </View>
     );
   }
 }
-/*
-<TextInput
-  style={SettingsItem.styles.text}
-  autoCorrect={false}
-  spellCheck={false}
-  onSubmitEditing={e => acceptInvite(e.nativeEvent.text)}
-  returnKeyType="send"
-  placeholderTextColor={colours.greys.lighter}
-  placeholder={I18n.t('settings/token_placeholder')}
-/>
-*/
 Invites.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,

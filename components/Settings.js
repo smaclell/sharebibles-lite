@@ -92,7 +92,7 @@ const Settings = (props) => {
           </View>
         )}
         { !regionKey && enableInvitations && (
-          <SettingsItem term="settings/accept_invite" onPress={acceptInvite} />
+          <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
         )}
         { __DEV__ && (
           <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>

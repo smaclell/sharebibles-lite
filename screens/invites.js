@@ -17,14 +17,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: colours.black,
   },
-  text: {
-    color: colours.text,
+  permission: {
+    color: colours.white,
+    fontSize: fonts.header,
+    padding: 15,
+    textAlign: 'center',
   },
   denied: {
-    backgroundColor: colours.white,
+    textDecorationLine: 'underline',
   },
   overlay: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomBar: {
     width: '100%',
@@ -36,6 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colours.text,
     fontSize: fonts.normal,
+    lineHeight: fonts.large,
   },
   acceptButton: {
     marginLeft: 10,
@@ -103,17 +109,18 @@ class Invites extends PureComponent {
             />
           </TouchableWithoutFeedback>
         )}
-        { this.state.hasCameraPermission === null && (
-          <Text style={styles.text}>
-            { I18n.t('permissions/camera/requesting') }
-          </Text>
-        )}
-        { this.state.hasCameraPermission === false && (
-          <Text style={[styles.text, styles.denied]}>
-            {I18n.t('permissions/camera/denied') }
-          </Text>
-        )}
-        <View style={styles.overlay} />
+        <View style={styles.overlay}>
+          { this.state.hasCameraPermission === null && (
+            <Text style={styles.permission}>
+              { I18n.t('permissions/camera/requesting') }
+            </Text>
+          )}
+          { this.state.hasCameraPermission === false && (
+            <Text style={[styles.permission, styles.denied]}>
+              {I18n.t('permissions/camera/denied') }
+            </Text>
+          )}
+        </View>
         <View style={styles.bottomBar}>
           <TextInput
             style={styles.input}
@@ -126,6 +133,7 @@ class Invites extends PureComponent {
             value={this.state.inviteCode}
             placeholderTextColor={colours.greys.lighter}
             placeholder={I18n.t('invites/placeholder')}
+            underlineColorAndroid="transparent"
           />
           <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={!this.state.inviteCode}>
             <Text style={styles.acceptButtonText}>{I18n.t('invites/accept')}</Text>

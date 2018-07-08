@@ -9,6 +9,7 @@ import colours from '../styles/colours';
 import Settings from '../containers/Settings';
 
 import OverviewMap from '../screens/overviewMap';
+import Invites from '../screens/invites';
 import Icon from '../components/Icon';
 
 const createGear = navigation => (
@@ -20,6 +21,9 @@ const createGear = navigation => (
 const drawerScreens = {
   OverviewMap: {
     screen: OverviewMap,
+  },
+  Invites: {
+    screen: Invites,
   },
 };
 

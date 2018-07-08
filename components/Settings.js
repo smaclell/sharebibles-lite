@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
@@ -92,17 +92,7 @@ const Settings = (props) => {
           </View>
         )}
         { !regionKey && enableInvitations && (
-          <View style={SettingsItem.styles.container}>
-            <TextInput
-              style={SettingsItem.styles.text}
-              autoCorrect={false}
-              spellCheck={false}
-              onSubmitEditing={e => acceptInvite(e.nativeEvent.text)}
-              returnKeyType="send"
-              placeholderTextColor={colours.greys.lighter}
-              placeholder={I18n.t('settings/token_placeholder')}
-            />
-          </View>
+          <SettingsItem term="settings/accept_invite" onPress={acceptInvite} />
         )}
         { __DEV__ && (
           <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>

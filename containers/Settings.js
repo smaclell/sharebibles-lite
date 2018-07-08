@@ -5,7 +5,7 @@ import { Constants, FileSystem, MailComposer } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { fetchLocalLocations } from '../apis/database';
 import Settings from '../components/Settings';
-import { accept, logout } from '../actions/authentication';
+import { logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
 import { pushLocalLocations } from '../actions/locations';
 import emails from '../assets/constants/emails';
@@ -73,27 +73,7 @@ const sendFeedback = () => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   logout: () => dispatch(logout()),
-  acceptInvite: (invite) => {
-    const result = dispatch(accept(invite))
-      .then(() => {
-        Alert.alert(
-          I18n.t('settings/token_title'),
-          I18n.t('settings/token_success', { email: emails.sharebibles }),
-          [{ text: I18n.t('button/ok'), onPress() {} }],
-          { cancelable: false },
-        );
-      })
-      .catch((err) => {
-        Sentry.captureException(err);
-        Alert.alert(
-          I18n.t('settings/token_title'),
-          I18n.t('settings/token_error', { email: emails.sharebibles }),
-          [{ text: I18n.t('button/ok'), onPress() {} }],
-          { cancelable: false },
-        );
-      });
-    return result;
-  },
+  acceptInvite: () => ownProps.navigation.navigate('Invites'),
   exportData,
   sendFeedback,
   updateLocale: (locale) => {

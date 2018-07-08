@@ -35,6 +35,7 @@
         "googleMapsApiKey": "AIzaSyCbj56Rd_8AZOB-SQXtmtLB_1zy6ijoqCw"
       },
       "infoPlist": {
+        "NSCameraUsageDescription": "We use your camera to accept invites via QR code and capture your visits.",
         "NSLocationWhenInUseUsageDescription": "We need your location to update the map and save your visits."
       }
     },

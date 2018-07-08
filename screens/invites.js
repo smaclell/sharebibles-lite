@@ -127,7 +127,7 @@ class Invites extends PureComponent {
             placeholderTextColor={colours.greys.lighter}
             placeholder={I18n.t('invites/placeholder')}
           />
-          <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={!!this.state.inviteCode}>
+          <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={!this.state.inviteCode}>
             <Text style={styles.acceptButtonText}>{I18n.t('invites/accept')}</Text>
           </TouchableOpacity>
         </View>

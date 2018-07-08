@@ -12,18 +12,15 @@ import OverviewMap from '../screens/overviewMap';
 import Invites from '../screens/invites';
 import Icon from '../components/Icon';
 
-const createGear = navigation => (
-  <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={() => navigation.navigate('DrawerOpen')}>
-    <Icon size="medium" family="font-awesome" name="bars" colour={colours.black} />
+const createHeader = (name, onPress) => (
+  <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={onPress}>
+    <Icon size="medium" family="font-awesome" name={name} colour={colours.black} />
   </TouchableOpacity>
 );
 
 const drawerScreens = {
   OverviewMap: {
     screen: OverviewMap,
-  },
-  Invites: {
-    screen: Invites,
   },
 };
 
@@ -47,7 +44,14 @@ const drawerStack = new StackNavigator({
     screen: drawer,
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('title/share_bibles'),
-      headerLeft: createGear(navigation),
+      headerLeft: createHeader('bars', () => navigation.navigate('DrawerToggle')),
+    }),
+  },
+  Invites: {
+    screen: Invites,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('title/accept_invites'),
+      headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
     }),
   },
 }, {

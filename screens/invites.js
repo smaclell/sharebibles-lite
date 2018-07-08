@@ -86,7 +86,7 @@ class Invites extends PureComponent {
     }
 
     await this.props.acceptInvite(this.state.inviteCode);
-    this.props.navigation.navigate('OverviewMap');
+    this.props.navigation.goBack(null);
   }
 
   dismissKeyboard = () => Keyboard.dismiss()

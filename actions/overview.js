@@ -40,14 +40,13 @@ function updateLocations() {
 }
 
 export function update(latitude, longitude) {
-  return (dispatch) => {
+  return () => {
     query.updateCriteria({
       center: [
         wrapLatitude(latitude),
         wrapLongitude(longitude),
       ],
     });
-    dispatch(updateLocations());
   };
 }
 

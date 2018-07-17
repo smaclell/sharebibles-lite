@@ -1,4 +1,5 @@
-import 'moment/locale/th';
-import * as translations from './th.json';
+import 'moment/locale/zh-cn';
+
+import * as translations from './zh-cn.json';
 
 export default translations;

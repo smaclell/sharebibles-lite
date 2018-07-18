@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   groups: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',

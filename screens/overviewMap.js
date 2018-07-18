@@ -17,7 +17,6 @@ import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
 
-const creationMaxHeight = 280;
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '98%',
     height: '50%',
-    maxHeight: creationMaxHeight,
     backgroundColor: colours.white,
     zIndex: 1,
     flex: 1,
@@ -177,12 +175,16 @@ class OverviewMap extends PureComponent {
     this.setState({ tempLocation: null });
   }
 
+  getCreationMaxHeight = () => { // eslint-disable-line arrow-body-style
+    return /^pt/.test(this.props.locale) ? 320 : 280;
+  }
+
   createTempPin = (coord) => {
     this.setState({ tempLocation: coord });
     // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
     // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
 
-    const remainder = Math.min(creationMaxHeight / this.state.mapHeight, creationEndPercentage) / 2;
+    const remainder = Math.min(this.getCreationMaxHeight() / this.state.mapHeight, creationEndPercentage) / 2;
 
     const offSet = this.state.latitudeDelta * remainder;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
@@ -215,6 +217,9 @@ class OverviewMap extends PureComponent {
     const { locations } = this.props;
     const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
+
+    const creationMaxHeight = this.getCreationMaxHeight();
+
     return (
       <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
         <MapView
@@ -268,7 +273,7 @@ class OverviewMap extends PureComponent {
             />
           }
         </MapView>
-        <SlideIn visible={!!tempLocation} style={styles.animatedContainer} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
+        <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
           <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
         </SlideIn>
         <TouchableOpacity
@@ -304,6 +309,7 @@ class OverviewMap extends PureComponent {
 
 OverviewMap.propTypes = {
   createLocation: PropTypes.func.isRequired,
+  locale: PropTypes.string.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({
@@ -336,6 +342,7 @@ const mapStateToProps = (state) => {
       .filter(x => x);
 
   return {
+    locale: state.i18n.locale, // triggers rerender on local change
     position: state.position,
     mode,
     locations: enrichLocations(state, locations),

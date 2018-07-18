@@ -2,6 +2,7 @@
   "button/cancel": "取消",
   "button/ok": "确认",
   "button/push_locations": "上传",
+  "button/save": "保存",
   "connectivity/action_requires_connection": "进行此项操作需连接网络",
   "export/body": "这是分发圣经的数据",
   "export/error_title": "导出失败",

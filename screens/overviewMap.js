@@ -336,6 +336,7 @@ const mapStateToProps = (state) => {
       .filter(x => x);
 
   return {
+    locale: state.i18n.locale, // triggers rerender on local change
     position: state.position,
     mode,
     locations: enrichLocations(state, locations),

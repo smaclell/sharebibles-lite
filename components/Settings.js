@@ -94,23 +94,21 @@ const Settings = (props) => {
         { !regionKey && enableInvitations && (
           <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
         )}
-        { __DEV__ && (
-          <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
-            <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
-            <Picker
-              selectedValue={I18n.locale.substring(0, 2)}
-              onValueChange={updateLocale}
-              style={styles.changeLanguagePicker}
-              itemStyle={SettingsItem.styles.text}
-              mode="dropdown"
-              enabled
-            >
-              {Object.entries(list).map(([key, value]) => (
-                <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
-              ))}
-            </Picker>
-          </View>
-        )}
+        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
+          <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
+          <Picker
+            selectedValue={I18n.locale.substring(0, 2)}
+            onValueChange={updateLocale}
+            style={styles.changeLanguagePicker}
+            itemStyle={SettingsItem.styles.text}
+            mode="dropdown"
+            enabled
+          >
+            {Object.entries(list).map(([key, value]) => (
+              <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
+            ))}
+          </Picker>
+        </View>
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
 import LocationCreation from '../containers/LocationCreation';
@@ -290,21 +289,16 @@ const mapStateToProps = (state) => {
     i18n: {
       locale,
     },
-    overview: {
-      mode,
-    },
   } = state;
 
   return {
     locale, // triggers rerender on local change
     position,
-    mode,
     locations: Object.keys(locations),
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
 });
 

@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
 
   resultsInnerContainer: {
+    width: '100%',
     flex: 1,
     padding: 5,
     flexDirection: 'column',

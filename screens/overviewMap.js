@@ -8,8 +8,8 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
-import PinCallout from '../components/PinCallout';
 import LocationCreation from '../containers/LocationCreation';
+import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
@@ -189,7 +189,6 @@ class OverviewMap extends PureComponent {
   }
 
   render() {
-    const { locations } = this.props;
     const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
 
@@ -216,19 +215,11 @@ class OverviewMap extends PureComponent {
           onUserLocationChange={this.onLocationChange}
           onLongPress={this.onLongPress}
         >
-          {locations.map(({ location, pinColor }) => (
-            <MapView.Marker
-              key={location.key}
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              pinColor={pinColor}
-            >
-              <MapView.Callout>
-                <PinCallout {...location} />
-              </MapView.Callout>
-            </MapView.Marker>
+          {this.props.locations.map(locationKey => (
+            <LocationMarker
+              key={locationKey}
+              locationKey={locationKey}
+            />
           ))}
           { tempLocation &&
             <MapView.Marker
@@ -284,41 +275,31 @@ class OverviewMap extends PureComponent {
 
 OverviewMap.propTypes = {
   locale: PropTypes.string.isRequired,
-  locations: PropTypes.array.isRequired,
-  navigation: PropTypes.object.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   position: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
   }).isRequired,
-  updateMode: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
 };
 
-const locationColor = (location, statuses) => {
-  const status = statuses.find(s => (s.key === location.status));
-  if (status) { return status.pinColor; }
-
-  return 'wheat';
-};
-
-function enrichLocations({ statuses }, locations) {
-  return Object.values(locations).map(location => ({
-    location,
-    pinColor: locationColor(location, statuses),
-  }));
-}
-
 const mapStateToProps = (state) => {
-  const { position, i18n: { locale }, overview: { mode } } = state;
-  const locations =
-    Object.values(state.locations)
-      .filter(x => x);
+  const {
+    position,
+    locations,
+    i18n: {
+      locale,
+    },
+    overview: {
+      mode,
+    },
+  } = state;
 
   return {
     locale, // triggers rerender on local change
     position,
     mode,
-    locations: enrichLocations(state, locations),
+    locations: Object.keys(locations),
   };
 };
 

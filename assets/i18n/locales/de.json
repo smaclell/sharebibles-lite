@@ -34,7 +34,7 @@
   "settings/send_feedback": "Feedback schicken",
   "settings/shareInvite": "Teile einen Share Bibles Zugriffs Code",
   "status/accepted": "Akzeptiert",
-  "status/delivered": "Überliefert / Abgegeben ??",
+  "status/delivered": "Überliefert / Abgegeben",
   "status/groups/home": "Zu Hause",
   "status/groups/not_home": "Nicht zu Hause",
   "status/have": "Hat eine Bibel",
@@ -45,7 +45,7 @@
   "status/unknown": "Unbekannt",
   "title/accept_invites": "Einladung akzeptieren",
   "title/share_bibles": "Bibeln teilen",
-  "validation/no_status_message": "Sie müssen einen Status zur Verfügung stellen ??",
+  "validation/no_status_message": "Sie müssen einen Status zur Verfügung stellen",
   "validation/no_status_title": "Kein Status",
   "validation/unknown_error_message": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
   "validation/unknown_error_title": "Ein Fehler ist aufgetreten."

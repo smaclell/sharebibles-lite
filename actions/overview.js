@@ -40,29 +40,16 @@ function updateLocations() {
 }
 
 export function update(latitude, longitude) {
-  return (dispatch) => {
+  return () => {
     query.updateCriteria({
       center: [
         wrapLatitude(latitude),
         wrapLongitude(longitude),
       ],
     });
-    dispatch(updateLocations());
-  };
-}
-
-export const UPDATE_OVERVIEW_MODE = 'UPDATE_OVERVIEW_MODE';
-export function updateMode(mode) {
-  return (dispatch) => {
-    dispatch({
-      type: UPDATE_OVERVIEW_MODE,
-      mode,
-    });
-
-    dispatch(updateLocations());
   };
 }
 
 export function initialize() {
-  return dispatch => dispatch(updateMode(REGION_MODE));
+  return dispatch => dispatch(updateLocations());
 }

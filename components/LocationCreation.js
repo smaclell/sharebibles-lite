@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import Sentry from 'sentry-expo';
 import I18n from '../assets/i18n/i18n';
 import ChooseStatus from '../containers/ChooseStatus';
 import ResourceCounter from '../components/ResourceCounter';
@@ -85,9 +86,28 @@ function createInitialState() {
 }
 
 class LocationCreation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = createInitialState();
+  state = createInitialState();
+
+  saveLocation = async ({ status, resources }) => {
+    try {
+      const { longitude, latitude } = this.props.location;
+      await this.props.createLocation({
+        status,
+        longitude,
+        latitude,
+        resources,
+      });
+    } catch (err) {
+      Sentry.captureException(err, { extra: { status } });
+
+      Alert.alert(
+        I18n.t('validation/unknown_error_title'),
+        I18n.t('validation/unknown_error_message'),
+        [{ text: I18n.t('button/ok'), onPress() {} }],
+        { cancelable: false },
+      );
+    }
+    this.props.onLocationCancel();
   }
 
   updateStatus = (value) => {
@@ -115,7 +135,7 @@ class LocationCreation extends Component {
     // Filter out resources and tags that don't match the chosen status:
     const filteredResources = filterResources(this.props.resources, resources, status);
 
-    return this.props.saveLocation({
+    return this.saveLocation({
       status,
       resources: filteredResources,
     });
@@ -175,9 +195,17 @@ class LocationCreation extends Component {
 }
 
 LocationCreation.propTypes = { // Sorted Alphabetically
+  createLocation: PropTypes.func.isRequired,
   onLocationCancel: PropTypes.func.isRequired,
   resources: PropTypes.array.isRequired,
-  saveLocation: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }),
+};
+
+LocationCreation.defaultProps = {
+  location: null,
 };
 
 export default LocationCreation;

@@ -4,18 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import Sentry from 'sentry-expo';
-import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
-import * as locationActions from '../actions/locations';
-import * as overviewActions from '../actions/overview';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
-import PinCallout from '../components/PinCallout';
 import LocationCreation from '../containers/LocationCreation';
+import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
-import I18n from '../assets/i18n/i18n';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -191,30 +187,7 @@ class OverviewMap extends PureComponent {
     this.map.animateToCoordinate(temp, shortAnimationTime);
   }
 
-  saveLocation = async ({ status, resources }) => {
-    try {
-      const { longitude, latitude } = this.state.tempLocation;
-      await this.props.createLocation({
-        status,
-        longitude,
-        latitude,
-        resources,
-      });
-    } catch (err) {
-      Sentry.captureException(err, { extra: { status } });
-
-      Alert.alert(
-        I18n.t('validation/unknown_error_title'),
-        I18n.t('validation/unknown_error_message'),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
-    }
-    this.setState({ tempLocation: null });
-  }
-
   render() {
-    const { locations } = this.props;
     const { tempLocation, mapHeight } = this.state;
     const iconColour = this.state.centered ? blue : black;
 
@@ -241,19 +214,11 @@ class OverviewMap extends PureComponent {
           onUserLocationChange={this.onLocationChange}
           onLongPress={this.onLongPress}
         >
-          {locations.map(({ location, pinColor }) => (
-            <MapView.Marker
-              key={location.key}
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-              pinColor={pinColor}
-            >
-              <MapView.Callout>
-                <PinCallout {...location} />
-              </MapView.Callout>
-            </MapView.Marker>
+          {this.props.locations.map(locationKey => (
+            <LocationMarker
+              key={locationKey}
+              locationKey={locationKey}
+            />
           ))}
           { tempLocation &&
             <MapView.Marker
@@ -274,7 +239,7 @@ class OverviewMap extends PureComponent {
           }
         </MapView>
         <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
-          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
+          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
         </SlideIn>
         <TouchableOpacity
           style={[styles.mapButton, styles.centerButton]}
@@ -308,51 +273,32 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
-  createLocation: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
-  locations: PropTypes.array.isRequired,
-  navigation: PropTypes.object.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   position: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
   }).isRequired,
-  updateMode: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
-  resources: PropTypes.array.isRequired,
 };
-
-const locationColor = (location, statuses) => {
-  const status = statuses.find(s => (s.key === location.status));
-  if (status) { return status.pinColor; }
-
-  return 'wheat';
-};
-
-function enrichLocations({ statuses }, locations) {
-  return Object.values(locations).map(location => ({
-    location,
-    pinColor: locationColor(location, statuses),
-  }));
-}
 
 const mapStateToProps = (state) => {
-  const { overview: { mode } } = state;
-  const locations =
-    Object.values(state.locations)
-      .filter(x => x);
+  const {
+    position,
+    locations,
+    i18n: {
+      locale,
+    },
+  } = state;
 
   return {
-    locale: state.i18n.locale, // triggers rerender on local change
-    position: state.position,
-    mode,
-    locations: enrichLocations(state, locations),
-    resources: Object.values(state.resources),
+    locale, // triggers rerender on local change
+    position,
+    locations: Object.keys(locations),
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(locationActions, dispatch),
-  ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
 });
 

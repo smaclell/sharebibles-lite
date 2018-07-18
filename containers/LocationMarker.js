@@ -6,15 +6,13 @@ import PinCallout from '../components/PinCallout';
 
 class LocationMarker extends PureComponent {
   render() {
-    const pinColor = this.getPinColor();
-
     return (
       <MapView.Marker
         coordinate={{
           latitude: this.props.location.latitude,
           longitude: this.props.location.longitude,
         }}
-        pinColor={pinColor}
+        pinColor={this.props.pinColor}
       >
         <MapView.Callout>
           <PinCallout {...this.props.location} />

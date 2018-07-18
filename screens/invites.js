@@ -6,6 +6,7 @@ import { BarCodeScanner, Permissions } from 'expo';
 import { Keyboard, TextInput, Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Spacer from 'react-native-keyboard-spacer';
 import { accept } from '../actions/authentication';
+import { initialize } from '../actions/overview';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
@@ -92,6 +93,7 @@ class Invites extends PureComponent {
     }
 
     await this.props.acceptInvite(this.state.inviteCode);
+    await this.props.initialize();
     this.props.navigation.goBack(null);
   }
 
@@ -146,6 +148,7 @@ class Invites extends PureComponent {
 }
 Invites.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
+  initialize: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
 };
 
@@ -154,6 +157,7 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = dispatch => ({
   acceptInvite: bindActionCreators(accept, dispatch),
+  initialize: bindActionCreators(initialize, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Invites);

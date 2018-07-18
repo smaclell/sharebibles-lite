@@ -33,7 +33,7 @@ class SlideIn extends Component {
       visibleHeight = Math.max(visibleHeight, max);
     }
 
-    if (prevProps.visible !== visible) {
+    if (prevProps.visible !== visible || prevProps.fullHeight !== this.props.fullHeight) {
       Animated.timing(this.visibility, {
         toValue: visible ? visibleHeight : containerHeight,
         easing: Easing.bezier(0.76, 0.01, 0.4, 1),

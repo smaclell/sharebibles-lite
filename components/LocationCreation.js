@@ -159,7 +159,7 @@ class LocationCreation extends Component {
             <Ionicons name="md-arrow-round-back" size={fonts.header} color={colours.black} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.addLocation} style={buttonStyle} disabled={isDisabled}>
-            <Text style={buttonTextStyle}>Save</Text>
+            <Text style={buttonTextStyle}>{I18n.t('button/save')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.resultsInnerContainer}>

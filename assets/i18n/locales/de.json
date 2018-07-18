@@ -2,6 +2,7 @@
   "button/cancel": "Abbrechen",
   "button/ok": "Ok",
   "button/push_locations": "Weiterleiten",
+  "button/save": "Sparen",
   "connectivity/action_requires_connection": "Die angeforderte Aktion erfordert eine aktive Netzwerkverbindung",
   "export/body": "Hier ist eine Sharebibles Data",
   "export/error_title": "Exportieren fehlgeschlagen",

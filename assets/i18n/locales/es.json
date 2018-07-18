@@ -2,6 +2,7 @@
   "button/cancel": "CANCELAR",
   "button/ok": "ACEPTAR",
   "button/push_locations": "Presionar",
+  "button/save": "Guardar",
   "connectivity/action_requires_connection": "La acción solicitada requiere una conexión de internet activa",
   "export/body": "Estos son mis datos de Sharebibles",
   "export/error_title": "No Se Pudo Exportar",

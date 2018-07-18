@@ -2,6 +2,7 @@
   "button/cancel": "ยกเลิก",
   "button/ok": "ตกลง",
   "button/push_locations": "ดัน",
+  "button/save": "ไว้",
   "connectivity/action_requires_connection": "การดำเนินการที่ร้องขอต้องการการเชื่อมต่อเครือข่ายที่ใช้งานอยู่",
   "export/body": "นี่คือข้อมูลจากแชร์พระคัมภีร์ของฉัน",
   "export/error_title": "การส่งออกผิดพลาด",

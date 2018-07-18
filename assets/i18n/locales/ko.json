@@ -2,6 +2,7 @@
   "button/cancel": "취소",
   "button/ok": "확인",
   "button/push_locations": "누름",
+  "button/save": "구하다",
   "connectivity/action_requires_connection": "요청한 작업에는 활성 네트워크 연결이 필요합니다.",
   "export/body": "쉐어 바이블에서 얻은 나의 데이터 입니다. ",
   "export/error_title": "추출을 실패하였습니다",

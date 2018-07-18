@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import Sentry from 'sentry-expo';
-import { Alert, View, StyleSheet, TouchableOpacity } from 'react-native';
-import * as locationActions from '../actions/locations';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as overviewActions from '../actions/overview';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
@@ -15,7 +13,6 @@ import LocationCreation from '../containers/LocationCreation';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
-import I18n from '../assets/i18n/i18n';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -191,28 +188,6 @@ class OverviewMap extends PureComponent {
     this.map.animateToCoordinate(temp, shortAnimationTime);
   }
 
-  saveLocation = async ({ status, resources }) => {
-    try {
-      const { longitude, latitude } = this.state.tempLocation;
-      await this.props.createLocation({
-        status,
-        longitude,
-        latitude,
-        resources,
-      });
-    } catch (err) {
-      Sentry.captureException(err, { extra: { status } });
-
-      Alert.alert(
-        I18n.t('validation/unknown_error_title'),
-        I18n.t('validation/unknown_error_message'),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
-    }
-    this.setState({ tempLocation: null });
-  }
-
   render() {
     const { locations } = this.props;
     const { tempLocation, mapHeight } = this.state;
@@ -274,7 +249,7 @@ class OverviewMap extends PureComponent {
           }
         </MapView>
         <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
-          <LocationCreation onLocationCancel={this.onLocationCancel} saveLocation={this.saveLocation} />
+          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
         </SlideIn>
         <TouchableOpacity
           style={[styles.mapButton, styles.centerButton]}
@@ -308,7 +283,6 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
-  createLocation: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
   locations: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
@@ -318,7 +292,6 @@ OverviewMap.propTypes = {
   }).isRequired,
   updateMode: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
-  resources: PropTypes.array.isRequired,
 };
 
 const locationColor = (location, statuses) => {
@@ -336,22 +309,20 @@ function enrichLocations({ statuses }, locations) {
 }
 
 const mapStateToProps = (state) => {
-  const { overview: { mode } } = state;
+  const { position, i18n: { locale }, overview: { mode } } = state;
   const locations =
     Object.values(state.locations)
       .filter(x => x);
 
   return {
-    locale: state.i18n.locale, // triggers rerender on local change
-    position: state.position,
+    locale, // triggers rerender on local change
+    position,
     mode,
     locations: enrichLocations(state, locations),
-    resources: Object.values(state.resources),
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(locationActions, dispatch),
   ...bindActionCreators(overviewActions, dispatch),
   ...bindActionCreators(positionActions, dispatch),
 });

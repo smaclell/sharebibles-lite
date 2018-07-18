@@ -2,6 +2,7 @@
   "button/cancel": "Cancelar ",
   "button/ok": "Aceitar",
   "button/push_locations": "Empurrar",
+  "button/save": "Guardar",
   "connectivity/action_requires_connection": "A ação solicitado requer uma conexão de internet ativa",
   "export/body": "Estes são meus dados do Sharebilbles",
   "export/error_title": "A Exportação falhou",

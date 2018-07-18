@@ -1,4 +1,3 @@
-/* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';

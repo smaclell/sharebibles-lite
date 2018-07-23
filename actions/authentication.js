@@ -62,7 +62,7 @@ export function restore() {
   return async (dispatch, getState) => {
     const { settings: { enableInvitations } } = getState();
     if (!enableInvitations) {
-      return;
+      return false;
     }
 
     let values;
@@ -73,11 +73,12 @@ export function restore() {
     }
 
     if (!values || !values.refreshToken) {
-      return;
+      return false;
     }
 
     dispatch(accepted(values));
     await dispatch(authenticate(values.refreshToken));
+    return true;
   };
 }
 

@@ -14,6 +14,7 @@ import { initialize } from './apis';
 import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';
 import I18n from './assets/i18n/i18n';
+import * as overviewActions from './actions/overview';
 import * as positionActions from './actions/position';
 import { restoreLocalLocations } from './actions/locations';
 import * as settingsActions from './actions/settings';
@@ -44,8 +45,8 @@ class App extends Component {
     Promise.all([
       ...this.loadFontsAsync(),
       createDatabases(),
-      store.dispatch(positionActions.initialize()),
       I18n.initAsync(),
+      store.dispatch(positionActions.initialize()),
       store.dispatch(settingsActions.load({
         enableInvitations: Constants.manifest.extra.enableInvitations,
       })),
@@ -53,7 +54,7 @@ class App extends Component {
       I18n.setDateLocale();
       this.setState({ isReady: true });
       return Promise.all([
-        store.dispatch(restore()),
+        store.dispatch(restore()).then(restored => restored && store.dispatch(overviewActions.initialize())),
         store.dispatch(restoreLocalLocations()),
       ]);
     });

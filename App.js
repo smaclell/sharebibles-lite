@@ -45,7 +45,6 @@ class App extends Component {
       ...this.loadFontsAsync(),
       createDatabases(),
       store.dispatch(positionActions.initialize()),
-      store.dispatch(restore()),
       I18n.initAsync(),
       store.dispatch(settingsActions.load({
         enableInvitations: Constants.manifest.extra.enableInvitations,
@@ -53,7 +52,10 @@ class App extends Component {
     ]).then(() => {
       I18n.setDateLocale();
       this.setState({ isReady: true });
-      return store.dispatch(restoreLocalLocations());
+      return Promise.all([
+        store.dispatch(restore()),
+        store.dispatch(restoreLocalLocations()),
+      ]);
     });
   }
 

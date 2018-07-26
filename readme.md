@@ -55,7 +55,7 @@ See [Expo Docs](https://docs.expo.io/versions/v26.0.0/guides/building-standalone
 ```
 exp build:android --release-channel prod-v1
 exp build:ios --release-channel prod-v1
-``
+```
 
 Please publish to the `prod-v1` channel. If you need to change the standalone application please update this message to use the next prod version, i.e. `prod-v2`.
 

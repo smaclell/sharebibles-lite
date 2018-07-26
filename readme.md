@@ -12,7 +12,7 @@ This is a mobile application to help share the Bible throughout the world.
 
 # Get started
 
-1. In order to run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
+1. To run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
     1. brew install node
 

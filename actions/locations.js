@@ -131,7 +131,7 @@ export function createLocation(options) {
     if (connected && regionKey) {
       const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
 
-      wrapper(saved, location);
+      await dispatch(wrapper(saved, location));
     }
   };
 }
@@ -148,9 +148,9 @@ export function pushLocalLocations() {
       return false;
     }
 
-    Promise.all(offlineLocations.map(({ key, ...options }) => {
+    await Promise.all(offlineLocations.map(({ key, ...options }) => {
       return apis.createLocation(regionKey, options, key)
-        .then(({ created: location, saved }) => wrapper(saved, location));
+        .then(({ created: location, saved }) => dispatch(wrapper(saved, location)));
     }));
 
     return true;

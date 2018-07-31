@@ -9,8 +9,18 @@ import { logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
 import { pushLocalLocations } from '../actions/locations';
 import { requestPushPermission, clearPushPermission } from '../actions/permissions';
+import { UploadStatus } from '../actions/uploads';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
+
+function hasPending({ uploads }) {
+  const values = Object.values(uploads);
+  if (values.length === 0) {
+    return false;
+  }
+
+  return values.some(v => v === UploadStatus.pending);
+}
 
 const mapStateToProps = state => ({
   ...state.authentication,
@@ -18,6 +28,7 @@ const mapStateToProps = state => ({
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   connected: state.connected,
+  canUpload: hasPending(state),
 });
 
 const exportData = async () => {

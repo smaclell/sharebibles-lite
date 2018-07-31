@@ -52,7 +52,7 @@ export function restoreLocalLocations() {
           dispatch(receiveLocation(location));
 
           const process = location.uploaded ? uploaded : pending;
-          process(location.key);
+          dispatch(process(location.key));
         });
     } catch (err) {
       Sentry.captureException(err);

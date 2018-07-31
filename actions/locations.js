@@ -47,7 +47,13 @@ export function restoreLocalLocations() {
   return async (dispatch) => {
     try {
       const locations = await database.fetchLocalLocations();
-      locations.forEach(location => location && dispatch(receiveLocation(location)));
+      locations.filter(Boolean)
+        .forEach((location) => {
+          dispatch(receiveLocation(location));
+
+          const process = location.uploaded ? uploaded : pending;
+          process(location.key);
+        });
     } catch (err) {
       Sentry.captureException(err);
     }

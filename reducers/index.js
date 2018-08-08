@@ -6,6 +6,7 @@ import connectivity from './connectivity';
 import i18n from './i18n';
 import locations from './locations';
 import position from './position';
+import regions from './regions';
 import resources from './resources';
 import settings from './settings';
 import statuses from './statuses';
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   i18n,
   locations,
   position,
+  regions,
   resources,
   settings,
   statuses,

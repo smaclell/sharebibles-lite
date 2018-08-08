@@ -44,7 +44,9 @@
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "sentry-expo": "~1.7.0"
+    "reselect": "^3.0.1",
+    "sentry-expo": "~1.7.0",
+    "which-polygon": "^2.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

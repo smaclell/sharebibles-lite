@@ -8,8 +8,19 @@ import Settings from '../components/Settings';
 import { logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
 import { pushLocalLocations } from '../actions/locations';
+import { requestPushPermission, clearPushPermission } from '../actions/permissions';
+import { UploadStatus } from '../actions/uploads';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
+
+function hasPending({ uploads }) {
+  const values = Object.values(uploads);
+  if (values.length === 0) {
+    return false;
+  }
+
+  return values.some(v => v === UploadStatus.pending);
+}
 
 const mapStateToProps = state => ({
   ...state.authentication,
@@ -17,6 +28,7 @@ const mapStateToProps = state => ({
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   connected: state.connected,
+  canUpload: hasPending(state),
 });
 
 const exportData = async () => {
@@ -81,6 +93,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(updateLocale(locale));
   },
   pushLocations: () => dispatch(pushLocalLocations()),
+  requestPushPermission: () => dispatch(requestPushPermission()),
+  clearPushPermission: () => dispatch(clearPushPermission()),
 });
 
 const mergeProps = (stateProps, dispatchProps) => {
@@ -96,15 +110,9 @@ const mergeProps = (stateProps, dispatchProps) => {
       );
       return;
     }
-    Alert.alert(
-      I18n.t('settings/push_locations'),
-      I18n.t('settings/push_locations_message'),
-      [
-        { text: I18n.t('button/cancel'), onPress() {} },
-        { text: I18n.t('button/push_locations'), onPress() { dispatchProps.pushLocations(); } },
-      ],
-      { cancelable: true },
-    );
+
+    dispatchProps.requestPushPermission()
+      .then(allowed => allowed && dispatchProps.pushLocations());
   };
 
   return props;

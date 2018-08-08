@@ -21,17 +21,25 @@ const styles = StyleSheet.create({
     fontSize: fonts.large,
     flexDirection: 'column',
   },
+  disabled: {
+    color: colours.greys.base,
+  },
 });
 
-const SettingsItem = ({ term, onPress }) => (
-  <TouchableOpacity style={styles.container} onPress={onPress}>
-    <Text style={styles.text}>{I18n.t(term)}</Text>
+const SettingsItem = ({ term, onPress, disabled = false }) => (
+  <TouchableOpacity style={styles.container} onPress={onPress} disabled={disabled}>
+    <Text style={[styles.text, disabled && styles.disabled]}>{I18n.t(term)}</Text>
   </TouchableOpacity>
 );
 
 SettingsItem.propTypes = {
   term: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+SettingsItem.defaultProps = {
+  disabled: false,
 };
 
 SettingsItem.styles = styles;

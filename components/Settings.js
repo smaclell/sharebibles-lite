@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -72,6 +73,8 @@ const styles = StyleSheet.create({
 const Settings = (props) => {
   const {
     acceptInvite,
+    canUpload,
+    clearPushPermission,
     enableInvitations,
     exportData,
     logout,
@@ -108,7 +111,8 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
-        { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} /> }
+        { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
+        { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
@@ -126,6 +130,8 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
+  canUpload: PropTypes.bool.isRequired,
+  clearPushPermission: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
   exportData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,

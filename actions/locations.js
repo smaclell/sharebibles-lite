@@ -1,7 +1,9 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
+import { requestPushPermission } from './permissions';
 import { failed, pending, uploaded } from './uploads';
 import * as database from '../apis/database';
+import { LOCATION_UPLOADED } from '../utils/database';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 export function receiveLocation(location) {
@@ -16,7 +18,7 @@ export function updateUploadStatus(location, isUploaded) {
     const newLocation = { ...location, uploaded: isUploaded };
     dispatch(receiveLocation(newLocation));
     const numericValue =
-      isUploaded ? database.LOCATION_UPLOADED.true : database.LOCATION_UPLOADED.false;
+      isUploaded ? LOCATION_UPLOADED.true : LOCATION_UPLOADED.false;
 
     return database.updateUploadStatus(newLocation.key, numericValue);
   };
@@ -28,7 +30,7 @@ function wrapper(work, location) {
 
     try {
       await work;
-      await updateUploadStatus(location, true);
+      await dispatch(updateUploadStatus(location, true));
       dispatch(uploaded(location.key));
     } catch (err) {
       Sentry.captureException(err, {
@@ -47,7 +49,13 @@ export function restoreLocalLocations() {
   return async (dispatch) => {
     try {
       const locations = await database.fetchLocalLocations();
-      locations.forEach(location => location && dispatch(receiveLocation(location)));
+      locations.filter(Boolean)
+        .forEach((location) => {
+          dispatch(receiveLocation(location));
+
+          const process = location.uploaded ? uploaded : pending;
+          dispatch(process(location.key));
+        });
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -123,9 +131,14 @@ export function createLocation(options) {
     dispatch(pending(key));
     dispatch(receiveLocation(localLocation));
     if (connected && regionKey) {
+      const allowed = await dispatch(requestPushPermission());
+      if (!allowed) {
+        return;
+      }
+
       const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
 
-      wrapper(saved, location);
+      await dispatch(wrapper(saved, location));
     }
   };
 }
@@ -142,9 +155,9 @@ export function pushLocalLocations() {
       return false;
     }
 
-    Promise.all(offlineLocations.map(({ key, ...options }) => {
+    await Promise.all(offlineLocations.map(({ key, ...options }) => {
       return apis.createLocation(regionKey, options, key)
-        .then(({ created: location, saved }) => wrapper(saved, location));
+        .then(({ created: location, saved }) => dispatch(wrapper(saved, location)));
     }));
 
     return true;

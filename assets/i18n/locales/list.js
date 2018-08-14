@@ -7,4 +7,5 @@ export default {
   'locale/ko': '한국어',
   'locale/pt-br': 'Português',
   'locale/zh-cn': '中文',
+  'locale/nl': 'Nederlands',
 };

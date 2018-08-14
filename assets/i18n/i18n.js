@@ -7,6 +7,7 @@ import ko from './locales/ko';
 import th from './locales/th';
 import ptBr from './locales/pt-br';
 import zhCn from './locales/zh-cn';
+import zhHk from './locales/zh-hk';
 
 I18n.fallbacks = true;
 
@@ -18,6 +19,7 @@ I18n.translations = {
   th,
   'pt-br': ptBr,
   'zh-cn': zhCn,
+  'zh-hk': zhHk,
 };
 
 I18n.updateLocale = (locale) => {

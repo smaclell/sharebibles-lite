@@ -9,6 +9,11 @@ import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 import list from '../assets/i18n/locales/list';
 
+const languages = Object.entries(list);
+
+// eslint-disable-next-line no-unused-vars
+languages.sort(([ka, va], [kb, vb]) => va.localeCompare(vb));
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -106,7 +111,7 @@ const Settings = (props) => {
             mode="dropdown"
             enabled
           >
-            {Object.entries(list).map(([key, value]) => (
+            {languages.map(([key, value]) => (
               <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
             ))}
           </Picker>

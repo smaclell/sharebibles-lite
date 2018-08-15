@@ -172,7 +172,7 @@ class OverviewMap extends PureComponent {
   }
 
   getCreationMaxHeight = () => { // eslint-disable-line arrow-body-style
-    return /^pt/.test(this.props.locale) ? 320 : 280;
+    return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   }
 
   createTempPin = (coord) => {

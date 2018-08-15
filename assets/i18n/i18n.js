@@ -3,10 +3,12 @@ import moment from 'moment';
 import de from './locales/de';
 import en from './locales/en';
 import es from './locales/es';
+import fr from './locales/fr';
 import ko from './locales/ko';
 import th from './locales/th';
 import ptBr from './locales/pt-br';
 import zhCn from './locales/zh-cn';
+import zhHk from './locales/zh-hk';
 
 I18n.fallbacks = true;
 
@@ -14,10 +16,12 @@ I18n.translations = {
   en, // default
   de,
   es,
+  fr,
   ko,
   th,
   'pt-br': ptBr,
   'zh-cn': zhCn,
+  'zh-hk': zhHk,
 };
 
 I18n.updateLocale = (locale) => {

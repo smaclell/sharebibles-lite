@@ -5,6 +5,7 @@ import en from './locales/en';
 import es from './locales/es';
 import fr from './locales/fr';
 import ko from './locales/ko';
+import nl from './locales/nl';
 import th from './locales/th';
 import ptBr from './locales/pt-br';
 import zhCn from './locales/zh-cn';
@@ -18,6 +19,7 @@ I18n.translations = {
   es,
   fr,
   ko,
+  nl,
   th,
   'pt-br': ptBr,
   'zh-cn': zhCn,

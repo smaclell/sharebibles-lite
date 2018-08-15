@@ -2,6 +2,7 @@
 export default {
   'locale/en': 'English',
   'locale/es': 'Español',
+  'locale/fr': 'Français',
   'locale/th': 'ภาษาไทย',
   'locale/de': 'Deutsche',
   'locale/ko': '한국어',

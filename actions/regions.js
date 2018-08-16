@@ -36,9 +36,9 @@ export function request(regionKey) {
 
 export function containing({ latitude, longitude }) {
   return (dispatch, getState) => {
-    const { regions } = getState();
-    const finder = selector(regions);
-    const { regionKey } = finder.query([latitude, longitude]) || {};
+    const state = getState();
+    const finder = selector(state);
+    const { regionKey } = finder([longitude, latitude]) || {};
     return regionKey;
   };
 }

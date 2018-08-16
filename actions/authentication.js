@@ -1,5 +1,6 @@
 import { Constants, SecureStore } from 'expo';
 import Sentry from 'sentry-expo';
+import { clear as clearRegions, request as requestRegion } from './regions';
 import { signIn, signOut } from '../apis';
 import refetch from '../utils/refetch';
 
@@ -26,6 +27,7 @@ export function logout() {
   return async (dispatch) => {
     await clear();
     dispatch(accepted({}));
+    dispatch(clearRegions());
     await signOut();
   };
 }
@@ -77,6 +79,7 @@ export function restore() {
     }
 
     dispatch(accepted(values));
+    dispatch(requestRegion(values.regionKey));
     await dispatch(authenticate(values.refreshToken));
     return true;
   };
@@ -92,6 +95,7 @@ export function accept(token) {
     await save(values);
 
     dispatch(accepted(values));
+    dispatch(requestRegion(values.regionKey));
     await dispatch(authenticate(values.refreshToken));
   };
 }

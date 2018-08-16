@@ -3,10 +3,12 @@ import { Constants, SecureStore } from 'expo';
 import thunk from 'redux-thunk';
 import refetch from '../../utils/refetch';
 import { signIn, signOut } from '../../apis';
+import { request, clear } from '../../actions/regions';
 
 // jest.mock('expo');
 jest.mock('../../utils/refetch');
 jest.mock('../../apis');
+jest.mock('../../actions/regions');
 
 describe('actions/authentication', () => {
   let actions;
@@ -20,6 +22,11 @@ describe('actions/authentication', () => {
     refetch.mockClear();
     signIn.mockClear();
     signOut.mockClear();
+    clear.mockClear();
+    clear.mockReturnValue({ type: 'CLEAR REGION' });
+    request.mockClear();
+    request.mockImplementation(regionKey => ({ type: 'FAKE REQUEST', regionKey }));
+
     store = configureStore([thunk])({});
 
     actions = require('../../actions/authentication');
@@ -67,6 +74,10 @@ describe('actions/authentication', () => {
 
     it('updates the store', () => {
       expect(store.getActions()).toContainEqual(actions.accepted({}));
+    });
+
+    it('clear regions', () => {
+      expect(store.getActions()).toContainEqual(clear());
     });
 
     it('signs out of firebase', () => {

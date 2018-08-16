@@ -1,6 +1,7 @@
 import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
+import { containing } from './regions';
 import { failed, pending, uploaded } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
@@ -119,20 +120,26 @@ export function createLocation(options) {
   } = options;
 
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, connected } = getState();
+    const { authentication: { regionKey: hasRegion }, connected } = getState();
 
     const locationData = {
       latitude, longitude, resources, status,
     };
 
-    const localLocation = await database.addLocalLocation(locationData, regionKey);
+    const localLocation = await database.addLocalLocation(locationData);
     const { key } = localLocation;
 
     dispatch(pending(key));
     dispatch(receiveLocation(localLocation));
-    if (connected && regionKey) {
+    if (connected && hasRegion) {
       const allowed = await dispatch(requestPushPermission());
       if (!allowed) {
+        return;
+      }
+
+      const regionKey = dispatch(containing(locationData));
+      if (!regionKey) {
+        dispatch(failed(key));
         return;
       }
 
@@ -145,8 +152,8 @@ export function createLocation(options) {
 
 export function pushLocalLocations() {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, connected } = getState();
-    if (!connected) {
+    const { authentication: { regionKey: hasRegion }, connected } = getState();
+    if (!connected || !hasRegion) {
       return false;
     }
 
@@ -155,9 +162,17 @@ export function pushLocalLocations() {
       return false;
     }
 
-    await Promise.all(offlineLocations.map(({ key, ...options }) => {
-      return apis.createLocation(regionKey, options, key)
-        .then(({ created: location, saved }) => dispatch(wrapper(saved, location)));
+    offlineLocations.forEach(({ key }) => dispatch(pending(key)));
+
+    await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
+      const regionKey = dispatch(containing(options));
+      if (!regionKey) {
+        dispatch(failed(key));
+        return;
+      }
+
+      const { created: location, saved } = await apis.createLocation(regionKey, options, key);
+      dispatch(wrapper(saved, location));
     }));
 
     return true;

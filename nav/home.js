@@ -10,6 +10,7 @@ import Settings from '../containers/Settings';
 
 import OverviewMap from '../screens/overviewMap';
 import Invites from '../screens/invites';
+import LocationData from '../screens/locationData';
 import Icon from '../components/Icon';
 
 const createHeader = (name, onPress) => (
@@ -51,6 +52,13 @@ const drawerStack = new StackNavigator({
     screen: Invites,
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('title/accept_invites'),
+      headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
+    }),
+  },
+  LocationData: {
+    screen: LocationData,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('title/location_data'),
       headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
     }),
   },

@@ -2,7 +2,7 @@ import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
 import { containing } from './regions';
-import { failed, pending, uploaded } from './uploads';
+import { failed, pending, uploaded, offline } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
 
@@ -54,7 +54,7 @@ export function restoreLocalLocations() {
         .forEach((location) => {
           dispatch(receiveLocation(location));
 
-          const process = location.uploaded ? uploaded : pending;
+          const process = location.uploaded ? uploaded : offline;
           dispatch(process(location.key));
         });
     } catch (err) {
@@ -129,7 +129,7 @@ export function createLocation(options) {
     const localLocation = await database.addLocalLocation(locationData);
     const { key } = localLocation;
 
-    dispatch(pending(key));
+    dispatch(offline(key));
     dispatch(receiveLocation(localLocation));
     if (connected && hasRegion) {
       const allowed = await dispatch(requestPushPermission());

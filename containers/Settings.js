@@ -13,13 +13,13 @@ import { UploadStatus } from '../actions/uploads';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
 
-function hasPending({ uploads }) {
+function hasOffline({ uploads }) {
   const values = Object.values(uploads);
   if (values.length === 0) {
     return false;
   }
 
-  return values.some(v => v === UploadStatus.pending);
+  return values.some(v => v === UploadStatus.offline || v === UploadStatus.failed);
 }
 
 const mapStateToProps = state => ({
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   connected: state.connected,
-  canUpload: hasPending(state),
+  canUpload: hasOffline(state),
 });
 
 const exportData = async () => {
@@ -93,6 +93,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(updateLocale(locale));
   },
   pushLocations: () => dispatch(pushLocalLocations()),
+  locationData: () => ownProps.navigation.navigate('LocationData'),
   requestPushPermission: () => dispatch(requestPushPermission()),
   clearPushPermission: () => dispatch(clearPushPermission()),
 });

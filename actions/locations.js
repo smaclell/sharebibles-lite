@@ -85,35 +85,6 @@ export function fetchAllLocationData(locationKey) {
   };
 }
 
-export function updateLocation(options) {
-  return async (dispatch, getState) => {
-    const { authentication: { regionKey }, locations, connected } = getState();
-    const original = { ...locations[options.key] };
-
-    const isUpdated = await database.updateLocalLocation({ ...original, ...options });
-
-    if (!isUpdated) {
-      throw new Error('Unable to update location! Please try again.');
-    }
-
-    if (connected) {
-      return apis.updateLocation(regionKey, { ...original, ...options })
-        .then(({ updated, saved }) => {
-          dispatch(receiveLocation({ ...original, ...updated }));
-
-          saved
-            .then(() => updateUploadStatus({ ...original, ...updated }, true))
-            .catch(() => {
-              dispatch(receiveLocation(original));
-              dispatch(fetchLocation(original.key));
-            });
-        });
-    }
-
-    return true;
-  };
-}
-
 export function createLocation(options) {
   const {
     latitude, longitude, resources, status,

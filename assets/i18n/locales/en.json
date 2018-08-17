@@ -3,6 +3,7 @@
   "button/ok": "OK",
   "button/push_locations": "Push",
   "button/save": "Save",
+  "button/offline": "Offline",
   "connectivity/action_requires_connection": "The requested action requires an active network connection",
   "export/body": "Here is my data from Sharebibles",
   "export/error_title": "Export Failed",

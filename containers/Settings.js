@@ -7,28 +7,15 @@ import { fetchLocalLocations } from '../apis/database';
 import Settings from '../components/Settings';
 import { logout } from '../actions/authentication';
 import I18n, { updateLocale } from '../actions/i18n';
-import { pushLocalLocations } from '../actions/locations';
 import { requestPushPermission, clearPushPermission } from '../actions/permissions';
-import { UploadStatus } from '../actions/uploads';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
-
-function hasOffline({ uploads }) {
-  const values = Object.values(uploads);
-  if (values.length === 0) {
-    return false;
-  }
-
-  return values.some(v => v === UploadStatus.offline || v === UploadStatus.failed);
-}
 
 const mapStateToProps = state => ({
   ...state.authentication,
   ...state.settings,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
-  connected: state.connected,
-  canUpload: hasOffline(state),
 });
 
 const exportData = async () => {
@@ -92,31 +79,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));
   },
-  pushLocations: () => dispatch(pushLocalLocations()),
   locationData: () => ownProps.navigation.navigate('LocationData'),
   requestPushPermission: () => dispatch(requestPushPermission()),
   clearPushPermission: () => dispatch(clearPushPermission()),
 });
 
-const mergeProps = (stateProps, dispatchProps) => {
-  const props = Object.assign({}, stateProps, dispatchProps);
-
-  props.showPushDialog = () => {
-    if (!stateProps.connected) {
-      Alert.alert(
-        I18n.t('button/offline'),
-        I18n.t('connectivity/action_requires_connection'),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
-      return;
-    }
-
-    dispatchProps.requestPushPermission()
-      .then(allowed => allowed && dispatchProps.pushLocations());
-  };
-
-  return props;
-};
-
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps, mergeProps)(Settings));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Settings));

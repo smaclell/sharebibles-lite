@@ -78,14 +78,12 @@ const styles = StyleSheet.create({
 const Settings = (props) => {
   const {
     acceptInvite,
-    canUpload,
     clearPushPermission,
     enableInvitations,
     exportData,
     locationData,
     logout,
     regionKey,
-    showPushDialog,
     sendFeedback,
     updateLocale,
     version,
@@ -117,8 +115,7 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
-        { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
-        { regionKey && <SettingsItem term="settings/location_data" onPress={locationData} disabled={!canUpload} /> }
+        { regionKey && <SettingsItem term="settings/location_data" onPress={locationData} /> }
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
@@ -137,7 +134,6 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
-  canUpload: PropTypes.bool.isRequired,
   clearPushPermission: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
   exportData: PropTypes.func.isRequired,
@@ -145,7 +141,6 @@ Settings.propTypes = {
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,
-  showPushDialog: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };

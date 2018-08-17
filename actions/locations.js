@@ -2,7 +2,7 @@ import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
 import { containing } from './regions';
-import { failed, pending, uploaded, offline } from './uploads';
+import { failed, pending, uploaded, offline, setUploadingStatus } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
 
@@ -163,6 +163,7 @@ export function pushLocalLocations() {
     }
 
     offlineLocations.forEach(({ key }) => dispatch(pending(key)));
+    dispatch(setUploadingStatus(true));
 
     await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
       const regionKey = dispatch(containing(options));
@@ -174,6 +175,8 @@ export function pushLocalLocations() {
       const { created: location, saved } = await apis.createLocation(regionKey, options, key);
       dispatch(wrapper(saved, location));
     }));
+
+    setTimeout(() => dispatch(setUploadingStatus(false)), 2000);
 
     return true;
   };

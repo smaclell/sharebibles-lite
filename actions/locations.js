@@ -7,14 +7,14 @@ import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
-export function receiveLocation(location) {
+function receiveLocation(location) {
   return {
     type: RECIEVE_LOCATION,
     location,
   };
 }
 
-export function updateUploadStatus(location, isUploaded) {
+function updateUploadStatus(location, isUploaded) {
   return (dispatch) => {
     const newLocation = { ...location, uploaded: isUploaded };
     dispatch(receiveLocation(newLocation));

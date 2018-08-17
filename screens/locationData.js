@@ -82,7 +82,7 @@ class LocationData extends PureComponent {
         </View>
         <View style={[styles.section, styles.first]}>
           { uploading && <Text style={styles.sectionText}>{I18n.t('locations/uploading')}{`: ${numberUploading - stats.offline}/${numberUploading}`}</Text> }
-          { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline')}{`: ${stats.offline}`}</Text> }
+          { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline')}{`: ${stats.offline + stats.failed}`}</Text> }
         </View>
         <View style={styles.section}>
           <Text style={styles.sectionText}>{I18n.t('locations/successful_upload')}{`: ${stats.uploaded}`}</Text>

@@ -30,7 +30,7 @@
   "settings/not_implemented": "Désolé, cette option n'est pas encore disponible",
   "settings/push_locations_message": "En poussant les données de localisation, toutes les données d'emplacement stockées localement seront envoyées à la base de données centrale pour que les autres puissent y accéder. Voulez-vous pousser vos données",
   "settings/push_locations": "Envoyer des données de localisation. ",
-  "settings/region": "Région: {{région}}",
+  "settings/region": "Région: {{region}}",
   "settings/send_feedback": "Envoyer des commentaires",
   "settings/shareInvite": "Partagez un code d'accès de Share Bibles",
   "settings/token_success": "Merci pour fournir votre jeton d'accès",

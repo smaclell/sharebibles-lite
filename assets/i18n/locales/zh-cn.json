@@ -31,7 +31,7 @@
   "settings/not_implemented": "抱歉，此功能暂时无法使用",
   "settings/push_locations_message": "将本地存储的位置数据传送至中央数据库便于他人访问，您要上传数据吗？",
   "settings/push_locations": "上传位置数据",
-  "settings/region": "区域",
+  "settings/region": "区域: {{region}}",
   "settings/send_feedback": "发送反馈",
   "settings/shareInvite": "分享分发圣经访问代码",
   "status/accepted": "已接收",

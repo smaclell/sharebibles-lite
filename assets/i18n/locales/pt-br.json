@@ -31,7 +31,7 @@
   "settings/not_implemented": "Desculpe, esse recurso ainda não está disponível",
   "settings/push_locations_message": "O envio de Dados de Localização enviará todos os Dados de Localização armazenados localmente, para o Banco de Dados Central, para que outros possam acessar. Você gostaria de enviar seus dados?",
   "settings/push_locations": "Envie dados de localização ",
-  "settings/region": "Região",
+  "settings/region": "Região: {{region}}",
   "settings/send_feedback": "Enviar Comentários",
   "settings/shareInvite": "Compartilhe um Código de Acesso do Share Bibles",
   "status/accepted": "Aceitou",

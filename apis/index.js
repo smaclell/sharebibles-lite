@@ -90,6 +90,7 @@ export async function createLocation(regionKey, options, key) {
   }
 
   const created = createLocationObject(pushed.key, options);
+  created.regionKey = regionKey;
 
   const saved = pushed.set(created);
   const geoPromises = saveGeoData(created, pushed.key, regionKey);

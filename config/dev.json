@@ -49,7 +49,8 @@
         "projectId": "sharebibles-lite-scott",
         "storageBucket": "",
         "messagingSenderId": "180261206879"
-      }
+      },
+      "mapsUrl": "https://4kmaps.now.sh"
     }
   }
 }

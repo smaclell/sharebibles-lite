@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import I18n from '../assets/i18n/i18n';
@@ -9,7 +9,8 @@ import fonts from '../styles/fonts';
 import { UploadStatus } from '../actions/uploads';
 import { pushLocalLocations } from '../actions/locations';
 import { requestPushPermission } from '../actions/permissions';
-import CollapsibleList from '../components/CollapsibleList';
+import FailedListItem from '../components/FailedListItem';
+import { getStats, getFailedLocations } from '../selectors/stats';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +73,8 @@ class LocationData extends PureComponent {
 
     const iconName = failedOpen ? 'chevron-small-down' : 'chevron-small-right';
     const disabled = stats.offline === 0 && stats.failed === 0;
+    const progress = numberUploading - stats.offline;
+    const offlineTotal = stats.offline + stats.failed;
 
     return (
       <View style={styles.container}>
@@ -81,22 +84,20 @@ class LocationData extends PureComponent {
           </TouchableOpacity>
         </View>
         <View style={[styles.section, styles.first]}>
-          { uploading && <Text style={styles.sectionText}>{I18n.t('locations/uploading')}{`: ${numberUploading - stats.offline}/${numberUploading}`}</Text> }
-          { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline')}{`: ${stats.offline + stats.failed}`}</Text> }
+          { uploading && <Text style={styles.sectionText}>{I18n.t('locations/uploading', { value: progress, total: numberUploading })}</Text> }
+          { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline', { value: offlineTotal })}</Text> }
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{I18n.t('locations/successful_upload')}{`: ${stats.uploaded}`}</Text>
+          <Text style={styles.sectionText}>{I18n.t('locations/successful_upload', { value: stats.uploaded })}</Text>
         </View>
-        <View style={styles.section}>
+        <TouchableOpacity style={styles.section} onPress={this.onFailedPressed}>
           <Icon size="medium" family="entypo" name={iconName} colour={colours.black} />
-          <TouchableOpacity onPress={this.onFailedPressed}>
-            <Text style={styles.sectionText}>{I18n.t('locations/Failed_upload')}{`: ${stats.failed}`}</Text>
-          </TouchableOpacity>
-        </View>
-        {stats.failed > 0 &&
-          <CollapsibleList
+          <Text style={styles.sectionText}>{I18n.t('locations/failed_upload', { value: stats.failed })}</Text>
+        </TouchableOpacity>
+        {stats.failed > 0 && failedOpen &&
+          <FlatList
             data={failedLocations}
-            open={failedOpen}
+            renderItem={FailedListItem}
           />
         }
       </View>
@@ -122,6 +123,12 @@ LocationData.defaultProps = {
 
 const mapStateToProps = (state) => {
   let failedLocations = {};
+  // const stats = {
+  //   [UploadStatus.pending]: getStats(state, UploadStatus.pending),
+  //   [UploadStatus.offline]: getStats(state, UploadStatus.offline),
+  //   [UploadStatus.failed]: getStats(state, UploadStatus.failed),
+  //   [UploadStatus.uploaded]: getStats(state, UploadStatus.uploaded),
+  // };
   const stats = {
     [UploadStatus.pending]: 0,
     [UploadStatus.offline]: 0,
@@ -141,6 +148,7 @@ const mapStateToProps = (state) => {
   return {
     connected: state.connected,
     stats,
+    // failedLocations: getFailedLocations(state),
     failedLocations,
     uploading: state.uploads.uploading,
   };

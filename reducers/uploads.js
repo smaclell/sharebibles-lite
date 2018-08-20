@@ -6,7 +6,8 @@ export default function reducer(state = { uploading: false }, action) {
       ...state,
       [action.key]: action.status,
     };
-  } else if (action.type === UPLOADING_STATUS) {
+  }
+  if (action.type === UPLOADING_STATUS) {
     return {
       ...state,
       uploading: action.status,

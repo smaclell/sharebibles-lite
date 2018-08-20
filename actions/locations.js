@@ -7,14 +7,14 @@ import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
-export function receiveLocation(location) {
+function receiveLocation(location) {
   return {
     type: RECIEVE_LOCATION,
     location,
   };
 }
 
-export function updateUploadStatus(location, isUploaded) {
+function updateUploadStatus(location, isUploaded) {
   return (dispatch) => {
     const newLocation = { ...location, uploaded: isUploaded };
     dispatch(receiveLocation(newLocation));
@@ -64,53 +64,26 @@ export function restoreLocalLocations() {
 }
 
 export function fetchLocation(locationKey) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { authentication: { regionKey }, connected } = getState();
     if (!connected || !regionKey) {
-      return Promise.resolve();
+      return;
     }
 
-    return apis.fetchLocation(locationKey, regionKey)
-      .then((location) => {
-        if (location) {
-          dispatch(receiveLocation({ ...location, uploaded: true }));
-        }
-      });
+    try {
+      const location = await apis.fetchLocation(locationKey, regionKey);
+      if (location) {
+        dispatch(receiveLocation({ ...location, uploaded: true }));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   };
 }
 
 export function fetchAllLocationData(locationKey) {
   return async (dispatch) => {
     await dispatch(fetchLocation(locationKey));
-  };
-}
-
-export function updateLocation(options) {
-  return async (dispatch, getState) => {
-    const { authentication: { regionKey }, locations, connected } = getState();
-    const original = { ...locations[options.key] };
-
-    const isUpdated = await database.updateLocalLocation({ ...original, ...options });
-
-    if (!isUpdated) {
-      throw new Error('Unable to update location! Please try again.');
-    }
-
-    if (connected) {
-      return apis.updateLocation(regionKey, { ...original, ...options })
-        .then(({ updated, saved }) => {
-          dispatch(receiveLocation({ ...original, ...updated }));
-
-          saved
-            .then(() => updateUploadStatus({ ...original, ...updated }, true))
-            .catch(() => {
-              dispatch(receiveLocation(original));
-              dispatch(fetchLocation(original.key));
-            });
-        });
-    }
-
-    return true;
   };
 }
 

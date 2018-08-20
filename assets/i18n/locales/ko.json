@@ -31,7 +31,7 @@
   "settings/not_implemented": "죄송합니다. 아직 이 기능을 사용할 수 없습니다.",
   "settings/push_locations_message": "위치 데이터를 보내면 다른 사람들이 사용 할 수 있도록 지방적 으로 저장된 모든 위치 데이터가 중앙 데이터베이스로 전송됩니다. 데이터를 보내 시겠습니까?",
   "settings/push_locations": "위치 데이터 보내기",
-  "settings/region: 지역": "{{region}}",
+  "settings/region": "지역: {{region}}",
   "settings/send_feedback": "의견 보내기",
   "settings/shareInvite": "쉐어바이블 접속코드 공유하기",
   "status/accepted": "승락되었습니다",

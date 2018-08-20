@@ -36,7 +36,7 @@ Create a card on the trello board if this does not work for you.
 
 # Contributing
 
-We maintain an active backlog of new features and bugs we would love your help with.
+We maintain an active backlog of new features and bugs we would love your help with on [Trello](https://trello.com/b/KtIsfEZp/sharebibles-lite).
 
 Have a great idea or change you want to share? Awesome. We actively welcome pull requests:
 

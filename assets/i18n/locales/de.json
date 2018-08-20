@@ -31,7 +31,7 @@
   "settings/not_implemented": "Es tut uns leid. Diese Option ist leider noch nicht verfügbar.",
   "settings/push_locations_message": "Durch das Weiterleiten der Standortdaten werden alle lokal gespeicherten Standortdaten an die zentrale Datenbank gesendet, auf die Andere zugreifen können. Möchten Sie Ihre Daten weiterleiten?",
   "settings/push_locations": "Leite Standort Data weiter",
-  "settings/region": "Region",
+  "settings/region": "Region: {{region}}",
   "settings/send_feedback": "Feedback schicken",
   "settings/shareInvite": "Teile einen Share Bibles Zugriffs Code",
   "status/accepted": "Akzeptiert",

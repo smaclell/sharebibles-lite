@@ -64,18 +64,20 @@ export function restoreLocalLocations() {
 }
 
 export function fetchLocation(locationKey) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { authentication: { regionKey }, connected } = getState();
     if (!connected || !regionKey) {
-      return Promise.resolve();
+      return;
     }
 
-    return apis.fetchLocation(locationKey, regionKey)
-      .then((location) => {
-        if (location) {
-          dispatch(receiveLocation({ ...location, uploaded: true }));
-        }
-      });
+    try {
+      const location = await apis.fetchLocation(locationKey, regionKey);
+      if (location) {
+        dispatch(receiveLocation({ ...location, uploaded: true }));
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   };
 }
 

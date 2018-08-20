@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import I18n from '../assets/i18n/i18n';
 import fonts from '../styles/fonts';
@@ -18,17 +18,23 @@ const styles = StyleSheet.create({
     fontSize: fonts.normal,
     color: colours.black,
   },
+  error: {
+    color: colours.reds.base,
+    paddingTop: 5,
+  },
 });
 
-const FailedListItem = ({ item }) => (
-  <View style={styles.container}>
+const FailedListItem = ({ item, onPress }) => (
+  <TouchableOpacity style={styles.container} onPress={() => onPress(item.longitude, item.latitude)}>
     <Text style={styles.text}>{I18n.t('locations/latitude', { value: item.latitude.toFixed(5) })}</Text>
     <Text style={styles.text}>{I18n.t('locations/longitude', { value: item.longitude.toFixed(5) })}</Text>
-  </View>
+    <Text style={styles.error}>{item.error ? I18n.t(item.error) : I18n.t('locations/unknown_error') }</Text>
+  </TouchableOpacity>
 );
 
 FailedListItem.propTypes = {
   item: PropTypes.object.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default FailedListItem;

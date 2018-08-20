@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import I18n from '../assets/i18n/i18n';
 import Icon from '../components/Icon';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
-import { UploadStatus } from '../actions/uploads';
 import { pushLocalLocations } from '../actions/locations';
 import { requestPushPermission } from '../actions/permissions';
+import { showPushDialog } from '../actions/settings';
 import FailedListItem from '../components/FailedListItem';
 import { getStats, getFailedLocations } from '../selectors/stats';
 
@@ -50,14 +50,17 @@ class LocationData extends Component {
     numberUploading: 0,
   }
 
-  onFailedPressed = () => {
-    this.setState(p => ({ failedOpen: !p.failedOpen }));
-  }
-
   uploadLocations = () => {
     this.setState({ numberUploading: this.props.stats.offline + this.props.stats.failed });
     this.props.showPushDialog();
   }
+
+  renderItem = ({ item }) => (
+    <FailedListItem
+      item={item}
+      onPress={this.props.goToPin}
+    />
+  )
 
   render() {
     const {
@@ -93,7 +96,7 @@ class LocationData extends Component {
         </View>
         <FlatList
           data={failedLocations}
-          renderItem={FailedListItem}
+          renderItem={this.renderItem}
         />
       </View>
     );
@@ -102,6 +105,7 @@ class LocationData extends Component {
 
 LocationData.propTypes = {
   failedLocations: PropTypes.array,
+  goToPin: PropTypes.func.isRequired,
   showPushDialog: PropTypes.func.isRequired,
   stats: PropTypes.shape({
     pending: PropTypes.number.isRequired,
@@ -116,67 +120,18 @@ LocationData.defaultProps = {
   failedLocations: [],
 };
 
-const mapStateToProps = (state) => {
-  let failedLocations = {};
-  // const stats = {
-  //   [UploadStatus.pending]: getStats(state, UploadStatus.pending),
-  //   [UploadStatus.offline]: getStats(state, UploadStatus.offline),
-  //   [UploadStatus.failed]: getStats(state, UploadStatus.failed),
-  //   [UploadStatus.uploaded]: getStats(state, UploadStatus.uploaded),
-  // };
-  const stats = {
-    [UploadStatus.pending]: 0,
-    [UploadStatus.offline]: 0,
-    [UploadStatus.failed]: 0,
-    [UploadStatus.uploaded]: 0,
-  };
-
-  Object.entries(state.uploads).forEach(([key, v]) => {
-    stats[v] += 1;
-    if (v === UploadStatus.failed && state.locations[key]) {
-      failedLocations[key] = state.locations[key];
-    }
-  });
-
-  failedLocations = Object.values(failedLocations);
-
-  return {
-    connected: state.connected,
-    stats,
-    // failedLocations: getFailedLocations(state),
-    failedLocations,
-    uploading: state.uploads.uploading,
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  pushLocations: () => dispatch(pushLocalLocations()),
-  requestPushPermission: () => dispatch(requestPushPermission()),
+const mapStateToProps = state => ({
+  connected: state.connected,
+  stats: getStats(state),
+  failedLocations: getFailedLocations(state),
+  uploading: state.uploads.uploading,
 });
 
-const mergeProps = (stateProps, dispatchProps) => {
-  const props = Object.assign({}, stateProps, dispatchProps);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  pushLocations: () => dispatch(pushLocalLocations()),
+  requestPushPermission: () => dispatch(requestPushPermission()),
+  showPushDialog: () => dispatch(showPushDialog()),
+  goToPin: (longitude, latitude) => ownProps.navigation.navigate('OverviewMap', { coord: { longitude, latitude } }),
+});
 
-  props.showPushDialog = () => {
-    if (!stateProps.connected) {
-      Alert.alert(
-        I18n.t('button/offline'),
-        I18n.t('connectivity/action_requires_connection'),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
-      return;
-    }
-
-    dispatchProps.requestPushPermission()
-      .then((allowed) => {
-        if (allowed) {
-          dispatchProps.pushLocations();
-        }
-      });
-  };
-
-  return props;
-};
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(LocationData);
+export default connect(mapStateToProps, mapDispatchToProps)(LocationData);

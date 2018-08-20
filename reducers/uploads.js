@@ -4,9 +4,13 @@ export default function reducer(state = { uploading: false }, action) {
   if (action.type === UPLOAD_UPDATED) {
     return {
       ...state,
-      [action.key]: action.status,
+      [action.key]: {
+        status: action.status,
+        error: action.err,
+      },
     };
   }
+
   if (action.type === UPLOADING_STATUS) {
     return {
       ...state,

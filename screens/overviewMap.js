@@ -96,6 +96,17 @@ class OverviewMap extends PureComponent {
     };
   }
 
+  componentDidUpdate() {
+    const { navigation } = this.props;
+    const coord = navigation.getParam('coord', null);
+
+    if (coord && coord.latitude && coord.longitude) {
+      navigation.setParams({ coord: { latitude: null, longitude: null } });
+      navigation.toggleDrawer();
+      this.map.animateToCoordinate(coord, animationTime);
+    }
+  }
+
   onMapReady = () => {
     this.setState({ isReady: true });
 
@@ -275,6 +286,7 @@ class OverviewMap extends PureComponent {
 OverviewMap.propTypes = {
   locale: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,

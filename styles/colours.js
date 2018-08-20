@@ -25,6 +25,10 @@ const colours = {
   oranges: {
     base: '#F75C03',
   },
+
+  reds: {
+    base: '#E53935',
+  },
 };
 
 const semantic = {

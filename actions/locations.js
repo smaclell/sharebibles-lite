@@ -40,7 +40,7 @@ function wrapper(work, location) {
         },
       });
 
-      dispatch(failed(location.key));
+      dispatch(failed(location.key, err));
     }
   };
 }
@@ -112,7 +112,7 @@ export function createLocation(options) {
 
       const regionKey = dispatch(containing(locationData));
       if (!regionKey) {
-        dispatch(failed(key));
+        dispatch(failed(key, 'locations/incorrect_region'));
         return;
       }
 
@@ -141,7 +141,7 @@ export function pushLocalLocations() {
     await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
       const regionKey = dispatch(containing(options));
       if (!regionKey) {
-        dispatch(failed(key));
+        dispatch(failed(key, 'locations/incorrect_region'));
         return;
       }
 
@@ -149,7 +149,7 @@ export function pushLocalLocations() {
       dispatch(wrapper(saved, location));
     }));
 
-    dispatch(setUploadingStatus(false));
+    setTimeout(() => dispatch(setUploadingStatus(false)), 2000);
 
     return true;
   };

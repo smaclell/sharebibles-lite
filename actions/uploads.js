@@ -12,10 +12,11 @@ export const setUploadingStatus = status => ({
 });
 
 export const UPLOAD_UPDATED = 'UPLOAD_UPDATED';
-const setup = status => key => ({
+const setup = status => (key, err) => ({
   type: UPLOAD_UPDATED,
   key,
   status,
+  err,
 });
 
 export const failed = setup(UploadStatus.failed);

@@ -1,43 +1,40 @@
 import { createSelector } from 'reselect';
 import { UploadStatus } from '../actions/uploads';
 
-const uploads = createSelector(
-  state => state.uploads,
+const getLocations = state => state.locations;
+const getUploads = state => state.uploads;
+
+const uploadEntries = createSelector(
+  getUploads,
   data => Object.entries(data),
 );
 
-const getLocations = state => state.locations;
-
-// const getStat = (data, value) => {
-//   // console.log(data);
-//   // return data.reduce((total, [key, v]) => (v === UploadStatus[value] ? total + 1 : total), 0);
-//   return data.reduce((total, item) => {
-//     console.log(item[1], value);
-//     return (item[1] === UploadStatus[value] ? total + 1 : total);
-//   }, 0);
-// };
-
-export const getStats = value => createSelector(
-  uploads,
-  (data, v) => {
-    // console.log(data);
-    // return data.reduce((total, [key, v]) => (v === UploadStatus[value] ? total + 1 : total), 0);
-    return data.reduce((total, item) => {
-      console.log(item[1], v);
-      return (item[1] === UploadStatus[v] ? total + 1 : total);
-    }, 0);
-  }
-);
-
 export const getFailedLocations = createSelector(
-  [uploads, getLocations],
-  (data, locations) => {
+  [getUploads, uploadEntries, getLocations],
+  (uploads, data, locations) => {
     const failedLocations = [];
     data.forEach(([key, v]) => {
-      if (v === UploadStatus.failed && locations[key]) {
-        failedLocations.push(locations[key]);
+      if (v.status === UploadStatus.failed && locations[key]) {
+        const failed = locations[key];
+        failed.error = uploads[key].error;
+        failedLocations.push(failed);
       }
     });
     return failedLocations;
   },
 );
+
+export const getStats = (state) => {
+  const stats = {
+    [UploadStatus.pending]: 0,
+    [UploadStatus.offline]: 0,
+    [UploadStatus.failed]: 0,
+    [UploadStatus.uploaded]: 0,
+  };
+
+  Object.values(state.uploads).forEach((v) => {
+    stats[v.status] += 1;
+  });
+
+  return stats;
+};

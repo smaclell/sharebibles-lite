@@ -149,7 +149,7 @@ export function pushLocalLocations() {
       dispatch(wrapper(saved, location));
     }));
 
-    setTimeout(() => dispatch(setUploadingStatus(false)), 2000);
+    dispatch(setUploadingStatus(false));
 
     return true;
   };

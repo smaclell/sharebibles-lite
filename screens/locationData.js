@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -45,9 +45,8 @@ const styles = StyleSheet.create({
   },
 });
 
-class LocationData extends PureComponent {
+class LocationData extends Component {
   state = {
-    failedOpen: false,
     numberUploading: 0,
   }
 
@@ -67,11 +66,9 @@ class LocationData extends PureComponent {
       uploading,
     } = this.props;
     const {
-      failedOpen,
       numberUploading,
     } = this.state;
 
-    const iconName = failedOpen ? 'chevron-small-down' : 'chevron-small-right';
     const disabled = stats.offline === 0 && stats.failed === 0;
     const progress = numberUploading - stats.offline;
     const offlineTotal = stats.offline + stats.failed;
@@ -90,16 +87,14 @@ class LocationData extends PureComponent {
         <View style={styles.section}>
           <Text style={styles.sectionText}>{I18n.t('locations/successful_upload', { value: stats.uploaded })}</Text>
         </View>
-        <TouchableOpacity style={styles.section} onPress={this.onFailedPressed}>
-          <Icon size="medium" family="entypo" name={iconName} colour={colours.black} />
+        <View style={styles.section}>
+          <Icon size="medium" family="entypo" name="chevron-small-down" colour={colours.black} />
           <Text style={styles.sectionText}>{I18n.t('locations/failed_upload', { value: stats.failed })}</Text>
-        </TouchableOpacity>
-        {stats.failed > 0 && failedOpen &&
-          <FlatList
-            data={failedLocations}
-            renderItem={FailedListItem}
-          />
-        }
+        </View>
+        <FlatList
+          data={failedLocations}
+          renderItem={FailedListItem}
+        />
       </View>
     );
   }

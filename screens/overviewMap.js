@@ -96,6 +96,7 @@ class OverviewMap extends PureComponent {
     };
   }
 
+  // Used to check if we just came from a failed item being pressed
   componentDidUpdate() {
     const { navigation } = this.props;
     const coord = navigation.getParam('coord', null);

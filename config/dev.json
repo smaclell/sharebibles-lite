@@ -43,7 +43,7 @@
       "enableInvitations": true,
       "serviceUrl": "https://sharebibles-lite-scott.firebaseapp.com",
       "firebase": {
-        "apiKey": "AIzaSyAwBO2rVZSxbJY0-fFtpbv11ACzvrP6EmE",
+        "apiKey": "AIzaSyD1MJsvOB171NxB4Cg_dd5bCwA26LCqKxA",
         "authDomain": "sharebibles-lite-scott.firebaseapp.com",
         "databaseURL": "https://sharebibles-lite-scott.firebaseio.com",
         "projectId": "sharebibles-lite-scott",

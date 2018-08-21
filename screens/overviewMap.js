@@ -103,7 +103,7 @@ class OverviewMap extends PureComponent {
 
     if (coord && coord.latitude && coord.longitude) {
       navigation.setParams({ coord: { latitude: null, longitude: null } });
-      navigation.toggleDrawer();
+      navigation.closeDrawer();
       this.map.animateToCoordinate(coord, animationTime);
     }
   }

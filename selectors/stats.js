@@ -15,7 +15,8 @@ export const getFailedLocations = createSelector(
     const failedLocations = [];
     data.forEach(([key, v]) => {
       if (v.status === UploadStatus.failed && locations[key]) {
-        const failed = locations[key];
+        const failed = { key };
+        failed.location = locations[key];
         failed.error = uploads[key].error;
         failedLocations.push(failed);
       }

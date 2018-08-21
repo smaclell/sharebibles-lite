@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const FailedListItem = ({ item, onPress }) => (
-  <TouchableOpacity style={styles.container} onPress={() => onPress(item.longitude, item.latitude)}>
-    <Text style={styles.text}>{I18n.t('locations/latitude', { value: item.latitude.toFixed(5) })}</Text>
-    <Text style={styles.text}>{I18n.t('locations/longitude', { value: item.longitude.toFixed(5) })}</Text>
-    <Text style={styles.error}>{item.error ? I18n.t(item.error) : I18n.t('locations/unknown_error') }</Text>
+const FailedListItem = ({ item: { error, key, location: { latitude, longitude } }, onPress }) => (
+  <TouchableOpacity style={styles.container} onPress={() => onPress(longitude, latitude)} key={key}>
+    <Text style={styles.text}>{I18n.t('locations/latitude', { value: latitude.toFixed(5) })}</Text>
+    <Text style={styles.text}>{I18n.t('locations/longitude', { value: longitude.toFixed(5) })}</Text>
+    <Text style={styles.error}>{error ? I18n.t(error) : I18n.t('locations/unknown_error') }</Text>
   </TouchableOpacity>
 );
 

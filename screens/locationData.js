@@ -7,7 +7,6 @@ import Icon from '../components/Icon';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import { pushLocalLocations } from '../actions/locations';
-import { requestPushPermission } from '../actions/permissions';
 import { showPushDialog } from '../actions/settings';
 import FailedListItem from '../components/FailedListItem';
 import { getStats, getFailedLocations } from '../selectors/stats';
@@ -72,9 +71,9 @@ class LocationData extends Component {
       numberUploading,
     } = this.state;
 
-    const disabled = stats.offline === 0 && stats.failed === 0;
-    const progress = numberUploading - stats.offline;
     const offlineTotal = stats.offline + stats.failed;
+    const disabled = offlineTotal === 0;
+    const progress = numberUploading - stats.offline;
 
     return (
       <View style={styles.container}>
@@ -129,7 +128,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   pushLocations: () => dispatch(pushLocalLocations()),
-  requestPushPermission: () => dispatch(requestPushPermission()),
   showPushDialog: () => dispatch(showPushDialog()),
   goToPin: (longitude, latitude) => ownProps.navigation.navigate('OverviewMap', { coord: { longitude, latitude } }),
 });

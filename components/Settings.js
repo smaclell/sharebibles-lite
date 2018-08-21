@@ -101,7 +101,7 @@ const Settings = (props) => {
         { !regionKey && enableInvitations && (
           <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
         )}
-        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
+        <View style={[SettingsItem.styles.container, { maxHeight: 1.5 * fonts.large }]}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}

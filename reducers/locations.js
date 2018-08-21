@@ -1,11 +1,17 @@
-import { RECIEVE_LOCATION } from '../actions/locations';
+import { RECIEVE_LOCATION, CLEAR_LOCATIONS } from '../actions/locations';
 
-export default function reducer(state = {}, action) {
+const initial = {};
+
+export default function reducer(state = initial, action) {
   if (action.type === RECIEVE_LOCATION) {
     return {
       ...state,
       [action.location.key]: action.location,
     };
+  }
+
+  if (action.type === CLEAR_LOCATIONS) {
+    return initial;
   }
 
   return state;

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
 import LocationCreation from '../containers/LocationCreation';
@@ -97,7 +98,7 @@ class OverviewMap extends PureComponent {
   }
 
   // Used to check if we just came from a failed item being pressed
-  componentDidUpdate() {
+  onScreenWillFocus = () => {
     const { navigation } = this.props;
     const coord = navigation.getParam('coord', null);
 
@@ -207,6 +208,9 @@ class OverviewMap extends PureComponent {
 
     return (
       <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
+        <NavigationEvents
+          onWillFocus={this.onScreenWillFocus}
+        />
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}

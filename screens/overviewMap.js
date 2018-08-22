@@ -140,7 +140,11 @@ class OverviewMap extends PureComponent {
   }
 
   // Called when the users physical location changes
-  onLocationChange = (coord) => {
+  onLocationChange = ({ coordinate: coord }) => {
+    if (!coord) {
+      return;
+    }
+
     if (this.state.centered) {
       this.props.updatePosition(coord.latitude, coord.longitude);
       this.map.animateToCoordinate(coord, animationTime);

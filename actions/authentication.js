@@ -2,6 +2,7 @@ import { Constants, SecureStore } from 'expo';
 import Sentry from 'sentry-expo';
 import { clear as clearRegions, request as requestRegion } from './regions';
 import { signIn, signOut } from '../apis';
+import { clearLocations, restoreLocalLocations } from './locations';
 import refetch from '../utils/refetch';
 
 const { serviceUrl } = Constants.manifest.extra;
@@ -28,6 +29,8 @@ export function logout() {
     await clear();
     dispatch(accepted({}));
     dispatch(clearRegions());
+    dispatch(clearLocations());
+    dispatch(restoreLocalLocations());
     await signOut();
   };
 }

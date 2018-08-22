@@ -14,6 +14,13 @@ function receiveLocation(location) {
   };
 }
 
+export const CLEAR_LOCATIONS = 'CLEAR_LOCATIONS';
+export function clearLocations() {
+  return {
+    type: CLEAR_LOCATIONS,
+  };
+}
+
 function updateUploadStatus(location, isUploaded) {
   return (dispatch) => {
     const newLocation = { ...location, uploaded: isUploaded };

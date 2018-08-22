@@ -43,6 +43,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     pinColor: getPinColor(location, state),
     location,
+    locale: state.i18n.locale,
   };
 };
 

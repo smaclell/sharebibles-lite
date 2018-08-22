@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: colours.transparent,
   },
   addButton: {
+    // Icons are odly sized, so padding on each side must be different to ensure its centered properly
     paddingTop: 14,
     paddingBottom: 13,
     paddingLeft: 17,
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   centerButton: {
+    // Icons are odly sized, so padding on each side must be different to ensure its centered properly
     paddingTop: 13,
     paddingBottom: 14,
     paddingHorizontal: 16,

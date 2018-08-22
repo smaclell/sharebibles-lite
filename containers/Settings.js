@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   acceptInvite: () => ownProps.navigation.navigate('Invites'),
   clearPushPermission: () => dispatch(clearPushPermission()),
   exportData,
-  locationData: () => ownProps.navigation.navigate('LocationData'),
+  showLocationData: () => ownProps.navigation.navigate('LocationData'),
   logout: () => dispatch(logout()),
   showPushDialog: () => dispatch(showPushDialog()),
   sendFeedback,

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flexDirection: 'column',
+    backgroundColor: colours.white,
   },
   button: {
     alignSelf: 'flex-start',
@@ -77,11 +78,9 @@ class LocationData extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <TouchableOpacity style={styles.button} disabled={disabled} onPress={this.uploadLocations}>
-            <Text style={styles.sectionText}>{I18n.t('settings/push_locations')}</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button} disabled={disabled} onPress={this.uploadLocations}>
+          <Text style={styles.sectionText}>{I18n.t('settings/push_locations')}</Text>
+        </TouchableOpacity>
         <View style={[styles.section, styles.first]}>
           { uploading && <Text style={styles.sectionText}>{I18n.t('locations/uploading', { value: progress, total: numberUploading })}</Text> }
           { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline', { value: offlineTotal })}</Text> }
@@ -89,7 +88,7 @@ class LocationData extends Component {
         <View style={styles.section}>
           <Text style={styles.sectionText}>{I18n.t('locations/successful_upload', { value: stats.uploaded })}</Text>
         </View>
-        <View style={styles.section}>
+        <View style={[styles.section]}>
           <Icon size="medium" family="entypo" name="chevron-small-down" colour={colours.black} />
           <Text style={styles.sectionText}>{I18n.t('locations/failed_upload', { value: stats.failed })}</Text>
         </View>

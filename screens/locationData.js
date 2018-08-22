@@ -13,6 +13,8 @@ import { getStats, getFailedLocations } from '../selectors/stats';
 
 const styles = StyleSheet.create({
   container: {
+    borderTopWidth: 1,
+    borderColor: colours.greys.lighter,
     width: '100%',
     height: '100%',
     flexDirection: 'column',

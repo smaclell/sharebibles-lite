@@ -25,25 +25,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: colours.black,
-    backgroundColor: colours.greys.lightest,
+    backgroundColor: colours.white,
     padding: 10,
     marginHorizontal: 5,
     marginVertical: 10,
-  },
-  first: {
-    borderTopWidth: 1,
   },
   section: {
     flexDirection: 'row',
     paddingVertical: 15,
     paddingHorizontal: 10,
-    backgroundColor: colours.greys.lightest,
-    borderBottomWidth: 1,
-    borderColor: colours.black,
+    backgroundColor: colours.white,
     alignItems: 'center',
   },
   sectionText: {
     fontSize: fonts.large,
+  },
+  listHeading: {
+    borderBottomWidth: 1,
+    borderColor: colours.greys.lighter,
+    paddingBottom: 10,
+    marginBottom: 5,
+  },
+  listHeadingText: {
+    paddingLeft: 5,
   },
 });
 
@@ -81,18 +85,18 @@ class LocationData extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} disabled={disabled} onPress={this.uploadLocations}>
-          <Text style={styles.sectionText}>{I18n.t('settings/push_locations')}</Text>
+          <Text style={styles.sectionText}>{I18n.t('locationData/Upload_locations')}</Text>
         </TouchableOpacity>
-        <View style={[styles.section, styles.first]}>
-          { uploading && <Text style={styles.sectionText}>{I18n.t('locations/uploading', { value: progress, total: numberUploading })}</Text> }
-          { !uploading && <Text style={styles.sectionText}>{I18n.t('locations/offline', { value: offlineTotal })}</Text> }
+        <View style={styles.section}>
+          { uploading && <Text style={styles.sectionText}>{I18n.t('locationData/uploading', { value: progress, total: numberUploading })}</Text> }
+          { !uploading && <Text style={styles.sectionText}>{I18n.t('locationData/offline', { value: offlineTotal })}</Text> }
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{I18n.t('locations/successful_upload', { value: stats.uploaded })}</Text>
+          <Text style={styles.sectionText}>{I18n.t('locationData/successful_upload', { value: stats.uploaded })}</Text>
         </View>
-        <View style={[styles.section]}>
+        <View style={[styles.section, styles.listHeading]}>
           <Icon size="medium" family="entypo" name="chevron-small-down" colour={colours.black} />
-          <Text style={styles.sectionText}>{I18n.t('locations/failed_upload', { value: stats.failed })}</Text>
+          <Text style={[styles.sectionText, styles.listHeadingText]}>{I18n.t('locationData/failed_upload', { value: stats.failed })}</Text>
         </View>
         <FlatList
           data={failedLocations}

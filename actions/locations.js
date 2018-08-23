@@ -47,7 +47,7 @@ function wrapper(work, location) {
         },
       });
 
-      dispatch(failed(location.key, err));
+      dispatch(failed(location.key, 'locationData/unknown_error'));
     }
   };
 }
@@ -119,7 +119,7 @@ export function createLocation(options) {
 
       const regionKey = dispatch(containing(locationData));
       if (!regionKey) {
-        dispatch(failed(key, 'locations/incorrect_region'));
+        dispatch(failed(key, 'locationData/incorrect_region'));
         return;
       }
 
@@ -148,7 +148,7 @@ export function pushLocalLocations() {
     await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
       const regionKey = dispatch(containing(options));
       if (!regionKey) {
-        dispatch(failed(key, 'locations/incorrect_region'));
+        dispatch(failed(key, 'locationData/incorrect_region'));
         return;
       }
 

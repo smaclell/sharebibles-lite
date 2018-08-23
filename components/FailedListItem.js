@@ -7,16 +7,18 @@ import fonts from '../styles/fonts';
 import colours from '../styles/colours';
 
 const styles = StyleSheet.create({
-  container: {
+  button: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  container: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: colours.black,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 5,
   },
   infoContainer: {
-    paddingLeft: 10,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     flex: 1,
     flexDirection: 'column',
@@ -29,12 +31,20 @@ const styles = StyleSheet.create({
     height: 80,
   },
   text: {
-    fontSize: fonts.normal,
+    fontSize: fonts.small,
     color: colours.black,
   },
   error: {
     color: colours.reds.base,
+    fontSize: fonts.normal,
     paddingTop: 5,
+  },
+  divider: {
+    borderBottomWidth: 1,
+    borderColor: colours.greys.lighter,
+    marginLeft: 100,
+    marginRight: 20,
+    marginVertical: 2,
   },
 });
 
@@ -51,36 +61,39 @@ const FailedListItem = ({ item: { error, key, location: { latitude, longitude } 
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress(longitude, latitude)} key={key}>
-      <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          region={region}
-          mapType="hybrid"
-          provider="google"
-          cacheEnabled
-          showsTraffic={false}
-          showsIndoors={false}
-          showsBuildings={false}
-          scrollEnabled={false}
-          zoomEnabled={false}
-          showsMyLocationButton={false}
-        >
-          <MapView.Marker
-            coordinate={{
-              latitude,
-              longitude,
-            }}
-            pinColor="red"
-            opacity={0.8}
-          />
-        </MapView>
+    <TouchableOpacity style={styles.button} onPress={() => onPress(longitude, latitude)} key={key}>
+      <View style={styles.container}>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            region={region}
+            mapType="hybrid"
+            provider="google"
+            cacheEnabled
+            showsTraffic={false}
+            showsIndoors={false}
+            showsBuildings={false}
+            scrollEnabled={false}
+            zoomEnabled={false}
+            showsMyLocationButton={false}
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude,
+                longitude,
+              }}
+              pinColor="red"
+              opacity={0.8}
+            />
+          </MapView>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.error}>{error ? I18n.t(error) : I18n.t('locationData/unknown_error') }</Text>
+          <Text style={styles.text}>{I18n.t('locationData/latitude', { value: latitude.toFixed(5) })}</Text>
+          <Text style={styles.text}>{I18n.t('locationData/longitude', { value: longitude.toFixed(5) })}</Text>
+        </View>
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.text}>{I18n.t('locations/latitude', { value: latitude.toFixed(5) })}</Text>
-        <Text style={styles.text}>{I18n.t('locations/longitude', { value: longitude.toFixed(5) })}</Text>
-        <Text style={styles.error}>{error ? I18n.t(error) : I18n.t('locations/unknown_error') }</Text>
-      </View>
+      <View style={styles.divider} />
     </TouchableOpacity>
   );
 };

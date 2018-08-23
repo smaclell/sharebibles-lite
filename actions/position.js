@@ -4,8 +4,6 @@ import { update } from './overview';
 export const UPDATE_POSITION = 'UPDATE_POSITION';
 export function updatePosition(latitude, longitude) {
   return (dispatch) => {
-    if (!latitude || !longitude) return;
-
     dispatch({
       type: UPDATE_POSITION,
       latitude,

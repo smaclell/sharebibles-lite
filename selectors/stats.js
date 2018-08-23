@@ -12,15 +12,14 @@ const uploadEntries = createSelector(
 export const getFailedLocations = createSelector(
   [getUploads, uploadEntries, getLocations],
   (uploads, data, locations) => {
-    const failedLocations = [];
-    data.forEach(([key, v]) => {
-      if (v.status === UploadStatus.failed && locations[key]) {
-        const failed = { key };
-        failed.location = locations[key];
-        failed.error = uploads[key].error;
-        failedLocations.push(failed);
-      }
-    });
+    const failedLocations = data
+      .filter(([key, v]) => v.status === UploadStatus.failed && locations[key])
+      .map(([key]) => ({
+        key,
+        location: locations[key],
+        error: uploads[key].error,
+      }));
+
     return failedLocations;
   },
 );

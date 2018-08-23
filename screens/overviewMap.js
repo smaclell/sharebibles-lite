@@ -8,6 +8,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
+import Onboarding from '../containers/Onboarding';
 import LocationCreation from '../containers/LocationCreation';
 import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
@@ -213,9 +214,13 @@ class OverviewMap extends PureComponent {
 
     return (
       <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
+<<<<<<< HEAD
         <NavigationEvents
           onWillFocus={this.onScreenWillFocus}
         />
+=======
+        <Onboarding />
+>>>>>>> Initital workings
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}

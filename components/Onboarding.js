@@ -1,0 +1,121 @@
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import I18n from 'ex-react-native-i18n';
+import colours from '../styles/colours';
+import fonts from '../styles/fonts';
+
+const LAST_STEP = 2;
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
+  onBoardingContainer: {
+    width: '80%',
+    minHeight: '25%',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colours.greys.lighter,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: colours.white,
+  },
+  onBoardingInfo: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  infoHeader: {
+    fontSize: fonts.header,
+    paddingBottom: 5,
+    textDecorationLine: 'underline',
+  },
+  infoDescription: {
+    fontSize: fonts.large,
+  },
+  buttonContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  actionBtn: {
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  actionBtnText: {
+    fontSize: fonts.large,
+    color: colours.blues.base,
+  },
+});
+
+class Onboarding extends PureComponent {
+  onContinuePress = () => {
+    if (this.props.step < LAST_STEP) {
+      this.props.setStep(this.props.step + 1);
+    } else {
+      this.props.setOnboardingStatus(true);
+    }
+  }
+
+  onbackPress = () => {
+    this.props.setStep(this.props.step - 1);
+  }
+
+  getStepInfo = () => {
+    const { step } = this.props;
+    return {
+      header: `onboarding/${step}_header`,
+      description: `onboarding/${step}_description`,
+      continueButton: step === LAST_STEP ? 'onboarding/finish' : 'onboarding/continue',
+    };
+  }
+
+  render() {
+    const {
+      isOnboarded,
+      step,
+    } = this.props;
+
+    if (isOnboarded) return null;
+
+    const { header, description, continueButton } = this.getStepInfo();
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.onBoardingContainer}>
+          <View style={styles.onBoardingInfo}>
+            <Text style={styles.infoHeader}>{I18n.t(header)}</Text>
+            <Text style={styles.infoDescription}>{I18n.t(description)}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.actionBtn} onPress={this.onbackPress} disabled={step === 1}><Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.actionBtn} onPress={this.onContinuePress}><Text style={styles.actionBtnText}>{I18n.t(continueButton)}</Text></TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
+
+Onboarding.propTypes = {
+  isOnboarded: PropTypes.bool.isRequired,
+  step: PropTypes.number.isRequired,
+  setOnboardingStatus: PropTypes.func.isRequired,
+  setStep: PropTypes.func.isRequired,
+};
+
+export default Onboarding;

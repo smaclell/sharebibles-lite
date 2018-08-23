@@ -129,6 +129,7 @@ class Settings extends Component {
       exportData,
       logout,
       regionKey,
+      resetOnboarding,
       sendFeedback,
       showLocationData,
       showPushDialog,
@@ -188,6 +189,7 @@ class Settings extends Component {
             <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
             { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
             { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
+            { __DEV__ && <SettingsItem term="settings/onboarding_reset" onPress={resetOnboarding} /> }
           </View>
         )}
         <View style={styles.version_container}>
@@ -212,6 +214,7 @@ Settings.propTypes = {
   exportData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
+  resetOnboarding: PropTypes.func.isRequired,
   sendFeedback: PropTypes.func.isRequired,
   showLocationData: PropTypes.func.isRequired,
   showPushDialog: PropTypes.func.isRequired,

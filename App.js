@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import Sentry from 'sentry-expo';
 import thunk from 'redux-thunk';
 
+import Onboarding from './containers/Onboarding';
 import Navigation from './nav';
 import reducer from './reducers';
 import { createDatabases } from './apis/database';
@@ -17,6 +18,7 @@ import I18n from './assets/i18n/i18n';
 import * as overviewActions from './actions/overview';
 import * as positionActions from './actions/position';
 import { restoreLocalLocations } from './actions/locations';
+import { restoreOnboardingStatus } from './actions/onboarding';
 import * as settingsActions from './actions/settings';
 
 Sentry.config('https://b3f49b97fd1045d0b76429a73baf0396@sentry.io/1193850').install();
@@ -62,6 +64,7 @@ class App extends Component {
           return store.dispatch(overviewActions.initialize());
         }),
         store.dispatch(restoreLocalLocations()),
+        store.dispatch(restoreOnboardingStatus()),
       ]);
     });
   }

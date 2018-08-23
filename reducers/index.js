@@ -12,6 +12,7 @@ import resources from './resources';
 import settings from './settings';
 import statuses from './statuses';
 import uploads from './uploads';
+import onboarding from './onboarding';
 
 // Sorted Alphabetically
 const reducer = combineReducers({
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   connected: connectivity,
   i18n,
   locations,
+  onboarding,
   permissions,
   position,
   regions,

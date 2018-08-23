@@ -7,7 +7,6 @@ import I18n from '../assets/i18n/i18n';
 import colours from '../styles/colours';
 
 import Settings from '../containers/Settings';
-
 import OverviewMap from '../screens/overviewMap';
 import Invites from '../screens/invites';
 import LocationData from '../screens/locationData';

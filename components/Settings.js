@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, View, Switch } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignSelf: 'flex-start',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingLeft: 20,
+    paddingRight: 10,
     width: '100%',
   },
   version_container: {
@@ -82,12 +83,14 @@ const Settings = (props) => {
     clearPushPermission,
     enableInvitations,
     exportData,
+    isOfflineOnly,
     showLocationData,
     logout,
     regionKey,
     sendFeedback,
     showPushDialog,
     updateLocale,
+    updateMode,
     version,
   } = props;
 
@@ -122,6 +125,10 @@ const Settings = (props) => {
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
+        <View style={SettingsItem.styles.container}>
+          <Text style={SettingsItem.styles.text}>{I18n.t('settings/offline_only')}</Text>
+          <Switch onValueChange={updateMode} value={isOfflineOnly} />
+        </View>
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
       </View>
       <View style={styles.version_container}>
@@ -141,12 +148,14 @@ Settings.propTypes = {
   clearPushPermission: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
   exportData: PropTypes.func.isRequired,
+  isOfflineOnly: PropTypes.bool.isRequired,
   showLocationData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,
   showPushDialog: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
+  updateMode: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };
 

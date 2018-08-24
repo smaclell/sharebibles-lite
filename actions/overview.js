@@ -25,9 +25,9 @@ function updateLocations() {
     if (query) {
       query.cancel();
     }
-    const { position } = getState();
+    const { position, connectivity: { isOfflineOnly } } = getState();
     const key = dispatch(getGeoKey());
-    if (!key) {
+    if (!key || isOfflineOnly) {
       return;
     }
 

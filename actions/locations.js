@@ -72,7 +72,7 @@ export function restoreLocalLocations() {
 
 export function fetchLocation(locationKey) {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, connected } = getState();
+    const { authentication: { regionKey }, connectivity: { connected } } = getState();
     if (!connected || !regionKey) {
       return;
     }
@@ -100,7 +100,7 @@ export function createLocation(options) {
   } = options;
 
   return async (dispatch, getState) => {
-    const { authentication: { regionKey: hasRegion }, connected } = getState();
+    const { authentication: { regionKey: hasRegion }, connectivity: { connected } } = getState();
 
     const locationData = {
       latitude, longitude, resources, status,
@@ -132,7 +132,7 @@ export function createLocation(options) {
 
 export function pushLocalLocations() {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey: hasRegion }, connected } = getState();
+    const { authentication: { regionKey: hasRegion }, connectivity: { connected } } = getState();
     if (!connected || !hasRegion) {
       return false;
     }

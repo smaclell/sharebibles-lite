@@ -125,7 +125,7 @@ LocationData.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  connected: state.connected,
+  connected: state.connectivity.connected,
   stats: getStats(state),
   failedLocations: getFailedLocations(state),
   uploading: state.uploads.uploading,

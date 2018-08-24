@@ -1,8 +1,23 @@
-import { SET_CONNECTED } from '../actions/connectivity';
+import { SET_CONNECTED, SET_MODE } from '../actions/connectivity';
 
-export default function reducer(state = false, action) {
+const initial = {
+  connected: false,
+  isOfflineOnly: false,
+};
+
+export default function reducer(state = initial, action) {
   if (action.type === SET_CONNECTED) {
-    return action.connected;
+    return {
+      ...state,
+      connected: action.connected,
+    };
+  }
+
+  if (action.type === SET_MODE) {
+    return {
+      ...state,
+      isOfflineOnly: action.isOfflineOnly,
+    };
   }
 
   return state;

@@ -10,6 +10,7 @@ import { showPushDialog } from '../actions/settings';
 import I18n, { updateLocale } from '../actions/i18n';
 import { clearPushPermission } from '../actions/permissions';
 import { UploadStatus } from '../actions/uploads';
+import { updateMode } from '../actions/connectivity';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
 
@@ -27,6 +28,7 @@ const mapStateToProps = state => ({
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   canUpload: hasPending(state),
+  isOfflineOnly: state.connectivity.isOfflineOnly,
 });
 
 const exportData = async () => {
@@ -93,6 +95,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));
   },
+  updateMode: value => dispatch(updateMode(value)),
 });
 
 export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Settings));

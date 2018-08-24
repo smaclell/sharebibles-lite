@@ -15,7 +15,7 @@ import uploads from './uploads';
 // Sorted Alphabetically
 const reducer = combineReducers({
   authentication,
-  connected: connectivity,
+  connectivity,
   i18n,
   locations,
   position,

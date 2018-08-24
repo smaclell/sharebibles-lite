@@ -40,6 +40,7 @@
   "settings/location_data": "Location Data",
   "settings/logout": "Logout",
   "settings/not_implemented": "Sorry this feature isn't available yet.",
+  "settings/offline_only": "Local Locations Only:",
   "settings/push_locations_clear": "DEV: Clear Push",
   "settings/push_locations_message": "Pushing location data will send all locally stored location data to the central database for others to access. Would you like to push your data?",
   "settings/push_locations": "Push Location Data",

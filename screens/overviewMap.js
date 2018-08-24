@@ -7,6 +7,7 @@ import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';
+import { setCompleted, COMPLETED_KEYS } from '../actions/onboarding';
 import Icon from '../components/Icon';
 import LocationCreation from '../containers/LocationCreation';
 import LocationMarker from '../containers/LocationMarker';
@@ -174,6 +175,12 @@ class OverviewMap extends PureComponent {
     }
   }
 
+  onMarkerPress = () => {
+    if (!this.props.isOnboarded) {
+      this.props.setCompleted();
+    }
+  }
+
   onDragStart = (event) => {
     this.setState({ movingTemp: true });
     event.persist();
@@ -241,6 +248,7 @@ class OverviewMap extends PureComponent {
           onRegionChangeComplete={this.onRegionChangeComplete}
           onUserLocationChange={this.onLocationChange}
           onLongPress={this.onLongPress}
+          onMarkerPress={this.onMarkerPress}
         >
           {this.props.locations.map(locationKey => (
             <LocationMarker
@@ -301,6 +309,7 @@ class OverviewMap extends PureComponent {
 }
 
 OverviewMap.propTypes = {
+  isOnboarded: PropTypes.bool.isRequired,
   locale: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   navigation: PropTypes.object.isRequired,
@@ -308,6 +317,7 @@ OverviewMap.propTypes = {
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
   }).isRequired,
+  setCompleted: PropTypes.func.isRequired,
   updatePosition: PropTypes.func.isRequired,
 };
 
@@ -318,17 +328,22 @@ const mapStateToProps = (state) => {
     i18n: {
       locale,
     },
+    onboarding: {
+      isOnboarded,
+    },
   } = state;
 
   return {
     locale, // triggers rerender on local change
     position,
     locations: Object.keys(locations),
+    isOnboarded,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(positionActions, dispatch),
+  setCompleted: () => dispatch(setCompleted(COMPLETED_KEYS.hasViewedPin))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);

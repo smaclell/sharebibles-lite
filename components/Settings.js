@@ -82,10 +82,11 @@ const Settings = (props) => {
     clearPushPermission,
     enableInvitations,
     exportData,
+    showLocationData,
     logout,
     regionKey,
-    showPushDialog,
     sendFeedback,
+    showPushDialog,
     updateLocale,
     version,
   } = props;
@@ -117,6 +118,7 @@ const Settings = (props) => {
           <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
         )}
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
+        { regionKey && __DEV__ && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
@@ -139,6 +141,7 @@ Settings.propTypes = {
   clearPushPermission: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
   exportData: PropTypes.func.isRequired,
+  showLocationData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,

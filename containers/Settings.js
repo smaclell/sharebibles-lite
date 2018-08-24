@@ -6,9 +6,9 @@ import { withNavigation } from 'react-navigation';
 import { fetchLocalLocations } from '../apis/database';
 import Settings from '../components/Settings';
 import { logout } from '../actions/authentication';
+import { showPushDialog } from '../actions/settings';
 import I18n, { updateLocale } from '../actions/i18n';
-import { pushLocalLocations } from '../actions/locations';
-import { requestPushPermission, clearPushPermission } from '../actions/permissions';
+import { clearPushPermission } from '../actions/permissions';
 import { UploadStatus } from '../actions/uploads';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
@@ -18,8 +18,7 @@ function hasPending({ uploads }) {
   if (values.length === 0) {
     return false;
   }
-
-  return values.some(v => v === UploadStatus.pending);
+  return values.some(v => (v.status === UploadStatus.offline || v.status === UploadStatus.failed));
 }
 
 const mapStateToProps = state => ({
@@ -27,7 +26,6 @@ const mapStateToProps = state => ({
   ...state.settings,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
-  connected: state.connected,
   canUpload: hasPending(state),
 });
 
@@ -84,38 +82,17 @@ const sendFeedback = () => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  logout: () => dispatch(logout()),
   acceptInvite: () => ownProps.navigation.navigate('Invites'),
+  clearPushPermission: () => dispatch(clearPushPermission()),
   exportData,
+  showLocationData: () => ownProps.navigation.navigate('LocationData'),
+  logout: () => dispatch(logout()),
+  showPushDialog: () => dispatch(showPushDialog()),
   sendFeedback,
   updateLocale: (locale) => {
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));
   },
-  pushLocations: () => dispatch(pushLocalLocations()),
-  requestPushPermission: () => dispatch(requestPushPermission()),
-  clearPushPermission: () => dispatch(clearPushPermission()),
 });
 
-const mergeProps = (stateProps, dispatchProps) => {
-  const props = Object.assign({}, stateProps, dispatchProps);
-
-  props.showPushDialog = () => {
-    if (!stateProps.connected) {
-      Alert.alert(
-        I18n.t('button/offline'),
-        I18n.t('connectivity/action_requires_connection'),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
-      );
-      return;
-    }
-
-    dispatchProps.requestPushPermission()
-      .then(allowed => allowed && dispatchProps.pushLocations());
-  };
-
-  return props;
-};
-
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps, mergeProps)(Settings));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Settings));

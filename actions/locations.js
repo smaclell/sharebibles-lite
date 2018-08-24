@@ -2,7 +2,7 @@ import Sentry from 'sentry-expo';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
 import { containing } from './regions';
-import { failed, pending, uploaded } from './uploads';
+import { failed, pending, uploaded, offline, setUploadingStatus } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
 
@@ -47,7 +47,7 @@ function wrapper(work, location) {
         },
       });
 
-      dispatch(failed(location.key));
+      dispatch(failed(location.key, 'locationData/unknown_error'));
     }
   };
 }
@@ -61,7 +61,7 @@ export function restoreLocalLocations() {
         .forEach((location) => {
           dispatch(receiveLocation(location));
 
-          const process = location.uploaded ? uploaded : pending;
+          const process = location.uploaded ? uploaded : offline;
           dispatch(process(location.key));
         });
     } catch (err) {
@@ -109,7 +109,7 @@ export function createLocation(options) {
     const localLocation = await database.addLocalLocation(locationData);
     const { key } = localLocation;
 
-    dispatch(pending(key));
+    dispatch(offline(key));
     dispatch(receiveLocation(localLocation));
     if (connected && hasRegion) {
       const allowed = await dispatch(requestPushPermission());
@@ -119,7 +119,7 @@ export function createLocation(options) {
 
       const regionKey = dispatch(containing(locationData));
       if (!regionKey) {
-        dispatch(failed(key));
+        dispatch(failed(key, 'locationData/incorrect_region'));
         return;
       }
 
@@ -143,17 +143,20 @@ export function pushLocalLocations() {
     }
 
     offlineLocations.forEach(({ key }) => dispatch(pending(key)));
+    dispatch(setUploadingStatus(true));
 
     await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
       const regionKey = dispatch(containing(options));
       if (!regionKey) {
-        dispatch(failed(key));
+        dispatch(failed(key, 'locationData/incorrect_region'));
         return;
       }
 
       const { created: location, saved } = await apis.createLocation(regionKey, options, key);
       dispatch(wrapper(saved, location));
     }));
+
+    setTimeout(() => dispatch(setUploadingStatus(false)), 2000);
 
     return true;
   };

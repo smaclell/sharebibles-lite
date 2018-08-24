@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';
 import Icon from '../components/Icon';
 import LocationCreation from '../containers/LocationCreation';
@@ -94,6 +95,18 @@ class OverviewMap extends PureComponent {
       movingTemp: false,
       mapHeight: 400, // Ideally it would be zero but that results in the slide in coming in from the top
     };
+  }
+
+  // Used to check if we just came from a failed item being pressed
+  onScreenWillFocus = () => {
+    const { navigation } = this.props;
+    const coord = navigation.getParam('coord', null);
+
+    if (coord && coord.latitude && coord.longitude) {
+      navigation.setParams({ coord: { latitude: null, longitude: null } });
+      navigation.closeDrawer();
+      this.map.animateToCoordinate(coord, animationTime);
+    }
   }
 
   onMapReady = () => {
@@ -199,6 +212,9 @@ class OverviewMap extends PureComponent {
 
     return (
       <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
+        <NavigationEvents
+          onWillFocus={this.onScreenWillFocus}
+        />
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}
@@ -279,6 +295,7 @@ class OverviewMap extends PureComponent {
 OverviewMap.propTypes = {
   locale: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  navigation: PropTypes.object.isRequired,
   position: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,

@@ -155,7 +155,13 @@ class OverviewMap extends PureComponent {
 
   onAddLocationPress = async () => {
     if (!this.state.tempLocation) {
-      this.createTempPin(this.state);
+      const { location } = await getCurrentPosition(true);
+      if (location) {
+        this.onCenterLocationPress();
+        this.createTempPin(location);
+      } else {
+        this.createTempPin(this.state);
+      }
     }
   }
 

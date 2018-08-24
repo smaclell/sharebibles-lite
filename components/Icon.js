@@ -11,7 +11,8 @@ const families = {
 const sizes = {
   small: 10,
   medium: 24,
-  large: 34,
+  large: 28,
+  extraLarge: 34,
 };
 
 

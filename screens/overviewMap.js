@@ -41,20 +41,27 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     margin: 10,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
     borderRadius: 100,
     borderWidth: 1,
-    borderColor: 'rgba(3, 3, 3, 0.4)',
-    backgroundColor: 'rgba(228, 229, 227, 1)',
+    borderColor: colours.black,
+    backgroundColor: colours.white,
   },
   buttonIcon: {
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: colours.transparent,
   },
   addButton: {
+    // Icons are odly sized, so padding on each side must be different to ensure its centered properly
+    paddingTop: 14,
+    paddingBottom: 13,
+    paddingLeft: 17,
+    paddingRight: 16,
     left: 0,
   },
   centerButton: {
+    // Icons are odly sized, so padding on each side must be different to ensure its centered properly
+    paddingTop: 13,
+    paddingBottom: 14,
+    paddingHorizontal: 16,
     right: 0,
   },
   map: {

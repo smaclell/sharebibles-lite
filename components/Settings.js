@@ -94,15 +94,7 @@ const Settings = (props) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.options_container}>
-        { regionKey && (
-          <View style={SettingsItem.styles.container}>
-            <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
-          </View>
-        )}
-        { !regionKey && enableInvitations && (
-          <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
-        )}
-        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
+        <View style={[SettingsItem.styles.container, { minHeight: 1.5 * fonts.large }]}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}
@@ -117,6 +109,14 @@ const Settings = (props) => {
             ))}
           </Picker>
         </View>
+        { regionKey && (
+          <View style={SettingsItem.styles.container}>
+            <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
+          </View>
+        )}
+        { !regionKey && enableInvitations && (
+          <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
+        )}
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
         { regionKey && __DEV__ && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }

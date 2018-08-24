@@ -92,7 +92,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   logout: () => dispatch(logout()),
   showPushDialog: () => dispatch(showPushDialog()),
   sendFeedback,
-  resetOnboarding: () => dispatch(setOnboardingStatus(false)),
+  resetOnboarding: () => {
+    ownProps.navigation.closeDrawer();
+    dispatch(setOnboardingStatus(false));
+  },
   updateLocale: (locale) => {
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));

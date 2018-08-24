@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import Sentry from 'sentry-expo';
 import thunk from 'redux-thunk';
 
+import NavigationService from './utils/NavigationService';
 import Onboarding from './containers/Onboarding';
 import Navigation from './nav';
 import reducer from './reducers';
@@ -90,7 +91,12 @@ class App extends Component {
       <Provider store={store}>
         <View style={{ flex: 1 }}>
           <StatusBar barStyle="dark-content" />
-          <Navigation />
+          <Navigation
+            ref={(navigatorRef) => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+          <Onboarding />
         </View>
       </Provider>
     );

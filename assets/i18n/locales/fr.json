@@ -15,7 +15,7 @@
   "feedback/feedback_title": "Envoyer des commentaires",
   "invites/accept": "accepter",
   "invites/error_title": "Problème d'invitation",
-  "invites/error": "Un problème s'est produit lors de l'acceptation de votre jeton d'accès",
+  "invites/error": "Un problème s'est produit lors de l'acceptation de votre jeton d'accès par {{email}}",
   "invites/placeholder": "Invité",
   "locationData/failed_upload: Échec du téléchargement": "{{value}}",
   "locationData/incorrect_region": "L'emplacement n'est pas dans votre région actuelle!",

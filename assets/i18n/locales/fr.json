@@ -10,7 +10,7 @@
   "export/generic_error": "Une erreur inattendue s'est produite, veuillez réessayer.",
   "export/no_email_error": "Vous n'avez pas de messagerie! Veuillez en instaler un pour pouvoir exporter vos données.",
   "export/subject": "Mes données Sharebibles",
-  "feedback/feedback_error": "Impossible de lancer l'application de messagerie. Envoyer des commentaires manuellement par{{email}}",
+  "feedback/feedback_error": "Impossible de lancer l'application de messagerie. Envoyer des commentaires manuellement par {{email}}",
   "feedback/feedback_subject": "Commentaires de Share Bibles ",
   "feedback/feedback_title": "Envoyer des commentaires",
   "invites/accept": "accepter",

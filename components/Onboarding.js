@@ -7,10 +7,7 @@ import NavigationService from '../utils/NavigationService';
 import { COMPLETED_KEYS } from '../actions/onboarding';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
-
-const LAST_STEP = 12;
-const ACTION_STEPS = [3, 5, 11]; // Steps that require user to do something before we show them more info
-const BUTTON_STEPS = [8, 9];
+import { ACTION_STEPS, BUTTON_STEPS, STEPS } from '../assets/constants/OnboardingSteps';
 
 const containerStyles = StyleSheet.create({
   defaultContainer: {
@@ -106,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   actionBtn: {
-    width: '50%',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -126,23 +123,23 @@ class Onboarding extends PureComponent {
       setStep,
     } = this.props;
 
-    if (numLocations > prevProps.numLocations && !hasAddedLocation && step === 3) {
-      setStep(step + 1);
+    if (((numLocations > prevProps.numLocations && !hasAddedLocation) || hasAddedLocation) && step === 3) {
+      setStep(STEPS.viewPinCallout);
       setCompleted(COMPLETED_KEYS.hasAddedLocation);
+    }
+
+    if (hasViewedPin && (step === 5 || step === 4)) {
+      setStep(STEPS.pinCalloutDescription);
     }
 
     if (this.props.regionKey !== prevProps.regionKey && !hasAcceptedInvite) {
       setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
-      setStep(step + 1);
-    }
-
-    if (hasViewedPin && step === 5) {
-      setStep(step + 1);
+      setStep(STEPS.invitationAccepted);
     }
   }
 
   onContinuePress = () => {
-    if (this.props.step < LAST_STEP) {
+    if (this.props.step < STEPS.end) {
       this.props.setStep(this.props.step + 1);
     } else {
       this.props.setOnboardingStatus(true);
@@ -150,7 +147,20 @@ class Onboarding extends PureComponent {
   }
 
   onbackPress = () => {
-    this.props.setStep(this.props.step - 1);
+    const { step, setCompleted } = this.props;
+    let back = 1;
+    while (ACTION_STEPS.includes(step - back)) back += 1;
+    const newStep = step - back;
+
+    if (newStep === STEPS.invitations3) {
+      NavigationService.goBack();
+    } else if (newStep === STEPS.invitations2) {
+      NavigationService.closeDrawer();
+    } else if (newStep === STEPS.viewPinCallout) {
+      setCompleted(COMPLETED_KEYS.hasViewedPin, false);
+    }
+
+    this.props.setStep(newStep);
   }
 
   onQuitPress = () => {
@@ -178,7 +188,7 @@ class Onboarding extends PureComponent {
     return {
       header: `onboarding/${step}_header`,
       description: `onboarding/${step}_description`,
-      continueButton: step === LAST_STEP ? 'onboarding/finish' : 'onboarding/continue',
+      continueButton: step === STEPS.end ? 'onboarding/finish' : 'onboarding/continue',
     };
   }
 
@@ -201,6 +211,8 @@ class Onboarding extends PureComponent {
     const { header, description, continueButton } = this.getStepInfo();
     const showContinue = !BUTTON_STEPS.includes(step);
 
+    console.log(step, isOnboarded);
+
     return (
       <View style={this.getContainerStyles(step)}>
         <View style={styles.onBoardingContainer}>
@@ -210,8 +222,14 @@ class Onboarding extends PureComponent {
             <Text style={styles.infoDescription}>{I18n.t(description)}</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.actionBtn} onPress={this.onbackPress} disabled={step === 1}><Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text></TouchableOpacity>
-            {showContinue && <TouchableOpacity style={styles.actionBtn} onPress={this.onContinuePress}><Text style={styles.actionBtnText}>{I18n.t(continueButton)}</Text></TouchableOpacity> }
+            <TouchableOpacity style={styles.actionBtn} onPress={this.onbackPress} disabled={step === 1}>
+              <Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text>
+            </TouchableOpacity>
+            {showContinue &&
+              <TouchableOpacity style={styles.actionBtn} onPress={this.onContinuePress}>
+                <Text style={styles.actionBtnText}>{I18n.t(continueButton)}</Text>
+              </TouchableOpacity>
+            }
           </View>
         </View>
         <TouchableOpacity style={highlightButtonStyles[`step${step}Button`]} onPress={this.onHightlightButtonPress} />

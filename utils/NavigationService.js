@@ -19,6 +19,10 @@ function navigate(routeName, params) {
   }));
 }
 
+function goBack() {
+  navigator.dispatch(NavigationActions.back());
+}
+
 function closeDrawer() {
   navigator.dispatch(DrawerActions.closeDrawer());
 }
@@ -29,6 +33,7 @@ function openDrawer() {
 
 export default {
   closeDrawer,
+  goBack,
   openDrawer,
   navigate,
   getCurrentRoute,

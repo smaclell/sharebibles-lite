@@ -13,7 +13,6 @@ import LocationCreation from '../containers/LocationCreation';
 import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
-import colours from '../styles/colours';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -32,6 +31,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     width: '100%',
     height: '50%',
+<<<<<<< HEAD
+=======
+    // backgroundColor: colours.white,
+>>>>>>> Add more steps, clean up code
     zIndex: 1,
     flex: 1,
     flexDirection: 'column',
@@ -199,7 +202,7 @@ class OverviewMap extends PureComponent {
   }
 
   getCreationMaxHeight = () => { // eslint-disable-line arrow-body-style
-    return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
+    return /^(pt|fr)/.test(this.props.locale) ? 370 : 330;
   }
 
   createTempPin = (coord) => {
@@ -275,7 +278,7 @@ class OverviewMap extends PureComponent {
           }
         </MapView>
         <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
-          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
+          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} isOnboarded={this.props.isOnboarded} />
         </SlideIn>
         <TouchableOpacity
           style={[styles.mapButton, styles.centerButton]}
@@ -343,7 +346,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(positionActions, dispatch),
-  setCompleted: () => dispatch(setCompleted(COMPLETED_KEYS.hasViewedPin))
+  setCompleted: () => dispatch(setCompleted(COMPLETED_KEYS.hasViewedPin)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);

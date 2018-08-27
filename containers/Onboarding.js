@@ -3,9 +3,8 @@ import { bindActionCreators } from 'redux';
 import Onboarding from '../components/Onboarding';
 import * as onboardingActions from '../actions/onboarding';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   ...state.onboarding,
-  ...ownProps,
   numLocations: Object.keys(state.locations).length,
   regionKey: state.authentication.regionKey || null,
 });

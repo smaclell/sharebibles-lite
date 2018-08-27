@@ -27,10 +27,11 @@ function setStatus(isOnboarded) {
 }
 
 export const SET_COMPLETED = 'SET_COMPLETED';
-export function setCompleted(key) {
+export function setCompleted(key, value = true) {
   return {
     type: SET_COMPLETED,
     key,
+    value,
   };
 }
 

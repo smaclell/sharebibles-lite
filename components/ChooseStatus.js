@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 0,
-    backgroundColor: colours.white,
     flexDirection: 'column',
     alignSelf: 'stretch',
     alignItems: 'stretch',

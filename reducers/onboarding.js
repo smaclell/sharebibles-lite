@@ -30,7 +30,7 @@ export default function reducer(state = initial, action) {
       ...state,
       completed: {
         ...state.completed,
-        [action.key]: true,
+        [action.key]: action.value,
       },
     };
   }

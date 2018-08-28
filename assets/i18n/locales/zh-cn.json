@@ -29,7 +29,7 @@
   "permissions/camera/requesting": "我们可以使用相机接受邀请吗？",
   "permissions/camera/denied": "在设置中使用相机通过扫码邀请",
   "pin_callout/bibles_heading": "圣经",
-  "pin_callout/last_visited": "已拜访（拜访时间：{{visited_time}})  ",
+  "pin_callout/last_visited": "已拜访（拜访时间：{{visited_time}})",
   "pin_callout/status_heading": "状态",
   "resource/english_bible_esv": "已发圣经类型",
   "resource/generic_bible": "已发圣经数量",

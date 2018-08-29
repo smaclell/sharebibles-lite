@@ -2,15 +2,24 @@ import { SecureStore } from 'expo';
 import { Alert } from 'react-native';
 import I18n from '../actions/i18n';
 
+export const UPDATE_ALLOW_DOWNLOAD = 'UPDATE_ALLOW_DOWNLOAD';
+const downloadPermission = value => ({
+  type: UPDATE_ALLOW_DOWNLOAD,
+  value,
+});
+
 export function allowDownload() {
-  return async () => {
+  return async (dispatch) => {
     const stored = await SecureStore.getItemAsync('allowDownload');
-    return stored !== 'false';
+    const value = stored !== 'false';
+    dispatch(downloadPermission(value));
+    return value;
   };
 }
 
 export function updateAllowDownload(value) {
-  return async () => {
+  return async (dispatch) => {
+    dispatch(downloadPermission(value));
     return SecureStore.setItemAsync('allowDownload', String(!!value));
   };
 }

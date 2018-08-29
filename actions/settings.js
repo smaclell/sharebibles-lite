@@ -13,7 +13,7 @@ export function load(settings) {
 
 export function showPushDialog() {
   return (dispatch, getState) => {
-    const { connected } = getState();
+    const { connectivity: { connected } } = getState();
 
     if (!connected) {
       Alert.alert(

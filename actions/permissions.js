@@ -2,6 +2,19 @@ import { SecureStore } from 'expo';
 import { Alert } from 'react-native';
 import I18n from '../actions/i18n';
 
+export function allowDownload() {
+  return async () => {
+    const stored = await SecureStore.getItemAsync('allowDownload');
+    return stored !== 'false';
+  };
+}
+
+export function updateAllowDownload(value) {
+  return async () => {
+    return SecureStore.setItemAsync('allowDownload', String(!!value));
+  };
+}
+
 export function clearPushPermission() {
   return async () => {
     await SecureStore.setItemAsync('allowPush', 'denied');

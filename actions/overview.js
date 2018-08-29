@@ -1,5 +1,6 @@
 import * as apis from '../apis';
 import { fetchAllLocationData } from './locations';
+import { allowDownload, updateAllowDownload } from './permissions';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
 
 const REGION_MODE = apis.GEO_REGION_KEY;
@@ -39,6 +40,17 @@ function updateLocations() {
   };
 }
 
+export function change(value) {
+  return async (dispatch) => {
+    await dispatch(updateAllowDownload(value));
+    if (value) {
+      dispatch(updateLocations());
+    } else {
+      query = initial;
+    }
+  };
+}
+
 export function update(latitude, longitude) {
   return () => {
     query.updateCriteria({
@@ -51,5 +63,10 @@ export function update(latitude, longitude) {
 }
 
 export function initialize() {
-  return dispatch => dispatch(updateLocations());
+  return async (dispatch) => {
+    const allowed = await dispatch(allowDownload);
+    if (allowed) {
+      dispatch(updateLocations());
+    }
+  };
 }

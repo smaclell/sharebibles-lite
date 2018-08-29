@@ -54,7 +54,13 @@ class App extends Component {
       I18n.setDateLocale();
       this.setState({ isReady: true });
       return Promise.all([
-        store.dispatch(restore()).then(restored => restored && store.dispatch(overviewActions.initialize())),
+        store.dispatch(restore()).then((restored) => {
+          if (!restored) {
+            return Promise.resolve();
+          }
+
+          return store.dispatch(overviewActions.initialize());
+        }),
         store.dispatch(restoreLocalLocations()),
       ]);
     });

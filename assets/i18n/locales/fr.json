@@ -34,6 +34,7 @@
   "resource/english_bible_esv": "# de Bibles distribuées",
   "resource/generic_bible": "# de Bibles distribuées",
   "settings/accept_invites": "Accepter les invitations",
+  "settings/allow_download": "Télécharger les lieux à proximité",
   "settings/change_language": "Langue",
   "settings/export": "Exporter des données ",
   "settings/invite": "Partager l'invitation",

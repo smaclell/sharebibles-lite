@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Picker, ScrollView, StyleSheet, Text, View, Switch } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
@@ -78,15 +78,17 @@ const styles = StyleSheet.create({
 const Settings = (props) => {
   const {
     acceptInvite,
+    allowDownload,
     canUpload,
     clearPushPermission,
     enableInvitations,
     exportData,
-    showLocationData,
     logout,
     regionKey,
     sendFeedback,
+    showLocationData,
     showPushDialog,
+    updateAllowDownload,
     updateLocale,
     version,
   } = props;
@@ -120,6 +122,12 @@ const Settings = (props) => {
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
         { regionKey && __DEV__ && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
+        { regionKey && (
+          <View style={SettingsItem.styles.container}>
+            <Text style={SettingsItem.styles.text}>{I18n.t('ssettings/allow_download')}</Text>
+            <Switch onValueChange={updateAllowDownload} value={allowDownload} />
+          </View>
+        )}
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
@@ -137,15 +145,17 @@ const Settings = (props) => {
 
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,
+  allowDownload: PropTypes.bool.isRequired,
   canUpload: PropTypes.bool.isRequired,
   clearPushPermission: PropTypes.func.isRequired,
   enableInvitations: PropTypes.bool.isRequired,
   exportData: PropTypes.func.isRequired,
-  showLocationData: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   regionKey: PropTypes.string,
   sendFeedback: PropTypes.func.isRequired,
+  showLocationData: PropTypes.func.isRequired,
   showPushDialog: PropTypes.func.isRequired,
+  updateAllowDownload: PropTypes.func.isRequired,
   updateLocale: PropTypes.func.isRequired,
   version: PropTypes.string.isRequired,
 };

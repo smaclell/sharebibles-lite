@@ -64,7 +64,7 @@ export function update(latitude, longitude) {
 
 export function initialize() {
   return async (dispatch) => {
-    const allowed = await dispatch(allowDownload);
+    const allowed = await dispatch(allowDownload());
     if (allowed) {
       dispatch(updateLocations());
     }

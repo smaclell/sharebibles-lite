@@ -124,7 +124,7 @@ const Settings = (props) => {
         { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
         { regionKey && (
           <View style={SettingsItem.styles.container}>
-            <Text style={SettingsItem.styles.text}>{I18n.t('ssettings/allow_download')}</Text>
+            <Text style={SettingsItem.styles.text}>{I18n.t('settings/allow_download')}</Text>
             <Switch onValueChange={updateAllowDownload} value={allowDownload} />
           </View>
         )}

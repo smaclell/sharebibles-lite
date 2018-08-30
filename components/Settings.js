@@ -124,8 +124,7 @@ const Settings = (props) => {
           <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
         )}
         { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
-        { regionKey && __DEV__ && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
-        { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
+        { regionKey && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
         { regionKey && (
           <View style={SettingsItem.styles.container}>
             <Text style={SettingsItem.styles.text}>{I18n.t('settings/allow_download')}</Text>
@@ -135,6 +134,7 @@ const Settings = (props) => {
         <SettingsItem term="settings/export" onPress={exportData} />
         <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
+        { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
       </View>
       <View style={styles.version_container}>
         { __DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}

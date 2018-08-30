@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: '60%',
   },
+  dev: {
+    fontWeight: 'bold',
+    fontSize: fonts.extraSmall,
+  },
   options_container: {
     flex: 5,
     flexShrink: 0,
@@ -133,6 +137,7 @@ const Settings = (props) => {
         { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
       </View>
       <View style={styles.version_container}>
+        { __DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}
         <View style={styles.logo_container}>
           <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
         </View>

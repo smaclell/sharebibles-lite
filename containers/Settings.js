@@ -10,6 +10,7 @@ import { showPushDialog } from '../actions/settings';
 import I18n, { updateLocale } from '../actions/i18n';
 import { clearPushPermission } from '../actions/permissions';
 import { UploadStatus } from '../actions/uploads';
+import { change } from '../actions/overview';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
 
@@ -24,6 +25,7 @@ function hasPending({ uploads }) {
 const mapStateToProps = state => ({
   ...state.authentication,
   ...state.settings,
+  allowDownload: state.permissions.allowDownload,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   canUpload: hasPending(state),
@@ -93,6 +95,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));
   },
+  updateAllowDownload: value => dispatch(change(value)),
 });
 
 export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Settings));

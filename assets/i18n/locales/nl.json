@@ -34,6 +34,7 @@
   "resource/english_bible_esv": "# bijbels gedistribueerd",
   "resource/generic_bible": "# bijbels gedistribueerd",
   "settings/accept_invites": "Uitnodiging accepteren",
+  "settings/allow_download": "Download locaties in de buurt",
   "settings/change_language": "Taal:",
   "settings/export": "Data exporteren",
   "settings/invite": "Uitnodiging delen",

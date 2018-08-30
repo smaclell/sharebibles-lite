@@ -34,6 +34,7 @@
   "resource/english_bible_esv": "성경 배포수 #",
   "resource/generic_bible": "성경 배포수 #",
   "settings/accept_invites": "초대 수락",
+  "settings/allow_download": "주변 위치 다운로드",
   "settings/change_language": "언어",
   "settings/export": "추출한 데이터",
   "settings/invite": "초대장 공유",

@@ -25,7 +25,7 @@ function hasPending({ uploads }) {
 const mapStateToProps = state => ({
   ...state.authentication,
   ...state.settings,
-  ...state.permisions,
+  allowDownload: state.permissions.allowDownload,
   locale: state.i18n.locale, // triggers rerender on local change
   version: Constants.manifest.version,
   canUpload: hasPending(state),

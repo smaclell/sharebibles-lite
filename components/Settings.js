@@ -1,7 +1,7 @@
 /* globals __DEV__ */
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, Picker, ScrollView, StyleSheet, Text, View, Switch } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Switch } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
 
 import colours from '../styles/colours';
@@ -31,6 +31,34 @@ const styles = StyleSheet.create({
   dev: {
     fontWeight: 'bold',
     fontSize: fonts.extraSmall,
+  },
+  language_container: {
+    flex: 0,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    minHeight: 1.5 * fonts.large,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    width: '100%',
+  },
+  shown_languages_container: {
+    flex: 1,
+  },
+  languagesOuter: {
+    alignSelf: 'stretch',
+  },
+  languagesInner: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+  },
+  language: {
+    flex: 1,
+    alignSelf: 'stretch',
+    paddingVertical: 10,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
   options_container: {
     flex: 5,
@@ -79,74 +107,101 @@ const styles = StyleSheet.create({
   },
 });
 
-const Settings = (props) => {
-  const {
-    acceptInvite,
-    allowDownload,
-    canUpload,
-    clearPushPermission,
-    enableInvitations,
-    exportData,
-    logout,
-    regionKey,
-    sendFeedback,
-    showLocationData,
-    showPushDialog,
-    updateAllowDownload,
-    updateLocale,
-    version,
-  } = props;
+class Settings extends Component {
+  state = {
+    showAllLanguages: false,
+  }
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.options_container}>
-        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
-          <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
-          <Picker
-            selectedValue={!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}
-            onValueChange={updateLocale}
-            style={styles.changeLanguagePicker}
-            itemStyle={SettingsItem.styles.text}
-            mode="dropdown"
-            enabled
-          >
-            {languages.map(([key, value]) => (
-              <Picker.Item key={key} label={value} value={key.replace('locale/', '')} />
-            ))}
-          </Picker>
+  toggleLanguages = () => {
+    this.setState(s => ({ ...s, showAllLanguages: !s.showAllLanguages }));
+  }
+
+  render = () => {
+    const {
+      showAllLanguages,
+    } = this.state;
+    const {
+      acceptInvite,
+      allowDownload,
+      canUpload,
+      clearPushPermission,
+      enableInvitations,
+      exportData,
+      logout,
+      regionKey,
+      sendFeedback,
+      showLocationData,
+      showPushDialog,
+      updateAllowDownload,
+      updateLocale,
+      version,
+    } = this.props;
+
+    const selected = `locale/${!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}`;
+    const languageStyles = [
+      styles.language_container,
+      showAllLanguages && styles.shown_languages_container,
+    ];
+
+    const languageTitleStyles = [
+      SettingsItem.styles.text,
+      styles.changeLanguageTitle,
+      showAllLanguages && styles.bold,
+      showAllLanguages && { marginBottom: 10 },
+    ];
+
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={languageStyles}>
+          <TouchableOpacity onPress={this.toggleLanguages}>
+            <Text style={languageTitleStyles}>{I18n.t('settings/change_language')}</Text>
+          </TouchableOpacity>
+          { showAllLanguages && (
+            <ScrollView style={styles.languagesOuter} contentContainerStyle={styles.languagesInner}>
+              {languages.map(([key, value]) => (
+                <TouchableOpacity style={[styles.language]} key={key} onPress={() => updateLocale(key.replace('locale/', ''))}>
+                  <Text style={[SettingsItem.styles.text, key === selected && styles.bold]}>{value}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
         </View>
-        { regionKey && (
-          <View style={SettingsItem.styles.container}>
-            <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
+        { !showAllLanguages && (
+          <View style={styles.options_container}>
+            { regionKey && (
+              <View style={SettingsItem.styles.container}>
+                <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
+              </View>
+            )}
+            { !regionKey && enableInvitations && (
+              <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
+            )}
+            { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
+            { regionKey && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
+            { regionKey && (
+              <View style={SettingsItem.styles.container}>
+                <Text style={SettingsItem.styles.text}>{I18n.t('settings/allow_download')}</Text>
+                <Switch onValueChange={updateAllowDownload} value={allowDownload} />
+              </View>
+            )}
+            <SettingsItem term="settings/export" onPress={exportData} />
+            <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
+            { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
+            { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
           </View>
         )}
-        { !regionKey && enableInvitations && (
-          <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
-        )}
-        { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
-        { regionKey && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
-        { regionKey && (
-          <View style={SettingsItem.styles.container}>
-            <Text style={SettingsItem.styles.text}>{I18n.t('settings/allow_download')}</Text>
-            <Switch onValueChange={updateAllowDownload} value={allowDownload} />
+        <View style={styles.version_container}>
+          { __DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}
+          <View style={styles.logo_container}>
+            <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
-        )}
-        <SettingsItem term="settings/export" onPress={exportData} />
-        <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
-        { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
-        { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
-      </View>
-      <View style={styles.version_container}>
-        { __DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}
-        <View style={styles.logo_container}>
-          <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
+          <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+          <Text style={styles.version}>{version}</Text>
         </View>
-        <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
-        <Text style={styles.version}>{version}</Text>
-      </View>
-    </ScrollView>
-  );
-};
+      </ScrollView>
+    );
+  }
+}
 
 Settings.propTypes = {
   acceptInvite: PropTypes.func.isRequired,

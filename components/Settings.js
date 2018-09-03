@@ -100,7 +100,7 @@ const Settings = (props) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.options_container}>
-        <View style={[SettingsItem.styles.container, { minHeight: 1.5 * fonts.large }]}>
+        <View style={[SettingsItem.styles.container, { minHeight: 3 * fonts.large }]}>
           <Text style={[SettingsItem.styles.text, styles.changeLanguageTitle]}>{I18n.t('settings/change_language')}</Text>
           <Picker
             selectedValue={!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}

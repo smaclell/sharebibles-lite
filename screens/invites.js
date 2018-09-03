@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { BarCodeScanner, Permissions } from 'expo';
 import { Keyboard, TextInput, Text, TouchableWithoutFeedback, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Spacer from 'react-native-keyboard-spacer';
+import Sentry from 'sentry-expo';
 import { accept } from '../actions/authentication';
 import { initialize } from '../actions/overview';
 import colours from '../styles/colours';
@@ -44,6 +45,9 @@ const styles = StyleSheet.create({
     fontSize: fonts.normal,
     lineHeight: fonts.large,
   },
+  failed: {
+    color: colours.reds.base,
+  },
   acceptButton: {
     marginLeft: 10,
     alignItems: 'center',
@@ -53,12 +57,16 @@ const styles = StyleSheet.create({
     color: colours.text,
     fontSize: fonts.normal,
   },
+  disabled: {
+    color: colours.greys.base,
+  },
 });
 
 class Invites extends PureComponent {
   state = {
     hasCameraPermission: null,
     inviteCode: null,
+    inviting: false,
   };
 
   componentDidMount() {
@@ -92,14 +100,25 @@ class Invites extends PureComponent {
       return;
     }
 
-    await this.props.acceptInvite(this.state.inviteCode);
-    await this.props.initialize();
-    this.props.navigation.goBack(null);
+    try {
+      this.setState({ inviting: true, failed: false });
+
+      await this.props.acceptInvite(this.state.inviteCode);
+      await this.props.initialize();
+      this.props.navigation.goBack(null);
+    } catch (err) {
+      Sentry.captureException(err);
+      this.setState({ failed: true });
+    } finally {
+      this.setState({ inviting: false });
+    }
   }
 
   dismissKeyboard = () => Keyboard.dismiss()
 
   render() {
+    const disabled = !this.state.inviteCode || this.state.inviting || this.state.failed;
+
     return (
       <View style={styles.container}>
         { this.state.hasCameraPermission && (
@@ -125,20 +144,20 @@ class Invites extends PureComponent {
         </View>
         <View style={styles.bottomBar}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, this.state.failed && styles.failed]}
             autoCorrect={false}
             spellCheck={false}
             clearButtonMode="always"
             onSubmitEditing={this.accept}
             returnKeyType="done"
-            onChangeText={inviteCode => this.setState({ inviteCode })}
+            onChangeText={inviteCode => this.setState({ inviteCode, failed: false })}
             value={this.state.inviteCode}
             placeholderTextColor={colours.greys.lighter}
             placeholder={I18n.t('invites/placeholder')}
             underlineColorAndroid="transparent"
           />
-          <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={!this.state.inviteCode}>
-            <Text style={styles.acceptButtonText}>{I18n.t('invites/accept')}</Text>
+          <TouchableOpacity style={styles.acceptButton} onPress={this.accept} disabled={disabled}>
+            <Text style={[styles.acceptButtonText, disabled && styles.disabled]}>{I18n.t('invites/accept')}</Text>
           </TouchableOpacity>
         </View>
         <Spacer />

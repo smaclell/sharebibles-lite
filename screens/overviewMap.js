@@ -32,9 +32,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '50%',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     // backgroundColor: colours.white,
 >>>>>>> Add more steps, clean up code
+=======
+>>>>>>> Remove commented line
     zIndex: 1,
     flex: 1,
     flexDirection: 'column',

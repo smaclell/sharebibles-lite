@@ -17,6 +17,7 @@ const colours = {
   blues: {
     lighter: '#96beff',
     base: '#2f7efc',
+    accent: '#2a9bba',
   },
 
   greens: {

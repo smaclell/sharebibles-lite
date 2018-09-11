@@ -30,7 +30,7 @@ const circle = {
 };
 
 const selectedStyle = {
-  backgroundColor: colours.black,
+  backgroundColor: colours.blues.accent,
 };
 
 const normalStyle = {

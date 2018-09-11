@@ -1,8 +1,6 @@
 import {
   View,
   StyleSheet,
-  Text,
-  TouchableOpacity,
 } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -10,6 +8,7 @@ import Status from '../components/Status';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
+import Button from './Button';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,13 +36,7 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 5,
-    fontSize: fonts.header,
-  },
-  active_text: {
-    color: colours.greys.darkest,
-  },
-  inactive_text: {
-    color: colours.greys.lighter,
+    fontSize: fonts.large + 5,
   },
 });
 class ChooseStatus extends Component {
@@ -75,16 +68,9 @@ class ChooseStatus extends Component {
   };
 
   renderGroup = (label, value) => {
-    const textStyle = [
-      styles.text,
-      this.state.group === value ? styles.active_text : styles.inactive_text,
-    ];
+    const type = this.state.group === value ? 'primary' : 'secondary';
 
-    return (
-      <TouchableOpacity onPress={() => this.setState({ group: value })}>
-        <Text style={textStyle}>{I18n.t(label).toUpperCase()}</Text>
-      </TouchableOpacity>
-    );
+    return <Button onPress={() => this.setState({ group: value })} type={type} text={I18n.t(label)} textStyle={styles.text} />;
   }
 
   // tODO: Styling

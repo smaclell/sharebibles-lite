@@ -32,7 +32,7 @@ const Button = ({
   text,
   textStyle,
 }) => {
-  const textStyleArray = [styles[`${type}Text`], textStyle];
+  const textStyleArray = [styles[`${type}Text`]];
 
   if (Array.isArray(textStyle)) {
     textStyleArray.push(...textStyle);

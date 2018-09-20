@@ -18,10 +18,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-<<<<<<< HEAD
     borderRadius: 8,
     backgroundColor: colours.white,
-=======
     marginTop: 50,
   },
 
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
   hintText: {
     paddingHorizontal: 10,
     paddingVertical: 5,
->>>>>>> Add more steps, clean up code
   },
 
   controlsContainer: {
@@ -46,13 +43,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-<<<<<<< HEAD
     backgroundColor: colours.core.blue,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-=======
-    backgroundColor: colours.white,
->>>>>>> Add more steps, clean up code
   },
 
   controlButton: {

@@ -1,3 +1,4 @@
+/* globals __DEV__ */
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { AppLoading, Constants, Font } from 'expo';
@@ -96,7 +97,7 @@ class App extends Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          <Onboarding />
+          { __DEV__ && <Onboarding /> }
         </View>
       </Provider>
     );

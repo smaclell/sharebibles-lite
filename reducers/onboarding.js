@@ -2,7 +2,7 @@ import { SET_STEP, SET_STATUS, SET_COMPLETED, COMPLETED_KEYS } from '../actions/
 
 const initial = {
   isOnboarded: true,
-  step: 1,
+  step: 0,
   completed: {
     [COMPLETED_KEYS.hasAddedLocation]: false,
     [COMPLETED_KEYS.hasViewedPin]: false,

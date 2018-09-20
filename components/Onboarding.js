@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import I18n from 'ex-react-native-i18n';
 import Icon from './Icon';
-import NavigationService from '../utils/NavigationService';
-import { COMPLETED_KEYS } from '../actions/onboarding';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
-import { ACTION_STEPS, BUTTON_STEPS, STEPS } from '../assets/constants/OnboardingSteps';
+import { ACTION_STEPS, BUTTON_STEPS, STEPS, ORDERED_STEPS } from '../assets/constants/OnboardingSteps';
 
 const containerStyles = StyleSheet.create({
   defaultContainer: {
@@ -115,6 +113,7 @@ const styles = StyleSheet.create({
 
 class Onboarding extends PureComponent {
   componentDidUpdate(prevProps) {
+<<<<<<< HEAD
     const {
       numLocations,
       completed: { hasAddedLocation, hasAcceptedInvite, hasViewedPin },
@@ -135,6 +134,12 @@ class Onboarding extends PureComponent {
     if (this.props.regionKey !== prevProps.regionKey && !hasAcceptedInvite) {
       setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
       setStep(STEPS.invitationAccepted);
+=======
+    const { step } = this.props;
+
+    if (step < STEPS.end && STEPS[ORDERED_STEPS[step]].actionLogic) {
+      STEPS[ORDERED_STEPS[step]].actionLogic(this.props, prevProps);
+>>>>>>> Move step specific logic out of component and into STEP object
     }
   }
 
@@ -146,18 +151,14 @@ class Onboarding extends PureComponent {
     }
   }
 
-  onbackPress = () => {
+  onBackPress = () => {
     const { step, setCompleted } = this.props;
     let back = 1;
     while (ACTION_STEPS.includes(step - back)) back += 1;
     const newStep = step - back;
 
-    if (newStep === STEPS.invitations3) {
-      NavigationService.goBack();
-    } else if (newStep === STEPS.invitations2) {
-      NavigationService.closeDrawer();
-    } else if (newStep === STEPS.viewPinCallout) {
-      setCompleted(COMPLETED_KEYS.hasViewedPin, false);
+    if (STEPS[ORDERED_STEPS[newStep]].backLogic) {
+      STEPS[ORDERED_STEPS[newStep]].backLogic(setCompleted);
     }
 
     this.props.setStep(newStep);
@@ -170,16 +171,10 @@ class Onboarding extends PureComponent {
   onHightlightButtonPress = () => {
     const { step, setStep } = this.props;
 
-    switch (step) {
-      case 8:
-        NavigationService.openDrawer();
-        break;
-      case 9:
-        NavigationService.navigate('Invites');
-        break;
-      default:
-        break;
+    if (STEPS[ORDERED_STEPS[step]].buttonLogic) {
+      STEPS[ORDERED_STEPS[step]].buttonLogic();
     }
+
     setStep(step + 1);
   }
 
@@ -239,21 +234,11 @@ class Onboarding extends PureComponent {
 }
 
 Onboarding.propTypes = {
-  completed: PropTypes.shape({
-    hasAcceptedInvite: PropTypes.bool.isRequired,
-    hasAddedLocation: PropTypes.bool.isRequired,
-  }).isRequired,
   isOnboarded: PropTypes.bool.isRequired,
-  numLocations: PropTypes.number.isRequired,
-  regionKey: PropTypes.string,
   setCompleted: PropTypes.func.isRequired,
   setOnboardingStatus: PropTypes.func.isRequired,
   setStep: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
-};
-
-Onboarding.defaultProps = {
-  regionKey: null,
 };
 
 export default Onboarding;

@@ -5,6 +5,7 @@ import I18n from 'ex-react-native-i18n';
 import Icon from './Icon';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
+import { step8Top, step9Top } from '../styles/onboardingHelper';
 import { ACTION_STEPS, BUTTON_STEPS, STEPS, ORDERED_STEPS } from '../assets/constants/OnboardingSteps';
 
 const containerStyles = StyleSheet.create({
@@ -32,7 +33,7 @@ const containerStyles = StyleSheet.create({
 const highlightButtonStyles = StyleSheet.create({
   step8Button: {
     position: 'absolute',
-    top: 34,
+    top: step8Top(),
     left: 3,
     width: 35,
     height: 35,
@@ -42,9 +43,9 @@ const highlightButtonStyles = StyleSheet.create({
   },
   step9Button: {
     position: 'absolute',
-    top: 95,
+    top: step9Top(),
     left: 15,
-    width: 150,
+    width: 210,
     height: 35,
     borderWidth: 3,
     borderColor: colours.blues.base,
@@ -113,33 +114,10 @@ const styles = StyleSheet.create({
 
 class Onboarding extends PureComponent {
   componentDidUpdate(prevProps) {
-<<<<<<< HEAD
-    const {
-      numLocations,
-      completed: { hasAddedLocation, hasAcceptedInvite, hasViewedPin },
-      step,
-      setCompleted,
-      setStep,
-    } = this.props;
-
-    if (((numLocations > prevProps.numLocations && !hasAddedLocation) || hasAddedLocation) && step === 3) {
-      setStep(STEPS.viewPinCallout);
-      setCompleted(COMPLETED_KEYS.hasAddedLocation);
-    }
-
-    if (hasViewedPin && (step === 5 || step === 4)) {
-      setStep(STEPS.pinCalloutDescription);
-    }
-
-    if (this.props.regionKey !== prevProps.regionKey && !hasAcceptedInvite) {
-      setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
-      setStep(STEPS.invitationAccepted);
-=======
     const { step } = this.props;
 
     if (step < STEPS.end && STEPS[ORDERED_STEPS[step]].actionLogic) {
       STEPS[ORDERED_STEPS[step]].actionLogic(this.props, prevProps);
->>>>>>> Move step specific logic out of component and into STEP object
     }
   }
 
@@ -217,7 +195,7 @@ class Onboarding extends PureComponent {
             <Text style={styles.infoDescription}>{I18n.t(description)}</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.actionBtn} onPress={this.onbackPress} disabled={step === 1}>
+            <TouchableOpacity style={styles.actionBtn} onPress={this.onBackPress} disabled={step === 1}>
               <Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text>
             </TouchableOpacity>
             {showContinue &&

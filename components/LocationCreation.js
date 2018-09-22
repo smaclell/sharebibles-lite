@@ -29,17 +29,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#2a9bba',
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
 
   controlButton: {
-    padding: 5,
+    margin: 7,
     borderRadius: 5,
   },
 
   saveButton: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    marginHorizontal: 10,
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    borderBottomColor: colours.core.white,
   },
 
   saveButtonDisabled: {
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontSize: fonts.large,
-    color: colours.white,
+    color: colours.core.white,
   },
 
   buttonTextDisabled: {

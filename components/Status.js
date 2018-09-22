@@ -18,10 +18,8 @@ const container = {
 
 const circle = {
   alignItems: 'center',
-  borderColor: colours.black,
+  backgroundColor: colours.core.white,
   borderRadius: 50,
-  borderStyle: 'solid',
-  borderWidth: 2,
   display: 'flex',
   flex: 0,
   height: 50,
@@ -29,29 +27,28 @@ const circle = {
   width: 50,
 };
 
-const selectedStyle = {
-  backgroundColor: colours.blues.accent,
-};
-
-const normalStyle = {
-  backgroundColor: colours.greys.lighter,
-};
-
 const text = {
-  color: colours.text,
   fontSize: fonts.small,
   marginVertical: 5,
   textAlign: 'center',
+};
+
+const textNormal = {
+  color: colours.text,
+};
+
+const textSelected = {
+  color: colours.core.blue,
 };
 
 const Status = ({
   icon, iconFamily, label, onPressed, selected = false,
 }) => (
   <TouchableOpacity style={container} onPressOut={onPressed}>
-    <View style={[circle, selected ? selectedStyle : normalStyle]}>
-      <Icon name={icon} family={iconFamily} size="medium" />
+    <View style={circle}>
+      <Icon name={icon} family={iconFamily} size="extraLarge" colour={selected ? colours.core.blue : colours.core.grey} />
     </View>
-    <Text style={text}>{label}</Text>
+    <Text style={[text, selected ? textSelected : textNormal]}>{label}</Text>
   </TouchableOpacity>
 );
 

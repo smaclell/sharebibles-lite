@@ -62,9 +62,9 @@ class ResourceCounter extends Component {
           maximumValue={999}
           minimumValue={0}
           onValueChange={this.onCountChanged}
-          borderColor={colours.blues.accent}
-          tintColor={colours.blues.accent}
-          textColor={colours.blues.accent}
+          borderColor={colours.core.blue}
+          tintColor={colours.core.blue}
+          textColor={colours.core.blue}
           borderWidth={2}
         />
       </View>

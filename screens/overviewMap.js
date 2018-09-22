@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
   },
   animatedContainer: {
     position: 'absolute',
-    borderRadius: 5,
-    width: '98%',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    width: '100%',
     height: '50%',
     backgroundColor: colours.white,
     zIndex: 1,

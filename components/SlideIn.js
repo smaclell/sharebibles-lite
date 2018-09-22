@@ -29,7 +29,7 @@ class SlideIn extends Component {
     const { visible, containerHeight, endPercentage } = this.props;
     let visibleHeight = containerHeight * endPercentage;
     if (this.props.fullHeight) {
-      const max = containerHeight - this.props.fullHeight - 10;
+      const max = containerHeight - this.props.fullHeight;
       visibleHeight = Math.max(visibleHeight, max);
     }
 

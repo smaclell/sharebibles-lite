@@ -17,7 +17,6 @@ const colours = {
   blues: {
     lighter: '#96beff',
     base: '#2f7efc',
-    accent: '#2a9bba',
   },
 
   greens: {
@@ -33,8 +32,16 @@ const colours = {
   },
 };
 
+const core = {
+  black: '#000000',
+  red: '#C1272D',
+  blue: '#1F9BBC',
+  white: '#FFFFFF',
+  grey: '#B6B6B6',
+};
+
 const semantic = {
   text: colours.black,
 };
 
-export default { ...colours, ...semantic };
+export default { ...colours, ...semantic, core };

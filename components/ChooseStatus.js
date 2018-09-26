@@ -66,16 +66,6 @@ class ChooseStatus extends Component {
     const { group } = this.state;
     const type = group === value ? 'primary' : 'secondary';
 
-    // const styleProps = {
-    //   backgroundColor: group === value ? colours.core.blue : colours.core.white,
-    //   color: group === value ? colours.core.white : colours.core.black,
-    //   borderColor: group === value ? colours.core.blue : colours.core.grey,
-    //   borderRadius: 5,
-    //   raised: true,
-    //   containerViewStyle: { flex: 1 },
-    //   fontSize: fonts.large,
-    // };
-
     return (
       <Button
         onPress={() => this.setState({ group: value })}

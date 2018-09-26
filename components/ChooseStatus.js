@@ -1,14 +1,12 @@
 import {
   View,
   StyleSheet,
-  Text,
-  TouchableOpacity,
 } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Status from '../components/Status';
+import Button from './Button';
+import Status from './Status';
 import colours from '../styles/colours';
-import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
 const styles = StyleSheet.create({
@@ -34,16 +32,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-  },
-  text: {
-    padding: 5,
-    fontSize: fonts.header,
-  },
-  active_text: {
-    color: colours.greys.darkest,
-  },
-  inactive_text: {
-    color: colours.greys.lighter,
   },
 });
 class ChooseStatus extends Component {
@@ -75,15 +63,15 @@ class ChooseStatus extends Component {
   };
 
   renderGroup = (label, value) => {
-    const textStyle = [
-      styles.text,
-      this.state.group === value ? styles.active_text : styles.inactive_text,
-    ];
+    const { group } = this.state;
+    const type = group === value ? 'primary' : 'secondary';
 
     return (
-      <TouchableOpacity onPress={() => this.setState({ group: value })}>
-        <Text style={textStyle}>{I18n.t(label).toUpperCase()}</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={() => this.setState({ group: value })}
+        title={I18n.t(label)}
+        type={type}
+      />
     );
   }
 

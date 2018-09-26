@@ -56,7 +56,17 @@ class ResourceCounter extends Component {
       <View style={container}>
         <FontAwesome name={iconName} size={fonts.large} color={colours.text} />
         <Text style={text}>{this.props.summary}</Text>
-        <Stepper initialValue={this.props.initialCount} displayValue maximumValue={999} minimumValue={0} onValueChange={this.onCountChanged} />
+        <Stepper
+          initialValue={this.props.initialCount}
+          displayValue
+          maximumValue={999}
+          minimumValue={0}
+          onValueChange={this.onCountChanged}
+          borderColor={colours.core.blue}
+          tintColor={colours.core.blue}
+          textColor={colours.core.blue}
+          borderWidth={2}
+        />
       </View>
     );
   }

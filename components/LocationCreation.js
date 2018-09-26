@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import Sentry from 'sentry-expo';
 import I18n from '../assets/i18n/i18n';
+import Icon from '../components/Icon';
 import ChooseStatus from '../containers/ChooseStatus';
 import ResourceCounter from '../components/ResourceCounter';
 import { filterResources } from '../utils/filters';
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderRadius: 5,
   },
 
   controlsContainer: {
@@ -27,37 +28,38 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#2a9bba',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
 
   controlButton: {
-    padding: 5,
+    margin: 7,
     borderRadius: 5,
   },
 
   saveButton: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 3,
-    borderColor: colours.blues.base,
-    borderWidth: 1,
+    marginTop: 5,
+    marginBottom: 5,
+    marginHorizontal: 10,
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    borderBottomColor: colours.core.white,
   },
 
   saveButtonDisabled: {
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 3,
-    borderColor: colours.blues.lighter,
-    borderWidth: 1,
   },
 
   buttonText: {
     fontSize: fonts.large,
-    color: colours.black,
+    color: colours.core.white,
   },
 
   buttonTextDisabled: {
     fontSize: fonts.large,
-    color: colours.greys.lighter,
+    color: colours.transparent,
   },
 
   resultsInnerContainer: {
@@ -177,7 +179,7 @@ class LocationCreation extends Component {
       <View style={styles.createLocationContainer}>
         <View style={styles.controlsContainer}>
           <TouchableOpacity style={styles.controlButton} onPress={this.props.onLocationCancel}>
-            <Ionicons name="md-arrow-round-back" size={fonts.header} color={colours.black} />
+            <Icon name="chevron-down" family="entypo" size="medium" colour={colours.white} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.addLocation} style={buttonStyle} disabled={isDisabled}>
             <Text style={buttonTextStyle}>{I18n.t('button/save')}</Text>

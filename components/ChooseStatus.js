@@ -3,11 +3,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import Status from '../components/Status';
+import Button from './Button';
+import Status from './Status';
 import colours from '../styles/colours';
-import fonts from '../styles/fonts';
 import I18n from '../assets/i18n/i18n';
 
 const styles = StyleSheet.create({
@@ -65,21 +64,23 @@ class ChooseStatus extends Component {
 
   renderGroup = (label, value) => {
     const { group } = this.state;
-    const styleProps = {
-      backgroundColor: group === value ? colours.core.blue : colours.core.white,
-      color: group === value ? colours.core.white : colours.core.black,
-      borderColor: group === value ? colours.core.blue : colours.core.grey,
-      borderRadius: 5,
-      raised: true,
-      containerViewStyle: { flex: 1 },
-      fontSize: fonts.large,
-    };
+    const type = group === value ? 'primary' : 'secondary';
+
+    // const styleProps = {
+    //   backgroundColor: group === value ? colours.core.blue : colours.core.white,
+    //   color: group === value ? colours.core.white : colours.core.black,
+    //   borderColor: group === value ? colours.core.blue : colours.core.grey,
+    //   borderRadius: 5,
+    //   raised: true,
+    //   containerViewStyle: { flex: 1 },
+    //   fontSize: fonts.large,
+    // };
 
     return (
       <Button
         onPress={() => this.setState({ group: value })}
         title={I18n.t(label)}
-        {...styleProps}
+        type={type}
       />
     );
   }

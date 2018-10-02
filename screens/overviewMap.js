@@ -41,27 +41,25 @@ const styles = StyleSheet.create({
   mapButton: {
     position: 'absolute',
     bottom: 20,
-    margin: 10,
+    margin: 20,
     borderRadius: 100,
-    borderWidth: 1,
-    borderColor: colours.black,
-    backgroundColor: colours.white,
+    backgroundColor: colours.core.blue,
   },
   buttonIcon: {
     backgroundColor: colours.transparent,
   },
   addButton: {
     // Icons are odly sized, so padding on each side must be different to ensure its centered properly
-    paddingTop: 14,
-    paddingBottom: 13,
+    paddingTop: 16,
+    paddingBottom: 16,
     paddingLeft: 17,
     paddingRight: 16,
     left: 0,
   },
   centerButton: {
     // Icons are odly sized, so padding on each side must be different to ensure its centered properly
-    paddingTop: 13,
-    paddingBottom: 14,
+    paddingTop: 15,
+    paddingBottom: 15,
     paddingHorizontal: 16,
     right: 0,
   },
@@ -79,9 +77,6 @@ const initialLongitudeDelta = 0.00000006;
 
 const animationTime = 400;
 const shortAnimationTime = 200;
-
-const black = 'rgb(0,0,0)';
-const blue = 'rgb(12, 128, 252)';
 
 class OverviewMap extends PureComponent {
   constructor(props) {
@@ -215,7 +210,7 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { tempLocation, mapHeight } = this.state;
-    const iconColour = this.state.centered ? blue : black;
+    const iconColour = this.state.centered ? colours.core.black : colours.core.white;
 
     const creationMaxHeight = this.getCreationMaxHeight();
 
@@ -276,9 +271,9 @@ class OverviewMap extends PureComponent {
           activeOpacity={0.9}
         >
           <Icon
-            name="crosshairs"
-            family="font-awesome"
-            size="large"
+            name="crosshair"
+            family="feather"
+            size="extraLarge"
             colour={iconColour}
             styles={styles.buttonIcon}
           />
@@ -290,9 +285,9 @@ class OverviewMap extends PureComponent {
         >
           <Icon
             name="plus"
-            family="font-awesome"
-            size="large"
-            colour={black}
+            family="feather"
+            size="extraLarge"
+            colour={colours.core.white}
             styles={styles.buttonIcon}
           />
         </TouchableOpacity>

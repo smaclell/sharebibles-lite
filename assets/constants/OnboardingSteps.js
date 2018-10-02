@@ -32,17 +32,18 @@ export const ORDERED_STEPS = [
 
 export const STEPS = {
   welcomeScreen: {},
-  addLocation: {},
+  addLocation: {
+    backLogic: setCompleted => setCompleted(COMPLETED_KEYS.hasAddedLocation, false),
+  },
   addLocationAction: {
-    actionLogic: (props, prevProps) => {
+    actionLogic: (props) => {
       const {
-        numLocations,
-        hasAddedLocation,
+        completed: { hasAddedLocation },
         setCompleted,
         setStep,
       } = props;
 
-      if (((numLocations > prevProps.numLocations && !hasAddedLocation) || hasAddedLocation)) {
+      if (hasAddedLocation) {
         setStep(STEPS.viewPinCallout.index);
         setCompleted(COMPLETED_KEYS.hasAddedLocation);
       }
@@ -60,7 +61,7 @@ export const STEPS = {
     actionLogic: (props) => {
       const {
         regionKey,
-        hasAcceptedInvite,
+        completed: { hasAcceptedInvite },
         setCompleted,
         setStep,
       } = props;

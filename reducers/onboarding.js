@@ -1,8 +1,9 @@
 import { SET_STEP, SET_STATUS, SET_COMPLETED, COMPLETED_KEYS } from '../actions/onboarding';
+import { STEPS } from '../assets/constants/OnboardingSteps';
 
 const initial = {
   isOnboarded: true,
-  step: 0,
+  step: STEPS.start,
   completed: {
     [COMPLETED_KEYS.hasAddedLocation]: false,
     [COMPLETED_KEYS.hasViewedPin]: false,

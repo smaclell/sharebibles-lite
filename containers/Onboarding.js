@@ -5,7 +5,6 @@ import * as onboardingActions from '../actions/onboarding';
 
 const mapStateToProps = state => ({
   ...state.onboarding,
-  numLocations: Object.keys(state.locations).length,
   regionKey: state.authentication.regionKey || null,
 });
 

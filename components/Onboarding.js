@@ -113,12 +113,8 @@ const styles = StyleSheet.create({
 });
 
 class Onboarding extends PureComponent {
-  componentDidUpdate(prevProps) {
-    const { step } = this.props;
-
-    if (step < STEPS.end && STEPS[ORDERED_STEPS[step]].actionLogic) {
-      STEPS[ORDERED_STEPS[step]].actionLogic(this.props, prevProps);
-    }
+  componentDidUpdate() {
+    this.props.stepAction();
   }
 
   onContinuePress = () => {
@@ -217,6 +213,7 @@ Onboarding.propTypes = {
   setOnboardingStatus: PropTypes.func.isRequired,
   setStep: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
+  stepAction: PropTypes.func.isRequired,
 };
 
 export default Onboarding;

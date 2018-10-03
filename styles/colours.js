@@ -35,7 +35,7 @@ const colours = {
 const core = {
   black: '#000000',
   red: '#C1272D',
-  blue: '#1F9BBC',
+  blue: '#1F79BC',
   white: '#FFFFFF',
   grey: '#B6B6B6',
 };

@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     width: '100%',
     height: '50%',
-    backgroundColor: colours.white,
     zIndex: 1,
     flex: 1,
     flexDirection: 'column',
@@ -210,8 +209,6 @@ class OverviewMap extends PureComponent {
 
   render() {
     const { tempLocation, mapHeight } = this.state;
-    const iconColour = this.state.centered ? colours.core.black : colours.core.white;
-
     const creationMaxHeight = this.getCreationMaxHeight();
 
     return (
@@ -274,7 +271,7 @@ class OverviewMap extends PureComponent {
             name="crosshair"
             family="feather"
             size="extraLarge"
-            colour={iconColour}
+            colour={colours.white}
             styles={styles.buttonIcon}
           />
         </TouchableOpacity>

@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 8,
+    backgroundColor: colours.white,
   },
 
   controlsContainer: {
@@ -28,14 +29,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#2a9bba',
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    backgroundColor: colours.core.blue,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
 
   controlButton: {
     margin: 7,
-    borderRadius: 5,
+    borderRadius: 8,
   },
 
   saveButton: {

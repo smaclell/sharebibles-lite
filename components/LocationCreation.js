@@ -20,20 +20,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: colours.white,
-    marginTop: 50,
-  },
-
-  onBoardingContainer: {
-    position: 'absolute',
-    width: '100%',
-    top: -50,
-    backgroundColor: colours.white,
-    borderRadius: 5,
-  },
-
-  hintText: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
   },
 
   controlsContainer: {
@@ -194,11 +180,6 @@ class LocationCreation extends Component {
 
     return (
       <View style={styles.createLocationContainer}>
-        { !this.props.isOnboarded &&
-          <View style={styles.onBoardingContainer}>
-            <Text style={styles.hintText}>{I18n.t('onboarding/move_pin_hint')}</Text>
-          </View>
-        }
         <View style={styles.controlsContainer}>
           <TouchableOpacity style={styles.controlButton} onPress={this.props.onLocationCancel}>
             <Icon name="chevron-down" family="entypo" size="medium" colour={colours.white} />
@@ -220,7 +201,6 @@ class LocationCreation extends Component {
 
 LocationCreation.propTypes = { // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
-  isOnboarded: PropTypes.bool.isRequired,
   onLocationCancel: PropTypes.func.isRequired,
   resources: PropTypes.array.isRequired,
   location: PropTypes.shape({

@@ -195,8 +195,6 @@ class Onboarding extends PureComponent {
     const { header, description, continueButton } = this.getStepInfo();
     const showContinue = !BUTTON_STEPS.includes(step);
 
-    console.log(step, isOnboarded);
-
     return (
       <View style={this.getContainerStyles(step)}>
         <View style={styles.onBoardingContainer}>

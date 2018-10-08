@@ -13,6 +13,7 @@ import LocationCreation from '../containers/LocationCreation';
 import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
+import colours from '../styles/colours';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -26,18 +27,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   animatedContainer: {
+    backgroundColor: colours.white,
     position: 'absolute',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     width: '100%',
     height: '50%',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    // backgroundColor: colours.white,
->>>>>>> Add more steps, clean up code
-=======
->>>>>>> Remove commented line
     zIndex: 1,
     flex: 1,
     flexDirection: 'column',
@@ -205,7 +200,7 @@ class OverviewMap extends PureComponent {
   }
 
   getCreationMaxHeight = () => { // eslint-disable-line arrow-body-style
-    return /^(pt|fr)/.test(this.props.locale) ? 370 : 330;
+    return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   }
 
   createTempPin = (coord) => {
@@ -226,16 +221,9 @@ class OverviewMap extends PureComponent {
 
     return (
       <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
-<<<<<<< HEAD
-<<<<<<< HEAD
         <NavigationEvents
           onWillFocus={this.onScreenWillFocus}
         />
-=======
-        <Onboarding />
->>>>>>> Initital workings
-=======
->>>>>>> Nav working
         <MapView
           ref={(map) => { this.map = map; }}
           style={styles.map}

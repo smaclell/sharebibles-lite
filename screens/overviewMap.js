@@ -281,7 +281,7 @@ class OverviewMap extends PureComponent {
           }
         </MapView>
         <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
-          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} isOnboarded={this.props.isOnboarded} />
+          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
         </SlideIn>
         <TouchableOpacity
           style={[styles.mapButton, styles.centerButton]}

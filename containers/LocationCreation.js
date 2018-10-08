@@ -5,6 +5,7 @@ import LocationCreation from '../components/LocationCreation';
 
 const mapStateToProps = state => ({
   resources: Object.values(state.resources),
+  isOnboarded: state.onboarding.isOnboarded,
 });
 
 const mapDispatchToProps = dispatch => ({

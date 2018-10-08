@@ -12,11 +12,11 @@ export const COMPLETED_KEYS = Object.freeze({
 export const SET_STEP = 'SET_STEP';
 export function setStep(step = STEPS.start) {
   return (dispatch) => {
-    SecureStore.setItemAsync(ONBOARDING_STEP, ORDERED_STEPS[step]);
     dispatch({
       type: SET_STEP,
       step,
     });
+    return SecureStore.setItemAsync(ONBOARDING_STEP, ORDERED_STEPS[step]);
   };
 }
 
@@ -58,7 +58,7 @@ export function restoreOnboardingStatus() {
     }
     isOnboarded = (isOnboarded === 'true');
     dispatch(setStatus(isOnboarded));
-    dispatch(setStep(STEPS[step].index));
+    return dispatch(setStep(STEPS[step].index));
   };
 }
 

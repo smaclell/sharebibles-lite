@@ -1,12 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import Expo from 'expo';
 import I18n from 'ex-react-native-i18n';
 import Icon from './Icon';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
-import { step8Top, step9Top } from '../styles/onboardingHelper';
 import { ACTION_STEPS, BUTTON_STEPS, STEPS, ORDERED_STEPS } from '../assets/constants/OnboardingSteps';
+
+export function step8Top() {
+  return Platform.OS === 'ios' ?
+    Expo.Constants.statusBarHeight + 5 :
+    Expo.Constants.statusBarHeight + 10;
+}
+
+export function step9Top() {
+  return Platform.OS === 'ios' ?
+    Expo.Constants.statusBarHeight + 100 :
+    Expo.Constants.statusBarHeight + 115;
+}
+
 
 const containerStyles = StyleSheet.create({
   defaultContainer: {
@@ -114,7 +127,9 @@ const styles = StyleSheet.create({
 
 class Onboarding extends PureComponent {
   componentDidUpdate() {
-    this.props.stepAction();
+    if (this.props.step < STEPS.end) {
+      this.props.stepAction();
+    }
   }
 
   onContinuePress = () => {

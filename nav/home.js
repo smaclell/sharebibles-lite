@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Image, View } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
 import I18n from '../assets/i18n/i18n';
@@ -17,6 +17,12 @@ const createHeader = (name, onPress) => (
   <TouchableOpacity style={{ paddingLeft: 10, paddingRight: 10 }} onPress={onPress}>
     <Icon size="medium" family="font-awesome" name={name} colour={colours.black} />
   </TouchableOpacity>
+);
+
+const createHeaderTitle = () => (
+  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Image style={{ height: 20, width: 160 }} source={require('../assets/icons/shareBibles-header.png')} />
+  </View>
 );
 
 const drawerScreens = {
@@ -40,7 +46,10 @@ const drawerStack = createStackNavigator({
     screen: drawer,
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('title/share_bibles'),
+      headerTitle: createHeaderTitle(),
+      // headerTitleStyle: { alignSelf: 'center' },
       headerLeft: createHeader('bars', () => navigation.toggleDrawer()),
+      headerRight: <View />,
     }),
   },
   Invites: {

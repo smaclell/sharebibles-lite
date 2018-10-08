@@ -47,7 +47,6 @@ const drawerStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('title/share_bibles'),
       headerTitle: createHeaderTitle(),
-      // headerTitleStyle: { alignSelf: 'center' },
       headerLeft: createHeader('bars', () => navigation.toggleDrawer()),
       headerRight: <View />,
     }),

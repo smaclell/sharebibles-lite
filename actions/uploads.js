@@ -6,13 +6,13 @@ export const UploadStatus = {
 };
 
 export const UPLOADING_STATUS = 'UPLOADING_STATUS';
-export const setUploadingStatus = status => ({
+export const setUploadingStatus = (status) => ({
   type: UPLOADING_STATUS,
   status,
 });
 
 export const UPLOAD_UPDATED = 'UPLOAD_UPDATED';
-const setup = status => (key, err) => ({
+const setup = (status) => (key, err) => ({
   type: UPLOAD_UPDATED,
   key,
   status,

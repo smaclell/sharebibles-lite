@@ -83,7 +83,9 @@ class OverviewMap extends PureComponent {
   constructor(props) {
     super(props);
 
-    const { position: { latitude, longitude } } = props;
+    const {
+      position: { latitude, longitude },
+    } = props;
     this.initialRegion = {
       latitude,
       longitude,
@@ -111,19 +113,17 @@ class OverviewMap extends PureComponent {
       navigation.closeDrawer();
       this.map.animateToCoordinate(coord, animationTime);
     }
-  }
+  };
 
   onMapReady = () => {
     this.setState({ isReady: true });
 
     // Initially map will be centered, need to wait till map is done setting up
     setTimeout(() => this.setState({ centered: true }), 500);
-  }
+  };
 
   // Called when user finishes moving the map on device
-  onRegionChangeComplete = ({
-    latitude, longitude, latitudeDelta, longitudeDelta,
-  }) => {
+  onRegionChangeComplete = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
     if (!this.state.isReady) {
       return;
     }
@@ -137,7 +137,7 @@ class OverviewMap extends PureComponent {
     });
 
     this.props.updatePosition(latitude, longitude);
-  }
+  };
 
   onCenterLocationPress = async () => {
     if (this.state.centered) return;
@@ -148,14 +148,14 @@ class OverviewMap extends PureComponent {
       // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
     }
-  }
+  };
 
   onAddLocationPress = async () => {
     if (!this.state.tempLocation) {
       const { location } = await getCurrentPosition(true);
       this.createTempPin(location || this.state);
     }
-  }
+  };
 
   // Called when the users physical location changes
   onLocationChange = ({ coordinate: coord }) => {
@@ -167,41 +167,42 @@ class OverviewMap extends PureComponent {
       this.props.updatePosition(coord.latitude, coord.longitude);
       this.map.animateToCoordinate(coord, animationTime);
     }
-  }
+  };
 
   onLongPress = (event) => {
     const coord = event.nativeEvent.coordinate;
     if (!this.state.tempLocation) {
       this.createTempPin(coord);
     }
-  }
+  };
 
   onMarkerPress = () => {
     if (!this.props.isOnboarded) {
       this.props.setCompleted();
     }
-  }
+  };
 
   onDragStart = (event) => {
     this.setState({ movingTemp: true });
     event.persist();
-  }
+  };
 
-  onDrag = event => event.persist();
+  onDrag = (event) => event.persist();
 
   onDragEnd = (event) => {
     const coord = event.nativeEvent.coordinate;
     this.setState({ movingTemp: false, tempLocation: coord });
     event.persist();
-  }
+  };
 
   onLocationCancel = () => {
     this.setState({ tempLocation: null });
-  }
+  };
 
-  getCreationMaxHeight = () => { // eslint-disable-line arrow-body-style
+  // eslint-disable-next-line arrow-body-style
+  getCreationMaxHeight = () => {
     return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
-  }
+  };
 
   createTempPin = (coord) => {
     this.setState({ tempLocation: coord });
@@ -213,19 +214,19 @@ class OverviewMap extends PureComponent {
     const offSet = this.state.latitudeDelta * remainder;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
     this.map.animateToCoordinate(temp, shortAnimationTime);
-  }
+  };
 
   render() {
     const { tempLocation, mapHeight } = this.state;
     const creationMaxHeight = this.getCreationMaxHeight();
 
     return (
-      <View style={styles.container} onLayout={e => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
-        <NavigationEvents
-          onWillFocus={this.onScreenWillFocus}
-        />
+      <View style={styles.container} onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}>
+        <NavigationEvents onWillFocus={this.onScreenWillFocus} />
         <MapView
-          ref={(map) => { this.map = map; }}
+          ref={(map) => {
+            this.map = map;
+          }}
           style={styles.map}
           mapType="hybrid"
           showsUserLocation
@@ -244,13 +245,10 @@ class OverviewMap extends PureComponent {
           onLongPress={this.onLongPress}
           onMarkerPress={this.onMarkerPress}
         >
-          {this.props.locations.map(locationKey => (
-            <LocationMarker
-              key={locationKey}
-              locationKey={locationKey}
-            />
+          {this.props.locations.map((locationKey) => (
+            <LocationMarker key={locationKey} locationKey={locationKey} />
           ))}
-          { tempLocation &&
+          {tempLocation && (
             <MapView.Marker
               key="tempLocation"
               coordinate={{
@@ -266,9 +264,15 @@ class OverviewMap extends PureComponent {
               onDrag={this.onDrag}
               onDragEnd={this.onDragEnd}
             />
-          }
+          )}
         </MapView>
-        <SlideIn visible={!!tempLocation} style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]} fullHeight={creationMaxHeight} containerHeight={mapHeight} endPercentage={creationEndPercentage}>
+        <SlideIn
+          visible={!!tempLocation}
+          style={[styles.animatedContainer, { maxHeight: creationMaxHeight }]}
+          fullHeight={creationMaxHeight}
+          containerHeight={mapHeight}
+          endPercentage={creationEndPercentage}
+        >
           <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
         </SlideIn>
         <TouchableOpacity
@@ -276,26 +280,14 @@ class OverviewMap extends PureComponent {
           onPress={this.onCenterLocationPress}
           activeOpacity={0.9}
         >
-          <Icon
-            name="crosshair"
-            family="feather"
-            size="extraLarge"
-            colour={colours.white}
-            styles={styles.buttonIcon}
-          />
+          <Icon name="crosshair" family="feather" size="extraLarge" colour={colours.white} styles={styles.buttonIcon} />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.mapButton, styles.addButton]}
           onPress={this.onAddLocationPress}
           activeOpacity={0.9}
         >
-          <Icon
-            name="plus"
-            family="feather"
-            size="extraLarge"
-            colour={colours.core.white}
-            styles={styles.buttonIcon}
-          />
+          <Icon name="plus" family="feather" size="extraLarge" colour={colours.core.white} styles={styles.buttonIcon} />
         </TouchableOpacity>
       </View>
     );
@@ -319,12 +311,8 @@ const mapStateToProps = (state) => {
   const {
     position,
     locations,
-    i18n: {
-      locale,
-    },
-    onboarding: {
-      isOnboarded,
-    },
+    i18n: { locale },
+    onboarding: { isOnboarded },
   } = state;
 
   return {
@@ -335,9 +323,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(positionActions, dispatch),
   setCompleted: () => dispatch(setCompleted(COMPLETED_KEYS.hasViewedPin)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewMap);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverviewMap);

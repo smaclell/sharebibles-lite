@@ -54,29 +54,18 @@ const styles = StyleSheet.create({
 class LocationData extends Component {
   state = {
     numberUploading: 0,
-  }
+  };
 
   uploadLocations = () => {
     this.setState({ numberUploading: this.props.stats.offline + this.props.stats.failed });
     this.props.showPushDialog();
-  }
+  };
 
-  renderItem = ({ item }) => (
-    <FailedListItem
-      item={item}
-      onPress={this.props.goToPin}
-    />
-  )
+  renderItem = ({ item }) => <FailedListItem item={item} onPress={this.props.goToPin} />;
 
   render() {
-    const {
-      failedLocations,
-      stats,
-      uploading,
-    } = this.props;
-    const {
-      numberUploading,
-    } = this.state;
+    const { failedLocations, stats, uploading } = this.props;
+    const { numberUploading } = this.state;
 
     const offlineTotal = stats.offline + stats.failed;
     const disabled = offlineTotal === 0;
@@ -88,20 +77,25 @@ class LocationData extends Component {
           <Text style={styles.sectionText}>{I18n.t('locationData/Upload_locations')}</Text>
         </TouchableOpacity>
         <View style={styles.section}>
-          { uploading && <Text style={styles.sectionText}>{I18n.t('locationData/uploading', { value: progress, total: numberUploading })}</Text> }
-          { !uploading && <Text style={styles.sectionText}>{I18n.t('locationData/offline', { value: offlineTotal })}</Text> }
+          {uploading && (
+            <Text style={styles.sectionText}>
+              {I18n.t('locationData/uploading', { value: progress, total: numberUploading })}
+            </Text>
+          )}
+          {!uploading && (
+            <Text style={styles.sectionText}>{I18n.t('locationData/offline', { value: offlineTotal })}</Text>
+          )}
         </View>
         <View style={styles.section}>
           <Text style={styles.sectionText}>{I18n.t('locationData/successful_upload', { value: stats.uploaded })}</Text>
         </View>
         <View style={[styles.section, styles.listHeading]}>
           <Icon size="medium" family="entypo" name="chevron-small-down" colour={colours.black} />
-          <Text style={[styles.sectionText, styles.listHeadingText]}>{I18n.t('locationData/failed_upload', { value: stats.failed })}</Text>
+          <Text style={[styles.sectionText, styles.listHeadingText]}>
+            {I18n.t('locationData/failed_upload', { value: stats.failed })}
+          </Text>
         </View>
-        <FlatList
-          data={failedLocations}
-          renderItem={this.renderItem}
-        />
+        <FlatList data={failedLocations} renderItem={this.renderItem} />
       </View>
     );
   }
@@ -124,7 +118,7 @@ LocationData.defaultProps = {
   failedLocations: [],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   connected: state.connected,
   stats: getStats(state),
   failedLocations: getFailedLocations(state),
@@ -137,4 +131,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   goToPin: (longitude, latitude) => ownProps.navigation.navigate('OverviewMap', { coord: { longitude, latitude } }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LocationData);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LocationData);

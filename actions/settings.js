@@ -20,16 +20,15 @@ export function showPushDialog() {
         I18n.t('button/offline'),
         I18n.t('connectivity/action_requires_connection'),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       );
       return;
     }
 
-    dispatch(requestPushPermission())
-      .then((allowed) => {
-        if (allowed) {
-          dispatch(pushLocalLocations());
-        }
-      });
+    dispatch(requestPushPermission()).then((allowed) => {
+      if (allowed) {
+        dispatch(pushLocalLocations());
+      }
+    });
   };
 }

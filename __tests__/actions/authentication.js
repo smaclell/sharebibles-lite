@@ -25,7 +25,7 @@ describe('actions/authentication', () => {
     clear.mockClear();
     clear.mockReturnValue({ type: 'CLEAR REGION' });
     request.mockClear();
-    request.mockImplementation(regionKey => ({ type: 'FAKE REQUEST', regionKey }));
+    request.mockImplementation((regionKey) => ({ type: 'FAKE REQUEST', regionKey }));
 
     store = configureStore([thunk])({});
 

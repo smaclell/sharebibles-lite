@@ -20,10 +20,10 @@ function hasPending({ uploads }) {
   if (values.length === 0) {
     return false;
   }
-  return values.some(v => (v.status === UploadStatus.offline || v.status === UploadStatus.failed));
+  return values.some((v) => v.status === UploadStatus.offline || v.status === UploadStatus.failed);
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.authentication,
   ...state.settings,
   allowDownload: state.permissions.allowDownload,
@@ -41,9 +41,7 @@ const exportData = async () => {
     await MailComposer.composeAsync({
       subject: I18n.t('export/subject'),
       body: I18n.t('export/body'),
-      attachments: [
-        fileName,
-      ],
+      attachments: [fileName],
     });
   } catch (err) {
     if (err.code === 'E_COMPOSE_UNAVAILABLE') {
@@ -51,7 +49,7 @@ const exportData = async () => {
         I18n.t('export/error_title'),
         I18n.t('export/no_email_error'),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       );
     } else {
       Sentry.captureException(err);
@@ -59,7 +57,7 @@ const exportData = async () => {
         I18n.t('export/error_title'),
         I18n.t('export/generic_error', { email: emails.feedback }),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       );
     }
   }
@@ -74,14 +72,14 @@ const sendFeedback = () => {
       }
       return null;
     })
-    .catch(() => (
+    .catch(() =>
       Alert.alert(
         I18n.t('feedback/feedback_title'),
         I18n.t('feedback/feedback_error', { email: emails.feedback }),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       )
-    ));
+    );
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -100,7 +98,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));
   },
-  updateAllowDownload: value => dispatch(change(value)),
+  updateAllowDownload: (value) => dispatch(change(value)),
 });
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(Settings));
+export default withNavigation(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Settings)
+);

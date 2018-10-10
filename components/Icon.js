@@ -16,14 +16,9 @@ const sizes = {
   extraLarge: 34,
 };
 
-
-const Icon = ({
-  size, name, family, colour, style = null,
-}) => {
+const Icon = ({ size, name, family, colour, style = null }) => {
   const Actual = families[family];
-  return (
-    <Actual size={sizes[size]} name={name} color={colour} style={style} />
-  );
+  return <Actual size={sizes[size]} name={name} color={colour} style={style} />;
 };
 
 Icon.propTypes = {

@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import I18n from '../actions/i18n';
 
 export const UPDATE_ALLOW_DOWNLOAD = 'UPDATE_ALLOW_DOWNLOAD';
-const downloadPermission = value => ({
+const downloadPermission = (value) => ({
   type: UPDATE_ALLOW_DOWNLOAD,
   value,
 });
@@ -48,7 +48,7 @@ export function requestPushPermission() {
         {
           cancelable: true,
           onDismiss: () => resolve(false),
-        },
+        }
       );
     });
 

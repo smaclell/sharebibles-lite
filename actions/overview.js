@@ -13,7 +13,9 @@ let query = initial;
 
 function getGeoKey() {
   return (dispatch, getState) => {
-    const { authentication: { regionKey } } = getState();
+    const {
+      authentication: { regionKey },
+    } = getState();
     if (!regionKey) {
       return null;
     }
@@ -32,11 +34,7 @@ function updateLocations() {
       return;
     }
 
-    query = apis.queryGeoData(
-      key,
-      position,
-      locationKey => dispatch(fetchAllLocationData(locationKey)),
-    );
+    query = apis.queryGeoData(key, position, (locationKey) => dispatch(fetchAllLocationData(locationKey)));
   };
 }
 
@@ -54,10 +52,7 @@ export function change(value) {
 export function update(latitude, longitude) {
   return () => {
     query.updateCriteria({
-      center: [
-        wrapLatitude(latitude),
-        wrapLongitude(longitude),
-      ],
+      center: [wrapLatitude(latitude), wrapLongitude(longitude)],
     });
   };
 }

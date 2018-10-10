@@ -14,7 +14,9 @@ export function initialize() {
 }
 
 export function signIn(token) {
-  return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+  return firebase
+    .auth()
+    .setPersistence(firebase.auth.Auth.Persistence.NONE)
     .then(() => firebase.auth().signInWithCustomToken(token));
 }
 
@@ -31,7 +33,10 @@ function getGeoFire(path) {
 
 export function pushRef(ref) {
   initialize();
-  return firebase.database().ref(ref).push();
+  return firebase
+    .database()
+    .ref(ref)
+    .push();
 }
 
 export function getRef(ref) {
@@ -56,27 +61,29 @@ export function queryGeoData(geoFireKey, position, callback) {
     radius: 0.5, // This is in KMs
   });
 
-  query.on('key_entered', geoSubKey => callback(geoSubKey));
+  query.on('key_entered', (geoSubKey) => callback(geoSubKey));
 
   return query;
 }
 
 export function fetchLocations({ last }) {
   initialize();
-  return firebase.database()
+  return firebase
+    .database()
     .ref('locations')
     .limitToLast(last)
     .once('value')
-    .then(locations => Object.values(locations.val() || {}))
+    .then((locations) => Object.values(locations.val() || {}))
     .catch(() => []);
 }
 
 export function fetchLocation(locationKey) {
   initialize();
-  return firebase.database()
+  return firebase
+    .database()
     .ref(`locations/${locationKey}`)
     .once('value')
-    .then(location => location.val());
+    .then((location) => location.val());
 }
 
 export async function createLocation(regionKey, options, key) {

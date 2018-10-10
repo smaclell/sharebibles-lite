@@ -26,8 +26,7 @@ function updateUploadStatus(location, isUploaded) {
   return (dispatch) => {
     const newLocation = { ...location, uploaded: isUploaded };
     dispatch(receiveLocation(newLocation));
-    const numericValue =
-      isUploaded ? LOCATION_UPLOADED.true : LOCATION_UPLOADED.false;
+    const numericValue = isUploaded ? LOCATION_UPLOADED.true : LOCATION_UPLOADED.false;
 
     return database.updateUploadStatus(newLocation.key, numericValue);
   };
@@ -58,13 +57,12 @@ export function restoreLocalLocations() {
   return async (dispatch) => {
     try {
       const locations = await database.fetchLocalLocations();
-      locations.filter(Boolean)
-        .forEach((location) => {
-          dispatch(receiveLocation(location));
+      locations.filter(Boolean).forEach((location) => {
+        dispatch(receiveLocation(location));
 
-          const process = location.uploaded ? uploaded : offline;
-          dispatch(process(location.key));
-        });
+        const process = location.uploaded ? uploaded : offline;
+        dispatch(process(location.key));
+      });
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -73,7 +71,10 @@ export function restoreLocalLocations() {
 
 export function fetchLocation(locationKey) {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey }, connected } = getState();
+    const {
+      authentication: { regionKey },
+      connected,
+    } = getState();
     if (!connected || !regionKey) {
       return;
     }
@@ -96,19 +97,24 @@ export function fetchAllLocationData(locationKey) {
 }
 
 export function createLocation(options) {
-  const {
-    latitude, longitude, resources, status,
-  } = options;
+  const { latitude, longitude, resources, status } = options;
 
   return async (dispatch, getState) => {
-    const { authentication: { regionKey: hasRegion }, connected, onboarding: { hasAddedLocation } } = getState();
+    const {
+      authentication: { regionKey: hasRegion },
+      connected,
+      onboarding: { hasAddedLocation },
+    } = getState();
 
     if (!hasAddedLocation) {
       dispatch(setCompleted(COMPLETED_KEYS.hasAddedLocation));
     }
 
     const locationData = {
-      latitude, longitude, resources, status,
+      latitude,
+      longitude,
+      resources,
+      status,
     };
 
     const localLocation = await database.addLocalLocation(locationData);
@@ -137,7 +143,10 @@ export function createLocation(options) {
 
 export function pushLocalLocations() {
   return async (dispatch, getState) => {
-    const { authentication: { regionKey: hasRegion }, connected } = getState();
+    const {
+      authentication: { regionKey: hasRegion },
+      connected,
+    } = getState();
     if (!connected || !hasRegion) {
       return false;
     }
@@ -150,16 +159,18 @@ export function pushLocalLocations() {
     offlineLocations.forEach(({ key }) => dispatch(pending(key)));
     dispatch(setUploadingStatus(true));
 
-    await Promise.all(offlineLocations.map(async ({ key, ...options }) => {
-      const regionKey = dispatch(containing(options));
-      if (!regionKey) {
-        dispatch(failed(key, 'locationData/incorrect_region'));
-        return;
-      }
+    await Promise.all(
+      offlineLocations.map(async ({ key, ...options }) => {
+        const regionKey = dispatch(containing(options));
+        if (!regionKey) {
+          dispatch(failed(key, 'locationData/incorrect_region'));
+          return;
+        }
 
-      const { created: location, saved } = await apis.createLocation(regionKey, options, key);
-      dispatch(wrapper(saved, location));
-    }));
+        const { created: location, saved } = await apis.createLocation(regionKey, options, key);
+        dispatch(wrapper(saved, location));
+      })
+    );
 
     setTimeout(() => dispatch(setUploadingStatus(false)), 2000);
 

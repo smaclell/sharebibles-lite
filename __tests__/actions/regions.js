@@ -31,19 +31,13 @@ describe('actions/regions', () => {
     it('fetches the geojson data', async () => {
       await actions.request('GOOD')(dispatch);
 
-      expect(refetch).toBeCalledWith(
-        'mapsUrl/geojson/GOOD',
-        expect.objectContaining({ method: 'GET' }),
-      );
+      expect(refetch).toBeCalledWith('mapsUrl/geojson/GOOD', expect.objectContaining({ method: 'GET' }));
     });
 
     it('fetches the region metadata', async () => {
       await actions.request('GOOD')(dispatch);
 
-      expect(refetch).toBeCalledWith(
-        'mapsUrl/regions/GOOD',
-        expect.objectContaining({ method: 'GET' }),
-      );
+      expect(refetch).toBeCalledWith('mapsUrl/regions/GOOD', expect.objectContaining({ method: 'GET' }));
     });
 
     it('saves the data to the state', async () => {

@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Feather, FontAwesome } from '@expo/vector-icons';
@@ -75,11 +71,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const relativeTime = time => moment.utc(time).clone().local().fromNow();
+const relativeTime = (time) =>
+  moment
+    .utc(time)
+    .clone()
+    .local()
+    .fromNow();
 
-const Callout = ({
-  created, status, resources, uploaded,
-}) => {
+const Callout = ({ created, status, resources, uploaded }) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';
   const statusString = `status/${status}`;
   return (
@@ -94,12 +93,13 @@ const Callout = ({
           <Text style={styles.value}>{I18n.t(statusString)}</Text>
         </View>
 
-        { resources && resources.generic_bible &&
-        <View style={styles.row}>
-          <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
-          <Text style={styles.value}>{resources.generic_bible.given}</Text>
-        </View>
-        }
+        {resources &&
+          resources.generic_bible && (
+            <View style={styles.row}>
+              <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
+              <Text style={styles.value}>{resources.generic_bible.given}</Text>
+            </View>
+          )}
       </View>
 
       <View style={styles.timeContainer}>

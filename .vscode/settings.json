@@ -1,0 +1,17 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/build": true,
+    "**/beta": true,
+    "**/prod": true,
+    "**/staging": true,
+    "**/coverage": true
+  }
+}

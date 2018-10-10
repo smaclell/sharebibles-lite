@@ -1,7 +1,4 @@
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
@@ -40,11 +37,9 @@ class ChooseStatus extends Component {
     };
   }
 
-  getStatuses = () => (
-    this.props.statuses.filter(s => s.group === this.state.group)
-  );
+  getStatuses = () => this.props.statuses.filter((s) => s.group === this.state.group);
 
-  showStatus = status => (
+  showStatus = (status) => (
     <Status
       key={status.key}
       label={I18n.t(status.label)}
@@ -64,14 +59,8 @@ class ChooseStatus extends Component {
     const { group } = this.state;
     const type = group === value ? 'primary' : 'secondary';
 
-    return (
-      <Button
-        onPress={() => this.setState({ group: value })}
-        title={I18n.t(label)}
-        type={type}
-      />
-    );
-  }
+    return <Button onPress={() => this.setState({ group: value })} title={I18n.t(label)} type={type} />;
+  };
 
   // tODO: Styling
   render() {
@@ -81,11 +70,7 @@ class ChooseStatus extends Component {
           {this.renderGroup('status/groups/home', 'home')}
           {this.renderGroup('status/groups/not_home', 'not_home')}
         </View>
-        { this.state.group &&
-          <View style={styles.statuses}>
-            {this.getStatuses().map(this.showStatus) }
-          </View>
-        }
+        {this.state.group && <View style={styles.statuses}>{this.getStatuses().map(this.showStatus)}</View>}
       </View>
     );
   }

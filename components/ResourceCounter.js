@@ -36,18 +36,18 @@ class ResourceCounter extends Component {
     onCountChanged: PropTypes.func.isRequired,
     resourceKey: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
-  }
+  };
 
   static defaultProps = {
     initialCount: 0,
-  }
+  };
 
   onCountChanged = (count) => {
     this.props.onCountChanged({
       count,
       resourceKey: this.props.resourceKey,
     });
-  }
+  };
 
   render() {
     const iconName = formatIcons[this.props.format] || formatIcons.default;

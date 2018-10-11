@@ -94,7 +94,7 @@ class App extends Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          { __DEV__ && <Onboarding /> }
+          {__DEV__ && <Onboarding />}
         </View>
       </Provider>
     );

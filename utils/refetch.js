@@ -1,4 +1,3 @@
-
 /* global fetch */
 export default async function refetch(url, options) {
   const params = Object.assign({ headers: {} }, options);

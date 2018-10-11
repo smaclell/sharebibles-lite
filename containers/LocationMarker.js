@@ -31,8 +31,10 @@ LocationMarker.propTypes = {
 };
 
 const getPinColor = ({ status: key } = {}, { statuses }) => {
-  const status = statuses.find(s => (s.key === key));
-  if (status) { return status.pinColor; }
+  const status = statuses.find((s) => s.key === key);
+  if (status) {
+    return status.pinColor;
+  }
 
   return 'wheat';
 };

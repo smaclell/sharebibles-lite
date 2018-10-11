@@ -27,10 +27,7 @@ Sentry.config('https://b3f49b97fd1045d0b76429a73baf0396@sentry.io/1193850').inst
 
 initialize();
 
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk),
-);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 store.dispatch(setup());
 
@@ -51,9 +48,11 @@ class App extends Component {
       createDatabases(),
       I18n.initAsync(),
       store.dispatch(positionActions.initialize()),
-      store.dispatch(settingsActions.load({
-        enableInvitations: Constants.manifest.extra.enableInvitations,
-      })),
+      store.dispatch(
+        settingsActions.load({
+          enableInvitations: Constants.manifest.extra.enableInvitations,
+        })
+      ),
     ]).then(() => {
       I18n.setDateLocale();
       this.setState({ isReady: true });
@@ -83,9 +82,7 @@ class App extends Component {
 
   render() {
     if (!this.state.isReady) {
-      return (
-        <AppLoading />
-      );
+      return <AppLoading />;
     }
 
     return (
@@ -97,7 +94,7 @@ class App extends Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          { __DEV__ && <Onboarding /> }
+          {__DEV__ && <Onboarding />}
         </View>
       </Provider>
     );

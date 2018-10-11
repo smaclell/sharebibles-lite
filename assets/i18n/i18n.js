@@ -27,7 +27,7 @@ I18n.translations = {
 };
 
 I18n.updateLocale = (locale) => {
-  I18n.locale = (locale) ? locale.replace(/_/, '-') : '';
+  I18n.locale = locale ? locale.replace(/_/, '-') : '';
   I18n.setDateLocale();
 };
 

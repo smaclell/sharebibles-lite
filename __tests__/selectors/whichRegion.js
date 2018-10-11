@@ -6,7 +6,7 @@ jest.mock('which-polygon');
 describe('selectors/whichRegion', () => {
   beforeEach(() => {
     whichPolygon.mockClear();
-    whichPolygon.mockImplementation(a => a);
+    whichPolygon.mockImplementation((a) => a);
   });
 
   it('projects the geojson for each region', () => {

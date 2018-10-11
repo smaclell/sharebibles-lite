@@ -13,10 +13,12 @@ function getCurrentRoute() {
 }
 
 function navigate(routeName, params) {
-  navigator.dispatch(NavigationActions.navigate({
-    routeName,
-    params,
-  }));
+  navigator.dispatch(
+    NavigationActions.navigate({
+      routeName,
+      params,
+    })
+  );
 }
 
 function goBack() {

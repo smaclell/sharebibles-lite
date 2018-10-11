@@ -1,8 +1,4 @@
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../components/Icon';
@@ -41,12 +37,15 @@ const textSelected = {
   color: colours.core.blue,
 };
 
-const Status = ({
-  icon, iconFamily, label, onPressed, selected = false,
-}) => (
+const Status = ({ icon, iconFamily, label, onPressed, selected = false }) => (
   <TouchableOpacity style={container} onPressOut={onPressed}>
     <View style={circle}>
-      <Icon name={icon} family={iconFamily} size="extraLarge" colour={selected ? colours.core.blue : colours.core.grey} />
+      <Icon
+        name={icon}
+        family={iconFamily}
+        size="extraLarge"
+        colour={selected ? colours.core.blue : colours.core.grey}
+      />
     </View>
     <Text style={[text, selected ? textSelected : textNormal]}>{label}</Text>
   </TouchableOpacity>

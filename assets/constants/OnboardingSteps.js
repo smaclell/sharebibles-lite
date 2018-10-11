@@ -33,7 +33,7 @@ export const ORDERED_STEPS = [
 export const STEPS = {
   welcomeScreen: {},
   addLocation: {
-    backLogic: setCompleted => setCompleted(COMPLETED_KEYS.hasAddedLocation, false),
+    backLogic: (setCompleted) => setCompleted(COMPLETED_KEYS.hasAddedLocation, false),
   },
   addLocationAction: {
     actionLogic: async (props) => {
@@ -50,11 +50,13 @@ export const STEPS = {
     },
   },
   viewPinCallout: {
-    backLogic: setCompleted => setCompleted(COMPLETED_KEYS.hasViewedPin, false),
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    backLogic: (setCompleted) => setCompleted(COMPLETED_KEYS.hasViewedPin, false),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
+      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   viewPinCalloutAction: {
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
+      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   pinCalloutDescription: {},
   invitations1: {
@@ -83,12 +85,7 @@ export const STEPS = {
   invitations4: {},
   invitationsAction: {
     actionLogic: async (props) => {
-      const {
-        regionKey,
-        hasAcceptedInvite,
-        setCompleted,
-        setStep,
-      } = props;
+      const { regionKey, hasAcceptedInvite, setCompleted, setStep } = props;
 
       if (regionKey && !hasAcceptedInvite) {
         setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
@@ -103,16 +100,19 @@ export const STEPS = {
   zero: {},
 };
 
+ORDERED_STEPS.forEach((step, index) => {
+  STEPS[step].index = index;
+});
 
-ORDERED_STEPS.forEach((step, index) => { STEPS[step].index = index; });
-
-export const ACTION_STEPS = [ // Steps that require user to do something before we show them more info
+export const ACTION_STEPS = [
+  // Steps that require user to do something before we show them more info
   STEPS.addLocationAction.index,
   STEPS.viewPinCalloutAction.index,
   STEPS.invitationsAction.index,
 ];
 
-export const BUTTON_STEPS = [ // Steps that the user needs to click a certain thing
+export const BUTTON_STEPS = [
+  // Steps that the user needs to click a certain thing
   STEPS.invitations2.index,
   STEPS.invitations3.index,
 ];

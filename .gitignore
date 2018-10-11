@@ -4,7 +4,6 @@ npm-debug.*
 
 app.json
 .env
-.vscode
 jsconfig.json
 
 # OSX

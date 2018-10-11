@@ -20,7 +20,8 @@ async function clear() {
 }
 
 export const ACCEPTED = 'ACCEPTED';
-export function accepted({ regionKey, teamKey }) { // Exported for testing
+export function accepted({ regionKey, teamKey }) {
+  // Exported for testing
   return { type: ACCEPTED, regionKey, teamKey };
 }
 
@@ -35,7 +36,8 @@ export function logout() {
   };
 }
 
-export function authenticate(refreshToken) { // Exported for testing
+export function authenticate(refreshToken) {
+  // Exported for testing
   return async (dispatch) => {
     let token;
     try {
@@ -65,7 +67,9 @@ export function authenticate(refreshToken) { // Exported for testing
 
 export function restore() {
   return async (dispatch, getState) => {
-    const { settings: { enableInvitations } } = getState();
+    const {
+      settings: { enableInvitations },
+    } = getState();
     if (!enableInvitations) {
       return false;
     }

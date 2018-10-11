@@ -26,14 +26,7 @@ const buttonProps = {
   },
 };
 
-const Button = ({
-  disabled,
-  fillContainer,
-  fontSize,
-  onPress,
-  title,
-  type,
-}) => (
+const Button = ({ disabled, fillContainer, fontSize, onPress, title, type }) => (
   <NativeButton
     {...buttonProps[type]}
     onPress={onPress}

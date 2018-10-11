@@ -108,11 +108,11 @@ class LocationCreation extends Component {
         I18n.t('validation/unknown_error_title'),
         I18n.t('validation/unknown_error_message'),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       );
     }
     this.props.onLocationCancel();
-  }
+  };
 
   updateStatus = (value) => {
     this.setState({ status: value });
@@ -122,7 +122,7 @@ class LocationCreation extends Component {
         this.updateCount({ count: resource.startCount, resourceKey: resource.key });
       }
     });
-  }
+  };
 
   addLocation = () => {
     const { status, resources } = this.state;
@@ -132,7 +132,7 @@ class LocationCreation extends Component {
         I18n.t('validation/no_status_title'),
         I18n.t('validation/no_status_message'),
         [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false },
+        { cancelable: false }
       );
     }
 
@@ -143,10 +143,10 @@ class LocationCreation extends Component {
       status,
       resources: filteredResources,
     });
-  }
+  };
 
   updateCount = ({ count, resourceKey }) => {
-    this.setState(p => ({
+    this.setState((p) => ({
       ...p,
       resources: {
         [resourceKey]: {
@@ -155,11 +155,12 @@ class LocationCreation extends Component {
         },
       },
     }));
-  }
-
+  };
 
   showResource = (resource) => {
-    if (!resource.statuses.includes(this.state.status)) { return null; }
+    if (!resource.statuses.includes(this.state.status)) {
+      return null;
+    }
 
     return (
       <ResourceCounter
@@ -171,7 +172,7 @@ class LocationCreation extends Component {
         summary={I18n.t(resource.summary)}
       />
     );
-  }
+  };
 
   render() {
     const isDisabled = this.state.status === 'unknown';
@@ -190,16 +191,15 @@ class LocationCreation extends Component {
         </View>
         <View style={styles.resultsInnerContainer}>
           <ChooseStatus updateStatus={this.updateStatus} />
-          <View style={styles.resourcesContainer}>
-            {this.props.resources.map(this.showResource) }
-          </View>
+          <View style={styles.resourcesContainer}>{this.props.resources.map(this.showResource)}</View>
         </View>
       </View>
     );
   }
 }
 
-LocationCreation.propTypes = { // Sorted Alphabetically
+LocationCreation.propTypes = {
+  // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
   onLocationCancel: PropTypes.func.isRequired,
   resources: PropTypes.array.isRequired,

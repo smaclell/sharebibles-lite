@@ -24,7 +24,9 @@ export function executeTransaction(statement, args = null) {
 }
 
 export function createDatabases() {
-  return executeTransaction('create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)');
+  return executeTransaction(
+    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
+  );
 }
 
 export function clearDatabase() {
@@ -40,7 +42,11 @@ export function updateLocalLocation(options) {
   // Uncomment this if user is ever able to change location position
   // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
 
-  return executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [resources, status, key]);
+  return executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [
+    resources,
+    status,
+    key,
+  ]);
 }
 
 // fetches individual location
@@ -55,9 +61,7 @@ export async function fetchLocalLocation(locationKey) {
 
 // fetch all locations in db
 export async function fetchLocalLocations(offlineOnly = false) {
-  const query = offlineOnly ?
-    'select * from locations where uploaded = 0' :
-    'select * from locations';
+  const query = offlineOnly ? 'select * from locations where uploaded = 0' : 'select * from locations';
 
   const result = await executeTransaction(query);
   // This is the shape of the data and cannot really be changed
@@ -66,9 +70,7 @@ export async function fetchLocalLocations(offlineOnly = false) {
 }
 
 export async function addLocalLocation(locationData) {
-  const {
-    resources, status = null, latitude, longitude,
-  } = locationData;
+  const { resources, status = null, latitude, longitude } = locationData;
   const resourcesString = JSON.stringify(resources);
   const { key } = pushRef('locations');
   const locationObject = createLocationObject(key, { ...locationData, uploaded: false });
@@ -79,7 +81,7 @@ export async function addLocalLocation(locationData) {
   const createdAt = moment.utc(locationObject.created).toISOString();
   await executeTransaction(
     'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
-    [key, key, createdAt, resourcesString, status, 0],
+    [key, key, createdAt, resourcesString, status, 0]
   );
 
   return locationObject;

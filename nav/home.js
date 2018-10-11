@@ -40,35 +40,38 @@ const drawer = createDrawerNavigator(drawerScreens, {
 });
 
 // Using a function to allow language changes to immediately update titles
-const drawerStack = createStackNavigator({
-  Drawer: {
-    screen: drawer,
-    navigationOptions: ({ navigation }) => ({
-      title: I18n.t('title/share_bibles'),
-      headerTitle: createHeaderTitle(),
-      headerLeft: createHeader('bars', () => navigation.toggleDrawer()),
-      headerRight: <View />,
-    }),
+const drawerStack = createStackNavigator(
+  {
+    Drawer: {
+      screen: drawer,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('title/share_bibles'),
+        headerTitle: createHeaderTitle(),
+        headerLeft: createHeader('bars', () => navigation.toggleDrawer()),
+        headerRight: <View />,
+      }),
+    },
+    Invites: {
+      screen: Invites,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('title/accept_invites'),
+        headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
+      }),
+    },
+    LocationData: {
+      screen: LocationData,
+      navigationOptions: ({ navigation }) => ({
+        title: I18n.t('title/location_data'),
+        headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
+      }),
+    },
   },
-  Invites: {
-    screen: Invites,
-    navigationOptions: ({ navigation }) => ({
-      title: I18n.t('title/accept_invites'),
-      headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
-    }),
-  },
-  LocationData: {
-    screen: LocationData,
-    navigationOptions: ({ navigation }) => ({
-      title: I18n.t('title/location_data'),
-      headerLeft: createHeader('chevron-left', () => navigation.goBack(null)),
-    }),
-  },
-}, {
-  headerMode: 'float',
-  navigationOptions: {
-    gesturesEnabled: false,
-  },
-});
+  {
+    headerMode: 'float',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+  }
+);
 
 export default drawerStack;

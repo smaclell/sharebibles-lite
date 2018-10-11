@@ -9,17 +9,12 @@ import fonts from '../styles/fonts';
 import { ACTION_STEPS, BUTTON_STEPS, STEPS, ORDERED_STEPS } from '../assets/constants/OnboardingSteps';
 
 export function step8Top() {
-  return Platform.OS === 'ios' ?
-    Expo.Constants.statusBarHeight + 5 :
-    Expo.Constants.statusBarHeight + 10;
+  return Platform.OS === 'ios' ? Expo.Constants.statusBarHeight + 5 : Expo.Constants.statusBarHeight + 10;
 }
 
 export function step9Top() {
-  return Platform.OS === 'ios' ?
-    Expo.Constants.statusBarHeight + 100 :
-    Expo.Constants.statusBarHeight + 115;
+  return Platform.OS === 'ios' ? Expo.Constants.statusBarHeight + 100 : Expo.Constants.statusBarHeight + 115;
 }
-
 
 const containerStyles = StyleSheet.create({
   defaultContainer: {
@@ -138,7 +133,7 @@ class Onboarding extends PureComponent {
     } else {
       await this.props.setOnboardingStatus(true);
     }
-  }
+  };
 
   onBackPress = async () => {
     const { step, setCompleted } = this.props;
@@ -151,11 +146,11 @@ class Onboarding extends PureComponent {
     }
 
     await this.props.setStep(newStep);
-  }
+  };
 
   onQuitPress = () => {
     this.props.setOnboardingStatus(true);
-  }
+  };
 
   onHightlightButtonPress = async () => {
     const { step, setStep } = this.props;
@@ -165,7 +160,7 @@ class Onboarding extends PureComponent {
     }
 
     await setStep(step + 1);
-  }
+  };
 
   getStepInfo = () => {
     const { step } = this.props;
@@ -174,18 +169,15 @@ class Onboarding extends PureComponent {
       description: `onboarding/${step}_description`,
       continueButton: step === STEPS.end ? 'onboarding/finish' : 'onboarding/continue',
     };
-  }
+  };
 
   getContainerStyles = (step) => {
     const style = containerStyles[`step${step}Container`] || containerStyles.defaultContainer;
     return [styles.container, style];
-  }
+  };
 
   render() {
-    const {
-      isOnboarded,
-      step,
-    } = this.props;
+    const { isOnboarded, step } = this.props;
 
     // If already onboarded or waiting for user to complete action before showing info again then don't show anything
     if (isOnboarded || ACTION_STEPS.includes(step)) {
@@ -198,7 +190,9 @@ class Onboarding extends PureComponent {
     return (
       <View style={this.getContainerStyles(step)}>
         <View style={styles.onBoardingContainer}>
-          <TouchableOpacity style={styles.quitBtn} onPress={this.onQuitPress}><Icon size="medium" colour="black" name="times" family="font-awesome" /></TouchableOpacity>
+          <TouchableOpacity style={styles.quitBtn} onPress={this.onQuitPress}>
+            <Icon size="medium" colour="black" name="times" family="font-awesome" />
+          </TouchableOpacity>
           <View style={styles.onBoardingInfo}>
             <Text style={styles.infoHeader}>{I18n.t(header)}</Text>
             <Text style={styles.infoDescription}>{I18n.t(description)}</Text>
@@ -207,11 +201,11 @@ class Onboarding extends PureComponent {
             <TouchableOpacity style={styles.actionBtn} onPress={this.onBackPress} disabled={step === STEPS.start}>
               <Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text>
             </TouchableOpacity>
-            {showContinue &&
+            {showContinue && (
               <TouchableOpacity style={styles.actionBtn} onPress={this.onContinuePress}>
                 <Text style={styles.actionBtnText}>{I18n.t(continueButton)}</Text>
               </TouchableOpacity>
-            }
+            )}
           </View>
         </View>
         <TouchableOpacity style={highlightButtonStyles[`step${step}Button`]} onPress={this.onHightlightButtonPress} />

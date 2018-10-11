@@ -22,11 +22,8 @@ function update(info) {
 
 export function setup() {
   return (dispatch) => {
-    NetInfo.addEventListener(
-      'connectionChange',
-      info => dispatch(update(info)),
-    );
+    NetInfo.addEventListener('connectionChange', (info) => dispatch(update(info)));
 
-    NetInfo.getConnectionInfo().then(info => dispatch(update(info)));
+    NetInfo.getConnectionInfo().then((info) => dispatch(update(info)));
   };
 }

@@ -78,10 +78,11 @@ class Invites extends PureComponent {
     this.setState({
       hasCameraPermission: status === 'granted',
     });
-  }
+  };
 
   readCode = async (result) => {
-    if (!result.data) { // TODO: Handle errors
+    if (!result.data) {
+      // TODO: Handle errors
       return;
     }
 
@@ -112,16 +113,16 @@ class Invites extends PureComponent {
     } finally {
       this.setState({ inviting: false });
     }
-  }
+  };
 
-  dismissKeyboard = () => Keyboard.dismiss()
+  dismissKeyboard = () => Keyboard.dismiss();
 
   render() {
     const disabled = !this.state.inviteCode || this.state.inviting || this.state.failed;
 
     return (
       <View style={styles.container}>
-        { this.state.hasCameraPermission && (
+        {this.state.hasCameraPermission && (
           <TouchableWithoutFeedback onPress={this.dismissKeyboard}>
             <BarCodeScanner
               onBarCodeRead={this.readCode}
@@ -131,15 +132,11 @@ class Invites extends PureComponent {
           </TouchableWithoutFeedback>
         )}
         <View style={styles.overlay}>
-          { this.state.hasCameraPermission === null && (
-            <Text style={styles.permission}>
-              { I18n.t('permissions/camera/requesting') }
-            </Text>
+          {this.state.hasCameraPermission === null && (
+            <Text style={styles.permission}>{I18n.t('permissions/camera/requesting')}</Text>
           )}
-          { this.state.hasCameraPermission === false && (
-            <Text style={[styles.permission, styles.denied]}>
-              {I18n.t('permissions/camera/denied') }
-            </Text>
+          {this.state.hasCameraPermission === false && (
+            <Text style={[styles.permission, styles.denied]}>{I18n.t('permissions/camera/denied')}</Text>
           )}
         </View>
         <View style={styles.bottomBar}>
@@ -150,7 +147,7 @@ class Invites extends PureComponent {
             clearButtonMode="always"
             onSubmitEditing={this.accept}
             returnKeyType="done"
-            onChangeText={inviteCode => this.setState({ inviteCode, failed: false })}
+            onChangeText={(inviteCode) => this.setState({ inviteCode, failed: false })}
             value={this.state.inviteCode}
             placeholderTextColor={colours.greys.lighter}
             placeholder={I18n.t('invites/placeholder')}
@@ -171,12 +168,14 @@ Invites.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   acceptInvite: bindActionCreators(accept, dispatch),
   initialize: bindActionCreators(initialize, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Invites);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Invites);

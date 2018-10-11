@@ -51,12 +51,12 @@ export function setOnboardingStatus(status = true) {
 export function restoreOnboardingStatus() {
   return async (dispatch) => {
     let isOnboarded = await SecureStore.getItemAsync(ONBOARDED);
-    const step = await SecureStore.getItemAsync(ONBOARDING_STEP) || ORDERED_STEPS[STEPS.start];
+    const step = (await SecureStore.getItemAsync(ONBOARDING_STEP)) || ORDERED_STEPS[STEPS.start];
 
     if (isOnboarded === null) {
       await SecureStore.setItemAsync(ONBOARDED, 'false');
     }
-    isOnboarded = (isOnboarded === 'true');
+    isOnboarded = isOnboarded === 'true';
     dispatch(setStatus(isOnboarded));
     return dispatch(setStep(STEPS[step].index));
   };
@@ -65,12 +65,14 @@ export function restoreOnboardingStatus() {
 export function stepAction() {
   return async (dispatch, getState) => {
     const state = getState();
-    const { onboarding: { step } } = state;
+    const {
+      onboarding: { step },
+    } = state;
 
     const options = {
       ...state.onboarding,
       regionKey: state.authentication.regionKey || null,
-      setStep: newStep => dispatch(setStep(newStep)),
+      setStep: (newStep) => dispatch(setStep(newStep)),
       setCompleted: (key, value) => dispatch(setCompleted(key, value)),
     };
 

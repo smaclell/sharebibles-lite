@@ -84,8 +84,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.large,
     fontWeight: 'bold',
   },
-  logo_container: {
-  },
+  logo_container: {},
   logo: {
     height: 40,
     width: 40,
@@ -110,16 +109,14 @@ const styles = StyleSheet.create({
 class Settings extends Component {
   state = {
     showAllLanguages: false,
-  }
+  };
 
   toggleLanguages = () => {
-    this.setState(s => ({ ...s, showAllLanguages: !s.showAllLanguages }));
-  }
+    this.setState((s) => ({ ...s, showAllLanguages: !s.showAllLanguages }));
+  };
 
   render = () => {
-    const {
-      showAllLanguages,
-    } = this.state;
+    const { showAllLanguages } = this.state;
     const {
       acceptInvite,
       allowDownload,
@@ -139,10 +136,7 @@ class Settings extends Component {
     } = this.props;
 
     const selected = `locale/${!/^(pt|zh)/.test(I18n.locale) ? I18n.locale.substring(0, 2) : I18n.locale}`;
-    const languageStyles = [
-      styles.language_container,
-      showAllLanguages && styles.shown_languages_container,
-    ];
+    const languageStyles = [styles.language_container, showAllLanguages && styles.shown_languages_container];
 
     const languageTitleStyles = [
       SettingsItem.styles.text,
@@ -157,29 +151,33 @@ class Settings extends Component {
           <TouchableOpacity onPress={this.toggleLanguages}>
             <Text style={languageTitleStyles}>{I18n.t('settings/change_language')}</Text>
           </TouchableOpacity>
-          { showAllLanguages && (
+          {showAllLanguages && (
             <ScrollView style={styles.languagesOuter} contentContainerStyle={styles.languagesInner}>
               {languages.map(([key, value]) => (
-                <TouchableOpacity style={[styles.language]} key={key} onPress={() => updateLocale(key.replace('locale/', ''))}>
+                <TouchableOpacity
+                  style={[styles.language]}
+                  key={key}
+                  onPress={() => updateLocale(key.replace('locale/', ''))}
+                >
                   <Text style={[SettingsItem.styles.text, key === selected && styles.bold]}>{value}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
           )}
         </View>
-        { !showAllLanguages && (
+        {!showAllLanguages && (
           <View style={styles.options_container}>
-            { regionKey && (
+            {regionKey && (
               <View style={SettingsItem.styles.container}>
                 <Text style={SettingsItem.styles.text}>{I18n.t('settings/region', { region: regionKey })}</Text>
               </View>
             )}
-            { !regionKey && enableInvitations && (
-              <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />
+            {!regionKey && enableInvitations && <SettingsItem term="settings/accept_invites" onPress={acceptInvite} />}
+            {regionKey && (
+              <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} />
             )}
-            { regionKey && <SettingsItem term="settings/push_locations" onPress={showPushDialog} disabled={!canUpload} /> }
-            { regionKey && <SettingsItem term="settings/location_data" onPress={showLocationData} /> }
-            { regionKey && (
+            {regionKey && <SettingsItem term="settings/location_data" onPress={showLocationData} />}
+            {regionKey && (
               <View style={SettingsItem.styles.container}>
                 <Text style={SettingsItem.styles.text}>{I18n.t('settings/allow_download')}</Text>
                 <Switch onValueChange={updateAllowDownload} value={allowDownload} />
@@ -187,13 +185,13 @@ class Settings extends Component {
             )}
             <SettingsItem term="settings/export" onPress={exportData} />
             <SettingsItem term="settings/send_feedback" onPress={sendFeedback} />
-            { regionKey && <SettingsItem term="settings/logout" onPress={logout} /> }
-            { __DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} /> }
-            { __DEV__ && <SettingsItem term="settings/onboarding_reset" onPress={resetOnboarding} /> }
+            {regionKey && <SettingsItem term="settings/logout" onPress={logout} />}
+            {__DEV__ && <SettingsItem term="settings/push_locations_clear" onPress={clearPushPermission} />}
+            {__DEV__ && <SettingsItem term="settings/onboarding_reset" onPress={resetOnboarding} />}
           </View>
         )}
         <View style={styles.version_container}>
-          { __DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}
+          {__DEV__ && <Text style={styles.dev}>DEVELOPMENT MODE</Text>}
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
@@ -202,7 +200,7 @@ class Settings extends Component {
         </View>
       </ScrollView>
     );
-  }
+  };
 }
 
 Settings.propTypes = {

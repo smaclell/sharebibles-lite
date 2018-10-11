@@ -43,9 +43,7 @@ class SlideIn extends Component {
   }
 
   render() {
-    const {
-      visible, style, children, ...rest
-    } = this.props;
+    const { visible, style, children, ...rest } = this.props;
 
     const containerStyle = {
       transform: [{ translateY: this.visibility }],

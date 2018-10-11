@@ -50,9 +50,16 @@ const styles = StyleSheet.create({
 
 const initialLatitudeDelta = 0.00200012;
 const initialLongitudeDelta = 0.00200006;
-const offset = 0.00010000;
+const offset = 0.0001;
 
-const FailedListItem = ({ item: { error, key, location: { latitude, longitude } }, onPress }) => {
+const FailedListItem = ({
+  item: {
+    error,
+    key,
+    location: { latitude, longitude },
+  },
+  onPress,
+}) => {
   const region = {
     latitude: latitude + offset, // Keeps pin in view (Small map)
     longitude,
@@ -88,7 +95,7 @@ const FailedListItem = ({ item: { error, key, location: { latitude, longitude } 
           </MapView>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.error}>{error ? I18n.t(error) : I18n.t('locationData/unknown_error') }</Text>
+          <Text style={styles.error}>{error ? I18n.t(error) : I18n.t('locationData/unknown_error')}</Text>
           <Text style={styles.text}>{I18n.t('locationData/latitude', { value: latitude.toFixed(5) })}</Text>
           <Text style={styles.text}>{I18n.t('locationData/longitude', { value: longitude.toFixed(5) })}</Text>
         </View>

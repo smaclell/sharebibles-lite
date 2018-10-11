@@ -5,6 +5,7 @@ import authentication from './authentication';
 import connectivity from './connectivity';
 import i18n from './i18n';
 import locations from './locations';
+import onboarding from './onboarding';
 import permissions from './permissions';
 import position from './position';
 import regions from './regions';
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   connected: connectivity,
   i18n,
   locations,
+  onboarding,
   permissions,
   position,
   regions,

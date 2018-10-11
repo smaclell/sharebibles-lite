@@ -6,14 +6,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import Status from './Status';
-import colours from '../styles/colours';
 import I18n from '../assets/i18n/i18n';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 0,
-    backgroundColor: colours.white,
     flexDirection: 'column',
     alignSelf: 'stretch',
     alignItems: 'stretch',

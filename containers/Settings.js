@@ -11,6 +11,7 @@ import I18n, { updateLocale } from '../actions/i18n';
 import { clearPushPermission } from '../actions/permissions';
 import { UploadStatus } from '../actions/uploads';
 import { change } from '../actions/overview';
+import { setOnboardingStatus } from '../actions/onboarding';
 import emails from '../assets/constants/emails';
 import toCsv from '../utils/csv';
 
@@ -91,6 +92,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   logout: () => dispatch(logout()),
   showPushDialog: () => dispatch(showPushDialog()),
   sendFeedback,
+  resetOnboarding: () => {
+    ownProps.navigation.closeDrawer();
+    dispatch(setOnboardingStatus(false));
+  },
   updateLocale: (locale) => {
     ownProps.navigation.setParams({ locale });
     dispatch(updateLocale(locale));

@@ -5,6 +5,7 @@ import { containing } from './regions';
 import { failed, pending, uploaded, offline, setUploadingStatus } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
+import { setCompleted, COMPLETED_KEYS } from './onboarding';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 function receiveLocation(location) {
@@ -100,7 +101,11 @@ export function createLocation(options) {
   } = options;
 
   return async (dispatch, getState) => {
-    const { authentication: { regionKey: hasRegion }, connected } = getState();
+    const { authentication: { regionKey: hasRegion }, connected, onboarding: { hasAddedLocation } } = getState();
+
+    if (!hasAddedLocation) {
+      dispatch(setCompleted(COMPLETED_KEYS.hasAddedLocation));
+    }
 
     const locationData = {
       latitude, longitude, resources, status,

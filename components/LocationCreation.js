@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colours.white,
   },
 
   resourceContainer: {
@@ -176,6 +177,7 @@ class LocationCreation extends Component {
     const isDisabled = this.state.status === 'unknown';
     const buttonStyle = isDisabled ? styles.saveButtonDisabled : styles.saveButton;
     const buttonTextStyle = isDisabled ? styles.buttonTextDisabled : styles.buttonText;
+
     return (
       <View style={styles.createLocationContainer}>
         <View style={styles.controlsContainer}>

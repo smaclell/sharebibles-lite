@@ -36,7 +36,7 @@ export const STEPS = {
     backLogic: setCompleted => setCompleted(COMPLETED_KEYS.hasAddedLocation, false),
   },
   addLocationAction: {
-    actionLogic: (props) => {
+    actionLogic: async (props) => {
       const {
         completed: { hasAddedLocation },
         setCompleted,
@@ -44,7 +44,7 @@ export const STEPS = {
       } = props;
 
       if (hasAddedLocation) {
-        setStep(STEPS.viewPinCallout.index);
+        await setStep(STEPS.viewPinCallout.index);
         setCompleted(COMPLETED_KEYS.hasAddedLocation);
       }
     },
@@ -58,7 +58,7 @@ export const STEPS = {
   },
   pinCalloutDescription: {},
   invitations1: {
-    actionLogic: (props) => {
+    actionLogic: async (props) => {
       const {
         regionKey,
         completed: { hasAcceptedInvite },
@@ -68,7 +68,7 @@ export const STEPS = {
 
       if (regionKey && !hasAcceptedInvite) {
         setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
-        setStep(STEPS.invitationAccepted.index);
+        await setStep(STEPS.invitationAccepted.index);
       }
     },
   },
@@ -82,7 +82,7 @@ export const STEPS = {
   },
   invitations4: {},
   invitationsAction: {
-    actionLogic: (props) => {
+    actionLogic: async (props) => {
       const {
         regionKey,
         hasAcceptedInvite,
@@ -92,13 +92,13 @@ export const STEPS = {
 
       if (regionKey && !hasAcceptedInvite) {
         setCompleted(COMPLETED_KEYS.hasAcceptedInvite);
-        setStep(STEPS.invitationAccepted.index);
+        await setStep(STEPS.invitationAccepted.index);
       }
     },
   },
   invitationAccepted: {},
   endScreen: {},
-  end: 13,
+  end: ORDERED_STEPS.length - 1,
   start: 1,
   zero: {},
 };

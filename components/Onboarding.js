@@ -132,15 +132,15 @@ class Onboarding extends PureComponent {
     }
   }
 
-  onContinuePress = () => {
+  onContinuePress = async () => {
     if (this.props.step < STEPS.end) {
-      this.props.setStep(this.props.step + 1);
+      await this.props.setStep(this.props.step + 1);
     } else {
-      this.props.setOnboardingStatus(true);
+      await this.props.setOnboardingStatus(true);
     }
   }
 
-  onBackPress = () => {
+  onBackPress = async () => {
     const { step, setCompleted } = this.props;
     let back = 1;
     while (ACTION_STEPS.includes(step - back)) back += 1;
@@ -150,21 +150,21 @@ class Onboarding extends PureComponent {
       STEPS[ORDERED_STEPS[newStep]].backLogic(setCompleted);
     }
 
-    this.props.setStep(newStep);
+    await this.props.setStep(newStep);
   }
 
   onQuitPress = () => {
     this.props.setOnboardingStatus(true);
   }
 
-  onHightlightButtonPress = () => {
+  onHightlightButtonPress = async () => {
     const { step, setStep } = this.props;
 
     if (STEPS[ORDERED_STEPS[step]].buttonLogic) {
       STEPS[ORDERED_STEPS[step]].buttonLogic();
     }
 
-    setStep(step + 1);
+    await setStep(step + 1);
   }
 
   getStepInfo = () => {
@@ -204,7 +204,7 @@ class Onboarding extends PureComponent {
             <Text style={styles.infoDescription}>{I18n.t(description)}</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.actionBtn} onPress={this.onBackPress} disabled={step === 1}>
+            <TouchableOpacity style={styles.actionBtn} onPress={this.onBackPress} disabled={step === STEPS.start}>
               <Text style={styles.actionBtnText}>{I18n.t('onboarding/back')}</Text>
             </TouchableOpacity>
             {showContinue &&

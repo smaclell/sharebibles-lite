@@ -41,7 +41,7 @@ export function setOnboardingStatus(status = true) {
   return async (dispatch) => {
     await SecureStore.setItemAsync(ONBOARDED, status.toString());
     if (!status) {
-      dispatch(setStep(STEPS.start));
+      await dispatch(setStep(STEPS.start));
     }
 
     dispatch(setStatus(status));
@@ -63,7 +63,7 @@ export function restoreOnboardingStatus() {
 }
 
 export function stepAction() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState();
     const { onboarding: { step } } = state;
 
@@ -75,7 +75,7 @@ export function stepAction() {
     };
 
     if (step < STEPS.end && STEPS[ORDERED_STEPS[step]].actionLogic) {
-      STEPS[ORDERED_STEPS[step]].actionLogic(options);
+      await STEPS[ORDERED_STEPS[step]].actionLogic(options);
     }
   };
 }

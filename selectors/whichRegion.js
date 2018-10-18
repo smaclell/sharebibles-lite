@@ -5,9 +5,6 @@ const regions = createSelector((state) => state.regions, (data) => Object.values
 
 const geojson = createSelector(regions, (x) => x.map((r) => r.geojson));
 
-export default createSelector(geojson, (features) =>
-  whichPolygon({
-    type: 'FeatureCollection',
-    features,
-  })
+export default createSelector(geojson, (featureCollection) =>
+  whichPolygon(featureCollection[0])
 );

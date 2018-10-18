@@ -5,6 +5,14 @@ const regions = createSelector((state) => state.regions, (data) => Object.values
 
 const geojson = createSelector(regions, (x) => x.map((r) => r.geojson));
 
-export default createSelector(geojson, (featureCollection) =>
-  whichPolygon(featureCollection[0])
+export default createSelector(geojson, (featureCollection) => {
+  let regionKey;
+  for (let i = 0; i < featureCollection.length; i += 1) {
+    regionKey = whichPolygon(featureCollection[i]);
+
+    if (regionKey) break;
+  }
+
+  return regionKey;
+}
 );

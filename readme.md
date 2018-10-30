@@ -15,22 +15,18 @@ This is a mobile application to help share the Bible throughout the world.
 1. To run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
     1. brew install node
-
     2. brew install watchman
-
     3. brew install npm
-
     4. npm install -g react-native-cli
 
-2. Install the XDE and exp cli tool from [expo](https://docs.expo.io/versions/latest/introduction/installation.html)
+2. Ensure you have `yarn` installed, i.e. `brew install yarn`
+3. Install all the dependencies using `yarn install`
+4. Install the [expo cli](https://docs.expo.io/versions/latest/introduction/installation.html) `yarn global add expo-cli`
+5. Start the project by running `expo start` in the project
+6. Create an account on `expo.io` and sign in on your device
+7. Using the expo app on your phone see the awesomeness you have created! (Android, take a picture of your QR code and for iOS send yourself a link)
 
-3. Ensure you have `yarn` installed, i.e. `brew install yarn`
-
-4. Install all the dependencies using `yarn install`
-
-5. Using the XDE to run the project (open the project folder)
-
-6. Using the expo app on your phone see the awesomeness you have created!
+Bonus: If you want to try out a simple change, open the `colours.js` file, change a few values like black and white then reload the application.
 
 Create a card on the trello board if this does not work for you.
 

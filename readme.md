@@ -19,11 +19,11 @@ This is a mobile application to help share the Bible throughout the world.
     3. brew install npm
     4. npm install -g react-native-cli
 
-2. Ensure you have `yarn` installed, i.e. `brew install yarn`
+2. Ensure you have `yarn` installed, i.e. `brew install yarn` or https://yarnpkg.com/en/docs/install
 3. Install all the dependencies using `yarn install`
 4. Install the [expo cli](https://docs.expo.io/versions/latest/introduction/installation.html) `yarn global add expo-cli`
 5. Start the project by running `expo start` in the project
-6. Create an account on `expo.io` and sign in on your device
+6. Create an account on `expo.io` and sign into the expo app on your device
 7. Using the expo app on your phone see the awesomeness you have created! (Android, take a picture of your QR code and for iOS send yourself a link)
 
 Bonus: If you want to try out a simple change, open the `colours.js` file, change a few values like black and white then reload the application.

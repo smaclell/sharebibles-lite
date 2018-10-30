@@ -23,7 +23,10 @@ describe('selectors/whichRegion', () => {
 
     const selected = selector(state);
 
-    expect(selected).toEqual('a');
+    expect(selected).toEqual({
+      type: 'FeatureCollection',
+      features: 'a',
+    });
   });
 
   it('memoizes the value', () => {

@@ -25,7 +25,7 @@ describe('selectors/whichRegion', () => {
 
     expect(selected).toEqual({
       type: 'FeatureCollection',
-      features: ['a', 'b'],
+      features: 'a',
     });
   });
 

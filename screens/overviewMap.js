@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   animatedContainer: {
-    backgroundColor: colours.white,
+    backgroundColor: colours.transparent,
     position: 'absolute',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,

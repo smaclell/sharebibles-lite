@@ -14,7 +14,7 @@ export default createSelector(geojson, (featureCollection) => {
     } else {
       regionKey = whichPolygon({
         type: 'FeatureCollection',
-        features: featureCollection[i],
+        features: [featureCollection[i]],
       });
     }
   }

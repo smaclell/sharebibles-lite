@@ -10,11 +10,13 @@ export default createSelector(geojson, (featureCollection) => {
 
   for (let i = 0; i < featureCollection.length && !regionKey; i += 1) {
     if (featureCollection[i].type && featureCollection[i].type === 'FeatureCollection') {
+      console.log('took new');
       regionKey = whichPolygon(featureCollection[i]);
     } else {
+      console.log('took old', JSON.stringify(featureCollection[i]));
       regionKey = whichPolygon({
         type: 'FeatureCollection',
-        features: featureCollection[i],
+        features: [featureCollection[i]],
       });
     }
   }

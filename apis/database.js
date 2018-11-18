@@ -1,8 +1,10 @@
-import { SQLite } from 'expo';
+import { SQLite, SecureStore, Constants } from 'expo';
 import Sentry from 'sentry-expo';
 import moment from 'moment';
 import { pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
+
+const DATABASE_VERSION_KEY = 'DATABASE_VERSION_KEY';
 
 export function openDatabase(databaseName = 'locations.1.db') {
   return SQLite.openDatabase(databaseName);
@@ -23,9 +25,11 @@ export function executeTransaction(statement, args = null) {
   });
 }
 
-export function createDatabases() {
+export async function createDatabases() {
+  await SecureStore.setItemAsync(DATABASE_VERSION_KEY, Constants.manifest.extra.localDatabaseVersion);
+
   return executeTransaction(
-    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
+    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int, updated int)'
   );
 }
 
@@ -33,20 +37,35 @@ export function clearDatabase() {
   return executeTransaction('drop table locations');
 }
 
+export function deleteLocation(key) {
+  return executeTransaction('delete from locations where key = ?', [key]);
+}
+
 export function updateUploadStatus(key, isUploaded) {
   return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
 }
 
-export function updateLocalLocation(options) {
-  const { resources, status, key } = options;
-  // Uncomment this if user is ever able to change location position
-  // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
+export async function updateLocalLocation(options, oldLocation) {
+  const { key, updated = 0 } = oldLocation;
+  const { latitude, longitude, resources, status } = options;
 
-  return executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [
+  SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
+
+  const locationObject = createLocationObject(key, {
+    ...oldLocation,
+    ...options,
+    uploaded: false,
+    updated: oldLocation.updated + 1,
+  });
+
+  await executeTransaction('update locations set resources = ?, status = ?, uploaded = 0, updated = ? where key = ?', [
     resources,
     status,
+    updated + 1,
     key,
   ]);
+
+  return locationObject;
 }
 
 // fetches individual location
@@ -80,9 +99,35 @@ export async function addLocalLocation(locationData) {
 
   const createdAt = moment.utc(locationObject.created).toISOString();
   await executeTransaction(
-    'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
-    [key, key, createdAt, resourcesString, status, 0]
+    'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) values (?, ?, ?, ?, ?, ?, ?)',
+    [key, key, createdAt, resourcesString, status, 0, 0]
   );
 
   return locationObject;
+}
+
+export async function createOrUpdateDatabase() {
+  const version = await SecureStore.getItemAsync(DATABASE_VERSION_KEY);
+
+  await createDatabases();
+
+  if (version === Constants.manifest.extra.localDatabaseVersion) {
+    return Promise.resolve();
+  }
+
+  const locations = await fetchLocalLocations();
+
+  await clearDatabase();
+  await createDatabases();
+
+  const transactions = locations.map((location) => {
+    const { key, createdAt, resources, status, uploaded = 0, updated = 0 } = location;
+
+    return executeTransaction(
+      'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) values (?, ?, ?, ?, ?, ?, ?)',
+      [key, key, createdAt, JSON.stringify(resources), status, uploaded, updated]
+    );
+  });
+
+  return Promise.all(transactions);
 }

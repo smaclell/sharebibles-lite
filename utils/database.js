@@ -7,9 +7,9 @@ export const LOCATION_UPLOADED = Object.freeze({ true: 1, false: 0 });
 export function createLocationObject(key, options) {
   const created = moment.utc().valueOf();
   return {
+    ...options,
     key,
     created,
-    ...options,
   };
 }
 
@@ -28,7 +28,7 @@ export async function getCoordinates(key) {
 }
 
 export async function convertToLocation(location) {
-  const { key, resources, status, uploaded } = location;
+  const { key, resources, status, uploaded, updated } = location;
   const created = moment(location.createdAt).valueOf();
   const { longitude, latitude } = await getCoordinates(key);
   return {
@@ -39,6 +39,7 @@ export async function convertToLocation(location) {
     longitude,
     latitude,
     uploaded: uploaded === LOCATION_UPLOADED.true,
+    updated: updated || 0,
   };
 }
 

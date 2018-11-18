@@ -86,6 +86,24 @@ export function fetchLocation(locationKey) {
     .then((location) => location.val());
 }
 
+export function updateLocation(newLocation, key) {
+  initialize();
+
+  let pushed;
+  if (key) {
+    pushed = getRef(`locations/${key}`);
+  } else {
+    pushed = pushRef('locations');
+  }
+
+  const saved = pushed.set(newLocation);
+  const geoPromises = saveGeoData(newLocation, pushed.key, newLocation.regionKey);
+
+  return {
+    saved: Promise.all([saved, ...geoPromises]),
+  };
+}
+
 export async function createLocation(regionKey, options, key) {
   initialize();
 

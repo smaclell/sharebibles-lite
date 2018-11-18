@@ -5,19 +5,47 @@ import { MapView } from 'expo';
 import PinCallout from '../components/PinCallout';
 
 class LocationMarker extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.handleDragEnd = this.handleDragEnd.bind(this);
+  }
+
+  handleDragStart(event) {
+    const { onDragStart, location } = this.props;
+
+    onDragStart(event, location.uploaded);
+  }
+
+  handleDragEnd(event) {
+    const { onDragEnd, location } = this.props;
+
+    onDragEnd(event, location);
+  }
+
   render() {
+    const { onDrag, onDragStart, pinColor, location } = this.props;
+
     return (
-      <MapView.Marker
+      <MapView.Marker.Animated
         coordinate={{
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
+          latitude: location.latitude,
+          longitude: location.longitude,
         }}
-        pinColor={this.props.pinColor}
+        pinColor={pinColor}
+        stopPropagation
+        draggable
+        onDragStart={onDragStart}
+        onDrag={onDrag}
+        onDragEnd={this.handleDragEnd}
+        ref={(marker) => {
+          this.marker = marker;
+        }}
       >
         <MapView.Callout>
-          <PinCallout {...this.props.location} />
+          <PinCallout {...location} />
         </MapView.Callout>
-      </MapView.Marker>
+      </MapView.Marker.Animated>
     );
   }
 }
@@ -28,6 +56,9 @@ LocationMarker.propTypes = {
     longitude: PropTypes.number.isRequired,
   }).isRequired,
   pinColor: PropTypes.string.isRequired,
+  onDragStart: PropTypes.func.isRequired,
+  onDrag: PropTypes.func.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
 };
 
 const getPinColor = ({ status: key } = {}, { statuses }) => {

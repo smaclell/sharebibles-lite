@@ -1,4 +1,6 @@
 import Sentry from 'sentry-expo';
+import { Alert } from 'react-native';
+import i18n from '../assets/i18n/i18n';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
 import { containing } from './regions';
@@ -12,6 +14,14 @@ function receiveLocation(location) {
   return {
     type: RECIEVE_LOCATION,
     location,
+  };
+}
+
+export const REMOVE_LOCATION = 'REMOVE_LOCATION';
+function removeLocation(locationKey) {
+  return {
+    type: REMOVE_LOCATION,
+    locationKey,
   };
 }
 
@@ -69,6 +79,34 @@ export function restoreLocalLocations() {
   };
 }
 
+export function deleteLocalLocation(locationKey) {
+  return async (dispatch) => {
+    const result = await new Promise((resolve) => {
+      Alert.alert(
+        i18n.t('location/delete'),
+        i18n.t('location/confirmDelete'),
+        [
+          { text: i18n.t('button/cancel'), style: 'cancel', onPress: () => resolve(false) },
+          { text: i18n.t('button/delete'), onPress: () => resolve(true) },
+        ],
+        {
+          cancelable: true,
+          onDismiss: () => resolve(false),
+        }
+      );
+    });
+
+    if (result) {
+      database
+        .deleteLocation(locationKey)
+        .then(() => dispatch(removeLocation(locationKey)))
+        .catch((err) => {
+          Sentry.captureException(err);
+        });
+    }
+  };
+}
+
 export function fetchLocation(locationKey) {
   return async (dispatch, getState) => {
     const {
@@ -93,6 +131,49 @@ export function fetchLocation(locationKey) {
 export function fetchAllLocationData(locationKey) {
   return async (dispatch) => {
     await dispatch(fetchLocation(locationKey));
+  };
+}
+
+export function updateLocation(options, oldLocationKey) {
+  const { latitude, longitude, resources, status } = options;
+
+  return async (dispatch, getState) => {
+    const {
+      authentication: { regionKey: hasRegion },
+      connected,
+      locations,
+    } = getState();
+
+    const oldLocation = locations[oldLocationKey];
+
+    const locationData = {
+      latitude,
+      longitude,
+      resources,
+      status,
+    };
+
+    const localLocation = await database.updateLocalLocation(locationData, oldLocation);
+    const { key } = localLocation;
+
+    dispatch(offline(key));
+    dispatch(receiveLocation(localLocation));
+    if (connected && hasRegion) {
+      const allowed = await dispatch(requestPushPermission());
+      if (!allowed) {
+        return;
+      }
+
+      const regionKey = dispatch(containing(localLocation));
+      if (!regionKey) {
+        dispatch(failed(key, 'locationData/incorrect_region'));
+        return;
+      }
+
+      const { saved } = await apis.updateLocation(regionKey, localLocation, key);
+
+      await dispatch(wrapper(saved, localLocation));
+    }
   };
 }
 

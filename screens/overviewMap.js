@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Platform } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import i18n from '../assets/i18n/i18n';
 import * as positionActions from '../actions/position';
@@ -16,6 +16,7 @@ import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: colours.core.white,
+    fontSize: fonts.large,
   },
   editAreaFocused: {
     backgroundColor: colours.core.black,
@@ -114,6 +116,7 @@ class OverviewMap extends PureComponent {
     const {
       position: { latitude, longitude },
     } = props;
+
     this.initialRegion = {
       latitude,
       longitude,
@@ -234,11 +237,12 @@ class OverviewMap extends PureComponent {
   }
 
   onPinDrag(event) {
-    event.persist();
+    const { canDeletePin } = this.state;
     const { position } = event.nativeEvent;
+    event.persist();
 
     if (position.y < this.screenHeight / 8) {
-      if (position.x < this.screenWidth / 2) {
+      if (position.x < this.screenWidth / 2 || !canDeletePin) {
         this.setState({ inEdit: true, inDelete: false });
         return;
       }
@@ -255,10 +259,11 @@ class OverviewMap extends PureComponent {
 
     if (inEdit) {
       this.createTempPin({ latitude: pinLocation.latitude, longitude: pinLocation.longitude }, pinLocation.key);
-    }
-
-    if (inDelete) {
+    } else if (inDelete) {
       deleteLocalLocation(pinLocation.key);
+    } else {
+      // Is there a better way to get the pin to rerender??? Cause this is actually gross...
+      this.setState(() => ({ editingPinKey: pinLocation.key }), () => this.setState(() => ({ editingPinKey: null })));
     }
 
     this.setState(() => ({ draggingPin: false, inEdit: false, inDelete: false, canDeletePin: false }));
@@ -274,8 +279,8 @@ class OverviewMap extends PureComponent {
     return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   };
 
-  screenWidth = Dimensions.get('window').width * Dimensions.get('window').scale;
-  screenHeight = Dimensions.get('window').height * Dimensions.get('window').scale;
+  screenWidth = Dimensions.get('window').width * (Platform.OS === 'ios' ? 1 : Dimensions.get('window').scale);
+  screenHeight = Dimensions.get('window').height * (Platform.OS === 'ios' ? 1 : Dimensions.get('window').scale);
 
   createTempPin = (coord, editingPinKey) => {
     this.setState(() => ({ tempLocation: coord, editingPinKey }));
@@ -306,8 +311,6 @@ class OverviewMap extends PureComponent {
   render() {
     const { tempLocation, mapHeight, draggingPin, inEdit, inDelete, canDeletePin, editingPinKey } = this.state;
     const creationMaxHeight = this.getCreationMaxHeight();
-
-    console.log(tempLocation);
 
     return (
       <View style={styles.container} onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}>

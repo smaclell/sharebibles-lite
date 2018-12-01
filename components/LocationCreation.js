@@ -38,9 +38,10 @@ const styles = StyleSheet.create({
   controlButton: {
     margin: 7,
     borderRadius: 8,
+    paddingRight: 25,
   },
 
-  controlTitle: {
+  controlsTitle: {
     color: colours.core.white,
     fontSize: fonts.large,
   },
@@ -124,7 +125,7 @@ class LocationCreation extends Component {
       }
     } catch (err) {
       Sentry.captureException(err, { extra: { status } });
-      console.log('error', err);
+
       Alert.alert(
         I18n.t('validation/unknown_error_title'),
         I18n.t('validation/unknown_error_message'),

@@ -50,7 +50,8 @@
         "storageBucket": "",
         "messagingSenderId": "180261206879"
       },
-      "mapsUrl": "https://4kmaps.now.sh"
+      "mapsUrl": "https://4kmaps.now.sh",
+      "localDatabaseVersion": "2"
     }
   }
 }

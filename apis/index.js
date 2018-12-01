@@ -1,8 +1,12 @@
+import Sentry from 'sentry-expo';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
+import { Alert } from 'react-native';
+import i18n from '../assets/i18n/i18n';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
 import { createLocationObject } from '../utils/database';
+import { replaceLocalLocationWithRemote } from '../apis/database';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -86,7 +90,7 @@ export function fetchLocation(locationKey) {
     .then((location) => location.val());
 }
 
-export function updateLocation(newLocation, key) {
+export async function updateLocation(regionKey, key, newLocation) {
   initialize();
 
   let pushed;
@@ -96,15 +100,36 @@ export function updateLocation(newLocation, key) {
     pushed = pushRef('locations');
   }
 
+  try {
+    const existing = await fetchLocation(key);
+    if (existing && existing.key && existing.updated >= newLocation.updated) {
+      Alert.alert(i18n.t('location/errorUpdate'), i18n.t('location/errorUpdateDescription'), [
+        { text: i18n.t('button/ok'), onPress: () => {} },
+      ]);
+      await replaceLocalLocationWithRemote(existing);
+      return {
+        created: existing,
+        saved: Promise.resolve(),
+      };
+    }
+  } catch (err) {
+    Sentry.captureException(err, {
+      extra: {
+        locationKey: key,
+      },
+    });
+  }
+
   const saved = pushed.set(newLocation);
-  const geoPromises = saveGeoData(newLocation, pushed.key, newLocation.regionKey);
+  const geoPromises = saveGeoData(newLocation, pushed.key, regionKey);
 
   return {
+    created: newLocation,
     saved: Promise.all([saved, ...geoPromises]),
   };
 }
 
-export async function createLocation(regionKey, options, key) {
+export async function createLocation(regionKey, key, options) {
   initialize();
 
   let pushed;

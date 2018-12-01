@@ -10,6 +10,7 @@ export function createLocationObject(key, options) {
     ...options,
     key,
     created,
+    updated: options.updated || 0,
   };
 }
 
@@ -31,6 +32,7 @@ export async function convertToLocation(location) {
   const { key, resources, status, uploaded, updated } = location;
   const created = moment(location.createdAt).valueOf();
   const { longitude, latitude } = await getCoordinates(key);
+
   return {
     key,
     created,

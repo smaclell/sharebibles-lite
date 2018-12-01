@@ -12,7 +12,7 @@ import NavigationService from './utils/NavigationService';
 import Onboarding from './containers/Onboarding';
 import Navigation from './nav';
 import reducer from './reducers';
-import { createDatabases } from './apis/database';
+import { createOrUpdateDatabase } from './apis/database';
 import { initialize } from './apis';
 import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';
@@ -45,7 +45,7 @@ class App extends Component {
   componentDidMount() {
     Promise.all([
       ...this.loadFontsAsync(),
-      createDatabases(),
+      createOrUpdateDatabase(),
       I18n.initAsync(),
       store.dispatch(positionActions.initialize()),
       store.dispatch(

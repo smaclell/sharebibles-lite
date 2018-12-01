@@ -45,17 +45,30 @@ export function updateUploadStatus(key, isUploaded) {
   return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
 }
 
+export function replaceLocalLocationWithRemote(remoteLocation) {
+  const { key, latitude, longitude, updated, status, resources } = remoteLocation;
+
+  saveCoordinates(key, latitude, longitude);
+
+  return executeTransaction('update locations set status = ?, resources = ?, updated = ?, uploaded = 1 where key = ?', [
+    status,
+    JSON.stringify(resources),
+    updated,
+    key,
+  ]);
+}
+
 export async function updateLocalLocation(options, oldLocation) {
   const { key, updated = 0 } = oldLocation;
   const { latitude, longitude, resources, status } = options;
 
-  SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
+  saveCoordinates(key, latitude, longitude);
 
   const locationObject = createLocationObject(key, {
     ...oldLocation,
     ...options,
     uploaded: false,
-    updated: oldLocation.updated + 1,
+    updated: oldLocation.uploaded ? oldLocation.updated + 1 : oldLocation.updated,
   });
 
   await executeTransaction('update locations set resources = ?, status = ?, uploaded = 0, updated = ? where key = ?', [

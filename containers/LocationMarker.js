@@ -8,6 +8,7 @@ class LocationMarker extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.handleDragStart = this.handleDragStart.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
   }
 
@@ -24,7 +25,7 @@ class LocationMarker extends PureComponent {
   }
 
   render() {
-    const { onDrag, onDragStart, pinColor, location } = this.props;
+    const { onDrag, pinColor, location } = this.props;
 
     return (
       <MapView.Marker.Animated
@@ -35,7 +36,7 @@ class LocationMarker extends PureComponent {
         pinColor={pinColor}
         stopPropagation
         draggable
-        onDragStart={onDragStart}
+        onDragStart={this.handleDragStart}
         onDrag={onDrag}
         onDragEnd={this.handleDragEnd}
         ref={(marker) => {

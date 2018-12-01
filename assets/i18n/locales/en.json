@@ -20,6 +20,8 @@
   "invites/placeholder": "Access Code",
   "location/edit": "Edit location",
   "location/delete": "Delete location",
+  "location/errorUpdate": "Edit failed",
+  "location/errorUpdateDescription": "Location on server was newer than the version on your local device. We have discarded your changes and updated the location. If you still wish to make changes, please try again.",
   "location/confirmDelete": "Are you sure you want to delete this location? This action cannot be undone!",
   "locationData/failed_upload": "Failed to upload: {{value}}",
   "locationData/incorrect_region": "Location is not within your current region!",

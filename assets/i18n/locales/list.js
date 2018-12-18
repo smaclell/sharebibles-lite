@@ -10,6 +10,7 @@ export default {
   'locale/pt-br': 'Português',
   'locale/zh-cn': '中文',
   'locale/zh-hk': '標準粵語',
+  'locale/ne': 'नेपाली',
   // Testing a long language list
   /*
   'locale/a': 'a',

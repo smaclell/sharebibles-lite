@@ -21,6 +21,8 @@ class LocationMarker extends PureComponent {
   handleDragEnd(event) {
     const { onDragEnd, location } = this.props;
 
+    this.forceUpdate();
+
     onDragEnd(event, location);
   }
 
@@ -28,7 +30,8 @@ class LocationMarker extends PureComponent {
     const { onDrag, pinColor, location } = this.props;
 
     return (
-      <MapView.Marker.Animated
+      <MapView.Marker
+        key={`${this.props.locationKey}${Date.now()}`}
         coordinate={{
           latitude: location.latitude,
           longitude: location.longitude,
@@ -39,23 +42,30 @@ class LocationMarker extends PureComponent {
         onDragStart={this.handleDragStart}
         onDrag={onDrag}
         onDragEnd={this.handleDragEnd}
-        ref={(marker) => {
-          this.marker = marker;
-        }}
       >
         <MapView.Callout>
           <PinCallout {...location} />
         </MapView.Callout>
-      </MapView.Marker.Animated>
+      </MapView.Marker>
     );
   }
 }
 
+LocationMarker.defaultProps = {
+  location: {
+    latitude: 0,
+    longitude: 0,
+    status: '',
+    created: 0,
+  },
+};
+
 LocationMarker.propTypes = {
+  locationKey: PropTypes.string.isRequired,
   location: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
   pinColor: PropTypes.string.isRequired,
   onDragStart: PropTypes.func.isRequired,
   onDrag: PropTypes.func.isRequired,
@@ -75,6 +85,7 @@ const mapStateToProps = (state, ownProps) => {
   const location = state.locations[ownProps.locationKey];
 
   return {
+    locationKey: ownProps.locationKey,
     pinColor: getPinColor(location, state),
     location,
     locale: state.i18n.locale,

@@ -2,8 +2,6 @@ import Sentry from 'sentry-expo';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
-import { Alert } from 'react-native';
-import i18n from '../assets/i18n/i18n';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
 import { createLocationObject } from '../utils/database';
 import { replaceLocalLocationWithRemote } from '../apis/database';
@@ -90,7 +88,7 @@ export function fetchLocation(locationKey) {
     .then((location) => location.val());
 }
 
-export async function updateLocation(regionKey, key, newLocation) {
+export async function updateLocation(regionKey, key, newLocation, showOutdatedAlert) {
   initialize();
 
   let pushed;
@@ -103,9 +101,7 @@ export async function updateLocation(regionKey, key, newLocation) {
   try {
     const existing = await fetchLocation(key);
     if (existing && existing.key && existing.updated >= newLocation.updated) {
-      Alert.alert(i18n.t('location/errorUpdate'), i18n.t('location/errorUpdateDescription'), [
-        { text: i18n.t('button/ok'), onPress: () => {} },
-      ]);
+      showOutdatedAlert();
       await replaceLocalLocationWithRemote(existing);
       return {
         created: existing,

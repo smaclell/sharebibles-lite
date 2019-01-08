@@ -261,9 +261,6 @@ class OverviewMap extends PureComponent {
       this.createTempPin({ latitude: pinLocation.latitude, longitude: pinLocation.longitude }, pinLocation.key);
     } else if (inDelete) {
       deleteLocalLocation(pinLocation.key);
-    } else {
-      // Is there a better way to get the pin to rerender??? Cause this is actually gross...
-      this.setState(() => ({ editingPinKey: pinLocation.key }), () => this.setState(() => ({ editingPinKey: null })));
     }
 
     this.setState(() => ({ draggingPin: false, inEdit: false, inDelete: false, canDeletePin: false }));
@@ -283,7 +280,7 @@ class OverviewMap extends PureComponent {
   screenHeight = Dimensions.get('window').height * (Platform.OS === 'ios' ? 1 : Dimensions.get('window').scale);
 
   createTempPin = (coord, editingPinKey) => {
-    this.setState(() => ({ tempLocation: coord, editingPinKey }));
+    this.setState({ tempLocation: coord, editingPinKey });
     // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
     // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
 

@@ -1,10 +1,11 @@
-import { SQLite, SecureStore, Constants } from 'expo';
+import { SQLite, SecureStore } from 'expo';
 import Sentry from 'sentry-expo';
 import moment from 'moment';
 import { pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
 
 const DATABASE_VERSION_KEY = 'DATABASE_VERSION_KEY';
+const DATABASE_VERSION = '2';
 
 export function openDatabase(databaseName = 'locations.1.db') {
   return SQLite.openDatabase(databaseName);
@@ -25,9 +26,7 @@ export function executeTransaction(statement, args = null) {
   });
 }
 
-export async function createDatabases() {
-  await SecureStore.setItemAsync(DATABASE_VERSION_KEY, Constants.manifest.extra.localDatabaseVersion);
-
+function createDatabases() {
   return executeTransaction(
     'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int, updated int)'
   );
@@ -124,7 +123,7 @@ export async function createOrUpdateDatabase() {
 
   await createDatabases();
 
-  if (version === Constants.manifest.extra.localDatabaseVersion) {
+  if (version === DATABASE_VERSION) {
     return Promise.resolve();
   }
 
@@ -142,5 +141,5 @@ export async function createOrUpdateDatabase() {
     );
   });
 
-  return Promise.all(transactions);
+  return Promise.all(transactions).then(() => SecureStore.setItemAsync(DATABASE_VERSION_KEY, DATABASE_VERSION));
 }

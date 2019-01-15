@@ -88,7 +88,7 @@ export function fetchLocation(locationKey) {
     .then((location) => location.val());
 }
 
-export async function updateLocation(regionKey, key, newLocation, showOutdatedAlert) {
+export async function updateLocation(regionKey, key, newLocation) {
   initialize();
 
   let pushed;
@@ -101,11 +101,11 @@ export async function updateLocation(regionKey, key, newLocation, showOutdatedAl
   try {
     const existing = await fetchLocation(key);
     if (existing && existing.key && existing.updated >= newLocation.updated) {
-      showOutdatedAlert();
       await replaceLocalLocationWithRemote(existing);
       return {
         created: existing,
         saved: Promise.resolve(),
+        outOfDate: true,
       };
     }
   } catch (err) {
@@ -122,6 +122,7 @@ export async function updateLocation(regionKey, key, newLocation, showOutdatedAl
   return {
     created: newLocation,
     saved: Promise.all([saved, ...geoPromises]),
+    outOfDate: false,
   };
 }
 
@@ -144,5 +145,6 @@ export async function createLocation(regionKey, key, options) {
   return {
     created,
     saved: Promise.all([saved, ...geoPromises]),
+    outOfDate: false,
   };
 }

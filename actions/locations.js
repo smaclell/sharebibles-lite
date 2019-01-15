@@ -137,14 +137,6 @@ export function fetchAllLocationData(locationKey) {
 }
 
 function pushLocation(localLocation, locationData, apiCall) {
-  const showOutdatedAlert = () =>
-    Alert.alert(i18n.t('location/errorUpdate'), i18n.t('location/errorUpdateDescription'), [
-      {
-        text: i18n.t('button/ok'),
-        onPress: () => {},
-      },
-    ]);
-
   return async (dispatch, getState) => {
     const {
       authentication: { regionKey: hasRegion },
@@ -167,7 +159,16 @@ function pushLocation(localLocation, locationData, apiCall) {
         return;
       }
 
-      const { created: location, saved } = await apiCall(regionKey, key, localLocation, showOutdatedAlert);
+      const { created: location, saved, outOfDate } = await apiCall(regionKey, key, localLocation);
+
+      if (outOfDate) {
+        Alert.alert(i18n.t('location/errorUpdate'), i18n.t('location/errorUpdateDescription'), [
+          {
+            text: i18n.t('button/ok'),
+            onPress: () => {},
+          },
+        ]);
+      }
 
       await dispatch(wrapper(saved, location));
     }

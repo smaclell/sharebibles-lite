@@ -26,22 +26,34 @@ export function executeTransaction(statement, args = null) {
   });
 }
 
-function createDatabases() {
+function createDatabases(table = 'locations') {
   return executeTransaction(
-    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int, updated int)'
+    `CREATE TABLE IF NOT EXISTS ${table} (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int, updated int)`
   );
 }
 
 export function clearDatabase() {
-  return executeTransaction('drop table locations');
+  return executeTransaction('DROP TABLE locations');
+}
+
+export async function backupDatabase() {
+  await executeTransaction('DROP TABLE backup');
+  await createDatabases('backup');
+  return executeTransaction('INSERT INTO backup SELECT * FROM locations');
+}
+
+export async function restoreBackup() {
+  await clearDatabase();
+  await createDatabases();
+  return executeTransaction('INSERT INTO locations SELECT * FROM backup');
 }
 
 export function deleteLocation(key) {
-  return executeTransaction('delete from locations where key = ?', [key]);
+  return executeTransaction('DELETE FROM locations WHERE key = ?', [key]);
 }
 
 export function updateUploadStatus(key, isUploaded) {
-  return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
+  return executeTransaction('UPDATE locations SET uploaded = ? WHERE key = ?', [isUploaded, key]);
 }
 
 export function replaceLocalLocationWithRemote(remoteLocation) {
@@ -49,7 +61,7 @@ export function replaceLocalLocationWithRemote(remoteLocation) {
 
   saveCoordinates(key, latitude, longitude);
 
-  return executeTransaction('update locations set status = ?, resources = ?, updated = ?, uploaded = 1 where key = ?', [
+  return executeTransaction('UPDATE locations SET status = ?, resources = ?, updated = ?, uploaded = 1 WHERE key = ?', [
     status,
     JSON.stringify(resources),
     updated,
@@ -70,7 +82,7 @@ export async function updateLocalLocation(options, oldLocation) {
     updated: oldLocation.uploaded ? oldLocation.updated + 1 : oldLocation.updated,
   });
 
-  await executeTransaction('update locations set resources = ?, status = ?, uploaded = 0, updated = ? where key = ?', [
+  await executeTransaction('UPDATE locations SET resources = ?, status = ?, uploaded = 0, updated = ? WHERE key = ?', [
     resources,
     status,
     updated + 1,
@@ -82,7 +94,7 @@ export async function updateLocalLocation(options, oldLocation) {
 
 // fetches individual location
 export async function fetchLocalLocation(locationKey) {
-  const rows = await executeTransaction('select * from locations where key = ?', [locationKey]);
+  const rows = await executeTransaction('SELECT * FROM locations WHERE key = ?', [locationKey]);
   if (rows.length < 1) {
     return false;
   }
@@ -92,7 +104,7 @@ export async function fetchLocalLocation(locationKey) {
 
 // fetch all locations in db
 export async function fetchLocalLocations(offlineOnly = false) {
-  const query = offlineOnly ? 'select * from locations where uploaded = 0' : 'select * from locations';
+  const query = offlineOnly ? 'SELECT * FROM locations WHERE uploaded = 0' : 'SELECT * FROM locations';
 
   const result = await executeTransaction(query);
   // This is the shape of the data and cannot really be changed
@@ -111,7 +123,7 @@ export async function addLocalLocation(locationData) {
 
   const createdAt = moment.utc(locationObject.created).toISOString();
   await executeTransaction(
-    'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) values (?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) VALUES (?, ?, ?, ?, ?, ?, ?)',
     [key, key, createdAt, resourcesString, status, 0, 0]
   );
 
@@ -119,7 +131,7 @@ export async function addLocalLocation(locationData) {
 }
 
 export async function createOrUpdateDatabase() {
-  const version = await SecureStore.getItemAsync(DATABASE_VERSION_KEY);
+  const version = (await SecureStore.getItemAsync(DATABASE_VERSION_KEY)) || 0;
 
   await createDatabases();
 
@@ -127,19 +139,27 @@ export async function createOrUpdateDatabase() {
     return Promise.resolve();
   }
 
-  const locations = await fetchLocalLocations();
+  try {
+    const locations = await fetchLocalLocations();
 
-  await clearDatabase();
-  await createDatabases();
+    await backupDatabase();
+    await clearDatabase();
+    await createDatabases();
 
-  const transactions = locations.map((location) => {
-    const { key, createdAt, resources, status, uploaded = 0, updated = 0 } = location;
+    const transactions = locations.map((location) => {
+      const { key, createdAt, resources, status, uploaded = 0, updated = 0 } = location;
 
-    return executeTransaction(
-      'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) values (?, ?, ?, ?, ?, ?, ?)',
-      [key, key, createdAt, JSON.stringify(resources), status, uploaded, updated]
-    );
-  });
+      return executeTransaction(
+        'INSERT INTO locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [key, key, createdAt, JSON.stringify(resources), status, uploaded, updated]
+      );
+    });
 
-  return Promise.all(transactions).then(() => SecureStore.setItemAsync(DATABASE_VERSION_KEY, DATABASE_VERSION));
+    return Promise.all(transactions).then(() => SecureStore.setItemAsync(DATABASE_VERSION_KEY, DATABASE_VERSION));
+  } catch (err) {
+    restoreBackup();
+
+    Sentry.captureException(err);
+    return Promise.reject(err);
+  }
 }

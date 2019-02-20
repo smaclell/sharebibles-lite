@@ -6,6 +6,7 @@ import { convertArrayToLocations, convertToLocation, createLocationObject, saveC
 
 const DATABASE_VERSION_KEY = 'DATABASE_VERSION_KEY';
 const DATABASE_VERSION = '2';
+const BACKUP_V1 = 'backup_v1';
 
 export function openDatabase(databaseName = 'locations.1.db') {
   return SQLite.openDatabase(databaseName);
@@ -37,15 +38,22 @@ export function clearDatabase() {
 }
 
 export async function backupDatabase() {
-  await executeTransaction('DROP TABLE backup');
-  await createDatabases('backup');
-  return executeTransaction('INSERT INTO backup SELECT * FROM locations');
+  await createDatabases(BACKUP_V1);
+  return executeTransaction(`
+    DELETE FROM ${BACKUP_V1} WHERE id IN (
+      SELECT id FROM locations
+    );
+
+    INSERT INTO ${BACKUP_V1}
+    SELECT *
+    FROM locations;
+  `);
 }
 
 export async function restoreBackup() {
   await clearDatabase();
   await createDatabases();
-  return executeTransaction('INSERT INTO locations SELECT * FROM backup');
+  return executeTransaction(`INSERT INTO locations SELECT * FROM ${BACKUP_V1}`);
 }
 
 export function deleteLocation(key) {

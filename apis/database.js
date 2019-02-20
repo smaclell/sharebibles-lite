@@ -39,15 +39,30 @@ export function clearDatabase() {
 
 export async function backupDatabase() {
   await createDatabases(BACKUP_V1);
-  return executeTransaction(`
+  await executeTransaction(`
     DELETE FROM ${BACKUP_V1} WHERE id IN (
       SELECT id FROM locations
     );
-
+  `);
+  await executeTransaction(`
+    DELETE FROM ${BACKUP_V1} WHERE key IN (
+      SELECT key FROM locations
+    );
+  `);
+  await executeTransaction(`
     INSERT INTO ${BACKUP_V1}
     SELECT *
     FROM locations;
   `);
+
+  const before = await executeTransaction('SELECT COUNT(1) as count FROM locations');
+  const after = await executeTransaction(`SELECT COUNT(1) as count FROM ${BACKUP_V1}`);
+  Sentry.captureMessage(`backed up: ${BACKUP_V1}`, {
+    extra: {
+      after: after.rows._array[0].count, // eslint-disable-line no-underscore-dangle
+      before: before.rows._array[0].count, // eslint-disable-line no-underscore-dangle
+    },
+  });
 }
 
 export async function restoreBackup() {
@@ -139,7 +154,7 @@ export async function addLocalLocation(locationData) {
 }
 
 export async function createOrUpdateDatabase() {
-  const version = (await SecureStore.getItemAsync(DATABASE_VERSION_KEY)) || 0;
+  const version = parseInt((await SecureStore.getItemAsync(DATABASE_VERSION_KEY)) || 0, 10);
 
   await createDatabases();
 

@@ -104,7 +104,9 @@ const Callout = ({ locationKey, created, status, resources, uploaded }) => {
 
         {__DEV__ && (
           <View style={styles.row}>
-            <Text style={styles.value}>{locationKey}</Text>
+            <Text style={styles.value} selectable>
+              {locationKey}
+            </Text>
           </View>
         )}
       </View>

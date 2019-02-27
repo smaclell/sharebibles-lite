@@ -79,15 +79,13 @@ const styles = StyleSheet.create({
   },
   editArea: {
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 16,
     color: colours.core.white,
-    borderWidth: 1,
     borderRadius: 5,
-    borderColor: colours.core.white,
     fontSize: fonts.large,
+    backgroundColor: colours.core.blue,
   },
   editAreaFocused: {
-    backgroundColor: colours.core.black,
     opacity: 0.7,
   },
   map: {

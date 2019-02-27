@@ -1,4 +1,4 @@
-import { RECIEVE_LOCATION, CLEAR_LOCATIONS } from '../actions/locations';
+import { RECIEVE_LOCATION, REMOVE_LOCATION, CLEAR_LOCATIONS } from '../actions/locations';
 
 const initial = {};
 
@@ -7,6 +7,13 @@ export default function reducer(state = initial, action) {
     return {
       ...state,
       [action.location.key]: action.location,
+    };
+  }
+
+  if (action.type === REMOVE_LOCATION) {
+    return {
+      ...state,
+      [action.locationKey]: undefined,
     };
   }
 

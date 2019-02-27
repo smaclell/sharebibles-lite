@@ -1,8 +1,12 @@
-import { SQLite } from 'expo';
+import { SQLite, SecureStore } from 'expo';
 import Sentry from 'sentry-expo';
 import moment from 'moment';
 import { pushRef } from './index';
 import { convertArrayToLocations, convertToLocation, createLocationObject, saveCoordinates } from '../utils/database';
+
+const DATABASE_VERSION_KEY = 'DATABASE_VERSION_KEY';
+const DATABASE_VERSION = '2';
+const BACKUP_V1 = 'backup_v1';
 
 export function openDatabase(databaseName = 'locations.1.db') {
   return SQLite.openDatabase(databaseName);
@@ -23,35 +27,97 @@ export function executeTransaction(statement, args = null) {
   });
 }
 
-export function createDatabases() {
+function createDatabases(table = 'locations') {
   return executeTransaction(
-    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
+    `CREATE TABLE IF NOT EXISTS ${table} (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int, updated int)`
   );
 }
 
 export function clearDatabase() {
-  return executeTransaction('drop table locations');
+  return executeTransaction('DROP TABLE locations');
+}
+
+export async function backupDatabase() {
+  await createDatabases(BACKUP_V1);
+  await executeTransaction(`
+    DELETE FROM ${BACKUP_V1} WHERE id IN (
+      SELECT id FROM locations
+    );
+  `);
+  await executeTransaction(`
+    DELETE FROM ${BACKUP_V1} WHERE key IN (
+      SELECT key FROM locations
+    );
+  `);
+  await executeTransaction(`
+    INSERT INTO ${BACKUP_V1}
+    SELECT *
+    FROM locations;
+  `);
+
+  const before = await executeTransaction('SELECT COUNT(1) as count FROM locations');
+  const after = await executeTransaction(`SELECT COUNT(1) as count FROM ${BACKUP_V1}`);
+  Sentry.captureMessage(`backed up: ${BACKUP_V1}`, {
+    extra: {
+      after: after.rows._array[0].count, // eslint-disable-line no-underscore-dangle
+      before: before.rows._array[0].count, // eslint-disable-line no-underscore-dangle
+    },
+  });
+}
+
+export async function restoreBackup() {
+  await clearDatabase();
+  await createDatabases();
+  return executeTransaction(`INSERT INTO locations SELECT * FROM ${BACKUP_V1}`);
+}
+
+export function deleteLocation(key) {
+  return executeTransaction('DELETE FROM locations WHERE key = ?', [key]);
 }
 
 export function updateUploadStatus(key, isUploaded) {
-  return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
+  return executeTransaction('UPDATE locations SET uploaded = ? WHERE key = ?', [isUploaded, key]);
 }
 
-export function updateLocalLocation(options) {
-  const { resources, status, key } = options;
-  // Uncomment this if user is ever able to change location position
-  // SecureStore.setItemAsync(key, JSON.parse({ longitude, latitude }));
+export function replaceLocalLocationWithRemote(remoteLocation) {
+  const { key, latitude, longitude, updated, status, resources } = remoteLocation;
 
-  return executeTransaction('update locations set resources = ?, status = ?, uploaded = 0 where key = ?', [
-    resources,
+  saveCoordinates(key, latitude, longitude);
+
+  return executeTransaction('UPDATE locations SET status = ?, resources = ?, updated = ?, uploaded = 1 WHERE key = ?', [
     status,
+    JSON.stringify(resources),
+    updated,
     key,
   ]);
 }
 
+export async function updateLocalLocation(options, oldLocation) {
+  const { key, updated = 0 } = oldLocation;
+  const { latitude, longitude, resources, status } = options;
+
+  saveCoordinates(key, latitude, longitude);
+
+  const locationObject = createLocationObject(key, {
+    ...oldLocation,
+    ...options,
+    uploaded: false,
+    updated: oldLocation.uploaded ? oldLocation.updated + 1 : oldLocation.updated,
+  });
+
+  await executeTransaction('UPDATE locations SET resources = ?, status = ?, uploaded = 0, updated = ? WHERE key = ?', [
+    resources,
+    status,
+    updated + 1,
+    key,
+  ]);
+
+  return locationObject;
+}
+
 // fetches individual location
 export async function fetchLocalLocation(locationKey) {
-  const rows = await executeTransaction('select * from locations where key = ?', [locationKey]);
+  const rows = await executeTransaction('SELECT * FROM locations WHERE key = ?', [locationKey]);
   if (rows.length < 1) {
     return false;
   }
@@ -61,7 +127,7 @@ export async function fetchLocalLocation(locationKey) {
 
 // fetch all locations in db
 export async function fetchLocalLocations(offlineOnly = false) {
-  const query = offlineOnly ? 'select * from locations where uploaded = 0' : 'select * from locations';
+  const query = offlineOnly ? 'SELECT * FROM locations WHERE uploaded = 0' : 'SELECT * FROM locations';
 
   const result = await executeTransaction(query);
   // This is the shape of the data and cannot really be changed
@@ -80,9 +146,43 @@ export async function addLocalLocation(locationData) {
 
   const createdAt = moment.utc(locationObject.created).toISOString();
   await executeTransaction(
-    'insert into locations (key, coordinateKey, createdAt, resources, status, uploaded) values (?, ?, ?, ?, ?, ?)',
-    [key, key, createdAt, resourcesString, status, 0]
+    'INSERT INTO locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [key, key, createdAt, resourcesString, status, 0, 0]
   );
 
   return locationObject;
+}
+
+export async function createOrUpdateDatabase() {
+  const version = parseInt((await SecureStore.getItemAsync(DATABASE_VERSION_KEY)) || 0, 10);
+
+  await createDatabases();
+
+  if (version === DATABASE_VERSION) {
+    return Promise.resolve();
+  }
+
+  try {
+    const locations = await fetchLocalLocations();
+
+    await backupDatabase();
+    await clearDatabase();
+    await createDatabases();
+
+    const transactions = locations.map((location) => {
+      const { key, createdAt, resources, status, uploaded = 0, updated = 0 } = location;
+
+      return executeTransaction(
+        'INSERT INTO locations (key, coordinateKey, createdAt, resources, status, uploaded, updated) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [key, key, createdAt, JSON.stringify(resources), status, uploaded, updated]
+      );
+    });
+
+    return Promise.all(transactions).then(() => SecureStore.setItemAsync(DATABASE_VERSION_KEY, DATABASE_VERSION));
+  } catch (err) {
+    restoreBackup();
+
+    Sentry.captureException(err);
+    return Promise.reject(err);
+  }
 }

@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MapView } from 'expo';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Platform } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+import i18n from '../assets/i18n/i18n';
 import * as positionActions from '../actions/position';
+import { deleteLocalLocation as deleteLocation } from '../actions/locations';
 import { setCompleted, COMPLETED_KEYS } from '../actions/onboarding';
 import Icon from '../components/Icon';
 import LocationCreation from '../containers/LocationCreation';
@@ -14,6 +16,7 @@ import LocationMarker from '../containers/LocationMarker';
 import SlideIn from '../components/SlideIn';
 import { getCurrentPosition } from '../apis/geo';
 import colours from '../styles/colours';
+import fonts from '../styles/fonts';
 
 const creationEndPercentage = 0.49;
 const styles = StyleSheet.create({
@@ -64,6 +67,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     right: 0,
   },
+  editAreaContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 0,
+    right: 0,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  editArea: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    color: colours.core.white,
+    borderRadius: 5,
+    fontSize: fonts.large,
+    backgroundColor: colours.core.blue,
+  },
+  editAreaFocused: {
+    opacity: 0.7,
+  },
   map: {
     position: 'absolute',
     top: 0,
@@ -83,9 +107,14 @@ class OverviewMap extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.onPinDragStart = this.onPinDragStart.bind(this);
+    this.onPinDrag = this.onPinDrag.bind(this);
+    this.onPinDragEnd = this.onPinDragEnd.bind(this);
+
     const {
       position: { latitude, longitude },
     } = props;
+
     this.initialRegion = {
       latitude,
       longitude,
@@ -100,6 +129,11 @@ class OverviewMap extends PureComponent {
       tempLocation: null,
       movingTemp: false,
       mapHeight: 400, // Ideally it would be zero but that results in the slide in coming in from the top
+      draggingPin: false,
+      editingPinKey: null,
+      inEdit: false,
+      inDelete: false,
+      canDeletePin: false,
     };
   }
 
@@ -182,21 +216,57 @@ class OverviewMap extends PureComponent {
     }
   };
 
-  onDragStart = (event) => {
+  onTempPinDragStart = (event) => {
     this.setState({ movingTemp: true });
     event.persist();
   };
 
-  onDrag = (event) => event.persist();
+  onTempPinDrag = (event) => event.persist();
 
-  onDragEnd = (event) => {
+  onTempPinDragEnd = (event) => {
     const coord = event.nativeEvent.coordinate;
     this.setState({ movingTemp: false, tempLocation: coord });
     event.persist();
   };
 
-  onLocationCancel = () => {
-    this.setState({ tempLocation: null });
+  onPinDragStart(event, isUploaded) {
+    this.setState({ draggingPin: true, canDeletePin: !isUploaded });
+    event.persist();
+  }
+
+  onPinDrag(event) {
+    const { canDeletePin } = this.state;
+    const { position } = event.nativeEvent;
+    event.persist();
+
+    if (position.y < this.screenHeight / 8) {
+      if (position.x < this.screenWidth / 2 || !canDeletePin) {
+        this.setState({ inEdit: true, inDelete: false });
+        return;
+      }
+      this.setState({ inEdit: false, inDelete: true });
+      return;
+    }
+
+    this.setState({ inEdit: false, inDelete: false });
+  }
+
+  onPinDragEnd(event, pinLocation) {
+    const { inEdit, inDelete } = this.state;
+    const { deleteLocalLocation } = this.props;
+
+    if (inEdit) {
+      this.createTempPin({ latitude: pinLocation.latitude, longitude: pinLocation.longitude }, pinLocation.key);
+    } else if (inDelete) {
+      deleteLocalLocation(pinLocation.key);
+    }
+
+    this.setState(() => ({ draggingPin: false, inEdit: false, inDelete: false, canDeletePin: false }));
+    event.persist();
+  }
+
+  onFinishCreation = () => {
+    this.setState({ tempLocation: null, editingPinKey: null });
   };
 
   // eslint-disable-next-line arrow-body-style
@@ -204,8 +274,11 @@ class OverviewMap extends PureComponent {
     return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   };
 
-  createTempPin = (coord) => {
-    this.setState({ tempLocation: coord });
+  screenWidth = Dimensions.get('window').width * (Platform.OS === 'ios' ? 1 : Dimensions.get('window').scale);
+  screenHeight = Dimensions.get('window').height * (Platform.OS === 'ios' ? 1 : Dimensions.get('window').scale);
+
+  createTempPin = (coord, editingPinKey) => {
+    this.setState({ tempLocation: coord, editingPinKey });
     // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
     // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
 
@@ -216,8 +289,22 @@ class OverviewMap extends PureComponent {
     this.map.animateToCoordinate(temp, shortAnimationTime);
   };
 
+  renderLocationMarker = (locationKey) => {
+    const { editingPinKey } = this.state;
+
+    return editingPinKey !== locationKey ? (
+      <LocationMarker
+        key={locationKey}
+        locationKey={locationKey}
+        onDragStart={this.onPinDragStart}
+        onDrag={this.onPinDrag}
+        onDragEnd={this.onPinDragEnd}
+      />
+    ) : null;
+  };
+
   render() {
-    const { tempLocation, mapHeight } = this.state;
+    const { tempLocation, mapHeight, draggingPin, inEdit, inDelete, canDeletePin, editingPinKey } = this.state;
     const creationMaxHeight = this.getCreationMaxHeight();
 
     return (
@@ -245,9 +332,7 @@ class OverviewMap extends PureComponent {
           onLongPress={this.onLongPress}
           onMarkerPress={this.onMarkerPress}
         >
-          {this.props.locations.map((locationKey) => (
-            <LocationMarker key={locationKey} locationKey={locationKey} />
-          ))}
+          {this.props.locations.map(this.renderLocationMarker)}
           {tempLocation && (
             <MapView.Marker
               key="tempLocation"
@@ -260,9 +345,9 @@ class OverviewMap extends PureComponent {
               opacity={0.9}
               draggable
               stopPropagation
-              onDragStart={this.onDragStart}
-              onDrag={this.onDrag}
-              onDragEnd={this.onDragEnd}
+              onDragStart={this.onTempPinDragStart}
+              onDrag={this.onTempPinDrag}
+              onDragEnd={this.onTempPinDragEnd}
             />
           )}
         </MapView>
@@ -273,7 +358,11 @@ class OverviewMap extends PureComponent {
           containerHeight={mapHeight}
           endPercentage={creationEndPercentage}
         >
-          <LocationCreation onLocationCancel={this.onLocationCancel} location={tempLocation} />
+          <LocationCreation
+            onFinish={this.onFinishCreation}
+            location={tempLocation}
+            editingLocationKey={editingPinKey}
+          />
         </SlideIn>
         <TouchableOpacity
           style={[styles.mapButton, styles.centerButton]}
@@ -289,12 +378,26 @@ class OverviewMap extends PureComponent {
         >
           <Icon name="plus" family="feather" size="extraLarge" colour={colours.core.white} styles={styles.buttonIcon} />
         </TouchableOpacity>
+
+        {draggingPin && (
+          <View style={styles.editAreaContainer}>
+            <Text style={inEdit ? [styles.editArea, styles.editAreaFocused] : styles.editArea}>
+              {i18n.t('location/edit')}
+            </Text>
+            {canDeletePin && (
+              <Text style={inDelete ? [styles.editArea, styles.editAreaFocused] : styles.editArea}>
+                {i18n.t('location/delete')}
+              </Text>
+            )}
+          </View>
+        )}
       </View>
     );
   }
 }
 
 OverviewMap.propTypes = {
+  deleteLocalLocation: PropTypes.func.isRequired,
   isOnboarded: PropTypes.bool.isRequired,
   locale: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -326,6 +429,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(positionActions, dispatch),
   setCompleted: () => dispatch(setCompleted(COMPLETED_KEYS.hasViewedPin)),
+  deleteLocalLocation: (locationKey) => dispatch(deleteLocation(locationKey)),
 });
 
 export default connect(

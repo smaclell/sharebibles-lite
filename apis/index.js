@@ -1,8 +1,10 @@
+import Sentry from 'sentry-expo';
 import Expo from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
 import { createLocationObject } from '../utils/database';
+import { replaceLocalLocationWithRemote } from '../apis/database';
 
 export function initialize() {
   if (firebase.initialized) {
@@ -86,7 +88,45 @@ export function fetchLocation(locationKey) {
     .then((location) => location.val());
 }
 
-export async function createLocation(regionKey, options, key) {
+export async function updateLocation(regionKey, key, newLocation) {
+  initialize();
+
+  let pushed;
+  if (key) {
+    pushed = getRef(`locations/${key}`);
+  } else {
+    pushed = pushRef('locations');
+  }
+
+  try {
+    const existing = await fetchLocation(key);
+    if (existing && existing.key && existing.updated >= newLocation.updated) {
+      await replaceLocalLocationWithRemote(existing);
+      return {
+        created: existing,
+        saved: Promise.resolve(),
+        outOfDate: true,
+      };
+    }
+  } catch (err) {
+    Sentry.captureException(err, {
+      extra: {
+        locationKey: key,
+      },
+    });
+  }
+
+  const saved = pushed.set(newLocation);
+  const geoPromises = saveGeoData(newLocation, pushed.key, regionKey);
+
+  return {
+    created: newLocation,
+    saved: Promise.all([saved, ...geoPromises]),
+    outOfDate: false,
+  };
+}
+
+export async function createLocation(regionKey, key, options) {
   initialize();
 
   let pushed;
@@ -105,5 +145,6 @@ export async function createLocation(regionKey, options, key) {
   return {
     created,
     saved: Promise.all([saved, ...geoPromises]),
+    outOfDate: false,
   };
 }

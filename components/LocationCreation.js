@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
   controlButton: {
     margin: 7,
     borderRadius: 8,
+    paddingRight: 25,
+  },
+
+  controlsTitle: {
+    color: colours.core.white,
+    fontSize: fonts.large,
   },
 
   saveButton: {
@@ -94,13 +100,29 @@ class LocationCreation extends Component {
 
   saveLocation = async ({ status, resources }) => {
     try {
-      const { longitude, latitude } = this.props.location;
-      await this.props.createLocation({
-        status,
-        longitude,
-        latitude,
-        resources,
-      });
+      const {
+        location: { longitude, latitude },
+        editingLocationKey,
+      } = this.props;
+
+      if (editingLocationKey) {
+        await this.props.updateLocation(
+          {
+            status,
+            longitude,
+            latitude,
+            resources,
+          },
+          editingLocationKey
+        );
+      } else {
+        await this.props.createLocation({
+          status,
+          longitude,
+          latitude,
+          resources,
+        });
+      }
     } catch (err) {
       Sentry.captureException(err, { extra: { status } });
 
@@ -111,7 +133,7 @@ class LocationCreation extends Component {
         { cancelable: false }
       );
     }
-    this.props.onLocationCancel();
+    this.props.onFinish();
   };
 
   updateStatus = (value) => {
@@ -175,6 +197,7 @@ class LocationCreation extends Component {
   };
 
   render() {
+    const { editingLocationKey } = this.props;
     const isDisabled = this.state.status === 'unknown';
     const buttonStyle = isDisabled ? styles.saveButtonDisabled : styles.saveButton;
     const buttonTextStyle = isDisabled ? styles.buttonTextDisabled : styles.buttonText;
@@ -182,9 +205,10 @@ class LocationCreation extends Component {
     return (
       <View style={styles.createLocationContainer}>
         <View style={styles.controlsContainer}>
-          <TouchableOpacity style={styles.controlButton} onPress={this.props.onLocationCancel}>
+          <TouchableOpacity style={styles.controlButton} onPress={this.props.onFinish}>
             <Icon name="chevron-down" family="entypo" size="medium" colour={colours.white} />
           </TouchableOpacity>
+          {!!editingLocationKey && <Text style={styles.controlsTitle}>{I18n.t('title/editing')}</Text>}
           <TouchableOpacity onPress={this.addLocation} style={buttonStyle} disabled={isDisabled}>
             <Text style={buttonTextStyle}>{I18n.t('button/save')}</Text>
           </TouchableOpacity>
@@ -201,15 +225,18 @@ class LocationCreation extends Component {
 LocationCreation.propTypes = {
   // Sorted Alphabetically
   createLocation: PropTypes.func.isRequired,
-  onLocationCancel: PropTypes.func.isRequired,
-  resources: PropTypes.array.isRequired,
+  editingLocationKey: PropTypes.string,
   location: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
   }),
+  onFinish: PropTypes.func.isRequired,
+  resources: PropTypes.array.isRequired,
+  updateLocation: PropTypes.func.isRequired,
 };
 
 LocationCreation.defaultProps = {
+  editingLocationKey: null,
   location: null,
 };
 

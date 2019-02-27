@@ -14,10 +14,10 @@ This is a mobile application to help share the Bible throughout the world.
 
 1. To run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
-    1. brew install node
-    2. brew install watchman
-    3. brew install npm
-    4. npm install -g react-native-cli
+   1. brew install node
+   2. brew install watchman
+   3. brew install npm
+   4. npm install -g react-native-cli
 
 2. Ensure you have `yarn` installed, i.e. `brew install yarn` or https://yarnpkg.com/en/docs/install
 3. Install all the dependencies using `yarn install`
@@ -42,7 +42,13 @@ Have a great idea or change you want to share? Awesome. We actively welcome pull
 4. Ensure the test suite passes.
 5. Make sure your code lints.
 
-We have adopted a [Code of Conduct]((https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)) that we expect project participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
+We have adopted a [Code of Conduct](<(https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)>) that we expect project participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
+
+## Making changes to local database
+
+If you need to add an extra column (field) to the local db you will need to increase the localDatabase version in the `config/dev.json` and `app.json` files. This will ensure the device will recreate the local database with the added field and migrate all existing locations over to the new version.
+
+This is necessary so that users don't lose all their local locations each time we update the local db.
 
 # Publishing
 

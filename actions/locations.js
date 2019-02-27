@@ -1,4 +1,6 @@
 import Sentry from 'sentry-expo';
+import { Alert } from 'react-native';
+import i18n from '../assets/i18n/i18n';
 import * as apis from '../apis';
 import { requestPushPermission } from './permissions';
 import { containing } from './regions';
@@ -12,6 +14,14 @@ function receiveLocation(location) {
   return {
     type: RECIEVE_LOCATION,
     location,
+  };
+}
+
+export const REMOVE_LOCATION = 'REMOVE_LOCATION';
+function removeLocation(locationKey) {
+  return {
+    type: REMOVE_LOCATION,
+    locationKey,
   };
 }
 
@@ -40,6 +50,8 @@ function wrapper(work, location) {
       await work;
       await dispatch(updateUploadStatus(location, true));
       dispatch(uploaded(location.key));
+      const uploadedLocation = { ...location, uploaded: true };
+      dispatch(receiveLocation(uploadedLocation));
     } catch (err) {
       Sentry.captureException(err, {
         extra: {
@@ -65,6 +77,34 @@ export function restoreLocalLocations() {
       });
     } catch (err) {
       Sentry.captureException(err);
+    }
+  };
+}
+
+export function deleteLocalLocation(locationKey) {
+  return async (dispatch) => {
+    const result = await new Promise((resolve) => {
+      Alert.alert(
+        i18n.t('location/delete'),
+        i18n.t('location/confirmDelete'),
+        [
+          { text: i18n.t('button/cancel'), style: 'cancel', onPress: () => resolve(false) },
+          { text: i18n.t('button/delete'), onPress: () => resolve(true) },
+        ],
+        {
+          cancelable: true,
+          onDismiss: () => resolve(false),
+        }
+      );
+    });
+
+    if (result) {
+      database
+        .deleteLocation(locationKey)
+        .then(() => dispatch(removeLocation(locationKey)))
+        .catch((err) => {
+          Sentry.captureException(err);
+        });
     }
   };
 }
@@ -96,28 +136,13 @@ export function fetchAllLocationData(locationKey) {
   };
 }
 
-export function createLocation(options) {
-  const { latitude, longitude, resources, status } = options;
-
+function pushLocation(localLocation, locationData, apiCall) {
   return async (dispatch, getState) => {
     const {
       authentication: { regionKey: hasRegion },
       connected,
-      onboarding: { hasAddedLocation },
     } = getState();
 
-    if (!hasAddedLocation) {
-      dispatch(setCompleted(COMPLETED_KEYS.hasAddedLocation));
-    }
-
-    const locationData = {
-      latitude,
-      longitude,
-      resources,
-      status,
-    };
-
-    const localLocation = await database.addLocalLocation(locationData);
     const { key } = localLocation;
 
     dispatch(offline(key));
@@ -134,10 +159,64 @@ export function createLocation(options) {
         return;
       }
 
-      const { created: location, saved } = await apis.createLocation(regionKey, locationData, key);
+      const { created: location, saved, outOfDate } = await apiCall(regionKey, key, localLocation);
+
+      if (outOfDate) {
+        Alert.alert(i18n.t('location/errorUpdate'), i18n.t('location/errorUpdateDescription'), [
+          {
+            text: i18n.t('button/ok'),
+            onPress: () => {},
+          },
+        ]);
+      }
 
       await dispatch(wrapper(saved, location));
     }
+  };
+}
+
+export function updateLocation(options, oldLocationKey) {
+  const { latitude, longitude, resources, status } = options;
+
+  return async (dispatch, getState) => {
+    const { locations } = getState();
+
+    const oldLocation = locations[oldLocationKey];
+
+    const locationData = {
+      latitude,
+      longitude,
+      resources,
+      status,
+    };
+
+    const localLocation = await database.updateLocalLocation(locationData, oldLocation);
+
+    dispatch(pushLocation(localLocation, locationData, apis.updateLocation));
+  };
+}
+
+export function createLocation(options) {
+  const { latitude, longitude, resources, status } = options;
+
+  return async (dispatch, getState) => {
+    const {
+      onboarding: { hasAddedLocation },
+    } = getState();
+
+    if (!hasAddedLocation) {
+      dispatch(setCompleted(COMPLETED_KEYS.hasAddedLocation));
+    }
+
+    const locationData = {
+      latitude,
+      longitude,
+      resources,
+      status,
+    };
+
+    const localLocation = await database.addLocalLocation(locationData);
+    dispatch(pushLocation(localLocation, locationData, apis.createLocation));
   };
 }
 
@@ -167,7 +246,7 @@ export function pushLocalLocations() {
           return;
         }
 
-        const { created: location, saved } = await apis.createLocation(regionKey, options, key);
+        const { created: location, saved } = await apis.createLocation(regionKey, key, options);
         dispatch(wrapper(saved, location));
       })
     );

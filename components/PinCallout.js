@@ -1,3 +1,4 @@
+/* global __DEV__ */
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
@@ -78,7 +79,7 @@ const relativeTime = (time) =>
     .local()
     .fromNow();
 
-const Callout = ({ created, status, resources, uploaded }) => {
+const Callout = ({ locationKey, created, status, resources, uploaded }) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';
   const statusString = `status/${status}`;
   return (
@@ -100,6 +101,12 @@ const Callout = ({ created, status, resources, uploaded }) => {
               <Text style={styles.value}>{resources.generic_bible.given}</Text>
             </View>
           )}
+
+        {__DEV__ && (
+          <View style={styles.row}>
+            <Text style={styles.value}>{locationKey}</Text>
+          </View>
+        )}
       </View>
 
       <View style={styles.timeContainer}>
@@ -113,14 +120,16 @@ const Callout = ({ created, status, resources, uploaded }) => {
 };
 
 Callout.defaultProps = {
+  locationKey: '',
   resources: null,
   uploaded: false,
 };
 
 Callout.propTypes = {
   created: PropTypes.number.isRequired,
-  status: PropTypes.string.isRequired,
+  locationKey: PropTypes.string,
   resources: PropTypes.object,
+  status: PropTypes.string.isRequired,
   uploaded: PropTypes.bool,
 };
 

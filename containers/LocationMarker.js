@@ -27,11 +27,11 @@ class LocationMarker extends PureComponent {
   }
 
   render() {
-    const { onDrag, pinColor, location } = this.props;
+    const { onDrag, pinColor, locationKey, location } = this.props;
 
     return (
       <MapView.Marker
-        key={`${this.props.locationKey}${Date.now()}`}
+        key={`${locationKey}${Date.now()}`}
         coordinate={{
           latitude: location.latitude,
           longitude: location.longitude,
@@ -44,7 +44,7 @@ class LocationMarker extends PureComponent {
         onDragEnd={this.handleDragEnd}
       >
         <MapView.Callout>
-          <PinCallout {...location} />
+          <PinCallout locationKey={locationKey} {...location} />
         </MapView.Callout>
       </MapView.Marker>
     );

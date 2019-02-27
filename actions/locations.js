@@ -246,7 +246,7 @@ export function pushLocalLocations() {
           return;
         }
 
-        const { created: location, saved } = await apis.createLocation(regionKey, options, key);
+        const { created: location, saved } = await apis.createLocation(regionKey, key, options);
         dispatch(wrapper(saved, location));
       })
     );

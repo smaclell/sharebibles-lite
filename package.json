@@ -26,10 +26,12 @@
     "ios": "react-native-scripts ios",
     "publish": "chmod +x ./deploy.sh && ./deploy.sh publish $ENVIRONMENT",
     "build": "chmod +x ./deploy.sh && ./deploy.sh build $ENVIRONMENT",
-    "test": "jest"
+    "test": "jest",
+    "translate": "node ./scripts/getTranslations.js"
   },
   "dependencies": {
     "@expo/vector-icons": "6.3.1",
+    "@k3rn31p4nic/google-translate-api": "^1.0.5",
     "ex-react-native-i18n": "0.0.4",
     "expo": "^29.0.0",
     "firebase": "^4.12.1",

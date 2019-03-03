@@ -1,0 +1,30 @@
+Sun Mar 03 2019 14:25:07 GMT-0500 (Eastern Standard Time)
+--------------------------
+[ ] onboarding/12_header
+[ ] onboarding/4_description
+[ ] settings/onboarding_reset
+[ ] onboarding/9_description
+[ ] onboarding/10_description
+[ ] onboarding/2_header
+[ ] onboarding/8_description
+[ ] onboarding/back
+[ ] onboarding/13_header
+[ ] onboarding/finish
+[ ] onboarding/4_header
+[ ] onboarding/move_pin_hint
+[ ] onboarding/10_header
+[ ] onboarding/13_description
+[ ] onboarding/continue
+[ ] onboarding/2_description
+[ ] settings/push_locations_clear
+[ ] onboarding/1_header
+[ ] onboarding/6_description
+[ ] onboarding/7_description
+[ ] onboarding/7_header
+[ ] onboarding/6_header
+[ ] onboarding/8_header
+[ ] onboarding/12_description
+[ ] onboarding/1_description
+[ ] onboarding/9_header
+
+

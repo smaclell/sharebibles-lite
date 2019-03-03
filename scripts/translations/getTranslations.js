@@ -5,9 +5,9 @@
 const translate = require('@k3rn31p4nic/google-translate-api'); // @vitalets/google-translate-api
 const fs = require('fs');
 const path = require('path');
-const en = require('../assets/i18n/locales/en.json');
+const en = require('../../assets/i18n/locales/en.json');
 
-const folderPath = path.join(__dirname, '..', 'assets', 'i18n', 'locales');
+const folderPath = path.join(__dirname, '..', '..', 'assets', 'i18n', 'locales');
 const files = fs.readdirSync(folderPath);
 const stats = {};
 
@@ -24,7 +24,7 @@ function getLocale(file) {
 }
 
 function writeUpdates(fileStats, file) {
-  const filename = file.replace(/json/gi, 'txt');
+  const filename = file.replace(/json/gi, 'changelog.txt');
   const date = new Date();
 
   const data = fileStats.addedKeys.reduce((acc, key) => `${acc}[ ] ${key}\n`, '');
@@ -79,7 +79,7 @@ async function updateTranslation(file) {
       sortedData[key] = newData[key];
     });
 
-  fs.writeFileSync(filePath, JSON.stringify(sortedData, null, 2), 'utf8');
+  fs.writeFileSync(filePath, `${JSON.stringify(sortedData, null, 2)}\n`, 'utf8');
   stats[locale] = currStats;
 
   if (currStats.addedKeys.length > 0) {
@@ -91,7 +91,7 @@ async function updateTranslation(file) {
 }
 
 console.log('Summary');
-console.log('[success] | [failed] | [failedKeys] | [successfulKeys] |');
+console.log('[# of success] | [# failed] | [Failed Keys] | [Successful Keys] |');
 console.log('----------');
 
 files.forEach(async (file) => {

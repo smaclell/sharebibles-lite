@@ -27,7 +27,7 @@
     "publish": "chmod +x ./deploy.sh && ./deploy.sh publish $ENVIRONMENT",
     "build": "chmod +x ./deploy.sh && ./deploy.sh build $ENVIRONMENT",
     "test": "jest",
-    "translate": "node ./scripts/getTranslations.js"
+    "translate": "node ./scripts/translations/getTranslations.js"
   },
   "dependencies": {
     "@expo/vector-icons": "6.3.1",

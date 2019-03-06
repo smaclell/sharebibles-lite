@@ -53,21 +53,22 @@ async function updateTranslation(file) {
     attempted: 0,
   };
 
-  const results = Object.keys(en).map((key) => {
-    if (!oldData[key]) {
-      currStats.attempted += 1;
-      return translate(en[key], { from: 'en', to: locale })
-        .then((res) => {
-          newData[key] = res.text;
-          currStats.added += 1;
-          currStats.addedKeys.push(key);
-        })
-        .catch(() => {
-          currStats.failed += 1;
-          currStats.failedKeys.push(key);
-        });
+  const results = Object.keys(en).map(async (key) => {
+    if (oldData[key]) {
+      return;
     }
-    return Promise.resolve();
+
+    currStats.attempted += 1;
+
+    try {
+      const translated = await translate(en[key], { from: 'en', to: locale });
+      newData[key] = translated.text;
+      currStats.added += 1;
+      currStats.addedKeys.push(key);
+    } catch (e) {
+      currStats.failed += 1;
+      currStats.failedKeys.push(key);
+    }
   });
 
   await Promise.all(results);
@@ -87,7 +88,7 @@ async function updateTranslation(file) {
   }
 
   console.log(`${file}: ${currStats.added} | ${currStats.failed} | ${currStats.failedKeys} | ${currStats.addedKeys} |`);
-  console.log('');
+  console.log();
 }
 
 console.log('Summary');

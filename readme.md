@@ -14,10 +14,10 @@ This is a mobile application to help share the Bible throughout the world.
 
 1. To run this app make sure you can run the [react-native base app](https://facebook.github.io/react-native/docs/getting-started.html) building projects with native code.
 
-    1. brew install node
-    2. brew install watchman
-    3. brew install npm
-    4. npm install -g react-native-cli
+   1. brew install node
+   2. brew install watchman
+   3. brew install npm
+   4. npm install -g react-native-cli
 
 2. Ensure you have `yarn` installed, i.e. `brew install yarn` or https://yarnpkg.com/en/docs/install
 3. Install all the dependencies using `yarn install`
@@ -42,7 +42,25 @@ Have a great idea or change you want to share? Awesome. We actively welcome pull
 4. Ensure the test suite passes.
 5. Make sure your code lints.
 
-We have adopted a [Code of Conduct]((https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)) that we expect project participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
+We have adopted a [Code of Conduct](<(https://github.com/smaclell/sharebibles-lite/blob/master/CODE_OF_CONDUCT.md)>) that we expect project participants to adhere to. Please read the full text so that you can understand what actions will and will not be tolerated.
+
+# Translations
+
+## Developers
+
+When adding a new feature that needs translations, ensure you do the following:
+
+1. Mark the PR using the `Needs Translations` GitHub label
+2. Run `yarn translate` to automatically generate translations for the new translations you added to `en.json` for all the other languages. These translations will be temporary and will be checked by a human later
+
+## Translators
+
+When you are asked to check translations please do the following:
+
+1. Open the translation file for the language you wish to translate/update (assets/i18n/locales)
+2. Open the corresponding translation changelog file (scripts/translations/changelogs)
+3. Go through the list of uncompleted changes (empty boxes) in the translation changelog file and make any corresponding changes to the translation file for each key.
+4. After making a change (Or checked the exisiting translation is OK), ensure that you mark the corresponding key in the changelog as completed by putting a character in the box [y]
 
 # Publishing
 

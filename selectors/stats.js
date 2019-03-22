@@ -4,7 +4,10 @@ import { UploadStatus } from '../actions/uploads';
 const getLocations = (state) => state.locations;
 const getUploads = (state) => state.uploads;
 
-const uploadEntries = createSelector(getUploads, (data) => Object.entries(data));
+const uploadEntries = createSelector(
+  getUploads,
+  (data) => Object.entries(data)
+);
 
 export const getFailedLocations = createSelector(
   [getUploads, uploadEntries, getLocations],

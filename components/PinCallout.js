@@ -93,13 +93,12 @@ const Callout = ({ created, status, resources, uploaded }) => {
           <Text style={styles.value}>{I18n.t(statusString)}</Text>
         </View>
 
-        {resources &&
-          resources.generic_bible && (
-            <View style={styles.row}>
-              <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
-              <Text style={styles.value}>{resources.generic_bible.given}</Text>
-            </View>
-          )}
+        {resources && resources.generic_bible && (
+          <View style={styles.row}>
+            <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
+            <Text style={styles.value}>{resources.generic_bible.given}</Text>
+          </View>
+        )}
       </View>
 
       <View style={styles.timeContainer}>

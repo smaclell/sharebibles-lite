@@ -5,9 +5,10 @@ import en from './locales/en';
 import es from './locales/es';
 import fr from './locales/fr';
 import ko from './locales/ko';
+import mn from './locales/mn';
 import nl from './locales/nl';
-import th from './locales/th';
 import ptBr from './locales/pt-br';
+import th from './locales/th';
 import zhCn from './locales/zh-cn';
 import zhHk from './locales/zh-hk';
 
@@ -19,6 +20,7 @@ I18n.translations = {
   es,
   fr,
   ko,
+  mn,
   nl,
   th,
   'pt-br': ptBr,

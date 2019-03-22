@@ -6,6 +6,7 @@ export default {
   'locale/nl': 'Nederlands',
   'locale/th': 'ภาษาไทย',
   'locale/de': 'Deutsche',
+  'locale/mn': 'монгол хэл',
   'locale/ko': '한국어',
   'locale/pt-br': 'Português',
   'locale/zh-cn': '中文',

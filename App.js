@@ -12,7 +12,7 @@ import NavigationService from './utils/NavigationService';
 import Onboarding from './containers/Onboarding';
 import Navigation from './nav';
 import reducer from './reducers';
-import { createDatabases } from './apis/database';
+import createDatabases from './apis/migrations';
 import { initialize } from './apis';
 import { restore } from './actions/authentication';
 import { setup } from './actions/connectivity';

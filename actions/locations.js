@@ -82,7 +82,7 @@ export function fetchLocation(locationKey) {
     try {
       const location = await apis.fetchLocation(locationKey, regionKey);
       if (location) {
-        dispatch(receiveLocation({ ...location, uploaded: true }));
+        dispatch(receiveLocation({ version: 0, ...location, uploaded: true }));
       }
     } catch (err) {
       Sentry.captureException(err);

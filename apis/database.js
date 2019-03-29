@@ -23,16 +23,6 @@ export function executeTransaction(statement, args = null) {
   });
 }
 
-export function createDatabases() {
-  return executeTransaction(
-    'create table if not exists locations (id integer primary key not null, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
-  );
-}
-
-export function clearDatabase() {
-  return executeTransaction('drop table locations');
-}
-
 export function updateUploadStatus(key, isUploaded) {
   return executeTransaction('update locations set uploaded = ? where key = ?', [isUploaded, key]);
 }

@@ -46,7 +46,6 @@ class App extends Component {
     Promise.all([
       ...this.loadFontsAsync(),
       createDatabases(),
-      I18n.initAsync(),
       store.dispatch(positionActions.initialize()),
       store.dispatch(
         settingsActions.load({
@@ -75,7 +74,7 @@ class App extends Component {
     throw error;
   }
 
-  async loadFontsAsync() {
+  loadFontsAsync() {
     const fonts = [FontAwesome.font, Entypo.font, Feather.font];
     return fonts.map(Font.loadAsync);
   }

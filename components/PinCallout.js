@@ -72,11 +72,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const relativeTime = (time) => moment
-  .utc(time)
-  .clone()
-  .local()
-  .fromNow();
+const relativeTime = (time) =>
+  moment
+    .utc(time)
+    .clone()
+    .local()
+    .fromNow();
 
 const Callout = ({ created, status, resources, uploaded }) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';

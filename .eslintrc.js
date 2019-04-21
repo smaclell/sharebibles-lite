@@ -1,7 +1,9 @@
 module.exports = {
-  extends: 'airbnb',
   parser: 'babel-eslint',
+  extends: ['airbnb', 'prettier'],
+  plugins: ['prettier'],
   rules: {
+    'prettier/prettier': ['error'],
     'no-case-declarations': 'off',
     'global-require': 'off',
     'class-methods-use-this': 'off',

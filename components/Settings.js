@@ -195,7 +195,7 @@ class Settings extends Component {
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
-          <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+          <Text style={styles.header}>{I18n.t('title/share_bibles')}</Text>
           <Text style={styles.version}>{version}</Text>
         </View>
       </ScrollView>

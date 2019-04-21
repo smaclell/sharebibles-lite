@@ -19,8 +19,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prettier": "prettier --write \"./**/*.js\"",
-    "publish": "chmod +x ./deploy.sh && ./deploy.sh publish $ENVIRONMENT",
-    "build": "chmod +x ./deploy.sh && ./deploy.sh build $ENVIRONMENT",
     "test": "jest",
     "translate": "node ./scripts/translations/getTranslations.js"
   },

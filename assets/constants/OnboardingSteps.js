@@ -56,10 +56,12 @@ export const STEPS = {
   },
   viewPinCallout: {
     backLogic: (setCompleted) => setCompleted(COMPLETED_KEYS.hasViewedPin, false),
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
+      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   viewPinCalloutAction: {
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
+      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   pinCalloutDescription: {},
   invitations1: {

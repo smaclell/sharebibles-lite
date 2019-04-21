@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather, FontAwesome } from '@expo/vector-icons';
 
 import fonts from '../styles/fonts';
@@ -71,12 +72,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const relativeTime = (time) =>
-  moment
-    .utc(time)
-    .clone()
-    .local()
-    .fromNow();
+const relativeTime = (time) => moment
+  .utc(time)
+  .clone()
+  .local()
+  .fromNow();
 
 const Callout = ({ created, status, resources, uploaded }) => {
   const cloudIcon = uploaded ? 'cloud' : 'cloud-off';
@@ -89,13 +89,17 @@ const Callout = ({ created, status, resources, uploaded }) => {
 
       <View style={[styles.col, { minHeight: 75 }]}>
         <View style={styles.row}>
-          <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/status_heading')}:</Text>
+          <Text style={[styles.statusHeader, styles.subHeading]}>
+            {`${I18n.t('pin_callout/status_heading')}:`}
+          </Text>
           <Text style={styles.value}>{I18n.t(statusString)}</Text>
         </View>
 
         {resources && resources.generic_bible && (
           <View style={styles.row}>
-            <Text style={[styles.statusHeader, styles.subHeading]}>{I18n.t('pin_callout/bibles_heading')}:</Text>
+            <Text style={[styles.statusHeader, styles.subHeading]}>
+              {`${I18n.t('pin_callout/bibles_heading')}:`}
+            </Text>
             <Text style={styles.value}>{resources.generic_bible.given}</Text>
           </View>
         )}

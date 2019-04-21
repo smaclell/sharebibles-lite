@@ -1,6 +1,6 @@
 import { SecureStore } from 'expo';
 import { Alert } from 'react-native';
-import I18n from '../actions/i18n';
+import I18n from './i18n';
 
 export const UPDATE_ALLOW_DOWNLOAD = 'UPDATE_ALLOW_DOWNLOAD';
 const downloadPermission = (value) => ({

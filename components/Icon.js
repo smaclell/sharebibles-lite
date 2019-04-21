@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ViewPropTypes } from 'react-native';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 
 const families = {

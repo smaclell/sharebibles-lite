@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import I18n from '../assets/i18n/i18n';
-import { pushLocalLocations } from '../actions/locations';
-import { requestPushPermission } from '../actions/permissions';
+import { pushLocalLocations } from './locations';
+import { requestPushPermission } from './permissions';
 
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export function load(settings) {

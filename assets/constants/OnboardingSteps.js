@@ -11,6 +11,7 @@ So in otherwords don't add new steps unless you are sure you really really need 
 */
 
 import NavigationService from '../../utils/NavigationService';
+
 export const COMPLETED_KEYS = Object.freeze({
   hasAddedLocation: 'hasAddedLocation',
   hasViewedPin: 'hasViewedPin',
@@ -55,12 +56,10 @@ export const STEPS = {
   },
   viewPinCallout: {
     backLogic: (setCompleted) => setCompleted(COMPLETED_KEYS.hasViewedPin, false),
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
-      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   viewPinCalloutAction: {
-    actionLogic: ({ setStep, completed: { hasViewedPin } }) =>
-      hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
+    actionLogic: ({ setStep, completed: { hasViewedPin } }) => hasViewedPin && setStep(STEPS.pinCalloutDescription.index),
   },
   pinCalloutDescription: {},
   invitations1: {

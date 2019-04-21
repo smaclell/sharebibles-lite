@@ -72,14 +72,12 @@ const sendFeedback = () => {
       }
       return null;
     })
-    .catch(() =>
-      Alert.alert(
-        I18n.t('feedback/feedback_title'),
-        I18n.t('feedback/feedback_error', { email: emails.feedback }),
-        [{ text: I18n.t('button/ok'), onPress() {} }],
-        { cancelable: false }
-      )
-    );
+    .catch(() => Alert.alert(
+      I18n.t('feedback/feedback_title'),
+      I18n.t('feedback/feedback_error', { email: emails.feedback }),
+      [{ text: I18n.t('button/ok'), onPress() {} }],
+      { cancelable: false }
+    ));
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

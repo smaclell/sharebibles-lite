@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { AppLoading, Constants, Font } from 'expo';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';

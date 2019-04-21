@@ -1,3 +1,4 @@
+import { createAppContainer } from 'react-navigation';
 import Home from './home';
 
-export default Home;
+export default createAppContainer(Home);

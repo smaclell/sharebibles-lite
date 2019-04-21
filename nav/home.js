@@ -33,7 +33,7 @@ const drawer = createDrawerNavigator(drawerScreens, {
   drawerLockMode: 'locked-closed',
   initialRouteName: 'OverviewMap',
   contentComponent: Settings,
-  navigationOptions: {
+  defaultNavigationOptions: {
     headerStyle: { backgroundColor: colours.white },
     headerTintColor: colours.text,
   },
@@ -68,7 +68,7 @@ const drawerStack = createStackNavigator(
   },
   {
     headerMode: 'float',
-    navigationOptions: {
+    defaultNavigationOptions: {
       gesturesEnabled: false,
     },
   }

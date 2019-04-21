@@ -3,10 +3,9 @@ import Sentry from 'sentry-expo';
 import { executeTransaction } from './database';
 
 const migrations = [
-  () =>
-    executeTransaction(
-      'CREATE TABLE IF NOT EXISTS locations (id integer PRIMARY KEY NOT NULL, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
-    ),
+  () => executeTransaction(
+    'CREATE TABLE IF NOT EXISTS locations (id integer PRIMARY KEY NOT NULL, key text, coordinateKey text, createdAt text, resources text, status text, uploaded int)'
+  ),
   () => executeTransaction('ALTER TABLE locations ADD COLUMN version integer NOT NULL DEFAULT 0'),
 ];
 

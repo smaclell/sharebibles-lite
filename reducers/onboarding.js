@@ -1,5 +1,5 @@
-import { SET_STEP, SET_STATUS, SET_COMPLETED, COMPLETED_KEYS } from '../actions/onboarding';
-import { STEPS } from '../assets/constants/OnboardingSteps';
+import { SET_STEP, SET_STATUS, SET_COMPLETED } from '../actions/onboarding';
+import { STEPS, COMPLETED_KEYS } from '../assets/constants/OnboardingSteps';
 
 const initial = {
   isOnboarded: true,

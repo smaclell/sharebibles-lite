@@ -14,7 +14,6 @@ import zhCn from './locales/zh-cn';
 import zhHk from './locales/zh-hk';
 
 I18n.fallbacks = true;
-I18n.locale = Localization.locale;
 I18n.translations = {
   en, // default
   de,
@@ -51,5 +50,7 @@ function getDateLocale() {
 I18n.setDateLocale = () => {
   moment.locale(getDateLocale());
 };
+
+I18n.updateLocale(Localization.locale);
 
 export default I18n;

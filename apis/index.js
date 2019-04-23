@@ -1,4 +1,4 @@
-import Expo from 'expo';
+import { Constants } from 'expo';
 import * as firebase from 'firebase';
 import GeoFire from 'geofire';
 import { wrapLatitude, wrapLongitude } from '../utils/geo';
@@ -10,7 +10,7 @@ export function initialize() {
   }
 
   firebase.initialized = true;
-  firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
+  firebase.initializeApp(Constants.manifest.extra.firebase);
 }
 
 export function signIn(token) {

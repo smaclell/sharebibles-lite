@@ -125,7 +125,7 @@ class Invites extends PureComponent {
         {this.state.hasCameraPermission && (
           <TouchableWithoutFeedback onPress={this.dismissKeyboard}>
             <BarCodeScanner
-              onBarCodeRead={this.readCode}
+              onBarCodeScanned={this.readCode}
               barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
               style={StyleSheet.absoluteFill}
             />

@@ -3,11 +3,6 @@ import { STEPS, ORDERED_STEPS } from '../assets/constants/OnboardingSteps';
 
 export const ONBOARDED = 'ONBOARDED';
 export const ONBOARDING_STEP = 'ONBOARDING_STEP';
-export const COMPLETED_KEYS = Object.freeze({
-  hasAddedLocation: 'hasAddedLocation',
-  hasViewedPin: 'hasViewedPin',
-  hasAcceptedInvite: 'hasAcceptedInvite',
-});
 
 export const SET_STEP = 'SET_STEP';
 export function setStep(step = STEPS.start) {

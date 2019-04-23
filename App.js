@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
 import { AppLoading, Constants, Font } from 'expo';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -46,7 +47,6 @@ class App extends Component {
     Promise.all([
       ...this.loadFontsAsync(),
       createDatabases(),
-      I18n.initAsync(),
       store.dispatch(positionActions.initialize()),
       store.dispatch(
         settingsActions.load({
@@ -75,7 +75,7 @@ class App extends Component {
     throw error;
   }
 
-  async loadFontsAsync() {
+  loadFontsAsync() {
     const fonts = [FontAwesome.font, Entypo.font, Feather.font];
     return fonts.map(Font.loadAsync);
   }

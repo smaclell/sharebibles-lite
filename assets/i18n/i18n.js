@@ -1,4 +1,5 @@
-import I18n from 'ex-react-native-i18n';
+import I18n from 'i18n-js';
+import { Localization } from 'expo';
 import moment from 'moment';
 import de from './locales/de';
 import en from './locales/en';
@@ -13,7 +14,6 @@ import zhCn from './locales/zh-cn';
 import zhHk from './locales/zh-hk';
 
 I18n.fallbacks = true;
-
 I18n.translations = {
   en, // default
   de,
@@ -50,5 +50,7 @@ function getDateLocale() {
 I18n.setDateLocale = () => {
   moment.locale(getDateLocale());
 };
+
+I18n.updateLocale(Localization.locale);
 
 export default I18n;

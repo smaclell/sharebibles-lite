@@ -1,6 +1,5 @@
 {
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.eol": "\n",
@@ -13,5 +12,7 @@
     "**/prod": true,
     "**/staging": true,
     "**/coverage": true
-  }
+  },
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true
 }

@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../components/Icon';
+import Icon from './Icon';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
 

@@ -5,7 +5,8 @@ import { containing } from './regions';
 import { failed, pending, uploaded, offline, setUploadingStatus } from './uploads';
 import * as database from '../apis/database';
 import { LOCATION_UPLOADED } from '../utils/database';
-import { setCompleted, COMPLETED_KEYS } from './onboarding';
+import { setCompleted } from './onboarding';
+import { COMPLETED_KEYS } from '../assets/constants/OnboardingSteps';
 
 export const RECIEVE_LOCATION = 'RECIEVE_LOCATION';
 function receiveLocation(location) {

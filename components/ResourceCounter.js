@@ -2,6 +2,7 @@ import { Text, View } from 'react-native';
 import Stepper from 'react-native-ui-stepper';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FontAwesome } from '@expo/vector-icons';
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';

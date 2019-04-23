@@ -11,7 +11,12 @@ So in otherwords don't add new steps unless you are sure you really really need 
 */
 
 import NavigationService from '../../utils/NavigationService';
-import { COMPLETED_KEYS } from '../../actions/onboarding';
+
+export const COMPLETED_KEYS = Object.freeze({
+  hasAddedLocation: 'hasAddedLocation',
+  hasViewedPin: 'hasViewedPin',
+  hasAcceptedInvite: 'hasAcceptedInvite',
+});
 
 export const ORDERED_STEPS = [
   'zero',

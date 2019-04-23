@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Switch } from 'react-native';
-import SettingsItem from '../components/SettingsItem';
+import SettingsItem from './SettingsItem';
 
 import colours from '../styles/colours';
 import fonts from '../styles/fonts';
@@ -195,7 +195,7 @@ class Settings extends Component {
           <View style={styles.logo_container}>
             <Image source={require('../assets/logo/logo.png')} style={styles.logo} />
           </View>
-          <Text style={styles.header}> {I18n.t('title/share_bibles')} </Text>
+          <Text style={styles.header}>{I18n.t('title/share_bibles')}</Text>
           <Text style={styles.version}>{version}</Text>
         </View>
       </ScrollView>

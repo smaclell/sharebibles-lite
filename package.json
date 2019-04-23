@@ -33,7 +33,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.2.tar.gz",
     "react-native-elements": "^0.19.1",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-ui-stepper": "^1.2.4",
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "babel-preset-expo": "^5.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",

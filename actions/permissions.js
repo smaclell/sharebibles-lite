@@ -1,4 +1,4 @@
-import { SecureStore } from 'expo';
+import * as SecureStore from 'expo-secure-store';
 import { Alert } from 'react-native';
 import I18n from './i18n';
 

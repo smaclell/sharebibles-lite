@@ -1,7 +1,9 @@
 /* globals __DEV__ */
 import React, { Component } from 'react';
 import { StatusBar, View } from 'react-native';
-import { AppLoading, Constants, Font } from 'expo';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import Constants from 'expo-constants';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { Provider } from 'react-redux';

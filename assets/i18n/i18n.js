@@ -1,5 +1,5 @@
 import I18n from 'i18n-js';
-import { Localization } from 'expo';
+import * as Localization from 'expo-localization';
 import moment from 'moment';
 import de from './locales/de';
 import en from './locales/en';

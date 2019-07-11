@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
 import I18n from '../assets/i18n/i18n';
 import fonts from '../styles/fonts';

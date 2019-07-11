@@ -1,4 +1,5 @@
-import { Constants, SecureStore } from 'expo';
+import * as SecureStore from 'expo-secure-store';
+import Constants from 'expo-constants';
 import Sentry from 'sentry-expo';
 import { clear as clearRegions, request as requestRegion } from './regions';
 import { signIn, signOut } from '../apis';

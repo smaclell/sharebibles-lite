@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';

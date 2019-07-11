@@ -3581,13 +3581,6 @@ expo-local-authentication@~5.0.1:
   dependencies:
     invariant "^2.2.4"
 
-expo-localization@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-4.0.0.tgz#b72393c8cd78ec08b54089089e5e75269726f84a"
-  integrity sha512-2VQuzynVIM6ZqRZlyseKlr6B/eUX7WppchFZFPi/8/V+Wo03PAZXWhvzbbsl8pjVKxOt36Q/jXbnqD67+vJ2Og==
-  dependencies:
-    rtl-detect "^1.0.2"
-
 expo-localization@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-5.0.1.tgz#9b617198f4627ed5c4eea406ed1a616dbc6d44f6"
@@ -7815,7 +7808,7 @@ react-native-keyboard-spacer@^0.4.1:
   resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.4.1.tgz#46f18a320432098a25ea9fa89f5143dd254d332d"
   integrity sha1-RvGKMgQyCYol6p+on1FD3SVNMy0=
 
-react-native-maps@0.24.2:
+react-native-maps@0.24.2, react-native-maps@~0.24.0:
   version "0.24.2"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
   integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==

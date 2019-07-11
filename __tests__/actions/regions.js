@@ -1,4 +1,4 @@
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import refetch from '../../utils/refetch';
 import * as actions from '../../actions/regions';
 

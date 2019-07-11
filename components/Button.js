@@ -32,8 +32,8 @@ const Button = ({ disabled, fillContainer, fontSize, onPress, title, type }) => 
     onPress={onPress}
     title={title}
     disabled={disabled}
-    containerViewStyle={fillContainer ? styles.fill : {}}
-    fontSize={fonts[fontSize]}
+    titleStyle={{ fontSize: fonts[fontSize] }}
+    containerStyle={fillContainer ? styles.fill : {}}
     raised
   />
 );

@@ -8,19 +8,32 @@ import colours from '../styles/colours';
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  normal: {
+    marginLeft: 5,
+    marginRight: 5,
   },
 });
+
+const titleProps = {
+  primary: {
+    color: colours.core.white,
+  },
+  secondary: {
+    color: colours.core.black,
+  },
+};
 
 const buttonProps = {
   primary: {
     backgroundColor: colours.core.blue,
-    color: colours.core.white,
     borderColor: colours.core.blue,
     borderRadius: 5,
   },
   secondary: {
     backgroundColor: colours.core.white,
-    color: colours.core.black,
     borderColor: colours.core.grey,
     borderRadius: 5,
   },
@@ -28,12 +41,12 @@ const buttonProps = {
 
 const Button = ({ disabled, fillContainer, fontSize, onPress, title, type }) => (
   <NativeButton
-    {...buttonProps[type]}
     onPress={onPress}
     title={title}
     disabled={disabled}
-    titleStyle={{ fontSize: fonts[fontSize] }}
-    containerStyle={fillContainer ? styles.fill : {}}
+    buttonStyle={buttonProps[type]}
+    titleStyle={{ ...titleProps[type], fontSize: fonts[fontSize] }}
+    containerStyle={fillContainer ? styles.fill : styles.normal}
     raised
   />
 );

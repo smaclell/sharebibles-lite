@@ -112,7 +112,7 @@ class OverviewMap extends PureComponent {
     if (coord && coord.latitude && coord.longitude) {
       navigation.setParams({ coord: { latitude: null, longitude: null } });
       navigation.closeDrawer();
-      this.map.animateToCoordinate(coord, animationTime);
+      this.map.animateCamera({ center: coord }, { duration: animationTime });
     }
   };
 
@@ -144,7 +144,7 @@ class OverviewMap extends PureComponent {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
-      this.map.animateToCoordinate(location, animationTime);
+      this.map.animateCamera({ center: location }, { duration: animationTime });
 
       // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
@@ -166,7 +166,7 @@ class OverviewMap extends PureComponent {
 
     if (this.state.centered) {
       this.props.updatePosition(coord.latitude, coord.longitude);
-      this.map.animateToCoordinate(coord, animationTime);
+      this.map.animateCamera({ center: coord }, { duration: animationTime });
     }
   };
 
@@ -214,7 +214,7 @@ class OverviewMap extends PureComponent {
 
     const offSet = this.state.latitudeDelta * remainder;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
-    this.map.animateToCoordinate(temp, shortAnimationTime);
+    this.map.animateCamera({ center: temp }, { duration: shortAnimationTime });
   };
 
   render() {

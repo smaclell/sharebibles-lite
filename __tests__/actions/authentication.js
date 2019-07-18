@@ -1,5 +1,6 @@
 import configureStore from 'redux-mock-store';
-import { Constants, SecureStore } from 'expo';
+import * as SecureStore from 'expo-secure-store';
+import Constants from 'expo-constants';
 import thunk from 'redux-thunk';
 import refetch from '../../utils/refetch';
 import { signIn, signOut } from '../../apis';

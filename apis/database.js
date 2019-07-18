@@ -1,4 +1,4 @@
-import { SQLite } from 'expo';
+import { SQLite } from 'expo-sqlite';
 import Sentry from 'sentry-expo';
 import moment from 'moment';
 import { pushRef } from './index';

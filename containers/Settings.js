@@ -1,7 +1,9 @@
 import Sentry from 'sentry-expo';
 import { Alert, Linking } from 'react-native';
 import { connect } from 'react-redux';
-import { Constants, FileSystem, MailComposer } from 'expo';
+import * as MailComposer from 'expo-mail-composer';
+import * as FileSystem from 'expo-file-system';
+import Constants from 'expo-constants';
 import { withNavigation } from 'react-navigation';
 import { fetchLocalLocations } from '../apis/database';
 import Settings from '../components/Settings';

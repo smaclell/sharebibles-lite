@@ -4,7 +4,7 @@
     "description": "A dev version for sharebibles lite",
     "slug": "sharebibles-lite-dev",
     "privacy": "unlisted",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "version": "0.9.0",
     "orientation": "portrait",
     "primaryColor": "#65B7C7",

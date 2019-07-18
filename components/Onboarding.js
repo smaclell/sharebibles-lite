@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import I18n from '../assets/i18n/i18n';
 import Icon from './Icon';
 import colours from '../styles/colours';

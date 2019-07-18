@@ -1,4 +1,4 @@
-import { SecureStore } from 'expo';
+import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 
 // NOTE: use 1 and 0 for isUploaded (1 = true, 0 = false)

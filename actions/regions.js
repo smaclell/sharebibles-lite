@@ -1,4 +1,4 @@
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 import Sentry from 'sentry-expo';
 import refetch from '../utils/refetch';
 import selector from '../selectors/whichRegion';

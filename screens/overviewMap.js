@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import * as positionActions from '../actions/position';
@@ -112,7 +112,7 @@ class OverviewMap extends PureComponent {
     if (coord && coord.latitude && coord.longitude) {
       navigation.setParams({ coord: { latitude: null, longitude: null } });
       navigation.closeDrawer();
-      this.map.animateToCoordinate(coord, animationTime);
+      this.map.animateCamera({ center: coord }, { duration: animationTime });
     }
   };
 
@@ -144,7 +144,7 @@ class OverviewMap extends PureComponent {
     if (this.state.centered) return;
     const { location } = await getCurrentPosition(true);
     if (location) {
-      this.map.animateToCoordinate(location, animationTime);
+      this.map.animateCamera({ center: location }, { duration: animationTime });
 
       // Wait for animation to finish then set centered
       setTimeout(() => this.setState({ centered: true }), animationTime + 100);
@@ -154,7 +154,7 @@ class OverviewMap extends PureComponent {
   onAddLocationPress = async () => {
     if (!this.state.tempLocation) {
       const { location } = await getCurrentPosition(true);
-      this.createTempPin(location || this.state);
+      this.createTempPin(location || this.state, true);
     }
   };
 
@@ -166,14 +166,14 @@ class OverviewMap extends PureComponent {
 
     if (this.state.centered) {
       this.props.updatePosition(coord.latitude, coord.longitude);
-      this.map.animateToCoordinate(coord, animationTime);
+      this.map.animateCamera({ center: coord }, { duration: animationTime });
     }
   };
 
   onLongPress = (event) => {
     const coord = event.nativeEvent.coordinate;
     if (!this.state.tempLocation) {
-      this.createTempPin(coord);
+      this.createTempPin(coord, false);
     }
   };
 
@@ -205,7 +205,7 @@ class OverviewMap extends PureComponent {
     return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   };
 
-  createTempPin = (coord) => {
+  createTempPin = (coord, animate) => {
     this.setState({ tempLocation: coord });
     // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
     // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
@@ -214,7 +214,9 @@ class OverviewMap extends PureComponent {
 
     const offSet = this.state.latitudeDelta * remainder;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
-    this.map.animateToCoordinate(temp, shortAnimationTime);
+    if (animate) {
+      this.map.animateCamera({ center: temp }, { duration: shortAnimationTime });
+    }
   };
 
   render() {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 import PinCallout from '../components/PinCallout';
 
 class LocationMarker extends PureComponent {

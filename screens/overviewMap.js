@@ -154,7 +154,7 @@ class OverviewMap extends PureComponent {
   onAddLocationPress = async () => {
     if (!this.state.tempLocation) {
       const { location } = await getCurrentPosition(true);
-      this.createTempPin(location || this.state);
+      this.createTempPin(location || this.state, true);
     }
   };
 
@@ -173,7 +173,7 @@ class OverviewMap extends PureComponent {
   onLongPress = (event) => {
     const coord = event.nativeEvent.coordinate;
     if (!this.state.tempLocation) {
-      this.createTempPin(coord);
+      this.createTempPin(coord, false);
     }
   };
 
@@ -205,7 +205,7 @@ class OverviewMap extends PureComponent {
     return /^(pt|fr)/.test(this.props.locale) ? 320 : 280;
   };
 
-  createTempPin = (coord) => {
+  createTempPin = (coord, animate) => {
     this.setState({ tempLocation: coord });
     // Offset is used to calculate where to move the map so the pin is centered in remainder of visible screen
     // Half the screen is visible when options container is visible, so we need to move the map so the pin is at the top quarter
@@ -214,7 +214,9 @@ class OverviewMap extends PureComponent {
 
     const offSet = this.state.latitudeDelta * remainder;
     const temp = { latitude: coord.latitude - offSet, longitude: coord.longitude };
-    this.map.animateCamera({ center: temp }, { duration: shortAnimationTime });
+    if (animate) {
+      this.map.animateCamera({ center: temp }, { duration: shortAnimationTime });
+    }
   };
 
   render() {
